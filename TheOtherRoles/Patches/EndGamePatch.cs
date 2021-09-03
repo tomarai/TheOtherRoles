@@ -155,7 +155,7 @@ namespace TheOtherRoles.Patches {
                     TempData.winners.Add(wpdFormerJackal);
                 }
             } else {
-              // Madmate win if team impostors win
+              // Madmate wins if team impostors wins
               foreach (WinningPlayerData winner in TempData.winners) {
                   if (winner.IsImpostor) {
                     WinningPlayerData wpd = new WinningPlayerData(Madmate.madmate.Data);
