@@ -1034,14 +1034,12 @@ namespace TheOtherRoles
         public static PlayerControl madmate;
         public static Color color = Palette.ImpostorRed;
 
-        public static bool impostorsCanKillAnyone = true;
         public static bool canEnterVents = false;
         public static bool hasImpostorVision = false;
         public static bool canSabotage = false;
 
         public static void clearAndReload() {
             madmate = null;
-            impostorsCanKillAnyone = CustomOptionHolder.madmateImpostorsCanKillAnyone.getBool();
             canEnterVents = CustomOptionHolder.madmateCanEnterVents.getBool();
             hasImpostorVision = CustomOptionHolder.madmateHasImpostorVision.getBool();
             canSabotage = CustomOptionHolder.madmateCanSabotage.getBool();

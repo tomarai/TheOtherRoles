@@ -168,7 +168,6 @@ namespace TheOtherRoles {
 
         public static CustomOption madmateSpawnRate;
         public static CustomOption madmateCanDieToSheriff;
-        public static CustomOption madmateImpostorsCanKillAnyone;
         public static CustomOption madmateCanEnterVents;
         public static CustomOption madmateHasImpostorVision;
         public static CustomOption madmateCanSabotage;
@@ -349,10 +348,9 @@ namespace TheOtherRoles {
 
             madmateSpawnRate = CustomOption.Create(360, cs(Madmate.color, "Madmate"), rates, null, true);
             madmateCanDieToSheriff = CustomOption.Create(361, "Madmate Can Die To Sheriff", false, madmateSpawnRate);
-            madmateImpostorsCanKillAnyone = CustomOption.Create(362, "Impostors Can Kill Anyone If There Is A Madmate", true, madmateSpawnRate);
-            madmateCanEnterVents = CustomOption.Create(363, "Madmate Can Enter Vents", false, madmateSpawnRate);
-            madmateHasImpostorVision = CustomOption.Create(364, "Madmate Has Impostor Vision", false, madmateSpawnRate);
-            madmateCanSabotage = CustomOption.Create(365, "Madmate Can Sabotage", false, madmateSpawnRate);
+            madmateCanEnterVents = CustomOption.Create(362, "Madmate Can Enter Vents", false, madmateSpawnRate);
+            madmateHasImpostorVision = CustomOption.Create(363, "Madmate Has Impostor Vision", false, madmateSpawnRate);
+            madmateCanSabotage = CustomOption.Create(364, "Madmate Can Sabotage", false, madmateSpawnRate);
 
             // Other options
             maxNumberOfMeetings = CustomOption.Create(3, "Number Of Meetings (excluding Mayor meeting)", 10, 0, 15, 1, null, true);

@@ -173,12 +173,6 @@ namespace TheOtherRoles.Patches {
                 } else {
                     target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
                 }
-            } else if (Madmate.madmate != null) {
-                if (Madmate.impostorsCanKillAnyone) {
-                    target = setTarget(false, true);
-                } else {
-                    target = setTarget(true, true, new List<PlayerControl>() { Madmate.madmate });
-                }
             } else {
                 target = setTarget(true, true);
             }
@@ -266,12 +260,6 @@ namespace TheOtherRoles.Patches {
                     target = setTarget(false, true);
                 } else {
                     target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
-                }
-            } else if (Madmate.madmate != null) {
-                if (Madmate.impostorsCanKillAnyone) {
-                    target = setTarget(false, true);
-                } else {
-                    target = setTarget(true, true, new List<PlayerControl>() { Madmate.madmate });
                 }
             } else {
                 target = setTarget(true, true);
