@@ -1041,9 +1041,9 @@ namespace TheOtherRoles
 
         public static void clearAndReload() {
             madmate = null;
-            impostorsCanKillAnyone = CustomOptionHolder.spyImpostorsCanKillAnyone.getBool();
-            canEnterVents = CustomOptionHolder.spyCanEnterVents.getBool();
-            hasImpostorVision = CustomOptionHolder.spyHasImpostorVision.getBool();
+            impostorsCanKillAnyone = CustomOptionHolder.madmateImpostorsCanKillAnyone.getBool();
+            canEnterVents = CustomOptionHolder.madmateCanEnterVents.getBool();
+            hasImpostorVision = CustomOptionHolder.madmateHasImpostorVision.getBool();
             canSabotage = CustomOptionHolder.madmateCanSabotage.getBool();
         }
     }
