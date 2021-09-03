@@ -246,8 +246,9 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(TuneRadioMinigame), nameof(TuneRadioMinigame.Begin))]
     class CommsMinigameBeginPatch {
         static void Postfix(TuneRadioMinigame __instance) {
-            // Block Swapper from fixing comms. Still looking for a better way to do this, but deleting the task doesn't seem like a viable option since then the camera, admin table, ... work while comms are out
-            if (Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) {
+            // Block Swapper or Madmate from fixing comms. Still looking for a better way to do this, but deleting the task doesn't seem like a viable option since then the camera, admin table, ... work while comms are out
+            if ((Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) ||
+                (Madmate.madmate != null && Madmate.madmate == PlayerControl.LocalPlayer)) {
                 __instance.Close();
             }
         }
@@ -256,8 +257,9 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(SwitchMinigame), nameof(SwitchMinigame.Begin))]
     class LightsMinigameBeginPatch {
         static void Postfix(SwitchMinigame __instance) {
-            // Block Swapper from fixing lights. One could also just delete the PlayerTask, but I wanted to do it the same way as with coms for now.
-            if (Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) {
+            // Block Swapper or Madmate from fixing lights. One could also just delete the PlayerTask, but I wanted to do it the same way as with coms for now.
+            if ((Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) ||
+                (Madmate.madmate != null && Madmate.madmate == PlayerControl.LocalPlayer)) {
                 __instance.Close();
             }
         }
