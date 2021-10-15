@@ -20,6 +20,7 @@ namespace TheOtherRoles.Objects {
         private Action OnEffectEnds;
         public bool HasEffect;
         public bool isEffectActive = false;
+        public bool TimerFixed;
         private bool showButtonText = false;
         public float EffectDuration;
         public Sprite Sprite;
@@ -27,7 +28,7 @@ namespace TheOtherRoles.Objects {
         private bool mirror;
         private KeyCode? hotkey;
 
-        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Vector3 PositionOffset, HudManager hudManager, KeyCode? hotkey, bool HasEffect, float EffectDuration, Action OnEffectEnds, bool mirror = false)
+        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Vector3 PositionOffset, HudManager hudManager, KeyCode? hotkey, bool HasEffect, float EffectDuration, Action OnEffectEnds, bool mirror = false, bool timerFixed = false)
         {
             this.hudManager = hudManager;
             this.OnClick = OnClick;
@@ -36,12 +37,15 @@ namespace TheOtherRoles.Objects {
             this.PositionOffset = PositionOffset;
             this.OnMeetingEnds = OnMeetingEnds;
             this.HasEffect = HasEffect;
+            this.TimerFixed = timerFixed;
             this.EffectDuration = EffectDuration;
             this.OnEffectEnds = OnEffectEnds;
             this.Sprite = Sprite;
             this.mirror = mirror;
             this.hotkey = hotkey;
             Timer = 16.2f;
+            if (this.TimerFixed)
+                Timer = CustomOptionHolder.adminTimer.getFloat();
             buttons.Add(this);
             killButtonManager = UnityEngine.Object.Instantiate(hudManager.KillButton, hudManager.transform);
             this.showButtonText = killButtonManager.renderer.sprite == Sprite;
@@ -153,7 +157,9 @@ namespace TheOtherRoles.Objects {
             }
 
             if (Timer >= 0) {
-                if (HasEffect && isEffectActive)
+                if (TimerFixed) {
+                  // do nothing
+                } else if (HasEffect && isEffectActive)
                     Timer -= Time.deltaTime;
                 else if (!PlayerControl.LocalPlayer.inVent && PlayerControl.LocalPlayer.moveable)
                     Timer -= Time.deltaTime;

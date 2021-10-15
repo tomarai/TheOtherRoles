@@ -33,6 +33,7 @@ namespace TheOtherRoles
         public static CustomButton warlockCurseButton;
         public static CustomButton securityGuardButton;
         public static CustomButton arsonistButton;
+        public static CustomButton mapConsoleButton;
         public static TMPro.TMP_Text securityGuardButtonScrewsText;
 
         public static void setCustomButtonCooldowns() {
@@ -81,6 +82,32 @@ namespace TheOtherRoles
 
         public static void Postfix(HudManager __instance)
         {
+            // Remaining time to see admin map
+            mapConsoleButton = new CustomButton(
+                () => {},
+                () => {
+                    return CustomOptionHolder.enabledAdminTimer.getBool();
+                },
+                () => {
+                    // always inactive, because the button only shows the remaining time
+                    return false;
+                },
+                () => {
+                    // the remaining time is only updated at the end of each meeting
+                    mapConsoleButton.TimerFixed = true;
+                    mapConsoleButton.Timer = MapOptions.AdminTimer;
+                },
+                Engineer.getButtonSprite(),   // please someone designs a new button for this!
+                new Vector3(-2.6f, 0, 0),
+                __instance,
+                null,
+                false,
+                0f,
+                () => {},
+                false,
+                true
+            );
+
             // Engineer Repair
             engineerRepairButton = new CustomButton(
                 () => {

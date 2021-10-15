@@ -326,6 +326,26 @@ namespace TheOtherRoles.Patches {
     class AdminPanelPatch {
         static Dictionary<SystemTypes, List<Color>> players = new Dictionary<SystemTypes, List<Color>>();
 
+        [HarmonyPatch(typeof(MapConsole), nameof(MapConsole.CanUse))]
+        class MapConsoleCanUsePatch {
+            public static bool Prefix(MapConsole __instance,
+                                      ref float __result,
+                                      [HarmonyArgument(0)] GameData.PlayerInfo pc,
+                                      [HarmonyArgument(1)] out bool canUse,
+                                      [HarmonyArgument(2)] out bool couldUse) {
+                // workaround
+                __instance.useIcon = ImageNames.PolusAdminButton;
+                canUse = couldUse = false;
+                __result = float.MaxValue;
+
+                if (PlayerControl.LocalPlayer.Data.IsDead)
+                    return true;
+                if (CustomOptionHolder.enabledAdminTimer.getBool())
+                    return MapOptions.AdminTimer > 0;
+                return true;
+            }
+        }
+
         [HarmonyPatch(typeof(MapCountOverlay), nameof(MapCountOverlay.Update))]
         class MapCountOverlayUpdatePatch {
             static bool Prefix(MapCountOverlay __instance) {
@@ -335,6 +355,26 @@ namespace TheOtherRoles.Patches {
                 {
                     return false;
                 }
+
+                // Consume time to see admin map if the player is alive
+                if (!PlayerControl.LocalPlayer.Data.IsDead) {
+                    // Show the grey map if all time to see admin is consumed and the player is alive
+                    if (MapOptions.AdminTimer <= 0) {
+                        __instance.isSab = true;
+                        __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
+                        return false;
+                    }
+
+                    // Consume the time via RPC
+                    MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId,
+                                                                           (byte)CustomRPC.ConsumeAdminTime,
+                                                                           Hazel.SendOption.Reliable);
+                    writer.Write(__instance.timer);
+                    writer.EndMessage();
+                    // Reflect the consumed time to local (workaround)
+                    MapOptions.AdminTimer -= __instance.timer;
+                }
+
                 __instance.timer = 0f;
                 players = new Dictionary<SystemTypes, List<Color>>();
                 bool commsActive = false;

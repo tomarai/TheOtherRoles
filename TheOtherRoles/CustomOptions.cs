@@ -22,6 +22,9 @@ namespace TheOtherRoles {
         public static CustomOption impostorRolesCountMin;
         public static CustomOption impostorRolesCountMax;
 
+        public static CustomOption adminTimer;
+        public static CustomOption enabledAdminTimer;
+
         public static CustomOption mafiaSpawnRate;
         public static CustomOption janitorCooldown;
 
@@ -203,6 +206,8 @@ namespace TheOtherRoles {
             neutralRolesCountMax = CustomOption.Create(303, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Neutral Roles"), 0f, 0f, 15f, 1f);
             impostorRolesCountMin = CustomOption.Create(304, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Minimum Impostor Roles"), 0f, 0f, 3f, 1f);
             impostorRolesCountMax = CustomOption.Create(305, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Impostor Roles"), 0f, 0f, 3f, 1f);
+            adminTimer = CustomOption.Create(306, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Admin Map Available Duration"), 10f, 0f, 120f, 1f);
+            enabledAdminTimer = CustomOption.Create(307, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Enable Admin Map Available Duration"), false);
 
             mafiaSpawnRate = CustomOption.Create(10, cs(Janitor.color, "Mafia"), rates, null, true);
             janitorCooldown = CustomOption.Create(11, "Janitor Cooldown", 30f, 10f, 60f, 2.5f, mafiaSpawnRate);
@@ -676,7 +681,7 @@ namespace TheOtherRoles {
             var hudString = sb.ToString();
 
             int defaultSettingsLines = 19;
-            int roleSettingsLines = defaultSettingsLines + 36;
+            int roleSettingsLines = defaultSettingsLines + 38;
             int detailedSettingsP1 = roleSettingsLines + 40;
             int detailedSettingsP2 = detailedSettingsP1 + 38;
             int end1 = hudString.TakeWhile(c => (defaultSettingsLines -= (c == '\n' ? 1 : 0)) > 0).Count();

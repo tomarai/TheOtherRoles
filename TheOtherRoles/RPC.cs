@@ -65,6 +65,7 @@ namespace TheOtherRoles
         UseUncheckedVent,
         UncheckedMurderPlayer,
         UncheckedCmdReportDeadBody,
+        ConsumeAdminTime,
 
         // Role functionality
 
@@ -282,6 +283,9 @@ namespace TheOtherRoles
             if (source != null && target != null) source.ReportDeadBody(target.Data);
         }
 
+        public static void consumeAdminTime(float delta) {
+            MapOptions.AdminTimer -= delta;
+        }
 
         // Role functionality
 
@@ -771,6 +775,10 @@ namespace TheOtherRoles
                     byte reportSource = reader.ReadByte();
                     byte reportTarget = reader.ReadByte();
                     RPCProcedure.uncheckedCmdReportDeadBody(reportSource, reportTarget);
+                    break;
+                case (byte)CustomRPC.ConsumeAdminTime:
+                    float delta = reader.ReadSingle();
+                    RPCProcedure.consumeAdminTime(delta);
                     break;
 
                 // Role functionality
