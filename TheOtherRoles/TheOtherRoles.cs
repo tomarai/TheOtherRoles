@@ -55,6 +55,8 @@ namespace TheOtherRoles
             BountyHunter.clearAndReload();
             Bait.clearAndReload();
             Madmate.clearAndReload();
+            Vulture.clearAndReload();
+            Medium.clearAndReload();
         }
 
         public static class Jester {
@@ -658,6 +660,7 @@ namespace TheOtherRoles
         public static bool jackalPromotedFromSidekickCanCreateSidekick = true;
         public static bool canCreateSidekickFromImpostor = true;
         public static bool hasImpostorVision = false;
+        public static bool canSeeEngineerVent = false;
 
         public static Sprite getSidekickButtonSprite() {
             if (buttonSprite) return buttonSprite;
@@ -686,6 +689,7 @@ namespace TheOtherRoles
             canCreateSidekickFromImpostor = CustomOptionHolder.jackalCanCreateSidekickFromImpostor.getBool();
             formerJackals.Clear();
             hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
+            canSeeEngineerVent = CustomOptionHolder.jackalCanSeeEngineerVent.getBool();
         }
         
     }
@@ -964,6 +968,7 @@ namespace TheOtherRoles
         private static Sprite targetSprite;
 
         public static int remainingShots = 2;
+        public static bool hasMultipleShotsPerMeeting = false;
 
         public static Sprite getTargetSprite() {
             if (targetSprite) return targetSprite;
@@ -975,6 +980,7 @@ namespace TheOtherRoles
             guesser = null;
             
             remainingShots = Mathf.RoundToInt(CustomOptionHolder.guesserNumberOfShots.getFloat());
+            hasMultipleShotsPerMeeting = CustomOptionHolder.guesserHasMultipleShotsPerMeeting.getBool();
         }
     }
 
@@ -1049,6 +1055,80 @@ namespace TheOtherRoles
             hasImpostorVision = CustomOptionHolder.madmateHasImpostorVision.getBool();
             canSabotage = CustomOptionHolder.madmateCanSabotage.getBool();
             canFixComm = CustomOptionHolder.madmateCanFixComm.getBool();
+        }
+    }
+
+    public static class Vulture {
+        public static PlayerControl vulture;
+        public static Color color = new Color32(139, 69, 19, byte.MaxValue);
+        public static List<Arrow> localArrows = new List<Arrow>();
+        public static float cooldown = 30f;
+        public static int vultureNumberToWin = 4;
+        public static int eatenBodies = 0;
+        public static bool triggerVultureWin = false;
+        public static bool canUseVents = false;
+        private static Sprite buttonSprite;
+        public static Sprite getButtonSprite() {
+            if (buttonSprite) return buttonSprite;
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.VultureButton.png", 115f);
+            return buttonSprite;
+        }
+
+        public static void clearAndReload() {
+            vulture = null;
+            vultureNumberToWin = Mathf.RoundToInt(CustomOptionHolder.vultureNumberToWin.getFloat());
+            eatenBodies = 0;
+            cooldown = CustomOptionHolder.vultureCooldown.getFloat();
+            triggerVultureWin = false;
+            canUseVents = CustomOptionHolder.vultureCanUseVents.getBool();
+            if (localArrows != null) {
+                foreach (Arrow arrow in localArrows)
+                    if (arrow?.arrow != null)
+                        UnityEngine.Object.Destroy(arrow.arrow);
+            }
+            localArrows = new List<Arrow>();
+        }
+    }
+
+    public static class Medium {
+        public static PlayerControl medium;
+        public static DeadPlayer target;
+        public static DeadPlayer soulTarget;
+        public static Color color = new Color32(98, 120, 115, byte.MaxValue);
+        public static List<Tuple<DeadPlayer, Vector3>> deadBodies = new List<Tuple<DeadPlayer, Vector3>>();
+        public static List<Tuple<DeadPlayer, Vector3>> featureDeadBodies = new List<Tuple<DeadPlayer, Vector3>>();
+        public static List<SpriteRenderer> souls = new List<SpriteRenderer>();
+        public static DateTime meetingStartTime = DateTime.UtcNow;
+
+        public static float cooldown = 30f;
+        public static float duration = 3f;
+        public static bool oneTimeUse = false;
+
+        private static Sprite soulSprite;
+        public static Sprite getSoulSprite() {
+            if (soulSprite) return soulSprite;
+            soulSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Soul.png", 500f);
+            return soulSprite;
+        }
+
+        private static Sprite question;
+        public static Sprite getQuestionSprite() {
+            if (question) return question;
+            question = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.MediumButton.png", 115f);
+            return question;
+        }
+
+        public static void clearAndReload() {
+            medium = null;
+            target = null;
+            soulTarget = null;
+            deadBodies = new List<Tuple<DeadPlayer, Vector3>>();
+            featureDeadBodies = new List<Tuple<DeadPlayer, Vector3>>();
+            souls = new List<SpriteRenderer>();
+            meetingStartTime = DateTime.UtcNow;
+            cooldown = CustomOptionHolder.mediumCooldown.getFloat();
+            duration = CustomOptionHolder.mediumDuration.getFloat();
+            oneTimeUse = CustomOptionHolder.mediumOneTimeUse.getBool();
         }
     }
 }
