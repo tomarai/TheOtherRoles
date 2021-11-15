@@ -62,7 +62,8 @@ namespace TheOtherRoles.Patches {
             __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
             bool canMoveInVents = true;
             if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
-            if (Spy.spy == PlayerControl.LocalPlayer) {
+            if (Spy.spy == PlayerControl.LocalPlayer ||
+                Madmate.madmate == PlayerControl.LocalPlayer) {
                 canMoveInVents = false;
             }
             bool isEnter = !PlayerControl.LocalPlayer.inVent;
@@ -169,6 +170,9 @@ namespace TheOtherRoles.Patches {
             canUse = couldUse = false;
             if (Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer)
                 return !__instance.TaskTypes.Any(x => x == TaskTypes.FixLights || x == TaskTypes.FixComms);
+            if (Madmate.madmate != null && Madmate.madmate == PlayerControl.LocalPlayer &&
+                __instance.AllowImpostor)
+                return !__instance.TaskTypes.Any(x => x == TaskTypes.FixLights || x == TaskTypes.FixComms);
             if (__instance.AllowImpostor) return true;
             if (!Helpers.hasFakeTasks(pc.Object)) return true;
             __result = float.MaxValue;
@@ -180,7 +184,8 @@ namespace TheOtherRoles.Patches {
     class CommsMinigameBeginPatch {
         static void Postfix(TuneRadioMinigame __instance) {
             // Block Swapper from fixing comms. Still looking for a better way to do this, but deleting the task doesn't seem like a viable option since then the camera, admin table, ... work while comms are out
-            if (Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) {
+            if ((Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) ||
+                (Madmate.madmate != null && Madmate.madmate == PlayerControl.LocalPlayer)) {
                 __instance.Close();
             }
         }
@@ -190,7 +195,8 @@ namespace TheOtherRoles.Patches {
     class LightsMinigameBeginPatch {
         static void Postfix(SwitchMinigame __instance) {
             // Block Swapper from fixing lights. One could also just delete the PlayerTask, but I wanted to do it the same way as with coms for now.
-            if (Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) {
+            if ((Swapper.swapper != null && Swapper.swapper == PlayerControl.LocalPlayer) ||
+                (Madmate.madmate != null && Madmate.madmate == PlayerControl.LocalPlayer)) {
                 __instance.Close();
             }
         }

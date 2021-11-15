@@ -50,6 +50,7 @@ namespace TheOtherRoles
         Bait,
         Vulture,
         Medium,
+        Madmate,
         Crewmate,
         Impostor
     }
@@ -246,6 +247,9 @@ namespace TheOtherRoles
                     case RoleId.Medium:
                         Medium.medium = player;
                         break;
+                    case RoleId.Madmate:
+                        Madmate.madmate = player;
+                        break;
                     }
                 }
         }
@@ -441,6 +445,8 @@ namespace TheOtherRoles
                 
             if (Medium.medium != null && Medium.medium == player)
                 Medium.medium = oldShifter;
+            if (Madmate.madmate != null && Madmate.madmate == player)
+                Madmate.madmate = oldShifter;
 
             // Set cooldowns to max for both players
             if (PlayerControl.LocalPlayer == oldShifter || PlayerControl.LocalPlayer == player)
@@ -578,6 +584,7 @@ namespace TheOtherRoles
             if (player == SecurityGuard.securityGuard) SecurityGuard.clearAndReload();
             if (player == Bait.bait) Bait.clearAndReload();
             if (player == Medium.medium) Medium.clearAndReload();
+            if (player == Madmate.madmate) Madmate.clearAndReload();
 
             // Impostor roles
             if (player == Morphling.morphling) Morphling.clearAndReload();
