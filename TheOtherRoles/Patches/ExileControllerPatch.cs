@@ -102,6 +102,7 @@ namespace TheOtherRoles.Patches {
 
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
+            MapOptions.MeetingEndedUpdate();
 
             // Mini set adapted cooldown
             if (Mini.mini != null && PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor) {

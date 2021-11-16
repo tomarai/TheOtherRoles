@@ -21,12 +21,18 @@ namespace TheOtherRoles{
         public static List<SurvCamera> camerasToAdd = new List<SurvCamera>();
         public static List<Vent> ventsToSeal = new List<Vent>();
         public static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
+        public static float AdminTimer = 0f;
+        public static TMPro.TextMeshPro AdminTimerText = null;
 
 public static void clearAndReloadMapOptions() {
             meetingsCount = 0;
             camerasToAdd = new List<SurvCamera>();
             ventsToSeal = new List<Vent>();
             playerIcons = new Dictionary<byte, PoolablePlayer>(); ;
+
+            AdminTimer = CustomOptionHolder.adminTimer.getFloat();
+            ClearAdminTimerText();
+            UpdateAdminTimerText();
 
             maxNumberOfMeetings = Mathf.RoundToInt(CustomOptionHolder.maxNumberOfMeetings.getSelection());
             blockSkippingInEmergencyMeetings = CustomOptionHolder.blockSkippingInEmergencyMeetings.getBool();
@@ -36,6 +42,35 @@ public static void clearAndReloadMapOptions() {
             ghostsSeeTasks = TheOtherRolesPlugin.GhostsSeeTasks.Value;
             ghostsSeeVotes = TheOtherRolesPlugin.GhostsSeeVotes.Value;
             showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value;
+        }
+
+        public static void MeetingEndedUpdate()
+        {
+            ClearAdminTimerText();
+            UpdateAdminTimerText();
+        }
+
+        public static void UpdateAdminTimerText()
+        {
+            if (!CustomOptionHolder.enabledAdminTimer.getBool())
+                return;
+            if (HudManager.Instance == null)
+                return;
+            AdminTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
+            AdminTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
+            if (AdminTimer > 0)
+                AdminTimerText.text = $"Admin: {(int)AdminTimer} sec remaining";
+            else
+                AdminTimerText.text = "Admin: ran out of time";
+            AdminTimerText.gameObject.SetActive(true);
+        }
+
+        private static void ClearAdminTimerText()
+        {
+            if (AdminTimerText == null)
+                return;
+            UnityEngine.Object.Destroy(AdminTimerText);
+            AdminTimerText = null;
         }
     }
 } 
