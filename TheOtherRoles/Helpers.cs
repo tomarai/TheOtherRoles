@@ -168,7 +168,7 @@ namespace TheOtherRoles {
         }
 
         public static bool hasFakeTasks(this PlayerControl player) {
-            return (player == Jester.jester || player == Jackal.jackal || player == Sidekick.sidekick || player == Arsonist.arsonist || player == Vulture.vulture || Jackal.formerJackals.Contains(player));
+            return (player == Madmate.madmate || player == Jester.jester || player == Jackal.jackal || player == Sidekick.sidekick || player == Arsonist.arsonist || player == Vulture.vulture || Jackal.formerJackals.Contains(player));
         }
 
         public static bool canBeErased(this PlayerControl player) {
@@ -283,6 +283,8 @@ namespace TheOtherRoles {
             else if (Spy.canEnterVents && Spy.spy != null && Spy.spy == player)
                 roleCouldUse = true;
             else if (Vulture.canUseVents && Vulture.vulture != null && Vulture.vulture == player)
+                roleCouldUse = true;
+            else if (Madmate.canEnterVents && Madmate.madmate != null && Madmate.madmate == player)
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)  {
                 if (Janitor.janitor != null && Janitor.janitor == PlayerControl.LocalPlayer)

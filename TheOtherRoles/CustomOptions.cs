@@ -181,6 +181,11 @@ namespace TheOtherRoles {
         public static CustomOption mediumDuration;
         public static CustomOption mediumOneTimeUse;
 
+        public static CustomOption madmateSpawnRate;
+        public static CustomOption madmateCanDieToSheriff;
+        public static CustomOption madmateCanEnterVents;
+        public static CustomOption madmateHasImpostorVision;
+
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
         public static CustomOption noVoteIsSelfVote;
@@ -368,6 +373,11 @@ namespace TheOtherRoles {
             mediumCooldown = CustomOption.Create(361, "Medium Questioning Cooldown", 30f, 5f, 120f, 5f, mediumSpawnRate);
             mediumDuration = CustomOption.Create(362, "Medium Questioning Duration", 3f, 0f, 15f, 1f, mediumSpawnRate);
             mediumOneTimeUse = CustomOption.Create(363, "Each Soul Can Only Be Questioned Once", false, mediumSpawnRate);
+
+            madmateSpawnRate = CustomOption.Create(350, cs(Madmate.color, "Madmate"), rates, null, true);
+            madmateCanDieToSheriff = CustomOption.Create(351, "Madmate Can Die To Sheriff", false, madmateSpawnRate);
+            madmateCanEnterVents = CustomOption.Create(352, "Madmate Can Enter Vents", false, madmateSpawnRate);
+            madmateHasImpostorVision = CustomOption.Create(353, "Madmate Has Impostor Vision", false, madmateSpawnRate);
 
             // Other options
             maxNumberOfMeetings = CustomOption.Create(3, "Number Of Meetings (excluding Mayor meeting)", 10, 0, 15, 1, null, true);

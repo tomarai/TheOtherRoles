@@ -64,6 +64,17 @@ namespace TheOtherRoles.Patches {
                 yourTeam = soloTeam;
             }
 
+            /*
+             * Madmate is a solo team as well
+             * This code is redundant, but this part should be decoupled from the original code
+             * to merge future changes
+             */
+            if (PlayerControl.LocalPlayer == Madmate.madmate) {
+                var soloTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+                soloTeam.Add(PlayerControl.LocalPlayer);
+                yourTeam = soloTeam;
+            }
+
             // Add the Spy to the Impostor team (for the Impostors)
             if (Spy.spy != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
                 List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList().OrderBy(x => Guid.NewGuid()).ToList();
@@ -85,6 +96,12 @@ namespace TheOtherRoles.Patches {
                 __instance.BackgroundBar.material.color = neutralColor;
                 __instance.TeamTitle.text = "Neutral";
                 __instance.TeamTitle.color = neutralColor;
+            } else if (roleInfo.roleId == RoleId.Madmate) {
+                __instance.BackgroundBar.material.color = roleInfo.color;
+                __instance.TeamTitle.text = roleInfo.name;
+                __instance.TeamTitle.color = roleInfo.color;
+                __instance.ImpostorText.gameObject.SetActive(true);
+                __instance.ImpostorText.text = "Team Impostor";
             }
         }
 
