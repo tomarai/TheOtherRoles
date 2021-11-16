@@ -148,6 +148,7 @@ namespace TheOtherRoles
             public static Color color = new Color32(248, 205, 70, byte.MaxValue);
 
             public static float cooldown = 30f;
+            public static int remainingShots = 1;
             public static bool canKillNeutrals = false;
             public static bool spyCanDieToSheriff = false;
             public static bool madmateCanDieToSheriff = false;
@@ -158,6 +159,7 @@ namespace TheOtherRoles
                 sheriff = null;
                 currentTarget = null;
                 cooldown = CustomOptionHolder.sheriffCooldown.getFloat();
+                remainingShots = Mathf.RoundToInt(CustomOptionHolder.sheriffNumberOfShots.getFloat());
                 canKillNeutrals = CustomOptionHolder.sheriffCanKillNeutrals.getBool();
                 spyCanDieToSheriff = CustomOptionHolder.spyCanDieToSheriff.getBool();
                 madmateCanDieToSheriff = CustomOptionHolder.madmateCanDieToSheriff.getBool();

@@ -94,6 +94,7 @@ namespace TheOtherRoles {
 
         public static CustomOption sheriffSpawnRate;
         public static CustomOption sheriffCooldown;
+        public static CustomOption sheriffNumberOfShots;
         public static CustomOption sheriffCanKillNeutrals;
 
         public static CustomOption lighterSpawnRate;
@@ -307,6 +308,7 @@ namespace TheOtherRoles {
             sheriffSpawnRate = CustomOption.Create(100, cs(Sheriff.color, "Sheriff"), rates, null, true);
             sheriffCooldown = CustomOption.Create(101, "Sheriff Cooldown", 30f, 10f, 60f, 2.5f, sheriffSpawnRate);
             sheriffCanKillNeutrals = CustomOption.Create(102, "Sheriff Can Kill Neutrals", false, sheriffSpawnRate);
+            sheriffNumberOfShots = CustomOption.Create(103, "Sheriff Number Of Shots", 1f, 1f, 15, 1f, sheriffSpawnRate);
 
             lighterSpawnRate = CustomOption.Create(110, cs(Lighter.color, "Lighter"), rates, null, true);
             lighterModeLightsOnVision = CustomOption.Create(111, "Lighter Mode Vision On Lights On", 2f, 0.25f, 5f, 0.25f, lighterSpawnRate);
