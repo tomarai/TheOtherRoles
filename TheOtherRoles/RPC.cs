@@ -31,6 +31,7 @@ namespace TheOtherRoles
         Seer,
         Morphling,
         Camouflager,
+        EvilHacker,
         Hacker,
         Mini,
         Tracker,
@@ -186,6 +187,9 @@ namespace TheOtherRoles
                         break;
                     case RoleId.Camouflager:
                         Camouflager.camouflager = player;
+                        break;
+                    case RoleId.EvilHacker:
+                        EvilHacker.evilHacker = player;
                         break;
                     case RoleId.Hacker:
                         Hacker.hacker = player;

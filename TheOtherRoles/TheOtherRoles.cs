@@ -37,6 +37,7 @@ namespace TheOtherRoles
             Seer.clearAndReload();
             Morphling.clearAndReload();
             Camouflager.clearAndReload();
+            EvilHacker.clearAndReload();
             Hacker.clearAndReload();
             Mini.clearAndReload();
             Tracker.clearAndReload();
@@ -475,6 +476,22 @@ namespace TheOtherRoles
             camouflageTimer = 0f;
             cooldown = CustomOptionHolder.camouflagerCooldown.getFloat();
             duration = CustomOptionHolder.camouflagerDuration.getFloat();
+        }
+    }
+
+    public static class EvilHacker {
+        public static PlayerControl evilHacker;
+        public static Color color = Palette.ImpostorRed;
+
+        private static Sprite buttonSprite;
+        public static Sprite getButtonSprite() {
+            if (buttonSprite) return buttonSprite;
+            buttonSprite = DestroyableSingleton<TranslationController>.Instance.GetImage(ImageNames.AirshipAdminButton);
+            return buttonSprite;
+        }
+
+        public static void clearAndReload() {
+            evilHacker = null;
         }
     }
 

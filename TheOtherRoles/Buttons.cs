@@ -18,6 +18,7 @@ namespace TheOtherRoles
         private static CustomButton shifterShiftButton;
         private static CustomButton morphlingButton;
         private static CustomButton camouflagerButton;
+        private static CustomButton evilHackerButton;
         private static CustomButton hackerButton;
         private static CustomButton trackerTrackPlayerButton;
         private static CustomButton trackerTrackCorpsesButton;
@@ -334,6 +335,30 @@ namespace TheOtherRoles
                 true,
                 Camouflager.duration,
                 () => { camouflagerButton.Timer = camouflagerButton.MaxTimer; }
+            );
+
+            // EvilHacker button
+            evilHackerButton = new CustomButton(
+                () => {
+                    PlayerControl.LocalPlayer.NetTransform.Halt();
+                    Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
+                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    if (PlayerControl.LocalPlayer.AmOwner) {
+                        PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
+                        ConsoleJoystick.SetMode_Task();
+                    }
+                },
+                () => {
+                    return EvilHacker.evilHacker != null &&
+                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                      !PlayerControl.LocalPlayer.Data.IsDead;
+                },
+                () => { return PlayerControl.LocalPlayer.CanMove; },
+                () => {},
+                EvilHacker.getButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                KeyCode.F
             );
 
             // Hacker button

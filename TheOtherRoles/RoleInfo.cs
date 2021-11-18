@@ -34,6 +34,7 @@ namespace TheOtherRoles
         public static RoleInfo janitor = new RoleInfo("Janitor", Janitor.color, "Work with the <color=#FF1919FF>Mafia</color> by hiding dead bodies", "Hide dead bodies", RoleId.Janitor);
         public static RoleInfo morphling = new RoleInfo("Morphling", Morphling.color, "Change your look to not get caught", "Change your look", RoleId.Morphling);
         public static RoleInfo camouflager = new RoleInfo("Camouflager", Camouflager.color, "Camouflage and kill the Crewmates", "Hide among others", RoleId.Camouflager);
+        public static RoleInfo evilHacker = new RoleInfo("EvilHacker", EvilHacker.color, "Hack systems and kill the Crewmates", "Hack to kill the Crewmates", RoleId.EvilHacker);
         public static RoleInfo vampire = new RoleInfo("Vampire", Vampire.color, "Kill the Crewmates with your bites", "Bite your enemies", RoleId.Vampire);
         public static RoleInfo eraser = new RoleInfo("Eraser", Eraser.color, "Kill the Crewmates and erase their roles", "Erase the roles of your enemies", RoleId.Eraser);
         public static RoleInfo trickster = new RoleInfo("Trickster", Trickster.color, "Use your jack-in-the-boxes to surprise others", "Surprise your enemies", RoleId.Trickster);
@@ -73,6 +74,7 @@ namespace TheOtherRoles
             janitor,
             morphling,
             camouflager,
+            evilHacker,
             vampire,
             eraser,
             trickster,
@@ -125,6 +127,7 @@ namespace TheOtherRoles
             if (p == Janitor.janitor) infos.Add(janitor);
             if (p == Morphling.morphling) infos.Add(morphling);
             if (p == Camouflager.camouflager) infos.Add(camouflager);
+            if (p == EvilHacker.evilHacker) infos.Add(evilHacker);
             if (p == Vampire.vampire) infos.Add(vampire);
             if (p == Eraser.eraser) infos.Add(eraser);
             if (p == Trickster.trickster) infos.Add(trickster);
