@@ -95,16 +95,6 @@ namespace TheOtherRoles.Patches {
         }
     }
 
-    [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
-    public static class EnterVentPatch {
-        public static void Postfix(Vent __instance) {
-            if (Spy.spy == PlayerControl.LocalPlayer ||
-                Madmate.madmate == PlayerControl.LocalPlayer) {
-                __instance.SetButtons(false);
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
     class VentButtonVisibilityPatch {
         static void Postfix(PlayerControl __instance) {
