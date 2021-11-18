@@ -61,7 +61,7 @@ public static void clearAndReloadMapOptions() {
             AdminTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
             AdminTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
             if (AdminTimer > 0)
-                AdminTimerText.text = $"Admin: {(int)AdminTimer} sec remaining";
+                AdminTimerText.text = $"Admin: {Mathf.RoundToInt(AdminTimer)} sec remaining";
             else
                 AdminTimerText.text = "Admin: ran out of time";
             AdminTimerText.gameObject.SetActive(true);
