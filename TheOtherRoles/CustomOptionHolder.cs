@@ -197,6 +197,10 @@ namespace TheOtherRoles {
         public static CustomOption madmateCanDieToSheriff;
         public static CustomOption madmateCanEnterVents;
         public static CustomOption madmateHasImpostorVision;
+        public static CustomOption madmateNoticeImpostors;
+        public static CustomOption madmateCommonTasks;
+        public static CustomOption madmateShortTasks;
+        public static CustomOption madmateLongTasks;
 
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
@@ -405,6 +409,10 @@ namespace TheOtherRoles {
             madmateCanDieToSheriff = CustomOption.Create(351, "Madmate Can Die To Sheriff", false, madmateSpawnRate);
             madmateCanEnterVents = CustomOption.Create(352, "Madmate Can Enter Vents", false, madmateSpawnRate);
             madmateHasImpostorVision = CustomOption.Create(353, "Madmate Has Impostor Vision", false, madmateSpawnRate);
+            madmateNoticeImpostors = CustomOption.Create(354, "Show Impostors After Madmate Finishes Tasks", false, madmateSpawnRate);
+            madmateCommonTasks = CustomOption.Create(355, "Madmate Common Tasks", 0f, 0f, 4f, 1f, madmateSpawnRate);
+            madmateShortTasks = CustomOption.Create(356, "Madmate Short Tasks", 0f, 0f, 23f, 1f, madmateSpawnRate);
+            madmateLongTasks = CustomOption.Create(357, "Madmate Long Tasks", 0f, 0f, 15f, 1f, madmateSpawnRate);
 
             // Other options
             maxNumberOfMeetings = CustomOption.Create(3, "Number Of Meetings (excluding Mayor meeting)", 10, 0, 15, 1, null, true);

@@ -64,7 +64,7 @@ namespace TheOtherRoles.Patches {
 
             foreach(var playerControl in PlayerControl.AllPlayerControls) {
                 var roles = RoleInfo.getRoleInfoForPlayer(playerControl);
-                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(playerControl.Data);
+                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(playerControl.Data, true);
                 AdditionalTempData.playerRoles.Add(new AdditionalTempData.PlayerRoleInfo() { PlayerName = playerControl.Data.PlayerName, Roles = roles, TasksTotal = tasksTotal, TasksCompleted = tasksCompleted });
             }
 

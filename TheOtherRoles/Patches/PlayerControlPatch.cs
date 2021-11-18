@@ -387,7 +387,7 @@ namespace TheOtherRoles.Patches {
                     meetingInfo.gameObject.name = "Info";
                 }
                 
-                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
+                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data, true);
                 string roleNames = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
                 string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({tasksCompleted}/{tasksTotal})</color>" : "";
                 

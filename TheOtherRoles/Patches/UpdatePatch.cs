@@ -12,6 +12,21 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     class HudManagerUpdatePatch
     {
+        private static bool CanPlayerSeeImpostorName()
+        {
+            if (PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+                return true;
+
+            if (Madmate.madmate == null)
+                return false;
+
+            if (Madmate.madmate != PlayerControl.LocalPlayer)
+                return false;
+
+            var (playerCompleted, playerTotal) = TasksHandler.taskInfo(Madmate.madmate.Data, true);
+            return playerTotal - playerCompleted <= 0;
+        }
+
         static void resetNameTagsAndColors() {
             Dictionary<byte, PlayerControl> playersById = Helpers.allPlayersById();
 
@@ -39,7 +54,7 @@ namespace TheOtherRoles.Patches {
                     }
                 }
             }
-            if (PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+            if (CanPlayerSeeImpostorName()) {
                 List<PlayerControl> impostors = PlayerControl.AllPlayerControls.ToArray().ToList();
                 impostors.RemoveAll(x => !x.Data.Role.IsImpostor);
                 foreach (PlayerControl player in impostors)

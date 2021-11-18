@@ -8,13 +8,14 @@ namespace TheOtherRoles {
     [HarmonyPatch]
     public static class TasksHandler {
 
-        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo) {
+        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo, bool madmateCount=false) {
             int TotalTasks = 0;
             int CompletedTasks = 0;
             if (!playerInfo.Disconnected && playerInfo.Tasks != null &&
                 playerInfo.Object &&
                 (PlayerControl.GameOptions.GhostsDoTasks || !playerInfo.IsDead) &&
                 playerInfo.Role && playerInfo.Role.TasksCountTowardProgress &&
+                (playerInfo.Object != Madmate.madmate || (madmateCount && PlayerControl.LocalPlayer == Madmate.madmate)) &&
                 !playerInfo.Object.hasFakeTasks()
                 ) {
 
