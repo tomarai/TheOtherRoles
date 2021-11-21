@@ -13,11 +13,13 @@ namespace TheOtherRoles.Patches {
 $@"<size=130%><color=#ff351f>TheOtherRoles</color></size> v{TheOtherRolesPlugin.Version.ToString()}
 <size=60%>Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>EndOfFile</color>
 <color=#FCCE03FF>Thunderstorm584</color> & <color=#FCCE03FF>Mallöris</color>
-Button design by <color=#FCCE03FF>Bavari</color></size>";
+Button design by <color=#FCCE03FF>Bavari</color>
+このMODについて: https://git.io/AUMod</size>";
 
     public static string mainMenuCredentials = 
 $@"Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>Thunderstorm584</color>, <color=#FCCE03FF>EndOfFile</color> & <color=#FCCE03FF>Mallöris</color>
-Design by <color=#FCCE03FF>Bavari</color>";
+Design by <color=#FCCE03FF>Bavari</color>
+このMODについて: https://git.io/AUMod";
 
         public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, gendelo3</size>";
 
