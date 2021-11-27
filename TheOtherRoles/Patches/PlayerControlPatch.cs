@@ -145,7 +145,7 @@ namespace TheOtherRoles.Patches {
 
         static void evilHackerSetTarget() {
             if (EvilHacker.evilHacker == null || EvilHacker.evilHacker != PlayerControl.LocalPlayer) return;
-            EvilHacker.currentTarget = setTarget();
+            EvilHacker.currentTarget = setTarget(true);
             setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
         }
 
