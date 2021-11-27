@@ -86,6 +86,7 @@ namespace TheOtherRoles
         TrackerUsedTracker,
         VampireSetBitten,
         PlaceGarlic,
+        EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
         ErasePlayerRoles,
@@ -504,6 +505,18 @@ namespace TheOtherRoles
                     Tracker.tracked = player;
         }
 
+        public static void evilHackerCreatesMadmate(byte targetId) {
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+                if (player.PlayerId == targetId) {
+                    player.RemoveInfected();
+                    erasePlayerRoles(player.PlayerId, true);
+                    Madmate.madmate = player;
+                    EvilHacker.canCreateMadmate = false;
+                    return;
+                }
+            }
+        }
+
         public static void jackalCreatesSidekick(byte targetId) {
             foreach (PlayerControl player in PlayerControl.AllPlayerControls)
             {
@@ -827,6 +840,9 @@ namespace TheOtherRoles
                     break;
                 case (byte)CustomRPC.TrackerUsedTracker:
                     RPCProcedure.trackerUsedTracker(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.EvilHackerCreatesMadmate:
+                    RPCProcedure.evilHackerCreatesMadmate(reader.ReadByte());
                     break;
                 case (byte)CustomRPC.JackalCreatesSidekick:
                     RPCProcedure.jackalCreatesSidekick(reader.ReadByte());

@@ -39,6 +39,7 @@ namespace TheOtherRoles {
         public static CustomOption camouflagerDuration;
 
         public static CustomOption evilHackerSpawnRate;
+        public static CustomOption evilHackerCanCreateMadmate;
 
         public static CustomOption vampireSpawnRate;
         public static CustomOption vampireKillDelay;
@@ -251,6 +252,7 @@ namespace TheOtherRoles {
             camouflagerDuration = CustomOption.Create(32, "Camo Duration", 10f, 1f, 20f, 0.5f, camouflagerSpawnRate);
 
             evilHackerSpawnRate = CustomOption.Create(39, cs(EvilHacker.color, "EvilHacker"), rates, null, true);
+            evilHackerCanCreateMadmate = CustomOption.Create(38, "EvilHacker Can Create Madmate", false, evilHackerSpawnRate);
 
             vampireSpawnRate = CustomOption.Create(40, cs(Vampire.color, "Vampire"), rates, null, true);
             vampireKillDelay = CustomOption.Create(41, "Vampire Kill Delay", 10f, 1f, 20f, 1f, vampireSpawnRate);

@@ -483,15 +483,28 @@ namespace TheOtherRoles
         public static PlayerControl evilHacker;
         public static Color color = Palette.ImpostorRed;
 
+        public static bool canCreateMadmate = false;
+        public static PlayerControl currentTarget;
+
         private static Sprite buttonSprite;
+        private static Sprite madmateButtonSprite;
+
         public static Sprite getButtonSprite() {
             if (buttonSprite) return buttonSprite;
             buttonSprite = DestroyableSingleton<TranslationController>.Instance.GetImage(ImageNames.AirshipAdminButton);
             return buttonSprite;
         }
 
+        public static Sprite getMadmateButtonSprite() {
+            if (madmateButtonSprite) return madmateButtonSprite;
+            madmateButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.SidekickButton.png", 115f);
+            return madmateButtonSprite;
+        }
+
         public static void clearAndReload() {
             evilHacker = null;
+            currentTarget = null;
+            canCreateMadmate = CustomOptionHolder.evilHackerCanCreateMadmate.getBool();
         }
     }
 

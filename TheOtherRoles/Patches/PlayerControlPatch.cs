@@ -143,6 +143,12 @@ namespace TheOtherRoles.Patches {
             setPlayerOutline(Sheriff.currentTarget, Sheriff.color);
         }
 
+        static void evilHackerSetTarget() {
+            if (EvilHacker.evilHacker == null || EvilHacker.evilHacker != PlayerControl.LocalPlayer) return;
+            EvilHacker.currentTarget = setTarget();
+            setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
+        }
+
         static void trackerSetTarget() {
             if (Tracker.tracker == null || Tracker.tracker != PlayerControl.LocalPlayer) return;
             Tracker.currentTarget = setTarget();
@@ -690,6 +696,8 @@ namespace TheOtherRoles.Patches {
                 engineerUpdate();
                 // Tracker
                 trackerUpdate();
+                // EvilHacker
+                evilHackerSetTarget();
                 // Jackal
                 jackalSetTarget();
                 // Sidekick
