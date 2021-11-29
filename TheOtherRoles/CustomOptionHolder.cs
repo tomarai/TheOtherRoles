@@ -40,6 +40,10 @@ namespace TheOtherRoles {
 
         public static CustomOption evilHackerSpawnRate;
         public static CustomOption evilHackerCanCreateMadmate;
+        public static CustomOption createdMadmateCanDieToSheriff;
+        public static CustomOption createdMadmateCanEnterVents;
+        public static CustomOption createdMadmateHasImpostorVision;
+        public static CustomOption createdMadmateNoticeImpostors;
 
         public static CustomOption vampireSpawnRate;
         public static CustomOption vampireKillDelay;
@@ -253,6 +257,10 @@ namespace TheOtherRoles {
 
             evilHackerSpawnRate = CustomOption.Create(39, cs(EvilHacker.color, "EvilHacker"), rates, null, true);
             evilHackerCanCreateMadmate = CustomOption.Create(38, "EvilHacker Can Create Madmate", false, evilHackerSpawnRate);
+            createdMadmateCanDieToSheriff = CustomOption.Create(37, "Madmate Can Die To Sheriff", false, evilHackerCanCreateMadmate);
+            createdMadmateCanEnterVents = CustomOption.Create(36, "Madmate Can Enter Vents", false, evilHackerCanCreateMadmate);
+            createdMadmateHasImpostorVision = CustomOption.Create(35, "Madmate Has Impostor Vision", false, evilHackerCanCreateMadmate);
+            createdMadmateNoticeImpostors = CustomOption.Create(34, "Show Impostors After Madmate Finishes Tasks", false, evilHackerCanCreateMadmate);
 
             vampireSpawnRate = CustomOption.Create(40, cs(Vampire.color, "Vampire"), rates, null, true);
             vampireKillDelay = CustomOption.Create(41, "Vampire Kill Delay", 10f, 1f, 20f, 1f, vampireSpawnRate);
@@ -414,9 +422,9 @@ namespace TheOtherRoles {
             madmateCanEnterVents = CustomOption.Create(352, "Madmate Can Enter Vents", false, madmateSpawnRate);
             madmateHasImpostorVision = CustomOption.Create(353, "Madmate Has Impostor Vision", false, madmateSpawnRate);
             madmateNoticeImpostors = CustomOption.Create(354, "Show Impostors After Madmate Finishes Tasks", false, madmateSpawnRate);
-            madmateCommonTasks = CustomOption.Create(355, "Madmate Common Tasks", 0f, 0f, 4f, 1f, madmateSpawnRate);
-            madmateShortTasks = CustomOption.Create(356, "Madmate Short Tasks", 0f, 0f, 23f, 1f, madmateSpawnRate);
-            madmateLongTasks = CustomOption.Create(357, "Madmate Long Tasks", 0f, 0f, 15f, 1f, madmateSpawnRate);
+            madmateCommonTasks = CustomOption.Create(355, "Madmate Common Tasks", 0f, 0f, 4f, 1f, madmateNoticeImpostors);
+            madmateShortTasks = CustomOption.Create(356, "Madmate Short Tasks", 0f, 0f, 23f, 1f, madmateNoticeImpostors);
+            madmateLongTasks = CustomOption.Create(357, "Madmate Long Tasks", 0f, 0f, 15f, 1f, madmateNoticeImpostors);
 
             // Other options
             maxNumberOfMeetings = CustomOption.Create(3, "Number Of Meetings (excluding Mayor meeting)", 10, 0, 15, 1, null, true);

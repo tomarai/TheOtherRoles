@@ -144,7 +144,7 @@ namespace TheOtherRoles.Patches {
                  * If you have an idea, please send me a pull request!
                  */
                 if (Madmate.madmate != null && PlayerControl.LocalPlayer == Madmate.madmate
-                    && CustomOptionHolder.madmateNoticeImpostors.getBool()) {
+                    && Madmate.noticeImpostors) {
                     MadmateTaskHelper.SetMadmateTasks();
                 }
             }

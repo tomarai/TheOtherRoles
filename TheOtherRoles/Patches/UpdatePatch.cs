@@ -23,7 +23,7 @@ namespace TheOtherRoles.Patches {
             if (Madmate.madmate != PlayerControl.LocalPlayer)
                 return false;
 
-            if (!CustomOptionHolder.madmateNoticeImpostors.getBool())
+            if (!Madmate.noticeImpostors)
                 return false;
 
             var (playerCompleted, playerTotal) = TasksHandler.taskInfo(Madmate.madmate.Data, true);

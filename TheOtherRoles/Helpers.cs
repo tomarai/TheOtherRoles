@@ -139,7 +139,7 @@ namespace TheOtherRoles {
 
         public static bool hasFakeTasks(this PlayerControl player) {
             if (player == Madmate.madmate)
-                return !CustomOptionHolder.madmateNoticeImpostors.getBool();
+                return !Madmate.noticeImpostors;
 
             return (player == Jester.jester || player == Jackal.jackal || player == Sidekick.sidekick || player == Arsonist.arsonist || player == Vulture.vulture || Jackal.formerJackals.Contains(player));
         }
