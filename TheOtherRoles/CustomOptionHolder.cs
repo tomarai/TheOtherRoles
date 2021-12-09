@@ -44,6 +44,7 @@ namespace TheOtherRoles {
         public static CustomOption createdMadmateCanEnterVents;
         public static CustomOption createdMadmateHasImpostorVision;
         public static CustomOption createdMadmateNoticeImpostors;
+        public static CustomOption createdMadmateExileCrewmate;
 
         public static CustomOption vampireSpawnRate;
         public static CustomOption vampireKillDelay;
@@ -216,6 +217,7 @@ namespace TheOtherRoles {
         public static CustomOption madmateCommonTasks;
         public static CustomOption madmateShortTasks;
         public static CustomOption madmateLongTasks;
+        public static CustomOption madmateExileCrewmate;
 
         public static CustomOption lawyerSpawnRate;
         public static CustomOption lawyerTargetKnows;
@@ -280,6 +282,7 @@ namespace TheOtherRoles {
             createdMadmateCanEnterVents = CustomOption.Create(36, "Madmate Can Enter Vents", false, evilHackerCanCreateMadmate);
             createdMadmateHasImpostorVision = CustomOption.Create(35, "Madmate Has Impostor Vision", false, evilHackerCanCreateMadmate);
             createdMadmateNoticeImpostors = CustomOption.Create(34, "Show Impostors After Madmate Finishes Tasks", false, evilHackerCanCreateMadmate);
+            createdMadmateExileCrewmate = CustomOption.Create(33, "Exile A Crewmate When Madmate Is Exiled", false, evilHackerCanCreateMadmate);
 
             vampireSpawnRate = CustomOption.Create(40, cs(Vampire.color, "Vampire"), rates, null, true);
             vampireKillDelay = CustomOption.Create(41, "Vampire Kill Delay", 10f, 1f, 20f, 1f, vampireSpawnRate);
@@ -461,6 +464,7 @@ namespace TheOtherRoles {
             madmateCommonTasks = CustomOption.Create(355, "Madmate Common Tasks", 0f, 0f, 4f, 1f, madmateNoticeImpostors);
             madmateShortTasks = CustomOption.Create(356, "Madmate Short Tasks", 0f, 0f, 23f, 1f, madmateNoticeImpostors);
             madmateLongTasks = CustomOption.Create(357, "Madmate Long Tasks", 0f, 0f, 15f, 1f, madmateNoticeImpostors);
+            madmateExileCrewmate = CustomOption.Create(358, "Exile A Crewmate When Madmate Is exiled", false, madmateSpawnRate);
 
             // Other options
             maxNumberOfMeetings = CustomOption.Create(3, "Number Of Meetings (excluding Mayor meeting)", 10, 0, 15, 1, null, true);

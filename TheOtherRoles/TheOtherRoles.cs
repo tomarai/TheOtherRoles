@@ -1174,12 +1174,14 @@ namespace TheOtherRoles
         public static bool canEnterVents = false;
         public static bool hasImpostorVision = false;
         public static bool noticeImpostors = false;
+        public static bool exileCrewmate = false;
 
         public static void clearAndReload() {
             madmate = null;
             CustomOption opCanEnterVents = CustomOptionHolder.madmateCanEnterVents;
             CustomOption opHasImpostorVision = CustomOptionHolder.madmateHasImpostorVision;
             CustomOption opNoticeImpostors = CustomOptionHolder.madmateNoticeImpostors;
+            CustomOption opExileCrewmate = CustomOptionHolder.madmateExileCrewmate;
 
             if (CustomOptionHolder.evilHackerSpawnRate.getSelection() > 0 &&
                 CustomOptionHolder.evilHackerCanCreateMadmate.getBool()) {
@@ -1187,10 +1189,12 @@ namespace TheOtherRoles
                 opCanEnterVents = CustomOptionHolder.createdMadmateCanEnterVents;
                 opHasImpostorVision = CustomOptionHolder.createdMadmateHasImpostorVision;
                 opNoticeImpostors = CustomOptionHolder.createdMadmateNoticeImpostors;
+                opExileCrewmate = CustomOptionHolder.createdMadmateExileCrewmate;
             }
             canEnterVents = opCanEnterVents.getBool();
             hasImpostorVision = opHasImpostorVision.getBool();
             noticeImpostors = opNoticeImpostors.getBool();
+            exileCrewmate = opExileCrewmate.getBool();
         }
     }
 
