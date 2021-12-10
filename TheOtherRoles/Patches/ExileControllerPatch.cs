@@ -32,14 +32,16 @@ namespace TheOtherRoles.Patches {
                 && exiled.PlayerId == Madmate.madmate.PlayerId) {
                 // pick random crewmate
                 PlayerControl target = pickRandomCrewmate();
-                // exile the picked crewmate
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.UncheckedExilePlayer,
-                    Hazel.SendOption.Reliable,
-                    -1);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.uncheckedExilePlayer(target.PlayerId);
+                if (target != null) {
+                    // exile the picked crewmate
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.UncheckedExilePlayer,
+                        Hazel.SendOption.Reliable,
+                        -1);
+                    writer.Write(target.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.uncheckedExilePlayer(target.PlayerId);
+                }
             }
 
             // Shifter shift
