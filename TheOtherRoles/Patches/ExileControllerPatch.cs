@@ -116,6 +116,8 @@ namespace TheOtherRoles.Patches {
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
                 if (player.Data.Role.IsImpostor)
                     continue;
+                if (player.Data.IsDead)
+                    continue;
                 numAliveCrewmates++;
             }
             // get random number range 0, num of alive crewmates
@@ -124,6 +126,8 @@ namespace TheOtherRoles.Patches {
             // return the player
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
                 if (player.Data.Role.IsImpostor)
+                    continue;
+                if (player.Data.IsDead)
                     continue;
                 if (currentPlayerIndex == targetPlayerIndex)
                     return player;
