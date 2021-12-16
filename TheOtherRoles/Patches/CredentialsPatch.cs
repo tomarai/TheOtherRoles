@@ -21,6 +21,7 @@ $@"Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>Thunderstorm584
 Design by <color=#FCCE03FF>Bavari</color>
 このMODについて: https://git.io/AUMod";
 
+
         public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, amsyarasyiq, gendelo3</size>";
 
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
