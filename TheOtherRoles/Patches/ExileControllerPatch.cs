@@ -31,7 +31,7 @@ namespace TheOtherRoles.Patches {
                 && exiled != null
                 && exiled.PlayerId == Madmate.madmate.PlayerId) {
                 // pick random crewmate
-                PlayerControl target = pickRandomCrewmate();
+                PlayerControl target = pickRandomCrewmate(exiled.PlayerId);
                 if (target != null) {
                     // exile the picked crewmate
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
@@ -110,7 +110,7 @@ namespace TheOtherRoles.Patches {
             MapOptions.ventsToSeal = new List<Vent>();
         }
 
-        private static PlayerControl pickRandomCrewmate() {
+        private static PlayerControl pickRandomCrewmate(int exiledPlayerId) {
             int numAliveCrewmates = 0;
             // count alive crewmates
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
@@ -118,10 +118,14 @@ namespace TheOtherRoles.Patches {
                     continue;
                 if (player.Data.IsDead)
                     continue;
+                if (player.PlayerId == exiledPlayerId)
+                    continue;
                 numAliveCrewmates++;
+                TheOtherRolesPlugin.Instance.Log.LogInfo($"pickRandomCrewmate: {player.PlayerId}");
             }
             // get random number range 0, num of alive crewmates
             int targetPlayerIndex = TheOtherRoles.rnd.Next(0, numAliveCrewmates);
+            TheOtherRolesPlugin.Instance.Log.LogInfo($"targetPlayerIndex: {targetPlayerIndex}");
             int currentPlayerIndex = 0;
             // return the player
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
