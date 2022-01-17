@@ -170,6 +170,10 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Uranai.color);
             }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Munou))
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);
+            }
 
             if (GM.gm != null) {
                 setPlayerNameColor(GM.gm, GM.color);

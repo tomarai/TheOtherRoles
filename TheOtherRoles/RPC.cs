@@ -33,6 +33,9 @@ namespace TheOtherRoles
         SecurityGuard,
         Bait,
         Medium,
+        FortuneTeller,
+        Munou,
+        Uranai,
 
 
         Impostor = 100,
@@ -68,8 +71,6 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
-        FortuneTeller,
-        Uranai,
 
 
         GM = 200,
@@ -586,6 +587,9 @@ namespace TheOtherRoles
                         break;
                     case RoleId.Uranai:
                         Uranai.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.Munou:
+                        Munou.swapRole(player, oldShifter);
                         break;
                 }
             }

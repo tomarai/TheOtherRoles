@@ -40,6 +40,7 @@ namespace TheOtherRoles
             FortuneTeller.Clear();
             Uranai.Clear();
             SoulPlayer.Clear();
+            Munou.Clear();
             Role.ClearAll();
         }
 

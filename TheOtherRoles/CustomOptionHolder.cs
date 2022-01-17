@@ -314,6 +314,8 @@ namespace TheOtherRoles {
         public static CustomOption foxNumCommonTasks;
         public static CustomOption foxNumLongTasks;
         public static CustomOption foxNumShortTasks;
+        public static CustomRoleOption munouSpawnRate;
+
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
         internal static List<byte> blockLovers = new List<byte>();
@@ -514,6 +516,8 @@ namespace TheOtherRoles {
             foxStealthDuration = CustomOption.Create(917, "透明時間", 15f, 1f, 30f, 1f, foxSpawnRate);
             foxCanCreateImmoralist = CustomOption.Create(918, "背徳者を作れる", true, foxSpawnRate);
             foxNumRepair = CustomOption.Create(919, "リペア回数", 1f, 0f, 5f, 1f, foxSpawnRate);
+
+            munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
 
             fortuneTellerSpawnRate = new CustomRoleOption(930, "占い師", FortuneTeller.color, 1);
             fortuneTellerNumTasks = CustomOption.Create(931, "占いに必要なタスク数", 4f, 1f, 10f, 1f, fortuneTellerSpawnRate);
