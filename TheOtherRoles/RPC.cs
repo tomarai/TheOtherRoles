@@ -66,6 +66,9 @@ namespace TheOtherRoles
         Lawyer,
         Pursuer,
         PlagueDoctor,
+        Fox,
+        Immoralist,
+        FortuneTeller,
 
 
         GM = 200,
@@ -142,6 +145,9 @@ namespace TheOtherRoles
         PlagueDoctorSetInfected,
         PlagueDoctorUpdateProgress,
         SerialKillerSuicide,
+        FortuneTellerShoot,
+        FoxStealth,
+        FoxCreatesImmoralist,
     }
 
     public static class RPCProcedure {
@@ -564,9 +570,17 @@ namespace TheOtherRoles
                     case RoleId.PlagueDoctor:
                         PlagueDoctor.swapRole(player, oldShifter);
                         break;
-
                     case RoleId.SerialKiller:
                         SerialKiller.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.Fox:
+                        Fox.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.Immoralist:
+                        Immoralist.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.FortuneTeller:
+                        FortuneTeller.swapRole(player, oldShifter);
                         break;
                 }
             }
@@ -640,7 +654,10 @@ namespace TheOtherRoles
 
             if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor) {
                 Jackal.fakeSidekick = player;
-            } else {
+            }else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleId.Fox)){
+                Jackal.fakeSidekick = player;
+            }else {
+                
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 erasePlayerRoles(player.PlayerId, true);
                 Sidekick.sidekick = player;
@@ -920,6 +937,20 @@ namespace TheOtherRoles
             PlayerControl player = Helpers.playerById(playerId);
             Ninja.setStealthed(player, stealthed);
         }
+        public static void foxStealth(byte playerId, bool stealthed)
+        {
+            PlayerControl player = Helpers.playerById(playerId);
+            Fox.setStealthed(player, stealthed);
+        }
+
+        public static void foxCreatesImmoralist(byte targetId)
+        {
+            PlayerControl player = Helpers.playerById(targetId);
+            DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+            erasePlayerRoles(player.PlayerId, true);
+            player.setRole(RoleId.Immoralist);
+            player.clearAllTasks();
+        }
 
         public static void GMKill(byte targetId)
         {
@@ -1021,6 +1052,27 @@ namespace TheOtherRoles
             PlayerControl serialKiller = Helpers.playerById(serialKillerId);
             if (serialKiller == null) return;
             serialKiller.MurderPlayer(serialKiller);
+        }
+
+        public static void fortuneTellerShoot(byte fortuneTellerId, byte targetId) {
+            PlayerControl fortuneTeller = Helpers.playerById(fortuneTellerId);
+            PlayerControl target = Helpers.playerById(targetId);
+            if (target == null) return;
+            target.Exiled();
+            if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(target.KillSfx, false, 0.8f);
+            if (MeetingHud.Instance) {
+                foreach (PlayerVoteArea pva in MeetingHud.Instance.playerStates) {
+                    if (pva.TargetPlayerId == targetId) {
+                        pva.SetDead(pva.DidReport, true);
+                        pva.Overlay.gameObject.SetActive(true);
+                    }
+                }
+                if (AmongUsClient.Instance.AmHost) 
+                    MeetingHud.Instance.CheckForEndVoting();
+            }
+            if (HudManager.Instance != null && FortuneTeller.exists)
+                if (PlayerControl.LocalPlayer == target) 
+                    HudManager.Instance.KillOverlay.ShowKillAnimation(fortuneTeller.Data, target.Data);
         }
     }   
 
@@ -1255,6 +1307,17 @@ namespace TheOtherRoles
 
                 case (byte)CustomRPC.SerialKillerSuicide:
                     RPCProcedure.serialKillerSuicide(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.FortuneTellerShoot:
+                    byte fortuneTellerId = reader.ReadByte();
+                    byte targetId = reader.ReadByte();
+                    RPCProcedure.fortuneTellerShoot(fortuneTellerId, targetId);
+                    break;    
+                case (byte)CustomRPC.FoxStealth:
+                    RPCProcedure.foxStealth(reader.ReadByte(), reader.ReadBoolean());
+                    break;
+                case (byte)CustomRPC.FoxCreatesImmoralist:
+                    RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
                     break;
             }
         }
