@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-<<<<<<< HEAD
-        <Version>3.4.2</Version>
-=======
-        <Version>22.117.0</Version>
->>>>>>> tmp_work3
+        <Version>22.118.0</Version>
         <Description>TheOtherRoles: GM Edition</Description>
         <Authors>Eisbison</Authors>
     </PropertyGroup>

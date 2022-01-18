@@ -1,11 +1,14 @@
 using HarmonyLib;
+using Hazel;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
 using static TheOtherRoles.TheOtherRoles;
+using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.GameHistory;
+using System;
 
 namespace TheOtherRoles
 {
@@ -42,6 +45,12 @@ namespace TheOtherRoles
         {
             players = new List<Immoralist>();
         }
+        public static void suicide() {
+            byte targetId = PlayerControl.LocalPlayer.PlayerId;
+            MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1); killWriter.Write(targetId);
+            AmongUsClient.Instance.FinishRpcImmediately(killWriter);
+            RPCProcedure.serialKillerSuicide(targetId);
+        }
 
         private static Sprite buttonSprite;
          public static Sprite getButtonSprite()
@@ -55,7 +64,7 @@ namespace TheOtherRoles
             // Fox stealth
             immoralistButton = new CustomButton(
                 () => {
-                    PlayerControl.LocalPlayer.MurderPlayer(PlayerControl.LocalPlayer);
+                    suicide();
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleId.Immoralist) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => {return true;},
@@ -108,6 +117,32 @@ namespace TheOtherRoles
 
                 // タイマーに時間をセット
                 updateTimer = arrowUpdateInterval;
+            }
+        }
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
+        public static class MurderPlayerPatch{
+            public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
+            {
+                PlayerControl player = PlayerControl.LocalPlayer;
+                if(player.isRole(RoleId.Immoralist) && player.isAlive()){
+
+                    HudManager.Instance.FullScreen.enabled = true;
+                    HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
+                    {
+                        var renderer = HudManager.Instance.FullScreen;
+                        if (p < 0.5)
+                        {
+                            if (renderer != null)
+                                renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01(p * 2 * 0.75f));
+                        }
+                        else
+                        {
+                            if (renderer != null)
+                                renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01((1 - p) * 2 * 0.75f));
+                        }
+                        if (p == 1f && renderer != null) renderer.enabled = false;
+                    })));
+                }
             }
         }
     }
