@@ -115,7 +115,7 @@ namespace TheOtherRoles.Patches
             Boolean isFoxAlive = Fox.isFoxAlive();
 
             Boolean isFoxCompletedTasks = Fox.isFoxCompletedTasks(); // 生存中の狐が1匹でもタスクを全て終えていること
-            if(isFoxAlive && (isFoxCompletedTasks || !Fox.mustCompleteTasks)){
+            if(isFoxAlive && isFoxCompletedTasks){
                 // タスク勝利の場合はオプションの設定次第
                 if(gameOverReason == GameOverReason.HumansByTask && !Fox.crewWinsByTasks)
                 {

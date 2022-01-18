@@ -19,17 +19,9 @@ namespace TheOtherRoles
         private static CustomButton foxImmoralistButton;
         public static List<Arrow> arrows = new List<Arrow>();
         public static float updateTimer = 0f;
-        // public static bool cantKillFox {get { return CustomOptionHolder.foxCantKillFox.getBool();}}
-        // public static int cantKillFoxExceptions {get { return CustomOptionHolder.foxCantKillFoxExceptions.getSelection();}}
-        public static bool canFixReactor {get { return CustomOptionHolder.foxCanFixReactor.getBool();}}
-        public static bool canFixO2 {get { return CustomOptionHolder.foxCanFixO2.getBool();}}
-        public static bool canFixComms {get { return CustomOptionHolder.foxCanFixComms.getBool();}}
-        public static bool canFixLights {get { return CustomOptionHolder.foxCanFixLights.getBool();}}
-        public static float arrowUpdateInterval{get { return CustomOptionHolder.foxArrowUpdateInterval.getFloat();}}
+        public static bool canFixReactorAndO2 {get { return CustomOptionHolder.foxCanFixReactorAndO2.getBool();}}
+        public static float arrowUpdateInterval = 0.5f;
         public static bool crewWinsByTasks {get { return CustomOptionHolder.foxCrewWinsByTasks.getBool();}}
-        public static bool mustCompleteTasks {get { return CustomOptionHolder.foxMustCompleteTasks.getBool();}}
-        // public static bool hasImpostorVision {get { return CustomOptionHolder.foxHasImpostorVision.getBool();}}
-        // public static bool canStealth {get { return CustomOptionHolder.foxCanStealth.getBool();}}
         public static float stealthCooldown {get {return CustomOptionHolder.foxStealthCooldown.getFloat();}}
         public static float stealthDuration {get {return CustomOptionHolder.foxStealthDuration.getFloat();}}
         public static int numCommonTasks {get {return (int)CustomOptionHolder.foxNumCommonTasks.getFloat();}}
@@ -353,11 +345,6 @@ namespace TheOtherRoles
 
         public static bool isFoxCompletedTasks()
         {
-            // タスク完了が勝利条件に必要でない場合はtrueを返す
-            if(!mustCompleteTasks){
-                return true;
-            }
-
             // 生存中の狐が1匹でもタスクを終了しているかを確認
             bool isCompleted = false;
             foreach(var fox in allPlayers)
@@ -376,6 +363,7 @@ namespace TheOtherRoles
         {
             int counter = 0;
             int totalTasks = numCommonTasks + numLongTasks + numShortTasks;
+            if(totalTasks == 0) return true;
             foreach(var task in p.Data.Tasks){
 
                 if(task.Complete){
@@ -393,7 +381,9 @@ namespace TheOtherRoles
             if (playerById == null)
                 return;
             me.clearAllTasks();
-            if(!Fox.mustCompleteTasks) return;
+
+            int totalTasks = numCommonTasks + numLongTasks + numShortTasks;
+            if(totalTasks == 0) return;
 
             List<byte> list = new List<byte>(10);
             SetTasksToList(
