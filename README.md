@@ -23,9 +23,9 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 ※現在調整中
 
 # GM本家とのバージョン対応表
-| 本家 | Haoming Edition|
-|------|----------------|
-|3.4.2| 1.0.0|
+|Among Us Version| GM本家 | Haoming Edition| Download|
+|----------------|--------|-----------------|--------|-
+|2021.12.15s (build num: 1421)|v3.4.2| v1.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.0/TheOtherRoles-GM-Haoming.v1.0.0.zip)|
 
 ↓ここから本家のREADMEそのもの↓
 # The Other Roles: GM Edition
