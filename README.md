@@ -1,3 +1,33 @@
+# The Other Roles: GM  Haoming Edition
+GMエディションにPRを出す前にバランス調整等のお試しをするための環境  
+基本的にバグだらけなので使う人は自己責任でどうぞ  
+不具合を見つけた方はissue登録かDiscordのhaoming#1821まで
+
+安定したものを使いたい方は素直に[本家](https://github.com/yukinogatari/TheOtherRoles-GM)を使ってください
+
+
+# 追加機能
+- エアシップのリアクター時間変更(オプション)
+- 死亡時の千里眼(常時発動)
+
+# 追加役職
+
+| Impostors | Crewmates | Neutral | Other | 
+|----------|-------------|-----------------|----------------|
+|| [占い師](#占い師) |[狐](#狐) ||
+
+## 占い師
+※現在調整中
+
+## 狐
+※現在調整中
+
+# GM本家とのバージョン対応表
+| 本家 | Haoming Edition|
+|------|----------------|
+|3.4.2| 1.0.0|
+
+↓ここから本家のREADMEそのもの↓
 # The Other Roles: GM Edition
 
 This fork introduces a number of changes to [The Other Roles](https://github.com/Eisbison/TheOtherRoles).
