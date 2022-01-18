@@ -21,6 +21,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.0.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.1/TheOtherRoles-GM-Haoming.v1.0.1.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.0/TheOtherRoles-GM-Haoming.v1.0.0.zip)|
 
 # 役職一覧
@@ -37,7 +38,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 ※現在調整中  
 タスクを一定数行うと議論時間に任意のプレイヤーを占うことができる  
 占いの結果は役職名が表示される or クルー/クルー以外の表記の2パターンがオプションで選択できる  
-<b>強すぎるので基本的にイビルゲッサーとセットじゃないとゲームバランス崩壊します</b>
+<b><font color="red">強すぎるので基本的にイビルゲッサーとセットじゃないとゲームバランス崩壊します</font></b>
 
 ## 妖狐
 第3陣営  
