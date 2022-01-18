@@ -661,6 +661,14 @@ namespace TheOtherRoles
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 erasePlayerRoles(player.PlayerId, true);
                 Sidekick.sidekick = player;
+                // 狐が一人もいなくなったら背徳者は死亡する
+                if(!Fox.isFoxAlive())
+                {
+                    foreach(var immoralist in Immoralist.allPlayers)
+                    {
+                        immoralist.MurderPlayer(immoralist);
+                    }
+                }
             }
             Jackal.canCreateSidekick = false;
         }

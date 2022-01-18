@@ -63,20 +63,23 @@ namespace TheOtherRoles
         {
             exiledFox.Add(player.PlayerId);
             player.clearAllTasks();
-            foreach(var immoralist in Immoralist.allPlayers)
+            if(!Fox.isFoxAlive())
             {
-                if(killer == null)
+                foreach(var immoralist in Immoralist.allPlayers)
                 {
-                    immoralist.Exiled();
-                }
-                else
-                {
-                    immoralist.MurderPlayer(immoralist);
+                    if(killer == null)
+                    {
+                        immoralist.Exiled();
+                    }
+                    else
+                    {
+                        immoralist.MurderPlayer(immoralist);
+                    }
                 }
             }
         }
 
-        public override void FixedUpdate() 
+        public override void FixedUpdate()
         {
             if(PlayerControl.LocalPlayer.isRole(RoleId.Fox))
             {
@@ -99,6 +102,10 @@ namespace TheOtherRoles
         public static void Clear()
         {
             players = new List<Fox>();
+            foreach(Arrow arrow in arrows){
+                arrow.arrow.SetActive(false);
+                UnityEngine.Object.Destroy(arrow.arrow);
+            }
             arrows = new List<Arrow>();
             Immoralist.Clear();
         }
