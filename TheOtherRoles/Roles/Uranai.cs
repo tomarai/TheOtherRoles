@@ -92,11 +92,13 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if (!isCompletedNumTasks(PlayerControl.LocalPlayer)) return false;
-                    else if (PlayerControl.LocalPlayer.Data.IsDead) return false;
-                    else if(PlayerControl.LocalPlayer.PlayerId == index) return false;
-                    else if (!MapOptions.playerIcons.ContainsKey(index)) return false;
-                    else if (numUsed >= 1)  return false;
+                    var p = PlayerControl.LocalPlayer;
+                    if (!MapOptions.playerIcons.ContainsKey(index)) return false;
+                    else if (p.Data.IsDead || !isCompletedNumTasks(p) || p.PlayerId == index || numUsed >= 1)
+                    {
+                        MapOptions.playerIcons[index].gameObject.SetActive(false);
+                        return false;
+                    }
                     else if (PlayerControl.LocalPlayer.isRole(RoleId.Uranai) && PlayerControl.LocalPlayer.CanMove) return true;
                     return false;
                 };
@@ -107,14 +109,9 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
+                    if (!MapOptions.playerIcons.ContainsKey(index)) return false;
                     var p = Helpers.playerById(index);
 
-                    // 自身のボタンは表示しない/既に占いを実行している場合はボタンを表示しない/タスクが終わっていない場合は表示しない
-                    if(index == PlayerControl.LocalPlayer.PlayerId || numUsed >= 1 || !isCompletedNumTasks(PlayerControl.LocalPlayer))
-                    {
-                        MapOptions.playerIcons[index].gameObject.SetActive(false);
-                        return false;
-                    }
                     // 占い可能か判定
                     bool status = true;
                     if(playerStatus.ContainsKey(index)){
@@ -122,7 +119,6 @@ namespace TheOtherRoles
                     }
                     bool canDivine = Uranai.progress[index] >= Uranai.duration || !status;
 
-                    if (!MapOptions.playerIcons.ContainsKey(index)) return false;
                     Vector3 pos = uranaiCalcPos(index);
                     Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
 
