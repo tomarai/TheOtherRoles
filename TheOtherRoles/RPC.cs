@@ -1088,13 +1088,14 @@ namespace TheOtherRoles
                     HudManager.Instance.KillOverlay.ShowKillAnimation(fortuneTeller.Data, target.Data);
         }
         public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId) {
-            PlayerControl fortuneTeller = Helpers.playerById(fortuneTellerId);
+            PlayerControl uranai = Helpers.playerById(fortuneTellerId);
             PlayerControl target = Helpers.playerById(targetId);
             if (target == null) return;
             if (target.isDead()) return;
             // 呪殺
             if(target.isRole(RoleId.Fox)){
-                target.MurderPlayer(target);
+                KillAnimationCoPerformKillPatch.hideNextAnimation = true;
+                uranai.MurderPlayer(target);
             }
             // インポスターの場合は占い師の位置に矢印を表示
             if(PlayerControl.LocalPlayer.isImpostor()){

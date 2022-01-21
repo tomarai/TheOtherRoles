@@ -93,6 +93,7 @@ namespace TheOtherRoles
                 return () =>
                 {
                     if (!isCompletedNumTasks(PlayerControl.LocalPlayer)) return false;
+                    else if (PlayerControl.LocalPlayer.Data.IsDead) return false;
                     else if(PlayerControl.LocalPlayer.PlayerId == index) return false;
                     else if (!MapOptions.playerIcons.ContainsKey(index)) return false;
                     else if (numUsed >= 1)  return false;
