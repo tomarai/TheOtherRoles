@@ -90,6 +90,7 @@ namespace TheOtherRoles
         public static RoleInfo fox = new RoleInfo("妖狐", Fox.color, CustomOptionHolder.foxSpawnRate, RoleId.Fox);
         public static RoleInfo immoralist = new RoleInfo("背徳者", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleId.Immoralist);
         public static RoleInfo fortuneTeller = new RoleInfo("占い師", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleId.FortuneTeller);
+        public static RoleInfo uranai= new RoleInfo("占い師2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleId.Uranai);
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -145,7 +146,8 @@ namespace TheOtherRoles
                 plagueDoctor,
                 fox,
                 immoralist,
-                fortuneTeller
+                fortuneTeller,
+                uranai
             };
 
         public static string tl(string key)
@@ -206,6 +208,8 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.Fox)) infos.Add(fox);
             if (p.isRole(RoleId.Immoralist)) infos.Add(immoralist);
             if (p.isRole(RoleId.FortuneTeller)) infos.Add(fortuneTeller);
+            if (p.isRole(RoleId.Uranai) && Uranai.isCompletedNumTasks(p)) infos.Add(uranai);
+            if (p.isRole(RoleId.Uranai) && !Uranai.isCompletedNumTasks(p)) infos.Add(crewmate);
 
 
             // Default roles

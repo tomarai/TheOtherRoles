@@ -38,6 +38,7 @@ namespace TheOtherRoles
             SerialKiller.Clear();
             Fox.Clear();
             FortuneTeller.Clear();
+            Uranai.Clear();
             SoulPlayer.Clear();
             Role.ClearAll();
         }

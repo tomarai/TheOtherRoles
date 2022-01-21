@@ -69,6 +69,7 @@ namespace TheOtherRoles
         Fox,
         Immoralist,
         FortuneTeller,
+        Uranai,
 
 
         GM = 200,
@@ -146,6 +147,7 @@ namespace TheOtherRoles
         PlagueDoctorUpdateProgress,
         SerialKillerSuicide,
         FortuneTellerShoot,
+        FortuneTellerUsedDivine,
         FoxStealth,
         FoxCreatesImmoralist,
     }
@@ -581,6 +583,9 @@ namespace TheOtherRoles
                         break;
                     case RoleId.FortuneTeller:
                         FortuneTeller.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.Uranai:
+                        Uranai.swapRole(player, oldShifter);
                         break;
                 }
             }
@@ -1082,6 +1087,26 @@ namespace TheOtherRoles
                 if (PlayerControl.LocalPlayer == target) 
                     HudManager.Instance.KillOverlay.ShowKillAnimation(fortuneTeller.Data, target.Data);
         }
+        public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId) {
+            PlayerControl fortuneTeller = Helpers.playerById(fortuneTellerId);
+            PlayerControl target = Helpers.playerById(targetId);
+            if (target == null) return;
+            if (target.isDead()) return;
+            // 呪殺
+            if(target.isRole(RoleId.Fox)){
+                target.MurderPlayer(target);
+            }
+            // インポスターの場合は占い師の位置に矢印を表示
+            if(PlayerControl.LocalPlayer.isImpostor()){
+                Uranai.uranaiMessage("占い師が占いを使った", 5f);
+                Uranai.impostorArrowFlag = true;
+            }
+            // 占われたのが背徳者の場合は通知を表示
+            if(target.isRole(RoleId.Immoralist) && PlayerControl.LocalPlayer.isRole(RoleId.Immoralist))
+            {
+                Uranai.uranaiMessage("占い師に占われた", 5f);
+            }
+        }
     }   
 
     
@@ -1320,6 +1345,11 @@ namespace TheOtherRoles
                     byte fortuneTellerId = reader.ReadByte();
                     byte targetId = reader.ReadByte();
                     RPCProcedure.fortuneTellerShoot(fortuneTellerId, targetId);
+                    break;    
+                case (byte)CustomRPC.FortuneTellerUsedDivine:
+                    byte fId = reader.ReadByte();
+                    byte tId = reader.ReadByte();
+                    RPCProcedure.fortuneTellerUsedDivine(fId, tId);
                     break;    
                 case (byte)CustomRPC.FoxStealth:
                     RPCProcedure.foxStealth(reader.ReadByte(), reader.ReadBoolean());
