@@ -534,9 +534,7 @@ namespace TheOtherRoles.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    // bool hideUranaiRole = PlayerControl.LocalPlayer.isRole(RoleId.Uranai) && !Uranai.isCompletedNumTasks(PlayerControl.LocalPlayer);
 
-                    //RoleId[] exclude = hideUranaiRole ? new RoleId[] {RoleId.Lovers, RoleId.Uranai}: new RoleId[] {RoleId.Lovers};
                     RoleId[] exclude = new RoleId[] {RoleId.Lovers};
                     string roleNames = RoleInfo.GetRolesString(p, true, exclude);
 

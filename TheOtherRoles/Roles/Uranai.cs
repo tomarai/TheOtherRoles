@@ -25,6 +25,7 @@ namespace TheOtherRoles
         public static bool impostorArrowFlag = false;
         public static bool meetingFlag = true;
         public static Dictionary<byte, bool> playerStatus = new Dictionary<byte, bool>();
+        public static bool endGameFlag = false;
 
 
         public Uranai()
@@ -253,6 +254,7 @@ namespace TheOtherRoles
             impostorArrowFlag = false;
             numUsed = 0;
             meetingFlag = true;
+            endGameFlag = false;
             playerStatus = new Dictionary<byte, bool>();
         }
 
@@ -324,7 +326,15 @@ namespace TheOtherRoles
                 })));
             }
         }
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
+        public class OnGameEndPatch
+        {
 
+            public static void Prefix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
+            {
+                    Uranai.endGameFlag = true;
+            }
+        }
     }
 
 }

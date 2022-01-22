@@ -193,10 +193,6 @@ namespace TheOtherRoles {
                         task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalShortDesc"));
                     }
                 } 
-                else if(roleInfo.roleId == RoleId.Uranai && !Uranai.isCompletedNumTasks(player))
-                {
-                    task.Text = cs(RoleInfo.crewmate.color, $"{RoleInfo.crewmate.name}: {RoleInfo.crewmate.shortDescription}");  
-                }
                 else
                 {
                     task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");  

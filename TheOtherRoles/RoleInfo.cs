@@ -211,8 +211,18 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.Fox)) infos.Add(fox);
             if (p.isRole(RoleId.Immoralist)) infos.Add(immoralist);
             if (p.isRole(RoleId.FortuneTeller)) infos.Add(fortuneTeller);
-            if (p.isRole(RoleId.Uranai) && Uranai.isCompletedNumTasks(p)) infos.Add(uranai);
-            if (p.isRole(RoleId.Uranai) && !Uranai.isCompletedNumTasks(p)) infos.Add(crewmate);
+            if(p.isRole(RoleId.Uranai))
+            {
+                if(PlayerControl.LocalPlayer.Data.IsDead || Uranai.endGameFlag)
+                {
+                    infos.Add(uranai);
+                }
+                else
+                {
+                    var info = Uranai.isCompletedNumTasks(p) ? uranai: crewmate;
+                    infos.Add(info);
+                }
+            }
             if (p.isRole(RoleId.Munou)) infos.Add(munou);
 
 
