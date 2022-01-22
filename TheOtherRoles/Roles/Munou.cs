@@ -25,7 +25,7 @@ namespace TheOtherRoles
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Munou))
+            if(PlayerControl.LocalPlayer.isRole(RoleId.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
                 // ずっとカモフラージュ
                 camouflagerTimer -= Time.fixedDeltaTime;
@@ -38,13 +38,7 @@ namespace TheOtherRoles
             }
         }
         public override void OnKill(PlayerControl target) { }
-        public override void OnDeath(PlayerControl killer = null) 
-        {
-            if(killer!=null)
-            {
-                player.Revive();
-            }
-        }
+        public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public static void MakeButtons(HudManager hm) { }
