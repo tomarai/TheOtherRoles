@@ -93,7 +93,7 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if (!MapOptions.playerIcons.ContainsKey(index)) return false;
+                    if (!MapOptions.playerIcons.ContainsKey(index) || !p.isRole(RoleId.Uranai)) return false;
                     else if (p.Data.IsDead || !isCompletedNumTasks(p) || p.PlayerId == index || numUsed >= 1)
                     {
                         MapOptions.playerIcons[index].gameObject.SetActive(false);
@@ -109,7 +109,7 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if (!MapOptions.playerIcons.ContainsKey(index)) return false;
+                    if (!MapOptions.playerIcons.ContainsKey(index) || !PlayerControl.LocalPlayer.isRole(RoleId.Uranai)) return false;
                     var p = Helpers.playerById(index);
 
                     // 占い可能か判定
