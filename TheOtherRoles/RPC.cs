@@ -35,6 +35,7 @@ namespace TheOtherRoles
         Medium,
         FortuneTeller,
         Munou,
+        Munou2nd,
         Uranai,
 
 
@@ -590,6 +591,9 @@ namespace TheOtherRoles
                         break;
                     case RoleId.Munou:
                         Munou.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.Munou2nd:
+                        Munou2nd.swapRole(player, oldShifter);
                         break;
                 }
             }

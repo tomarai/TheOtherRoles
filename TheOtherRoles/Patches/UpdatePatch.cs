@@ -174,6 +174,10 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);
             }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Munou2nd) && PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, Munou2nd.color);
+            }
 
             if (GM.gm != null) {
                 setPlayerNameColor(GM.gm, GM.color);

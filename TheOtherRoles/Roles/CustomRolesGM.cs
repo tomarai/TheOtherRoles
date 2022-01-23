@@ -41,6 +41,7 @@ namespace TheOtherRoles
             Uranai.Clear();
             SoulPlayer.Clear();
             Munou.Clear();
+            Munou2nd.Clear();
             Role.ClearAll();
         }
 

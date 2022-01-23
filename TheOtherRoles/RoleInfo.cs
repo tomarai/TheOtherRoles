@@ -92,6 +92,7 @@ namespace TheOtherRoles
         public static RoleInfo fortuneTeller = new RoleInfo("占い師", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleId.FortuneTeller);
         public static RoleInfo uranai= new RoleInfo("占い師2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleId.Uranai);
         public static RoleInfo munou = new RoleInfo("無能", Munou.color, CustomOptionHolder.munouSpawnRate, RoleId.Munou);
+        public static RoleInfo munou2nd = new RoleInfo("無能2nd", Munou2nd.color, CustomOptionHolder.munou2ndSpawnRate, RoleId.Munou2nd);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -224,6 +225,17 @@ namespace TheOtherRoles
                 }
             }
             if (p.isRole(RoleId.Munou)) infos.Add(munou);
+            if(p.isRole(RoleId.Munou2nd))
+            {
+                if(PlayerControl.LocalPlayer.Data.IsDead || Munou2nd.endGameFlag)
+                {
+                    infos.Add(munou2nd);
+                }
+                else
+                {
+                    infos.Add(crewmate);
+                }
+            }
 
 
             // Default roles
