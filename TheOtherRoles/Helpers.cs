@@ -253,7 +253,8 @@ namespace TheOtherRoles {
 
         public static bool hasFakeTasks(this PlayerControl player) {
             return (player.isNeutral() && !player.neutralHasTasks()) || 
-                    player.isRole(RoleId.Madmate) || 
+                   (player.isRole(RoleId.Madmate) && !Madmate.noticeImpostors) || 
+                   (player.isRole(RoleId.CreatedMadmate) && !CreatedMadmate.noticeImpostors) || 
                    (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
         }
 
@@ -393,6 +394,8 @@ namespace TheOtherRoles {
                 roleCouldUse = true;
             else if (Madmate.canEnterVents && player.isRole(RoleId.Madmate))
                 roleCouldUse = true;
+            else if (CreatedMadmate.canEnterVents && player.isRole(RoleId.CreatedMadmate))
+                roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleId.Vulture))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
@@ -413,6 +416,8 @@ namespace TheOtherRoles {
         {
             bool roleCouldUse = false;
             if (Madmate.canSabotage && player.isRole(RoleId.Madmate))
+                roleCouldUse = true;
+            else if (CreatedMadmate.canSabotage && player.isRole(RoleId.CreatedMadmate))
                 roleCouldUse = true;
             else if (Jester.canSabotage && player.isRole(RoleId.Jester))
                 roleCouldUse = true;

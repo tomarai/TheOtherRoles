@@ -13,6 +13,11 @@ namespace TheOtherRoles
         public static bool hasImpostorVision { get { return CustomOptionHolder.madmateHasImpostorVision.getBool(); } }
         public static bool canSabotage { get { return CustomOptionHolder.madmateCanSabotage.getBool(); } }
         public static bool canFixComm { get { return CustomOptionHolder.madmateCanFixComm.getBool(); } }
+        public static bool noticeImpostors { get { return CustomOptionHolder.madmateNoticeImpostors.getBool(); } }
+        public static int commonTasks { get { return Mathf.RoundToInt(CustomOptionHolder.madmateCommonTasks.getFloat()); } }
+        public static int shortTasks { get { return Mathf.RoundToInt(CustomOptionHolder.madmateShortTasks.getFloat()); } }
+        public static int longTasks { get { return Mathf.RoundToInt(CustomOptionHolder.madmateLongTasks.getFloat()); } }
+        public static bool exileCrewmate { get { return CustomOptionHolder.madmateExileCrewmate.getBool(); } }
 
         public Madmate()
         {

@@ -21,6 +21,8 @@ namespace TheOtherRoles
         private static CustomButton shifterShiftButton;
         private static CustomButton morphlingButton;
         private static CustomButton camouflagerButton;
+        private static CustomButton evilHackerButton;
+        private static CustomButton evilHackerCreatesMadmateButton;
         private static CustomButton hackerButton;
         private static CustomButton hackerVitalsButton;
         private static CustomButton hackerAdminTableButton;
@@ -60,6 +62,8 @@ namespace TheOtherRoles
             shifterShiftButton.MaxTimer = 0f;
             morphlingButton.MaxTimer = Morphling.cooldown;
             camouflagerButton.MaxTimer = Camouflager.cooldown;
+            evilHackerButton.MaxTimer = 0f;
+            evilHackerCreatesMadmateButton.MaxTimer = 0f;
             hackerButton.MaxTimer = Hacker.cooldown;
             hackerVitalsButton.MaxTimer = Hacker.cooldown;
             hackerAdminTableButton.MaxTimer = Hacker.cooldown;
@@ -364,6 +368,63 @@ namespace TheOtherRoles
                 () => { camouflagerButton.Timer = camouflagerButton.MaxTimer; }
             );
             camouflagerButton.buttonText = ModTranslation.getString("CamoText");
+
+            // EvilHacker button
+            evilHackerButton = new CustomButton(
+                () => {
+                    PlayerControl.LocalPlayer.NetTransform.Halt();
+                    Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
+                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    if (PlayerControl.LocalPlayer.AmOwner) {
+                        PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
+                        ConsoleJoystick.SetMode_Task();
+                    }
+                },
+                () => {
+                    return EvilHacker.evilHacker != null &&
+                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                      PlayerControl.LocalPlayer.isAlive();
+                },
+                () => { return PlayerControl.LocalPlayer.CanMove; },
+                () => {},
+                EvilHacker.getButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+				__instance.KillButton,
+				KeyCode.F,
+                false,
+                0f,
+                () => {},
+                PlayerControl.GameOptions.MapId == 3,
+                DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
+            );
+
+            // EvilHacker creates madmate button
+            evilHackerCreatesMadmateButton = new CustomButton(
+                () => {
+                    /*
+                     * creates madmate
+                     */
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.EvilHackerCreatesMadmate, Hazel.SendOption.Reliable, -1);
+                    writer.Write(EvilHacker.currentTarget.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.evilHackerCreatesMadmate(EvilHacker.currentTarget.PlayerId);
+                },
+                () => {
+                    return EvilHacker.evilHacker != null &&
+                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                      EvilHacker.canCreateMadmate &&
+                      PlayerControl.LocalPlayer.isAlive();
+                },
+                () => { return EvilHacker.currentTarget && PlayerControl.LocalPlayer.CanMove; },
+                () => {},
+                EvilHacker.getMadmateButtonSprite(),
+                new Vector3(-2.7f, -0.06f, 0),
+                __instance,
+				__instance.KillButton,
+				null
+			);
+            evilHackerCreatesMadmateButton.buttonText = ModTranslation.getString("MadmateText");
 
             // Hacker button
             hackerButton = new CustomButton(

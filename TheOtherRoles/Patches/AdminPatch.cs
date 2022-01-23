@@ -34,7 +34,8 @@ namespace TheOtherRoles.Patches {
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive())
+            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() &&
+                    !(EvilHacker.evilHacker != null && EvilHacker.evilHacker == PlayerControl.LocalPlayer))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -123,6 +124,12 @@ namespace TheOtherRoles.Patches {
                         TimeRemaining.color = Palette.White;
                     }
 
+                    if (EvilHacker.evilHacker != null && EvilHacker.evilHacker == PlayerControl.LocalPlayer)
+                    {
+                        TimeRemaining.gameObject.SetActive(false);
+                    }
+                    else
+                    {
                     if (MapOptions.restrictAdminTime <= 0f)
                     {
                         __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
@@ -142,6 +149,7 @@ namespace TheOtherRoles.Patches {
                     TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
                     //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
                     TimeRemaining.gameObject.SetActive(true);
+                    }
                 }
 
                 bool commsActive = false;

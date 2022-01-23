@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
@@ -49,6 +49,7 @@ namespace TheOtherRoles
             TimeMaster.clearAndReload();
             Medic.clearAndReload();
             Seer.clearAndReload();
+            EvilHacker.clearAndReload();
             Hacker.clearAndReload();
             Mini.clearAndReload();
             Tracker.clearAndReload();
@@ -71,6 +72,7 @@ namespace TheOtherRoles
             Lawyer.clearAndReload();
             Pursuer.clearAndReload();
             Witch.clearAndReload();
+            CreatedMadmate.clearAndReload();
             TheOtherRolesGM.clearAndReloadRoles();
         }
 
@@ -299,11 +301,47 @@ namespace TheOtherRoles
             }
         }
 
+        public static class EvilHacker {
+            public static PlayerControl evilHacker;
+            public static Color color = Palette.ImpostorRed;
+
+            public static bool canCreateMadmate = false;
+            public static PlayerControl currentTarget;
+
+            private static Sprite buttonSprite;
+            private static Sprite madmateButtonSprite;
+
+            public static Sprite getButtonSprite() {
+                if (buttonSprite) return buttonSprite;
+                // buttonSprite = DestroyableSingleton<TranslationController>.Instance.GetImage(ImageNames.AirshipAdminButton);
+                // return buttonSprite;
+                byte mapId = PlayerControl.GameOptions.MapId;
+                UseButtonSettings button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
+                if (mapId == 0 || mapId == 3) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
+                else if (mapId == 1) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
+                else if (mapId == 4) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
+                buttonSprite = button.Image;
+                return buttonSprite;
+            }
+
+            public static Sprite getMadmateButtonSprite() {
+                if (madmateButtonSprite) return madmateButtonSprite;
+                madmateButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.SidekickButton.png", 115f);
+                return madmateButtonSprite;
+            }
+
+            public static void clearAndReload() {
+                evilHacker = null;
+                currentTarget = null;
+                canCreateMadmate = CustomOptionHolder.evilHackerCanCreateMadmate.getBool();
+            }
+        }
+
         public static class Hacker
         {
             public static PlayerControl hacker;
             public static Minigame vitals = null;
-        public static Minigame doorLog = null;
+            public static Minigame doorLog = null;
             public static Color color = new Color32(117, 250, 76, byte.MaxValue);
 
             public static float cooldown = 30f;
@@ -1131,6 +1169,28 @@ namespace TheOtherRoles
             cooldown = CustomOptionHolder.mediumCooldown.getFloat();
             duration = CustomOptionHolder.mediumDuration.getFloat();
             oneTimeUse = CustomOptionHolder.mediumOneTimeUse.getBool();
+        }
+    }
+
+    public static class CreatedMadmate {
+        public static PlayerControl madmate;
+        public static Color color = Palette.ImpostorRed;
+
+        public static bool canEnterVents = false;
+        public static bool hasImpostorVision = false;
+        public static bool canSabotage = false;
+        public static bool canFixComm = true;
+        public static bool noticeImpostors = false;
+        public static bool exileCrewmate = false;
+
+        public static void clearAndReload() {
+            madmate = null;
+            canEnterVents = CustomOptionHolder.createdMadmateCanEnterVents.getBool();
+            hasImpostorVision = CustomOptionHolder.createdMadmateHasImpostorVision.getBool();
+            canSabotage = CustomOptionHolder.createdMadmateCanSabotage.getBool();
+            canFixComm = CustomOptionHolder.createdMadmateCanFixComm.getBool();
+            noticeImpostors = CustomOptionHolder.createdMadmateNoticeImpostors.getBool();
+            exileCrewmate = CustomOptionHolder.createdMadmateExileCrewmate.getBool();
         }
     }
 

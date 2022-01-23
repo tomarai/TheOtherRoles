@@ -122,6 +122,7 @@ namespace TheOtherRoles.Patches
 
             impSettings.Add((byte)RoleId.Morphling, CustomOptionHolder.morphlingSpawnRate.data);
             impSettings.Add((byte)RoleId.Camouflager, CustomOptionHolder.camouflagerSpawnRate.data);
+            impSettings.Add((byte)RoleId.EvilHacker, CustomOptionHolder.evilHackerSpawnRate.data);
             impSettings.Add((byte)RoleId.Vampire, CustomOptionHolder.vampireSpawnRate.data);
             impSettings.Add((byte)RoleId.Eraser, CustomOptionHolder.eraserSpawnRate.data);
             impSettings.Add((byte)RoleId.Trickster, CustomOptionHolder.tricksterSpawnRate.data);

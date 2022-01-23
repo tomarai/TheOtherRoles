@@ -202,6 +202,12 @@ namespace TheOtherRoles.Patches
             setPlayerOutline(Morphling.currentTarget, Morphling.color);
         }
 
+        static void evilHackerSetTarget() {
+            if (EvilHacker.evilHacker == null || EvilHacker.evilHacker != PlayerControl.LocalPlayer) return;
+            EvilHacker.currentTarget = setTarget(true);
+            setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
+        }
+
         static void trackerSetTarget()
         {
             if (Tracker.tracker == null || Tracker.tracker != PlayerControl.LocalPlayer) return;
@@ -533,7 +539,7 @@ namespace TheOtherRoles.Patches
                         playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);    
                     }
 
-                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
+                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data, true);
 
                     RoleId[] exclude = new RoleId[] {RoleId.Lovers};
                     string roleNames = RoleInfo.GetRolesString(p, true, exclude);
@@ -971,6 +977,8 @@ namespace TheOtherRoles.Patches
                 engineerUpdate();
                 // Tracker
                 trackerUpdate();
+                // EvilHacker
+                evilHackerSetTarget();
                 // Jackal
                 jackalSetTarget();
                 // Sidekick

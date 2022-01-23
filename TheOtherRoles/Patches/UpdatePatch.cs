@@ -13,6 +13,33 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     class HudManagerUpdatePatch
     {
+        private static bool CanPlayerSeeImpostorName()
+        {
+            if (PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+                return true;
+
+            if (PlayerControl.LocalPlayer.isRole(RoleId.CreatedMadmate))
+            {
+                if (!CreatedMadmate.noticeImpostors)
+                    return false;
+
+                var (playerCompleted, playerTotal) = TasksHandler.taskInfo(CreatedMadmate.madmate.Data, true);
+                return playerTotal - playerCompleted <= 0;
+            }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Madmate))
+            {
+                if (!Madmate.noticeImpostors)
+                    return false;
+
+                var (playerCompleted, playerTotal) = TasksHandler.taskInfo(PlayerControl.LocalPlayer.Data, true);
+                return playerTotal - playerCompleted <= 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         static void resetNameTagsAndColors() {
             Dictionary<byte, PlayerControl> playersById = Helpers.allPlayersById();
 
@@ -37,7 +64,7 @@ namespace TheOtherRoles.Patches {
                     }
                 }
             }
-            if (PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+            if (CanPlayerSeeImpostorName()) {
                 List<PlayerControl> impostors = PlayerControl.AllPlayerControls.ToArray().ToList();
                 impostors.RemoveAll(x => !x.Data.Role.IsImpostor);
                 foreach (PlayerControl player in impostors)
@@ -129,6 +156,10 @@ namespace TheOtherRoles.Patches {
             else if (PlayerControl.LocalPlayer.isRole(RoleId.Madmate))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Madmate.color);
+            }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.CreatedMadmate))
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, CreatedMadmate.color);
             }
             else if (PlayerControl.LocalPlayer.isRole(RoleId.Opportunist))
             {

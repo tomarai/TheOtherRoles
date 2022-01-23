@@ -46,6 +46,7 @@ namespace TheOtherRoles
         public static RoleInfo janitor = new RoleInfo("janitor", Janitor.color, CustomOptionHolder.mafiaSpawnRate, RoleId.Janitor);
         public static RoleInfo morphling = new RoleInfo("morphling", Morphling.color, CustomOptionHolder.morphlingSpawnRate, RoleId.Morphling);
         public static RoleInfo camouflager = new RoleInfo("camouflager", Camouflager.color, CustomOptionHolder.camouflagerSpawnRate, RoleId.Camouflager);
+        public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleId.EvilHacker);
         public static RoleInfo vampire = new RoleInfo("vampire", Vampire.color, CustomOptionHolder.vampireSpawnRate, RoleId.Vampire);
         public static RoleInfo eraser = new RoleInfo("eraser", Eraser.color, CustomOptionHolder.eraserSpawnRate, RoleId.Eraser);
         public static RoleInfo trickster = new RoleInfo("trickster", Trickster.color, CustomOptionHolder.tricksterSpawnRate, RoleId.Trickster);
@@ -74,6 +75,7 @@ namespace TheOtherRoles
         public static RoleInfo evilGuesser = new RoleInfo("evilGuesser", Palette.ImpostorRed, CustomOptionHolder.guesserSpawnRate, RoleId.EvilGuesser);
         public static RoleInfo bait = new RoleInfo("bait", Bait.color, CustomOptionHolder.baitSpawnRate, RoleId.Bait);
         public static RoleInfo madmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.madmateSpawnRate, RoleId.Madmate);
+        public static RoleInfo createdMadmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.evilHackerSpawnRate, RoleId.CreatedMadmate);
         public static RoleInfo impostor = new RoleInfo("impostor", Palette.ImpostorRed,null, RoleId.Impostor);
         public static RoleInfo lawyer = new RoleInfo("lawyer", Lawyer.color, CustomOptionHolder.lawyerSpawnRate, RoleId.Lawyer);
         public static RoleInfo pursuer = new RoleInfo("pursuer", Pursuer.color, CustomOptionHolder.lawyerSpawnRate, RoleId.Pursuer);
@@ -102,6 +104,7 @@ namespace TheOtherRoles
                 janitor,
                 morphling,
                 camouflager,
+                evilHacker,
                 vampire,
                 eraser,
                 trickster,
@@ -143,6 +146,7 @@ namespace TheOtherRoles
                 securityGuard,
                 bait,
                 madmate,
+                createdMadmate,
                 gm,
                 opportunist,
 	            medium,
@@ -174,6 +178,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.Janitor)) infos.Add(janitor);
             if (p.isRole(RoleId.Morphling)) infos.Add(morphling);
             if (p.isRole(RoleId.Camouflager)) infos.Add(camouflager);
+            if (p.isRole(RoleId.EvilHacker)) infos.Add(evilHacker);
             if (p.isRole(RoleId.Vampire)) infos.Add(vampire);
             if (p.isRole(RoleId.Eraser)) infos.Add(eraser);
             if (p.isRole(RoleId.Trickster)) infos.Add(trickster);
@@ -200,6 +205,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.BountyHunter)) infos.Add(bountyHunter);
             if (p.isRole(RoleId.Bait)) infos.Add(bait);
             if (p.isRole(RoleId.Madmate)) infos.Add(madmate);
+            if (p.isRole(RoleId.CreatedMadmate)) infos.Add(createdMadmate);
             if (p.isRole(RoleId.GM)) infos.Add(gm);
             if (p.isRole(RoleId.Opportunist)) infos.Add(opportunist);
             if (p.isRole(RoleId.Vulture)) infos.Add(vulture);

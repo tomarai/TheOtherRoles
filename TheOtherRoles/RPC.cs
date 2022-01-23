@@ -45,6 +45,7 @@ namespace TheOtherRoles
         Janitor,
         Morphling,
         Camouflager,
+        EvilHacker,
         Vampire,
         Eraser,
         Trickster,
@@ -55,6 +56,7 @@ namespace TheOtherRoles
         Ninja,
         Madmate,
         SerialKiller,
+        CreatedMadmate,
 
 
         Mini = 150,
@@ -114,6 +116,7 @@ namespace TheOtherRoles
         TrackerUsedTracker,
         VampireSetBitten,
         PlaceGarlic,
+        EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
         ErasePlayerRoles,
@@ -380,7 +383,7 @@ namespace TheOtherRoles
             }
 
             // Suicide (exile) when impostor or impostor variants
-            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.isRole(RoleId.Madmate))) {
+            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.isRole(RoleId.Madmate) || player.isRole(RoleId.CreatedMadmate))) {
                 oldShifter.Exiled();
                 finalStatuses[oldShifter.PlayerId] = FinalStatus.Suicide;
                 return;
@@ -491,6 +494,10 @@ namespace TheOtherRoles
                         Camouflager.camouflager = oldShifter;
                         break;
 
+                    case RoleId.EvilHacker:
+                        EvilHacker.evilHacker = oldShifter;
+                        break;
+
                     case RoleId.Vampire:
                         Vampire.vampire = oldShifter;
                         break;
@@ -521,6 +528,10 @@ namespace TheOtherRoles
 
                     case RoleId.Madmate:
                         Madmate.swapRole(player, oldShifter);
+                        break;
+
+                    case RoleId.CreatedMadmate:
+                        CreatedMadmate.madmate = oldShifter;
                         break;
 
                     case RoleId.Mini:
@@ -661,6 +672,18 @@ namespace TheOtherRoles
                     Tracker.tracked = player;
         }
 
+        public static void evilHackerCreatesMadmate(byte targetId) {
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+                if (player.PlayerId == targetId) {
+                    player.RemoveInfected();
+                    erasePlayerRoles(player.PlayerId, true, false);
+                    CreatedMadmate.madmate = player;
+                    EvilHacker.canCreateMadmate = false;
+                    return;
+                }
+            }
+        }
+
         public static void jackalCreatesSidekick(byte targetId) {
             PlayerControl player = Helpers.playerById(targetId);
             if (player == null) return;
@@ -672,7 +695,7 @@ namespace TheOtherRoles
             }else {
                 
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                erasePlayerRoles(player.PlayerId, true);
+                erasePlayerRoles(player.PlayerId, true, false);
                 Sidekick.sidekick = player;
                 // 狐が一人もいなくなったら背徳者は死亡する
                 if(!Fox.isFoxAlive())
@@ -694,12 +717,12 @@ namespace TheOtherRoles
             return;
         }
         
-        public static void erasePlayerRoles(byte playerId, bool ignoreLovers = false) {
+        public static void erasePlayerRoles(byte playerId, bool ignoreLovers = false, bool clearNeutralTasks = true) {
             PlayerControl player = Helpers.playerById(playerId);
             if (player == null) return;
 
             // Don't give a former neutral role tasks because that destroys the balance.
-            if (player.isNeutral())
+            if (player.isNeutral() && clearNeutralTasks)
                 player.clearAllTasks();
 
             player.eraseAllRoles();
@@ -1240,6 +1263,9 @@ namespace TheOtherRoles
                     break;
                 case (byte)CustomRPC.TrackerUsedTracker:
                     RPCProcedure.trackerUsedTracker(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.EvilHackerCreatesMadmate:
+                    RPCProcedure.evilHackerCreatesMadmate(reader.ReadByte());
                     break;
                 case (byte)CustomRPC.JackalCreatesSidekick:
                     RPCProcedure.jackalCreatesSidekick(reader.ReadByte());

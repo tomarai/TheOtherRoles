@@ -31,6 +31,11 @@ namespace TheOtherRoles.Patches
                 return true;
             }
 
+            if (pc.isRole(RoleId.CreatedMadmate) && (isLights || (isComms && !CreatedMadmate.canFixComm)))
+            {
+                return true;
+            }
+
             if (pc.isGM() && (isLights || isComms || isReactor || isO2))
             {
                 return true;
@@ -175,7 +180,7 @@ namespace TheOtherRoles.Patches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.isRole(RoleId.Madmate);
+                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.isRole(RoleId.Madmate) && !PlayerControl.LocalPlayer.isRole(RoleId.CreatedMadmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;

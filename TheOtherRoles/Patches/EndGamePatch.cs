@@ -140,7 +140,7 @@ namespace TheOtherRoles.Patches
             {
                 //var p = pc.Data;
                 var roles = RoleInfo.getRoleInfoForPlayer(p.Object, hideRoles);
-                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p);
+                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p, true);
                 var finalStatus = finalStatuses[p.PlayerId] =
                     p.Disconnected == true ? FinalStatus.Disconnected :
                     finalStatuses.ContainsKey(p.PlayerId) ? finalStatuses[p.PlayerId] :
@@ -172,6 +172,7 @@ namespace TheOtherRoles.Patches
             if (Jackal.jackal != null) notWinners.Add(Jackal.jackal);
             if (Arsonist.arsonist != null) notWinners.Add(Arsonist.arsonist);
             if (Vulture.vulture != null) notWinners.Add(Vulture.vulture);
+            if (CreatedMadmate.madmate != null) notWinners.Add(CreatedMadmate.madmate);
             if (Lawyer.lawyer != null) notWinners.Add(Lawyer.lawyer);
             if (Pursuer.pursuer != null) notWinners.Add(Pursuer.pursuer);
 
@@ -322,6 +323,7 @@ namespace TheOtherRoles.Patches
                     AdditionalTempData.winCondition = WinCondition.PlagueDoctorWin;
                 }
             }
+
             else if (foxWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
@@ -338,6 +340,7 @@ namespace TheOtherRoles.Patches
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
             }
 
+            
             // Madmate win with impostors
             if (Madmate.exists && TempData.winners.ToArray().Any(x => x.IsImpostor))
             {
@@ -346,6 +349,13 @@ namespace TheOtherRoles.Patches
                     WinningPlayerData wpd = new WinningPlayerData(p.Data);
                     TempData.winners.Add(wpd);
                 }
+            }
+
+            // Created Madmate win with impostors
+            if (CreatedMadmate.madmate != null && TempData.winners.ToArray().Any(x => x.IsImpostor))
+            {
+                WinningPlayerData wpd = new WinningPlayerData(CreatedMadmate.madmate.Data);
+                TempData.winners.Add(wpd);
             }
 
             // Possible Additional winner: Lawyer

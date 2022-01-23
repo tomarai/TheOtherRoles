@@ -163,6 +163,17 @@ namespace TheOtherRoles.Patches {
 
             public static void Postfix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
                 setupIntroTeam(__instance, ref yourTeam);
+
+                /*
+                 * Workaround
+                 * reset and re-assign tasks
+                 * This should be done before a game starting and after tasks assinged
+                 * If you have an idea, please send me a pull request!
+                 */
+                if (PlayerControl.LocalPlayer.isRole(RoleId.Madmate)
+                    && Madmate.noticeImpostors) {
+                    MadmateTaskHelper.SetMadmateTasks();
+                }
             }
         }
 

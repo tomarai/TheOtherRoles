@@ -26,6 +26,27 @@ namespace TheOtherRoles.Patches {
                 RPCProcedure.medicSetShielded(Medic.futureShielded.PlayerId);
             }
 
+            // Madmate exiled
+            if (AmongUsClient.Instance.AmHost
+                && exiled != null
+                && ((CreatedMadmate.exileCrewmate
+                && exiled.Object.isRole(RoleId.CreatedMadmate))
+                || (Madmate.exileCrewmate
+                && exiled.Object.isRole(RoleId.Madmate)))) {
+                // pick random crewmate
+                PlayerControl target = pickRandomCrewmate(exiled.PlayerId);
+                if (target != null) {
+                    // exile the picked crewmate
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.UncheckedExilePlayer,
+                        Hazel.SendOption.Reliable,
+                        -1);
+                    writer.Write(target.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.uncheckedExilePlayer(target.PlayerId);
+                }
+            }
+
             // Shifter shift
             if (Shifter.shifter != null && AmongUsClient.Instance.AmHost && Shifter.futureShift != null) { // We need to send the RPC from the host here, to make sure that the order of shifting and erasing is correct (for that reason the futureShifted and futureErased are being synced)
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShifterShift, Hazel.SendOption.Reliable, -1);
@@ -94,6 +115,36 @@ namespace TheOtherRoles.Patches {
             // 1 = reset per turn
             if (MapOptions.restrictDevices == 1)
                 MapOptions.resetDeviceTimes();
+        }
+
+        private static PlayerControl pickRandomCrewmate(int exiledPlayerId) {
+            int numAliveCrewmates = 0;
+            // count alive crewmates
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+                if (player.Data.Role.IsImpostor)
+                    continue;
+                if (player.Data.IsDead)
+                    continue;
+                if (player.PlayerId == exiledPlayerId)
+                    continue;
+                numAliveCrewmates++;
+                TheOtherRolesPlugin.Instance.Log.LogInfo($"pickRandomCrewmate: {player.PlayerId}");
+            }
+            // get random number range 0, num of alive crewmates
+            int targetPlayerIndex = TheOtherRoles.rnd.Next(0, numAliveCrewmates);
+            TheOtherRolesPlugin.Instance.Log.LogInfo($"targetPlayerIndex: {targetPlayerIndex}");
+            int currentPlayerIndex = 0;
+            // return the player
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+                if (player.Data.Role.IsImpostor)
+                    continue;
+                if (player.Data.IsDead)
+                    continue;
+                if (currentPlayerIndex == targetPlayerIndex)
+                    return player;
+                currentPlayerIndex++;
+            }
+            return null;
         }
     }
 

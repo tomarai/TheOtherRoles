@@ -37,6 +37,16 @@ namespace TheOtherRoles {
         public static CustomOption camouflagerDuration;
         public static CustomOption camouflagerRandomColors;
 
+        public static CustomRoleOption evilHackerSpawnRate;
+        public static CustomOption evilHackerCanCreateMadmate;
+        public static CustomOption createdMadmateCanDieToSheriff;
+        public static CustomOption createdMadmateCanEnterVents;
+        public static CustomOption createdMadmateHasImpostorVision;
+        public static CustomOption createdMadmateCanSabotage;
+        public static CustomOption createdMadmateCanFixComm;
+        public static CustomOption createdMadmateNoticeImpostors;
+        public static CustomOption createdMadmateExileCrewmate;
+
         public static CustomRoleOption vampireSpawnRate;
         public static CustomOption vampireKillDelay;
         public static CustomOption vampireCooldown;
@@ -266,6 +276,11 @@ namespace TheOtherRoles {
         public static CustomOption madmateHasImpostorVision;
         public static CustomOption madmateCanSabotage;
         public static CustomOption madmateCanFixComm;
+        public static CustomOption madmateNoticeImpostors;
+        public static CustomOption madmateCommonTasks;
+        public static CustomOption madmateShortTasks;
+        public static CustomOption madmateLongTasks;
+        public static CustomOption madmateExileCrewmate;
 
         public static CustomRoleOption opportunistSpawnRate;
 
@@ -368,6 +383,16 @@ namespace TheOtherRoles {
             camouflagerDuration = CustomOption.Create(32, "camouflagerDuration", 10f, 1f, 20f, 0.5f, camouflagerSpawnRate, format: "unitSeconds");
             camouflagerRandomColors = CustomOption.Create(33, "camouflagerRandomColors", false, camouflagerSpawnRate);
 
+            evilHackerSpawnRate = new CustomRoleOption(1900, "evilHacker", EvilHacker.color, 1);
+            evilHackerCanCreateMadmate = CustomOption.Create(1901, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
+            createdMadmateCanDieToSheriff = CustomOption.Create(1902, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
+            createdMadmateCanEnterVents = CustomOption.Create(1903, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
+            createdMadmateHasImpostorVision = CustomOption.Create(1904, "createdMadmateHasImpostorVision", false, evilHackerCanCreateMadmate);
+            createdMadmateCanSabotage = CustomOption.Create(1364, "createdMadmateCanSabotage", false, evilHackerCanCreateMadmate);
+            createdMadmateCanFixComm = CustomOption.Create(1365, "createdMadmateCanFixComm", true, evilHackerCanCreateMadmate);
+            createdMadmateNoticeImpostors = CustomOption.Create(1905, "createdMadmateNoticeImpostors", false, evilHackerCanCreateMadmate);
+            createdMadmateExileCrewmate = CustomOption.Create(1906, "createdMadmateExileCrewmate", false, evilHackerCanCreateMadmate);
+
             vampireSpawnRate = new CustomRoleOption(40, "vampire", Vampire.color, 1);
             vampireKillDelay = CustomOption.Create(41, "vampireKillDelay", 10f, 1f, 20f, 1f, vampireSpawnRate, format: "unitSeconds");
             vampireCooldown = CustomOption.Create(42, "vampireCooldown", 30f, 2.5f, 60f, 2.5f, vampireSpawnRate, format: "unitSeconds");
@@ -426,6 +451,11 @@ namespace TheOtherRoles {
             madmateHasImpostorVision = CustomOption.Create(363, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(364, "madmateCanSabotage", false, madmateSpawnRate);
             madmateCanFixComm = CustomOption.Create(365, "madmateCanFixComm", true, madmateSpawnRate);
+            madmateNoticeImpostors = CustomOption.Create(1914, "madmateNoticeImpostors", false, madmateSpawnRate);
+            madmateCommonTasks = CustomOption.Create(1915, "madmateCommonTasks", 0f, 0f, 4f, 1f, madmateNoticeImpostors);
+            madmateShortTasks = CustomOption.Create(1916, "madmateShortTasks", 0f, 0f, 23f, 1f, madmateNoticeImpostors);
+            madmateLongTasks = CustomOption.Create(1917, "madmateLongTasks", 0f, 0f, 15f, 1f, madmateNoticeImpostors);
+            madmateExileCrewmate = CustomOption.Create(1918, "madmateExileCrewmate", false, madmateSpawnRate);
 
             miniSpawnRate = new CustomRoleOption(180, "mini", Mini.color, 1);
             miniIsImpRate = CustomOption.Create(182, "miniIsImpRate", rates, miniSpawnRate);

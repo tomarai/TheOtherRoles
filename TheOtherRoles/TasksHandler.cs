@@ -19,7 +19,7 @@ namespace TheOtherRoles {
                     __instance.Arrow?.gameObject?.SetActive(false);
             }
         }
-
+        
         [HarmonyPatch(typeof(AirshipUploadTask), nameof(AirshipUploadTask.FixedUpdate))]
         public static class AirshipUploadTaskPatch
         {
@@ -30,7 +30,7 @@ namespace TheOtherRoles {
             }
         }
 
-        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo) {
+        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo, bool madmateCount=false) {
             int TotalTasks = 0;
             int CompletedTasks = 0;
             if (!playerInfo.Disconnected && playerInfo.Tasks != null &&
@@ -39,6 +39,8 @@ namespace TheOtherRoles {
                 playerInfo.Role && playerInfo.Role.TasksCountTowardProgress &&
                 !(playerInfo.Object.isGM() && !GM.hasTasks) &&
                 !(playerInfo.Object.isLovers() && !Lovers.hasTasks) &&
+                ((!playerInfo.Object.isRole(RoleId.Madmate) && playerInfo.Object != CreatedMadmate.madmate) || 
+                (madmateCount && (PlayerControl.LocalPlayer.isRole(RoleId.Madmate) || PlayerControl.LocalPlayer == CreatedMadmate.madmate))) &&
                 !playerInfo.Object.hasFakeTasks()
                 ) {
 
