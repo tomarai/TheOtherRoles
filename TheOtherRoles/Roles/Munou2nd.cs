@@ -25,7 +25,10 @@ namespace TheOtherRoles
             RoleType = roleId = RoleId.Munou2nd;
         }
 
-        public override void OnMeetingStart() { }
+        public override void OnMeetingStart()
+        {
+            resetColors();
+        }
         public override void OnMeetingEnd()
         {
             if(PlayerControl.LocalPlayer.isRole(RoleId.Munou2nd) && PlayerControl.LocalPlayer.isAlive())
