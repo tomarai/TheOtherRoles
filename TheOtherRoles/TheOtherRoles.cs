@@ -306,6 +306,9 @@ namespace TheOtherRoles
             public static Color color = Palette.ImpostorRed;
 
             public static bool canCreateMadmate = false;
+            public static bool canCreateMadmateFromFox {get { return CustomOptionHolder.evilHackerCanCreateMadmateFromFox.getBool();}}
+            public static bool canCreateMadmateFromJackal {get { return CustomOptionHolder.evilHackerCanCreateMadmateFromJackal.getBool();}}
+            public static PlayerControl fakeMadmate;
             public static PlayerControl currentTarget;
 
             private static Sprite buttonSprite;
@@ -333,6 +336,7 @@ namespace TheOtherRoles
             public static void clearAndReload() {
                 evilHacker = null;
                 currentTarget = null;
+                fakeMadmate = null;
                 canCreateMadmate = CustomOptionHolder.evilHackerCanCreateMadmate.getBool();
             }
         }

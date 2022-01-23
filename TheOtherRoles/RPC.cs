@@ -673,21 +673,24 @@ namespace TheOtherRoles
         }
 
         public static void evilHackerCreatesMadmate(byte targetId) {
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
-                if (player.PlayerId == targetId) {
-                    // Jackalバグ対応
-                    List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
+            PlayerControl player = Helpers.playerById(targetId);
+            if (!EvilHacker.canCreateMadmateFromJackal && player.isRole(RoleId.Jackal)) {
+                EvilHacker.fakeMadmate = player;
+            }else if (!EvilHacker.canCreateMadmateFromFox && player.isRole(RoleId.Fox)){
+                EvilHacker.fakeMadmate = player;
+            }else {
+                // Jackalバグ対応
+                List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
 
-                    player.RemoveInfected();
-                    erasePlayerRoles(player.PlayerId, true, false);
+                player.RemoveInfected();
+                erasePlayerRoles(player.PlayerId, true, false);
 
-                    // Jackalバグ対応
-                    Jackal.formerJackals = tmpFormerJackals;
+                // Jackalバグ対応
+                Jackal.formerJackals = tmpFormerJackals;
 
-                    CreatedMadmate.madmate = player;
-                    EvilHacker.canCreateMadmate = false;
-                    return;
-                }
+                CreatedMadmate.madmate = player;
+                EvilHacker.canCreateMadmate = false;
+                return;
             }
         }
 
