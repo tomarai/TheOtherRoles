@@ -675,8 +675,15 @@ namespace TheOtherRoles
         public static void evilHackerCreatesMadmate(byte targetId) {
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
                 if (player.PlayerId == targetId) {
+                    // Jackalバグ対応
+                    List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
+
                     player.RemoveInfected();
                     erasePlayerRoles(player.PlayerId, true, false);
+
+                    // Jackalバグ対応
+                    Jackal.formerJackals = tmpFormerJackals;
+
                     CreatedMadmate.madmate = player;
                     EvilHacker.canCreateMadmate = false;
                     return;
@@ -702,7 +709,9 @@ namespace TheOtherRoles
                 {
                     foreach(var immoralist in Immoralist.allPlayers)
                     {
-                        immoralist.MurderPlayer(immoralist);
+                        if(immoralist.isAlive()){
+                            immoralist.MurderPlayer(immoralist);
+                        }
                     }
                 }
             }

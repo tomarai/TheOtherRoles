@@ -109,6 +109,22 @@ namespace TheOtherRoles
             arrows = new List<Arrow>();
             Immoralist.Clear();
         }
+        public override void ResetRole()
+        {
+            foreach(Arrow arrow in arrows){
+                arrow.arrow.SetActive(false);
+                UnityEngine.Object.Destroy(arrow.arrow);
+            }
+            arrows = new List<Arrow>();
+
+            foreach(var p in Immoralist.allPlayers)
+            {
+                if(p.isAlive())
+                {
+                    p.MurderPlayer(p);
+                }
+            }
+        }
 
         private static Sprite buttonSprite;
         private static Sprite repairButtonSprite;
