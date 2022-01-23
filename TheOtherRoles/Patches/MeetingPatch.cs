@@ -403,6 +403,7 @@ namespace TheOtherRoles.Patches {
                     roleInfo == RoleInfo.niceMini || 
 					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleId.EvilGuesser && roleInfo.roleId == RoleId.Spy) ||
                     roleInfo == RoleInfo.gm ||
+                    roleInfo == RoleInfo.createdMadmate && RoleInfo.madmate.enabled||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings))
                     continue; // Not guessable roles
                 Transform buttonParent = (new GameObject()).transform;
@@ -444,7 +445,21 @@ namespace TheOtherRoles.Patches {
                         var mainRoleInfo = RoleInfo.getRoleInfoForPlayer(focusedTarget).FirstOrDefault();
                         if (mainRoleInfo == null) return;
 
-                        PlayerControl dyingTarget = (mainRoleInfo == roleInfo) ? focusedTarget : PlayerControl.LocalPlayer;
+                        // createdMadmateとmadmateを同等に扱う
+                        PlayerControl dyingTarget;
+                        if(mainRoleInfo == roleInfo)
+                        {
+                            dyingTarget = focusedTarget;
+                        }
+                        else if(roleInfo == RoleInfo.madmate && mainRoleInfo == RoleInfo.createdMadmate)
+                        {
+                            dyingTarget = focusedTarget;
+                        }
+                        else
+                        {
+                            dyingTarget = PlayerControl.LocalPlayer;
+                        }
+
 
                         // Reset the GUI
                         __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true));
