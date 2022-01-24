@@ -339,7 +339,7 @@ namespace TheOtherRoles
                         else if(p.isRole(RoleId.Jackal)){
                             arrow = new Arrow(Jackal.color);
                         }else if(p.isRole(RoleId.Sheriff)){
-                            arrow = new Arrow(Sheriff.color);
+                            arrow = new Arrow(Color.white);
                         }else{
                             arrow = new Arrow(Color.black);
                         }
