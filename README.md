@@ -15,7 +15,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 | Impostors | Crewmates | Neutral | Other | 
 |----------|-------------|-----------------|----------------|
 |[シリアルキラー](#シリアルキラー)| [占い師](#占い師) |[妖狐](#妖狐) ||
-||[占い師2nd](#占い師2nd)|[背徳者](#背徳者)|
+|[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[占い師2nd](#占い師2nd)|[背徳者](#背徳者)|
 ||[無能](#無能)||
 ||[無能2nd](#無能2nd)||
 
@@ -23,6 +23,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.4.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.4.0/TheOtherRoles-GM-Haoming.v1.4.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.3.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.3.0/TheOtherRoles-GM-Haoming.v1.3.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.2.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.1/TheOtherRoles-GM-Haoming.v1.2.1.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.2.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.0/TheOtherRoles-GM-Haoming.v1.2.0.zip)|
@@ -31,6 +32,27 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |2021.12.15s (build num: 1421)|v3.4.2| v1.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.0/TheOtherRoles-GM-Haoming.v1.0.0.zip)|
 
 # 役職一覧
+
+## イビルハッカー
+[tomarai氏のTORフォークから移植](https://github.com/tomarai/TheOtherRoles)  
+※移植作業: 鳴海氏実施  
+いつでもアドミンを見ることができる  
+オプション設定でONにすると任意のプレイヤーをマッドメイトにすることができる  
+オプションで妖狐・ジャッカルをマッドメイトにできない設定になっている場合はボタンが消費されるが対象のプレイヤーは妖狐・ジャッカルのままになる  
+サイドキックを持つ妖狐をマッドメイトにした場合、背徳者は死亡する
+|オプション名|説明|
+|-----------|----|
+|マッドメイトを指名できる|ONにするとマッドメイトを指名できる|
+|妖狐をマッドメイトにすることができる|ONにすると妖狐をマッドメイトにできる|
+|ジャッカルをマッドメイトにすることができる|ONにするとジャッカルをマッドメイトにできる|
+|シェリフがマッドメイトを殺せる|ONにするとシェリフが作成したマッドメイトを殺すことができる|
+|マッドメイトがベントに入れる|ONにすると作成したマッドメイトがベントに入ることができる|
+|マッドメイトがインポスターと同じ視野|ONにすると作成したマッドメイトがインポスターと同じ視野を持つ|
+|マッドメイトがサボタージュできる|ONにすると作成したマッドメイトがサボタージュを行うことができる|
+|マッドメイトがコミュサボを直せる|ONにすると作成したマッドメイトがコミュサボを直すことができる|
+|マッドメイトがタスク完了でインポスターがわかる|ONにするとタスク完了時にインポスターの名前が赤文字で表示されるようになる|
+|マッドメイトが追放時クルーを追放する|ONにするとマッドメイトが追放された際にランダムでクルーメイトを一人道連れにする|
+
 
 ## シリアルキラー
 

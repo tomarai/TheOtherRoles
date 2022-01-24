@@ -387,8 +387,8 @@ namespace TheOtherRoles {
 
             evilHackerSpawnRate = new CustomRoleOption(1900, "evilHacker", EvilHacker.color, 1);
             evilHackerCanCreateMadmate = CustomOption.Create(1901, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
-            evilHackerCanCreateMadmateFromFox = CustomOption.Create(1907, "狐をマッドメイトにすることができる", false, evilHackerCanCreateMadmate);
-            evilHackerCanCreateMadmateFromJackal = CustomOption.Create(1907, "ジャッカルをマッドメイトにすることができる", false, evilHackerCanCreateMadmate);
+            evilHackerCanCreateMadmateFromFox = CustomOption.Create(1907, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
+            evilHackerCanCreateMadmateFromJackal = CustomOption.Create(1908, "evilHackerCanCreateMadmateFromJackal", false, evilHackerCanCreateMadmate);
             createdMadmateCanDieToSheriff = CustomOption.Create(1902, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
             createdMadmateCanEnterVents = CustomOption.Create(1903, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
             createdMadmateHasImpostorVision = CustomOption.Create(1904, "createdMadmateHasImpostorVision", false, evilHackerCanCreateMadmate);
