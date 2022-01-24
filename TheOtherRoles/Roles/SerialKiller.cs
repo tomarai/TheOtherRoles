@@ -33,9 +33,9 @@ namespace TheOtherRoles
 
         public override void OnMeetingEnd()
         {
-            if (PlayerControl.LocalPlayer == player)
+            if (PlayerControl.LocalPlayer.isRole(RoleId.SerialKiller))
             {
-                player.SetKillTimerUnchecked(killCooldown);
+                PlayerControl.LocalPlayer.SetKillTimerUnchecked(killCooldown);
 
                 if (resetTimer)
                     serialKillerButton.Timer = suicideTimer;
