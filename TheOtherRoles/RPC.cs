@@ -694,9 +694,9 @@ namespace TheOtherRoles
                 Jackal.formerJackals = tmpFormerJackals;
 
                 CreatedMadmate.madmate = player;
-                EvilHacker.canCreateMadmate = false;
-                return;
             }
+            EvilHacker.canCreateMadmate = false;
+            return;
         }
 
         public static void jackalCreatesSidekick(byte targetId) {
