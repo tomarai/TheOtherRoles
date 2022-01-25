@@ -193,6 +193,10 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Immoralist.color);
             }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor))
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, LastImpostor.color);
+            }
             else if (PlayerControl.LocalPlayer.isRole(RoleId.FortuneTeller))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, FortuneTeller.color);

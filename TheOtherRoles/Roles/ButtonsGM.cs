@@ -52,6 +52,7 @@ namespace TheOtherRoles
             SerialKiller.MakeButtons(hm);
             Fox.MakeButtons(hm);
             Immoralist.MakeButtons(hm);
+            LastImpostor.MakeButtons(hm);
             Uranai.MakeButtons(hm);
             SoulPlayer.MakeButtons(hm);
 

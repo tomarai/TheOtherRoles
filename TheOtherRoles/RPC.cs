@@ -57,6 +57,7 @@ namespace TheOtherRoles
         Madmate,
         SerialKiller,
         CreatedMadmate,
+        LastImpostor,
 
 
         Mini = 150,
@@ -155,6 +156,7 @@ namespace TheOtherRoles
         FortuneTellerUsedDivine,
         FoxStealth,
         FoxCreatesImmoralist,
+        ImpostorPromotesToLastImpostor,
     }
 
     public static class RPCProcedure {
@@ -594,6 +596,9 @@ namespace TheOtherRoles
                     case RoleId.Immoralist:
                         Immoralist.swapRole(player, oldShifter);
                         break;
+                    case RoleId.LastImpostor:
+                        LastImpostor.swapRole(player, oldShifter);
+                        break;
                     case RoleId.FortuneTeller:
                         FortuneTeller.swapRole(player, oldShifter);
                         break;
@@ -1007,6 +1012,11 @@ namespace TheOtherRoles
             player.setRole(RoleId.Immoralist);
             player.clearAllTasks();
         }
+        public static void impostorPromotesToLastImpostor(byte targetId)
+        {
+            PlayerControl player = Helpers.playerById(targetId);
+            player.setRole(RoleId.LastImpostor);
+        }
 
         public static void GMKill(byte targetId)
         {
@@ -1140,15 +1150,15 @@ namespace TheOtherRoles
                 KillAnimationCoPerformKillPatch.hideNextAnimation = true;
                 uranai.MurderPlayer(target);
             }
-            // インポスターの場合は占い師の位置に矢印を表示
-            if(PlayerControl.LocalPlayer.isImpostor()){
-                Uranai.uranaiMessage("占い師が占いを使った", 5f);
+            // インポスターの場合は占い師の位置に矢印を表示 ラストインポスターの占いの場合は表示しない
+            if(uranai.isRole(RoleId.Uranai) && PlayerControl.LocalPlayer.isImpostor()){
+                Uranai.uranaiMessage("占い師が占いを使った", 5f, Color.white);
                 Uranai.impostorArrowFlag = true;
             }
             // 占われたのが背徳者の場合は通知を表示
             if(target.isRole(RoleId.Immoralist) && PlayerControl.LocalPlayer.isRole(RoleId.Immoralist))
             {
-                Uranai.uranaiMessage("占い師に占われた", 5f);
+                Uranai.uranaiMessage("占い師に占われた", 5f, Color.white);
             }
         }
     }   
@@ -1403,6 +1413,9 @@ namespace TheOtherRoles
                     break;
                 case (byte)CustomRPC.FoxCreatesImmoralist:
                     RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.ImpostorPromotesToLastImpostor:
+                    RPCProcedure.impostorPromotesToLastImpostor(reader.ReadByte());
                     break;
             }
         }

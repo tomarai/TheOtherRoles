@@ -37,6 +37,8 @@ namespace TheOtherRoles
             Lighter.Clear();
             SerialKiller.Clear();
             Fox.Clear();
+            Immoralist.Clear();
+            LastImpostor.Clear();
             FortuneTeller.Clear();
             Uranai.Clear();
             SoulPlayer.Clear();

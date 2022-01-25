@@ -85,7 +85,7 @@ namespace TheOtherRoles
                 return () =>
                 {
                     PlayerControl p = Helpers.playerById(index);
-                    Uranai.divine(p);
+                    Uranai.divine(p, resultIsCrewOrNot);
                 };
             };
 
@@ -258,21 +258,32 @@ namespace TheOtherRoles
             playerStatus = new Dictionary<byte, bool>();
         }
 
-        public static void divine(PlayerControl p)
+        public static void divine(PlayerControl p, bool isTwoSelections)
         {
             string msg = "";
-            if(!resultIsCrewOrNot){
+            Color color = Color.white;
+            if(!isTwoSelections){
                 string roleNames = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
-                roleNames = Regex.Replace(roleNames, "<[^>]*>", "");
+                // roleNames = Regex.Replace(roleNames, "<[^>]*>", "");
                 msg = $"{p.name}は{roleNames}";
             }else{
-                string ret = p.isCrew() ? "クルー" : "クルー以外";
+                string ret;
+                if(p.isCrew())
+                {
+                    ret = "クルー";
+                    color = Color.white;
+                }
+                else
+                {
+                    ret = "クルー以外";
+                    color = Palette.ImpostorRed;
+                }
                 msg = $"{p.name}は{ret}";
             }
 
             if (!string.IsNullOrWhiteSpace(msg))
             {   
-                uranaiMessage(msg, 5f);
+                uranaiMessage(msg, 5f, color);
                 
             }
             if(Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(DestroyableSingleton<HudManager>.Instance.TaskCompleteSound, false, 0.8f);
@@ -288,7 +299,7 @@ namespace TheOtherRoles
 
 
         private static TMPro.TMP_Text text;
-        public static void uranaiMessage(string message, float duration) {
+        public static void uranaiMessage(string message, float duration, Color color) {
             RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
             if (roomTracker != null) {
                 GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
@@ -301,7 +312,7 @@ namespace TheOtherRoles
                 // Use local position to place it in the player's view instead of the world location
                 gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
                 text.text = message;
-                text.color = Color.white;
+                text.color = color;
 
                 HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
                     if (p == 1f && text != null && text.gameObject != null) {

@@ -91,6 +91,7 @@ namespace TheOtherRoles
         public static RoleInfo serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleId.SerialKiller);
         public static RoleInfo fox = new RoleInfo("妖狐", Fox.color, CustomOptionHolder.foxSpawnRate, RoleId.Fox);
         public static RoleInfo immoralist = new RoleInfo("背徳者", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleId.Immoralist);
+        public static RoleInfo lastImpostor = new RoleInfo("ラストインポスター", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleId.LastImpostor);
         public static RoleInfo fortuneTeller = new RoleInfo("占い師", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleId.FortuneTeller);
         public static RoleInfo uranai= new RoleInfo("占い師2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleId.Uranai);
         public static RoleInfo munou = new RoleInfo("無能", Munou.color, CustomOptionHolder.munouSpawnRate, RoleId.Munou);
@@ -153,6 +154,7 @@ namespace TheOtherRoles
                 plagueDoctor,
                 fox,
                 immoralist,
+                lastImpostor,
                 fortuneTeller,
                 uranai,
                 munou
@@ -217,6 +219,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.SerialKiller)) infos.Add(serialKiller);
             if (p.isRole(RoleId.Fox)) infos.Add(fox);
             if (p.isRole(RoleId.Immoralist)) infos.Add(immoralist);
+            if (p.isRole(RoleId.LastImpostor)) infos.Add(lastImpostor);
             if (p.isRole(RoleId.FortuneTeller)) infos.Add(fortuneTeller);
             if(p.isRole(RoleId.Uranai))
             {

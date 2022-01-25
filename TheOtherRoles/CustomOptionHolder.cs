@@ -336,6 +336,10 @@ namespace TheOtherRoles {
         public static CustomOption munou2ndProbability;
         public static CustomOption munou2ndNumShufflePlayers;
 
+        public static CustomOption lastImpostorEnable;
+        public static CustomOption lastImpostorNumKills;
+        public static CustomOption lastImpostorResultIsCrewOrNot;
+
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
         internal static List<byte> blockLovers = new List<byte>();
@@ -657,6 +661,9 @@ namespace TheOtherRoles {
 
             // Other options
             specialOptions = new CustomOptionBlank(null);
+            lastImpostorEnable = CustomOption.Create(9900, "ラストインポスター有効化", true, specialOptions, true);
+            lastImpostorNumKills = CustomOption.Create(9901, "占いを行うのに必要なキル数", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
+            lastImpostorResultIsCrewOrNot = CustomOption.Create(9902, "占い結果がクルーとクルー以外になる", true, lastImpostorEnable);
             airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
