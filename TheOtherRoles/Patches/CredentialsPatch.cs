@@ -10,7 +10,7 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch]
     public static class CredentialsPatch {
 
-        public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRoles GM</color></size> v{TheOtherRolesPlugin.Version.ToString()}";
+        public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRoles GM H</color></size> v{TheOtherRolesPlugin.Version.ToString()}";
 
 
         public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, amsyarasyiq, gendelo3</size>";

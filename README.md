@@ -1,4 +1,4 @@
-# The Other Roles: GM  Haoming Edition
+# The Other Roles: GM Edition 改造版
 GMエディションにPRを出す前にバランス調整等のお試しをするための環境  
 基本的にバグだらけなので使う人は自己責任でどうぞ  
 不具合を見つけた方はissue登録かDiscordのhaoming#1821まで
@@ -16,13 +16,14 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |----------|-------------|-----------------|----------------|
 |[シリアルキラー](#シリアルキラー)| [占い師](#占い師) |[妖狐](#妖狐) ||
 |[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[占い師2nd](#占い師2nd)|[背徳者](#背徳者)|
-||[無能](#無能)||
+|[ラストインポスター](#ラストインポスター)|[無能](#無能)||
 ||[無能2nd](#無能2nd)||
 
 
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.5.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.0/TheOtherRoles-GM-Haoming.v1.5.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.4.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.4.0/TheOtherRoles-GM-Haoming.v1.4.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.3.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.3.0/TheOtherRoles-GM-Haoming.v1.3.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.2.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.1/TheOtherRoles-GM-Haoming.v1.2.1.zip)|
@@ -63,6 +64,25 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 タイマーはキルを行うか会議を跨ぐとリセットされる  
 タイマーは40～50秒程度を推奨  
 会議後にキルクールダウンがあるためタイマー40秒、キルクールダウン15秒設定だと実質キル可能な時間は25秒のみとなる  
+
+## ラストインポスター
+
+※現在調整中  
+今後は能力のバリエーションを増やしていく予定です  
+現状はほぼ妖狐村専用  
+  
+インポスター陣営  
+最後の一人になったインポスターに付与される役職  
+役職付与後に一定キル数を行うことで占いを行うことができる  
+占いは占い師2ndと同様に狐を呪殺することができるため、  
+背徳者の自爆と合わせてダブルキルを狙うことが可能
+(通常キルと合わせてトリプルキルが狙える)  
+5人盤面から一気に勝利を目指そう
+
+|オプション名|説明|
+|-----------|----|
+|占いを行うのに必要なキル数|設定したキル数を行うと画面右下に一度だけ使える占いボタンが出現する|
+|占い結果がクルーとクルー以外になる|ONにすると占い結果がクルーとクルー以外の二択になる、OFFにすると役職名が表示される|
 
 ## 占い師
 ※現在調整中  
