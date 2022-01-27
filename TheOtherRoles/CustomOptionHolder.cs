@@ -338,7 +338,9 @@ namespace TheOtherRoles {
 
         public static CustomOption lastImpostorEnable;
         public static CustomOption lastImpostorNumKills;
+        public static CustomOption lastImpostorFunctions;
         public static CustomOption lastImpostorResultIsCrewOrNot;
+        public static CustomOption lastImpostorNumShots;
 
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
@@ -662,9 +664,11 @@ namespace TheOtherRoles {
             // Other options
             specialOptions = new CustomOptionBlank(null);
             lastImpostorEnable = CustomOption.Create(9900, "ラストインポスター有効化", true, specialOptions, true);
-            lastImpostorNumKills = CustomOption.Create(9901, "占いを行うのに必要なキル数", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
-            lastImpostorResultIsCrewOrNot = CustomOption.Create(9902, "占い結果がクルーとクルー以外になる", true, lastImpostorEnable);
-            airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
+            lastImpostorFunctions = CustomOption.Create(9901, "ラストインポスター時に有効になる能力", new string[]{"占い", "ゲッサー"}, lastImpostorEnable);
+            lastImpostorNumKills = CustomOption.Create(9902, "能力発動に必要なキル数", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
+            lastImpostorResultIsCrewOrNot = CustomOption.Create(9903, "占い結果がクルーとクルー以外になる", true, lastImpostorEnable);
+            lastImpostorNumShots = CustomOption.Create(9904, "ゲッサー弾丸数", 1f, 1f, 15f, 1f, lastImpostorEnable );
+            airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, true, format: "unitSeconds");
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(5, "noVoteIsSelfVote", false, specialOptions);

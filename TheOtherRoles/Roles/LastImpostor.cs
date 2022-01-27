@@ -20,7 +20,8 @@ namespace TheOtherRoles
         public static int killCounter = 0;
         public static int maxKillCounter {get {return (int)CustomOptionHolder.lastImpostorNumKills.getFloat();}}
         public static int numUsed = 0;
-
+        public static int remainingShots = 0;
+        public static int selectedFunction {get {return CustomOptionHolder.lastImpostorFunctions.getSelection();}}
         public static bool resultIsCrewOrNot {get {return CustomOptionHolder.lastImpostorResultIsCrewOrNot.getBool();}}
 
         public LastImpostor()
@@ -62,7 +63,7 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if (!MapOptions.playerIcons.ContainsKey(index) || !p.isRole(RoleId.LastImpostor)) return false;
+                    if (!MapOptions.playerIcons.ContainsKey(index) || !p.isRole(RoleId.LastImpostor) || LastImpostor.selectedFunction != 0) return false;
                     else if (p.Data.IsDead || p.PlayerId == index || numUsed >= 1)
                     {
                         MapOptions.playerIcons[index].gameObject.SetActive(false);
@@ -142,6 +143,7 @@ namespace TheOtherRoles
             players = new List<LastImpostor>();
             killCounter = 0;
             numUsed = 0;
+            remainingShots = (int)CustomOptionHolder.lastImpostorNumShots.getFloat();
         }
         public static bool isCounterMax(){
             if(maxKillCounter <= killCounter) return true;

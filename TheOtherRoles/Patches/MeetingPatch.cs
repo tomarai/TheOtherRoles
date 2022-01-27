@@ -396,7 +396,24 @@ namespace TheOtherRoles.Patches {
 
             foreach (RoleInfo roleInfo in RoleInfo.allRoleInfos)
             {
-                RoleId guesserRole = (Guesser.niceGuesser != null && PlayerControl.LocalPlayer.PlayerId == Guesser.niceGuesser.PlayerId) ? RoleId.NiceGuesser : RoleId.EvilGuesser;
+                RoleId guesserRole;
+                if(PlayerControl.LocalPlayer.isRole(RoleId.NiceGuesser))
+                {
+                    guesserRole = RoleId.NiceGuesser;
+                }
+                else if(PlayerControl.LocalPlayer.isRole(RoleId.EvilGuesser))
+                {
+                    guesserRole = RoleId.EvilGuesser;
+                }
+                else if(PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor))
+                {
+                    guesserRole = RoleId.LastImpostor;
+                }
+                else
+                {
+                    guesserRole = RoleId.NiceGuesser;
+                }
+                
                 if (roleInfo == null || 
                     roleInfo.roleId == RoleId.Lovers || 
                     roleInfo.roleId == guesserRole || 
@@ -404,7 +421,8 @@ namespace TheOtherRoles.Patches {
 					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleId.EvilGuesser && roleInfo.roleId == RoleId.Spy) ||
                     roleInfo == RoleInfo.gm ||
                     roleInfo == RoleInfo.createdMadmate && RoleInfo.madmate.enabled||
-                    (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings))
+                    (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings) ||
+                    roleInfo == RoleInfo.lastImpostor)
                     continue; // Not guessable roles
                 Transform buttonParent = (new GameObject()).transform;
                 buttonParent.SetParent(container);
@@ -569,7 +587,9 @@ namespace TheOtherRoles.Patches {
             }
 
             // Add Guesser Buttons
-            if (Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) > 0) {
+            bool isGuesserButton = Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) > 0;
+            bool isLastImpostorButton = PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor) && LastImpostor.remainingShots > 0 && LastImpostor.selectedFunction == 1 && LastImpostor.isCounterMax();
+            if (isGuesserButton || isLastImpostorButton) {
                 for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
                     if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId || playerVoteArea.TargetPlayerId == GM.gm?.PlayerId) continue;
