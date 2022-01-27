@@ -23,6 +23,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.5.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.1/TheOtherRoles-GM-Haoming.v1.5.1.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.0/TheOtherRoles-GM-Haoming.v1.5.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.4.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.4.0/TheOtherRoles-GM-Haoming.v1.4.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.3.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.3.0/TheOtherRoles-GM-Haoming.v1.3.0.zip)|
@@ -81,8 +82,11 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 
 |オプション名|説明|
 |-----------|----|
-|占いを行うのに必要なキル数|設定したキル数を行うと画面右下に一度だけ使える占いボタンが出現する|
+|ラストインポスター有効化|ONにするとラストインポスターが有効になる|
+|ラストインポスター時に有効になる能力|ゲッサー/占いのどちらかを選ぶことができる
+|能力発動に必要なキル数|設定したキル数を行うと画面右下に一度だけ使える占いボタンが出現する|
 |占い結果がクルーとクルー以外になる|ONにすると占い結果がクルーとクルー以外の二択になる、OFFにすると役職名が表示される|
+|ゲッサー弾丸数|ゲッサー選択時に能力を発動できる回数|
 
 ## 占い師
 ※現在調整中  
