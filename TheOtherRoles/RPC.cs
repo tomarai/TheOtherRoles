@@ -75,6 +75,7 @@ namespace TheOtherRoles
         UncheckedCmdReportDeadBody,
         ConsumeAdminTime,
         UncheckedExilePlayer,
+        DynamicMapOption,
 
         // Role functionality
 
@@ -337,6 +338,10 @@ namespace TheOtherRoles
         public static void uncheckedExilePlayer(byte targetId) {
             PlayerControl target = Helpers.playerById(targetId);
             if (target != null) target.Exiled();
+        }
+
+        public static void dynamicMapOption(byte mapId) {
+            PlayerControl.GameOptions.MapId = mapId;
         }
 
         // Role functionality
@@ -898,6 +903,10 @@ namespace TheOtherRoles
                 case (byte)CustomRPC.ConsumeAdminTime:
                     float delta = reader.ReadSingle();
                     RPCProcedure.consumeAdminTime(delta);
+                    break;
+                case (byte)CustomRPC.DynamicMapOption:
+                    byte mapId = reader.ReadByte();
+                    RPCProcedure.dynamicMapOption(mapId);
                     break;
 
                 // Role functionality
