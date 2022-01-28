@@ -68,6 +68,14 @@ namespace TheOtherRoles
             var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
             return  tasksCompleted >= numTasks;
         }
+        public static bool canDivine(byte index)
+        {
+            bool status = true;
+            if (playerStatus.ContainsKey(index)){
+                status = playerStatus[index];
+            }
+            return Uranai.progress[index] >= Uranai.duration || !status;
+        }
 
         public static List<CustomButton> uranaiButtons;
         public static void MakeButtons(HudManager hm)
@@ -84,8 +92,11 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    PlayerControl p = Helpers.playerById(index);
-                    Uranai.divine(p, resultIsCrewOrNot);
+                    if(PlayerControl.LocalPlayer.CanMove && numUsed < 1 && canDivine(index))
+                    {
+                        PlayerControl p = Helpers.playerById(index);
+                        Uranai.divine(p, resultIsCrewOrNot);
+                    }
                 };
             };
 
@@ -94,71 +105,83 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if (!MapOptions.playerIcons.ContainsKey(index) || !p.isRole(RoleId.Uranai)) return false;
-                    else if (p.Data.IsDead || !isCompletedNumTasks(p) || p.PlayerId == index || numUsed >= 1)
+                    if (p.isRole(RoleId.Uranai) && p.CanMove && p.isAlive() & p.PlayerId != index
+                        && MapOptions.playerIcons.ContainsKey(index) && isCompletedNumTasks(p) && numUsed < 1)
                     {
-                        MapOptions.playerIcons[index].gameObject.SetActive(false);
+                        return true;
+                    } 
+                    else
+                    {
+                        if(MapOptions.playerIcons.ContainsKey(index))
+                            MapOptions.playerIcons[index].gameObject.SetActive(false);
+                        if(uranaiButtons.Count < index)
+                            uranaiButtons[index].setActive(false);
+
                         return false;
                     }
-                    else if (PlayerControl.LocalPlayer.isRole(RoleId.Uranai) && PlayerControl.LocalPlayer.CanMove) return true;
-                    return false;
                 };
             }
 
+            void setButtonPos(byte index)
+            {
+                Vector3 pos = uranaiCalcPos(index);
+                Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
 
+                Vector3 iconBase = hm.UseButton.transform.localPosition;
+                iconBase.x *= -1;
+                if (uranaiButtons[index].PositionOffset != pos)
+                {
+                    uranaiButtons[index].PositionOffset = pos;
+                    uranaiButtons[index].LocalScale = scale;
+                    MapOptions.playerIcons[index].transform.localPosition = iconBase + pos;
+                }
+            }
+            void setIconPos(byte index, bool transparent)
+            {
+                MapOptions.playerIcons[index].transform.localScale = Vector3.one * 0.25f;
+                MapOptions.playerIcons[index].gameObject.SetActive(PlayerControl.LocalPlayer.CanMove);
+                MapOptions.playerIcons[index].setSemiTransparent(transparent);
+            }
             Func<bool> uranaiCouldUse(byte index)
             {
                 return () =>
                 {
-                    if (!MapOptions.playerIcons.ContainsKey(index) || !PlayerControl.LocalPlayer.isRole(RoleId.Uranai)) return false;
+                    //　占い師以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
+                    if (!MapOptions.playerIcons.ContainsKey(index) ||
+                        !PlayerControl.LocalPlayer.isRole(RoleId.Uranai)) 
+                    {
+                        return false;
+                    }
 
-                    // 占い可能か判定
+                    // ボタンの位置を変更
+                    setButtonPos(index);
+
+
+                    // ボタンにテキストを設定
                     bool status = true;
-                    if(playerStatus.ContainsKey(index)){
+                    if (playerStatus.ContainsKey(index)){
                         status = playerStatus[index];
                     }
-                    bool canDivine = Uranai.progress[index] >= Uranai.duration || !status;
-
-                    Vector3 pos = uranaiCalcPos(index);
-                    Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
-
-                    Vector3 iconBase = hm.UseButton.transform.localPosition;
-                    iconBase.x *= -1;
-                    if (uranaiButtons[index].PositionOffset != pos)
-                    {
-                        uranaiButtons[index].PositionOffset = pos;
-                        uranaiButtons[index].LocalScale = scale;
-                        MapOptions.playerIcons[index].transform.localPosition = iconBase + pos;
-                    }
-
-                    MapOptions.playerIcons[index].transform.localScale = Vector3.one * 0.25f;
-                    MapOptions.playerIcons[index].gameObject.SetActive(PlayerControl.LocalPlayer.CanMove);
-                    MapOptions.playerIcons[index].setSemiTransparent(!canDivine);
-                    if(playerStatus.Count == 0)
+                    if(status)
                     {
                         uranaiButtons[index].buttonText = $"{Uranai.progress[index]:.0}/{Uranai.duration}";
                     }
                     else
                     {
-                        if(playerStatus[p.PlayerId]){
-                            uranaiButtons[index].buttonText = $"{Uranai.progress[index]:.0}/{Uranai.duration}";
-                        }
-                        else
-                        {
-                            uranaiButtons[index].buttonText = "死亡";
-                        }
+                        uranaiButtons[index].buttonText = "死亡";
                     }
-                    return PlayerControl.LocalPlayer.CanMove && numUsed < 1 && canDivine;
+
+                    // アイコンの位置と透明度を変更
+                    setIconPos(index, !canDivine(index));
+                    
+                    return PlayerControl.LocalPlayer.CanMove && numUsed < 1 && canDivine(index);
                 };
             }
 
 
             for (byte i = 0; i < 15; i++)
             {
-                //TheOtherRolesPlugin.Instance.Log.LogInfo($"Added {i}");
-                // if(i >= PlayerControl.AllPlayerControls.Count) break;
-
                 CustomButton uranaiButton = new CustomButton(
                     // Action OnClick
                     uranaiButtonOnClick(i),
@@ -194,9 +217,9 @@ namespace TheOtherRoles
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
+                if(!progress.ContainsKey(p.PlayerId)) progress[p.PlayerId] = 0f;
                 if (p.isDead()) continue;
                 var uranai = PlayerControl.LocalPlayer;
-                if(!progress.ContainsKey(p.PlayerId)) progress[p.PlayerId] = 0f;
                 float distance = Vector3.Distance(p.transform.position, uranai.transform.position);
                 // 障害物判定
                 bool anythingBetween = PhysicsHelpers.AnythingBetween(p.GetTruePosition(), uranai.GetTruePosition(), Constants.ShipAndObjectsMask, false);
