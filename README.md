@@ -23,6 +23,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.5.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.4/TheOtherRoles-GM-Haoming.v1.5.4.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.3/TheOtherRoles-GM-Haoming.v1.5.3.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.2/TheOtherRoles-GM-Haoming.v1.5.2.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.1/TheOtherRoles-GM-Haoming.v1.5.1.zip)|
@@ -167,13 +168,15 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |-----------|----|
 |リアクターとO2を直せる|ONにするとリアクターとO2を直すことができる|
 |クルーはタスクで勝利する|ONにするとクルーがタスク勝利が可能になる|
+|インポスターはサボタージュで勝利する|ONにするとインポスターがサボタージュで勝利可能になる|
 |コモンタスク数|出現するコモンタスク数|
 |ロングタスク数|出現するロングタスク数|
 |ショートタスク数|出現するショートタスク数|
 |透明クールダウン|透明能力の発動に必要なクールダウン|
 |透明時間|透明になることができる時間|
+|透明中にサボタージュを直せる|ONにすると透明中二サボタージュを直すことができる|
 |背徳者を作れる|ONにすると背徳者を作ることができる|
-|リペア回数|サボタージュを即時修理可能なボタンの使用回数|
+|背徳者矢印(背徳者→妖狐)|ONにすると背徳者から妖狐に矢印が表示される|
 
 立ち回り
 - キル陣営を把握して逃げることで死を回避する（必要に応じて透明能力を使う）

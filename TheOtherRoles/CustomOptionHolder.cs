@@ -328,6 +328,7 @@ namespace TheOtherRoles {
         public static CustomOption foxNumCommonTasks;
         public static CustomOption foxNumLongTasks;
         public static CustomOption foxNumShortTasks;
+        public static CustomOption foxImmoralistArrow;
         public static CustomRoleOption munouSpawnRate;
         public static CustomRoleOption munou2ndSpawnRate;
         public static CustomOption munou2ndProbability;
@@ -555,8 +556,9 @@ namespace TheOtherRoles {
             foxNumShortTasks = CustomOption.Create(916, "ショートタスク数", 2f, 0f, 4f, 1f, foxSpawnRate);
             foxStealthCooldown = CustomOption.Create(917, "透明クールダウン", 15f, 1f, 30f, 1f, foxSpawnRate);
             foxStealthDuration = CustomOption.Create(918, "透明時間", 15f, 1f, 30f, 1f, foxSpawnRate);
-            foxCanCreateImmoralist = CustomOption.Create(919, "背徳者を作れる", true, foxSpawnRate);
-            foxCanFixSabotageWhileStealth  = CustomOption.Create(920, "透明中にサボタージュを直せる", true, foxSpawnRate);
+            foxCanFixSabotageWhileStealth  = CustomOption.Create(919, "透明中にサボタージュを直せる", true, foxSpawnRate);
+            foxCanCreateImmoralist = CustomOption.Create(920, "背徳者を作れる", true, foxSpawnRate);
+            foxImmoralistArrow = CustomOption.Create(921, "背徳者矢印(背徳者→妖狐)", true, foxSpawnRate);
 
             munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
             munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 1);

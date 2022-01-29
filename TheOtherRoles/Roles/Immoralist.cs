@@ -17,6 +17,7 @@ namespace TheOtherRoles
     {
         public static Color color = Fox.color;
         private static CustomButton immoralistButton;
+        private static bool immoralistArrow {get {return CustomOptionHolder.foxImmoralistArrow.getBool();}}
 
         public Immoralist()
         {
@@ -27,7 +28,7 @@ namespace TheOtherRoles
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Immoralist))
+            if(PlayerControl.LocalPlayer.isRole(RoleId.Immoralist) && immoralistArrow)
             {
                 arrowUpdate();
             }
