@@ -43,7 +43,11 @@ namespace TheOtherRoles.Patches
             
             if (pc.isRole(RoleId.Fox) && (isLights || isComms || isReactor || isO2))
             {
-                if(isLights|| isComms)
+                if(Fox.foxCanFixSabotageWhileStealth && Fox.isStealthed(pc))
+                {
+                    return false;
+                }
+                else if(isLights|| isComms)
                 {
                     return true;
                 }

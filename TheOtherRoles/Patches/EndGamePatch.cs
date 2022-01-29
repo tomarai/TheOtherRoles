@@ -116,8 +116,12 @@ namespace TheOtherRoles.Patches
 
             Boolean isFoxCompletedTasks = Fox.isFoxCompletedTasks(); // 生存中の狐が1匹でもタスクを全て終えていること
             if(isFoxAlive && isFoxCompletedTasks){
-                // タスク勝利の場合はオプションの設定次第
+                // タスク・サボタージュ勝利の場合はオプションの設定次第
                 if(gameOverReason == GameOverReason.HumansByTask && !Fox.crewWinsByTasks)
+                {
+                    gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
+                }
+                else if(gameOverReason == GameOverReason.ImpostorBySabotage && !Fox.impostorWinsByTasks)
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
@@ -126,7 +130,8 @@ namespace TheOtherRoles.Patches
                 gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
-                gameOverReason != (GameOverReason)GameOverReason.HumansByTask)
+                gameOverReason != (GameOverReason)GameOverReason.HumansByTask &&
+                gameOverReason != (GameOverReason)GameOverReason.ImpostorBySabotage)
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }

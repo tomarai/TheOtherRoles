@@ -15,13 +15,13 @@ namespace TheOtherRoles
     {
         public static Color color = new Color32(167, 87, 168, byte.MaxValue);
         private static CustomButton foxButton;
-        private static CustomButton foxRepairButton;
         private static CustomButton foxImmoralistButton;
         public static List<Arrow> arrows = new List<Arrow>();
         public static float updateTimer = 0f;
         public static bool canFixReactorAndO2 {get { return CustomOptionHolder.foxCanFixReactorAndO2.getBool();}}
         public static float arrowUpdateInterval = 0.5f;
         public static bool crewWinsByTasks {get { return CustomOptionHolder.foxCrewWinsByTasks.getBool();}}
+        public static bool impostorWinsByTasks {get { return CustomOptionHolder.foxImpostorWinsBySabotage.getBool();}}
         public static float stealthCooldown {get {return CustomOptionHolder.foxStealthCooldown.getFloat();}}
         public static float stealthDuration {get {return CustomOptionHolder.foxStealthDuration.getFloat();}}
         public static int numCommonTasks {get {return (int)CustomOptionHolder.foxNumCommonTasks.getFloat();}}
@@ -30,8 +30,7 @@ namespace TheOtherRoles
         public bool stealthed = false;
         public DateTime stealthedAt = DateTime.UtcNow;
         public static float fadeTime = 1f;
-        public static int optNumRepair {get {return (int)CustomOptionHolder.foxNumRepair.getFloat();}}
-        public static int numRepair = 0;
+        public static bool foxCanFixSabotageWhileStealth {get {return CustomOptionHolder.foxCanFixSabotageWhileStealth.getBool();}}
         public static bool canCreateImmoralist {get {return CustomOptionHolder.foxCanCreateImmoralist.getBool();}}
         public static PlayerControl currentTarget;
         public static PlayerControl immoralist;
@@ -43,7 +42,6 @@ namespace TheOtherRoles
             stealthed = false;
             stealthedAt = DateTime.UtcNow;
             RoleType = roleId = RoleId.Fox;
-            numRepair = optNumRepair;
             immoralist = null;
             currentTarget = null;
             exiledFox = new List<byte>();
@@ -229,66 +227,6 @@ namespace TheOtherRoles
             foxButton.buttonText = ModTranslation.getString("NinjaText");
             foxButton.effectCancellable = true;
 
-            foxRepairButton = new CustomButton(
-                () =>
-                {
-                    bool sabotageActive = false;
-                    foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
-                        if (task.TaskType == TaskTypes.FixLights || task.TaskType == TaskTypes.RestoreOxy || task.TaskType == TaskTypes.ResetReactor || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.FixComms || task.TaskType == TaskTypes.StopCharles)
-                            sabotageActive = true;
-                    if(!sabotageActive) return;
-
-                    foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
-                    {
-                        if (task.TaskType == TaskTypes.FixLights)
-                        {
-                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.EngineerFixLights, Hazel.SendOption.Reliable, -1);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-                            RPCProcedure.engineerFixLights();
-                        }
-                        else if (task.TaskType == TaskTypes.RestoreOxy)
-                        {
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.LifeSupp, 0 | 64);
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.LifeSupp, 1 | 64);
-                        }
-                        else if (task.TaskType == TaskTypes.ResetReactor)
-                        {
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 16);
-                        }
-                        else if (task.TaskType == TaskTypes.ResetSeismic)
-                        {
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Laboratory, 16);
-                        }
-                        else if (task.TaskType == TaskTypes.FixComms)
-                        {
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 0);
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 1);
-                        }
-                        else if (task.TaskType == TaskTypes.StopCharles)
-                        {
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 0 | 16);
-                            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 1 | 16);
-                        }
-                    }
-                    numRepair -= 1;
-                },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Fox)  && PlayerControl.LocalPlayer.isAlive() && numRepair > 0; },
-                () =>
-                {
-                    bool sabotageActive = false;
-                    foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
-                        if (task.TaskType == TaskTypes.FixLights || task.TaskType == TaskTypes.RestoreOxy || task.TaskType == TaskTypes.ResetReactor || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.FixComms || task.TaskType == TaskTypes.StopCharles)
-                            sabotageActive = true;
-                    return sabotageActive && numRepair > 0 && PlayerControl.LocalPlayer.CanMove;
-                },
-                () => { },
-                Fox.getRepairButtonSprite(),
-                new Vector3(-2.7f, -0.06f, 0),
-                hm,
-                hm.AbilityButton,
-                KeyCode.G
-            );
-            foxRepairButton.buttonText = " ";
 
             foxImmoralistButton = new CustomButton(
                 () =>
