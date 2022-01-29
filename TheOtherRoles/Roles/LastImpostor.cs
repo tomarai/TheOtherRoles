@@ -39,6 +39,7 @@ namespace TheOtherRoles
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public static List<CustomButton> lastImpostorButtons = new List<CustomButton>();
+        static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
         public static void MakeButtons(HudManager hm)
         {
             lastImpostorButtons = new List<CustomButton>();
@@ -63,42 +64,87 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if (!MapOptions.playerIcons.ContainsKey(index) || !p.isRole(RoleId.LastImpostor) || LastImpostor.selectedFunction != 0) return false;
-                    else if (p.Data.IsDead || p.PlayerId == index || numUsed >= 1)
+                    if(!p.isRole(RoleId.LastImpostor)) return false;
+                    if (p.isRole(RoleId.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
+                        && MapOptions.playerIcons.ContainsKey(index) && numUsed < 1 && isCounterMax())
                     {
-                        MapOptions.playerIcons[index].gameObject.SetActive(false);
+                        return true;
+                    } 
+                    else
+                    {
+                        if(playerIcons.ContainsKey(index))
+                        {
+                            playerIcons[index].gameObject.SetActive(false);
+                            if(PlayerControl.LocalPlayer.isRole(RoleId.BountyHunter))
+                                setBountyIconPos(Vector3.zero);
+                        }
+                        if(lastImpostorButtons.Count > index)
+                        {
+                            lastImpostorButtons[index].setActive(false);
+                        }
                         return false;
                     }
-                    else if (PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor) && PlayerControl.LocalPlayer.CanMove && isCounterMax()) return true;
-                    return false;
                 };
             }
 
+            void setButtonPos(byte index)
+            {
+                Vector3 pos = lastImpostorCalcPos(index);
+                Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
+
+                Vector3 iconBase = hm.UseButton.transform.localPosition;
+                iconBase.x *= -1;
+                if (lastImpostorButtons[index].PositionOffset != pos)
+                {
+                    lastImpostorButtons[index].PositionOffset = pos;
+                    lastImpostorButtons[index].LocalScale = scale;
+                    playerIcons[index].transform.localPosition = iconBase + pos;
+                }
+            }
+
+            void setIconStatus(byte index, bool transparent)
+            {
+                playerIcons[index].transform.localScale = Vector3.one * 0.25f;
+                playerIcons[index].gameObject.SetActive(PlayerControl.LocalPlayer.CanMove);
+                playerIcons[index].setSemiTransparent(transparent);
+            }
+
+            void setBountyIconPos(Vector3 offset){
+                Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                PoolablePlayer icon = MapOptions.playerIcons[BountyHunter.bounty.PlayerId];
+                icon.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0) + offset;
+                BountyHunter.cooldownText.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, -1f) + offset;
+            }
 
             Func<bool> lastImpostorCouldUse(byte index)
             {
                 return () =>
                 {
-                    if (!MapOptions.playerIcons.ContainsKey(index) || !PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor)) return false;
+                    //　ラストインポスター以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
-
-                    Vector3 pos = lastImpostorCalcPos(index);
-                    Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
-
-                    Vector3 iconBase = hm.UseButton.transform.localPosition;
-                    iconBase.x *= -1;
-                    if (lastImpostorButtons[index].PositionOffset != pos)
+                    if (!playerIcons.ContainsKey(index) ||
+                        !PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor) ||
+                        !isCounterMax()) 
                     {
-                        lastImpostorButtons[index].PositionOffset = pos;
-                        lastImpostorButtons[index].LocalScale = scale;
-                        MapOptions.playerIcons[index].transform.localPosition = iconBase + pos;
+                        return false;
                     }
 
-                    MapOptions.playerIcons[index].transform.localScale = Vector3.one * 0.25f;
-                    MapOptions.playerIcons[index].gameObject.SetActive(PlayerControl.LocalPlayer.CanMove);
-                    MapOptions.playerIcons[index].setSemiTransparent(false);
-                    string buttonText =  PlayerControl.AllPlayerControls[index].isAlive() ? "生存" : "死亡";
-                    lastImpostorButtons[index].buttonText = buttonText;
+                    // ボタンの位置を変更
+                    setButtonPos(index);
+
+                    // ボタンにテキストを設定
+                    lastImpostorButtons[index].buttonText = PlayerControl.LocalPlayer.isAlive() ? "生存": "死亡";
+
+                    // アイコンの位置と透明度を変更
+                    setIconStatus(index, false);
+
+                    // Bounty Hunterの場合賞金首の位置をずらして表示する
+                    if(PlayerControl.LocalPlayer.isRole(RoleId.BountyHunter))
+                    {
+                        Vector3 offset = new Vector3(0f, 1f, 0f);
+                        setBountyIconPos(offset);
+                    }
+                    
                     return PlayerControl.LocalPlayer.CanMove && numUsed < 1;
                 };
             }
@@ -106,9 +152,6 @@ namespace TheOtherRoles
 
             for (byte i = 0; i < 15; i++)
             {
-                //TheOtherRolesPlugin.Instance.Log.LogInfo($"Added {i}");
-                // if(i >= PlayerControl.AllPlayerControls.Count) break;
-
                 CustomButton lastImpostorButton = new CustomButton(
                     // Action OnClick
                     lastImpostorButtonOnClick(i),
@@ -144,6 +187,7 @@ namespace TheOtherRoles
             killCounter = 0;
             numUsed = 0;
             remainingShots = (int)CustomOptionHolder.lastImpostorNumShots.getFloat();
+            playerIcons = new Dictionary<byte, PoolablePlayer>();
         }
         public static bool isCounterMax(){
             if(maxKillCounter <= killCounter) return true;
@@ -171,6 +215,26 @@ namespace TheOtherRoles
         {
             Uranai.divine(p, resultIsCrewOrNot);
             numUsed += 1;
+        }
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
+        class IntroCutsceneOnDestroyPatch
+        {
+            public static void Prefix(IntroCutscene __instance) {
+                if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
+                {
+                    Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
+                        GameData.PlayerInfo data = p.Data;
+                        PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
+                        player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);
+                        player.SetFlipX(true);
+                        player.PetSlot.gameObject.SetActive(false);
+                        player.NameText.text = p.Data.DefaultOutfit.PlayerName;
+                        player.gameObject.SetActive(false);
+                        playerIcons[p.PlayerId] = player;
+                    }
+                }
+            }
         }
     }
 }

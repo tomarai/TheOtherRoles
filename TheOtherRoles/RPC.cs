@@ -1147,8 +1147,15 @@ namespace TheOtherRoles
             if (target.isDead()) return;
             // 呪殺
             if(target.isRole(RoleId.Fox)){
-                KillAnimationCoPerformKillPatch.hideNextAnimation = true;
-                uranai.MurderPlayer(target);
+                if(!PlayerControl.LocalPlayer.isRole(RoleId.Uranai))
+                {
+                    KillAnimationCoPerformKillPatch.hideNextAnimation = true;
+                    uranai.MurderPlayer(target);
+                }
+                else
+                {
+                    target.MurderPlayer(target);
+                }
             }
             // インポスターの場合は占い師の位置に矢印を表示 ラストインポスターの占いの場合は表示しない
             if(uranai.isRole(RoleId.Uranai) && PlayerControl.LocalPlayer.isImpostor()){

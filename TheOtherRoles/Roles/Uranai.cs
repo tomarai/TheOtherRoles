@@ -105,7 +105,8 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if (p.isRole(RoleId.Uranai) && p.CanMove && p.isAlive() & p.PlayerId != index
+                    if(!p.isRole(RoleId.Uranai)) return false;
+                    if (p.CanMove && p.isAlive() & p.PlayerId != index
                         && MapOptions.playerIcons.ContainsKey(index) && isCompletedNumTasks(p) && numUsed < 1)
                     {
                         return true;
@@ -114,7 +115,7 @@ namespace TheOtherRoles
                     {
                         if(MapOptions.playerIcons.ContainsKey(index))
                             MapOptions.playerIcons[index].gameObject.SetActive(false);
-                        if(uranaiButtons.Count < index)
+                        if(uranaiButtons.Count > index)
                             uranaiButtons[index].setActive(false);
 
                         return false;
@@ -307,7 +308,6 @@ namespace TheOtherRoles
             if (!string.IsNullOrWhiteSpace(msg))
             {   
                 uranaiMessage(msg, 5f, color);
-                
             }
             if(Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(DestroyableSingleton<HudManager>.Instance.TaskCompleteSound, false, 0.8f);
             numUsed += 1;
