@@ -219,7 +219,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleId.SerialKiller)) infos.Add(serialKiller);
             if (p.isRole(RoleId.Fox)) infos.Add(fox);
             if (p.isRole(RoleId.Immoralist)) infos.Add(immoralist);
-            if (p.isRole(RoleId.LastImpostor)) infos.Add(lastImpostor);
             if (p.isRole(RoleId.FortuneTeller)) infos.Add(fortuneTeller);
             if(p.isRole(RoleId.Uranai))
             {
@@ -246,10 +245,17 @@ namespace TheOtherRoles
                 }
             }
 
+            if (p.isRole(RoleId.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
+
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
             if (infos.Count == 0 && !p.Data.Role.IsImpostor) infos.Add(crewmate); // Just Crewmate
+            if (infos.Count == 1 && infos[0] == lastImpostor)
+            {
+                infos[0] = impostor;
+                infos.Add(lastImpostor);
+            }
 
             // Modifier
             if (p.isLovers()) infos.Add(lovers);
