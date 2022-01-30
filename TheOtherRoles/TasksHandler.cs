@@ -50,6 +50,11 @@ namespace TheOtherRoles {
                         CompletedTasks++;
                     }
                 }
+                if(playerInfo.Object.isRole(RoleId.Fox))
+                {
+                    TotalTasks = Fox.numCommonTasks + Fox.numCommonTasks + Fox.numShortTasks;
+                }
+
             }
             return Tuple.Create(CompletedTasks, TotalTasks);
         }
