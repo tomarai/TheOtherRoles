@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>1.5.6</Version>
+        <Version>1.5.7</Version>
         <Description>TheOtherRoles: GM Edition</Description>
         <Authors>Eisbison</Authors>
     </PropertyGroup>
@@ -28,7 +28,7 @@
 
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
         <Message Text="Second occurrence" />
-        <Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\TheOtherRolesGM.dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
+        <Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\TheOtherRolesGM.dll" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
     </Target>
 
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
