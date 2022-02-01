@@ -339,6 +339,12 @@ namespace TheOtherRoles {
         public static CustomOption lastImpostorFunctions;
         public static CustomOption lastImpostorResultIsCrewOrNot;
         public static CustomOption lastImpostorNumShots;
+        public static CustomRoleOption schrodingersCatSpawnRate;
+        public static CustomOption schrodingersCatKillCooldown;
+        public static CustomOption schrodingersCatBecomesImpostor;
+        public static CustomOption schrodingersCatKillsKiller;
+        public static CustomOption schrodingersCatCantKillUntilLastOne;
+        public static CustomOption schrodingersCatBecomesRandomTeamOnExiled;
 
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
@@ -559,6 +565,13 @@ namespace TheOtherRoles {
             foxCanFixSabotageWhileStealth  = CustomOption.Create(919, "透明中にサボタージュを直せる", true, foxSpawnRate);
             foxCanCreateImmoralist = CustomOption.Create(920, "背徳者を作れる", true, foxSpawnRate);
             foxImmoralistArrow = CustomOption.Create(921, "背徳者矢印(背徳者→妖狐)", true, foxSpawnRate);
+
+            schrodingersCatSpawnRate = new CustomRoleOption(970, "シュレディンガーの猫", SchrodingersCat.color, 1);
+            schrodingersCatKillCooldown = CustomOption.Create(971, "キルクールダウン", 20f, 1f, 60f, 0.5f, schrodingersCatSpawnRate);
+            schrodingersCatBecomesImpostor = CustomOption.Create(972, "マッドメイトの代わりにインポスターになる", true, schrodingersCatSpawnRate);
+            schrodingersCatKillsKiller = CustomOption.Create(973, "キラーが死亡する", false, schrodingersCatSpawnRate);
+            schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, "最後の一人になるまでキルできない", false, schrodingersCatSpawnRate);
+            schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "追放時にランダムな陣営になる", false, schrodingersCatSpawnRate);
 
             munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
             munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 1);

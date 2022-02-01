@@ -96,6 +96,7 @@ namespace TheOtherRoles
         public static RoleInfo uranai= new RoleInfo("占い師2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleId.Uranai);
         public static RoleInfo munou = new RoleInfo("無能", Munou.color, CustomOptionHolder.munouSpawnRate, RoleId.Munou);
         public static RoleInfo munou2nd = new RoleInfo("無能2nd", Munou2nd.color, CustomOptionHolder.munou2ndSpawnRate, RoleId.Munou2nd);
+        public static RoleInfo schrodingersCat = new RoleInfo("シュレディンガーの猫", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleId.SchrodingersCat);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -157,7 +158,8 @@ namespace TheOtherRoles
                 lastImpostor,
                 fortuneTeller,
                 uranai,
-                munou
+                munou,
+                schrodingersCat
             };
 
         public static string tl(string key)
@@ -244,6 +246,7 @@ namespace TheOtherRoles
                     infos.Add(crewmate);
                 }
             }
+            if(p.isRole(RoleId.SchrodingersCat)) infos.Add(schrodingersCat);
 
             if (p.isRole(RoleId.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 

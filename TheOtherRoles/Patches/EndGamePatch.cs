@@ -187,6 +187,7 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(PlagueDoctor.allPlayers);
             notWinners.AddRange(Fox.allPlayers);
             notWinners.AddRange(Immoralist.allPlayers);
+            if (!SchrodingersCat.crewFlag) notWinners.AddRange(SchrodingersCat.allPlayers);
 
             // Neutral shifter can't win
             if (Shifter.shifter != null && Shifter.isNeutral) notWinners.Add(Shifter.shifter);
@@ -308,6 +309,15 @@ namespace TheOtherRoles.Patches
                     wpdFormerJackal.IsImpostor = false;
                     TempData.winners.Add(wpdFormerJackal);
                 }
+                if (SchrodingersCat.jackalFlag)
+                {
+                    foreach (var player in SchrodingersCat.allPlayers)
+                    {
+                        WinningPlayerData wpdSchrodingersCat= new WinningPlayerData(player.Data);
+                        wpdSchrodingersCat.IsImpostor = false;
+                        TempData.winners.Add(wpdSchrodingersCat);
+                    }
+                }
             }
             // Lawyer solo win 
             else if (lawyerSoloWin)
@@ -361,6 +371,15 @@ namespace TheOtherRoles.Patches
             {
                 WinningPlayerData wpd = new WinningPlayerData(CreatedMadmate.madmate.Data);
                 TempData.winners.Add(wpd);
+            }
+
+            if (SchrodingersCat.impostorFlag && TempData.winners.ToArray().Any(x=> x.IsImpostor))
+            {
+                foreach ( var p in SchrodingersCat.allPlayers)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                    TempData.winners.Add(wpd);
+                }
             }
 
             // Possible Additional winner: Lawyer
@@ -997,6 +1016,16 @@ namespace TheOtherRoles.Patches
                                 {
                                     numJackalAlive++;
                                     if (lover) jackalLovers++;
+                                }
+                                if (SchrodingersCat.jackalFlag)
+                                {
+                                    foreach(var p in SchrodingersCat.allPlayers)
+                                    {
+                                        if(p.PlayerId == playerInfo.PlayerId)
+                                        {
+                                            numJackalAlive++;
+                                        }
+                                    }
                                 }
 
                                 if (playerInfo.Object.isNeutral()) numNeutralAlive++;

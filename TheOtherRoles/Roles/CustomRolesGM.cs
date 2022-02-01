@@ -44,6 +44,7 @@ namespace TheOtherRoles
             SoulPlayer.Clear();
             Munou.Clear();
             Munou2nd.Clear();
+            SchrodingersCat.Clear();
             Role.ClearAll();
         }
 

@@ -234,6 +234,7 @@ namespace TheOtherRoles {
                     player.isRole(RoleId.Opportunist) ||
                     player.isRole(RoleId.PlagueDoctor) ||
                     player.isRole(RoleId.Fox) ||
+                    player.isRole(RoleId.SchrodingersCat) ||
                     player.isRole(RoleId.Immoralist) ||
                     player.isRole(RoleId.Vulture) ||
                     player.isRole(RoleId.Lawyer) ||

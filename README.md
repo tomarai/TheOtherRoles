@@ -16,15 +16,15 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |----------|-------------|-----------------|----------------|
 |[シリアルキラー](#シリアルキラー)| [占い師](#占い師) |[妖狐](#妖狐) ||
 |[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[占い師2nd](#占い師2nd)|[背徳者](#背徳者)|
-|[ラストインポスター](#ラストインポスター)|[無能](#無能)||
+|[ラストインポスター](#ラストインポスター)|[無能](#無能)|[シュレディンガーの猫](#シュレディンガーの猫)|
 ||[無能2nd](#無能2nd)||
 
 
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.5.9|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.9/TheOtherRoles-GM-Haoming.v1.5.9.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.8/TheOtherRoles-GM-Haoming.v1.5.8.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.7/TheOtherRoles-GM-Haoming.v1.5.7.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.7/TheOtherRoles-GM-Haoming.v1.5.7.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.4/TheOtherRoles-GM-Haoming.v1.5.4.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.3/TheOtherRoles-GM-Haoming.v1.5.3.zip)|
@@ -198,6 +198,26 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 - 妖狐の代わりにサボタージュを直して妖狐が直したことにしてあげる   
 - サボタージュを直さないことで妖狐のフリをして代わりに吊られる  
 - キルフラッシュタイミングで自殺することで妖狐が死んだと偽装する  
+
+## シュレディンガーの猫
+※調整中  
+第３陣営  
+デフォルトでは勝利条件を持たない  
+条件を満たすことで始めて勝利条件を持つ  
+1. インポスターにキルされるとインポスター陣営として復活する
+2. ジャッカルにキルされるとジャッカル陣営として復活する
+3. クルーに追放されるとクルー陣営として死亡する
+4. シェリフにキルされるとクルー陣営として復活する
+
+|オプション名|説明|
+|-----------|----|
+|キルクールダウン|ジャッカル、インポスターとして復活した際のキルクルールダウン|
+|マッドメイトの代わりにインポスターになる|ONにするとインポスター陣営として復活した際にインポスターになる|
+|キラーが死亡する|シュレディンガーの猫をキルしたプレイヤーは死亡する|
+|最後の一人になるまでキルできない|インポスター、ジャッカル陣営になった場合に最後の一人になるまでキルできない|
+|追放時にランダムな陣営になる|追放時にインポスター・ジャッカル・クルー陣営のどれかに所属させられる|
+
+
 
 ↓ここから本家のREADMEそのもの↓
 # The Other Roles: GM Edition

@@ -141,6 +141,7 @@ namespace TheOtherRoles.Patches
             neutralSettings.Add((byte)RoleId.Lawyer, CustomOptionHolder.lawyerSpawnRate.data);
             neutralSettings.Add((byte)RoleId.PlagueDoctor, CustomOptionHolder.plagueDoctorSpawnRate.data);
             neutralSettings.Add((byte)RoleId.Fox, CustomOptionHolder.foxSpawnRate.data);
+            neutralSettings.Add((byte)RoleId.SchrodingersCat, CustomOptionHolder.schrodingersCatSpawnRate.data);
 
             crewSettings.Add((byte)RoleId.Uranai, CustomOptionHolder.uranaiSpawnRate.data);
             crewSettings.Add((byte)RoleId.Munou, CustomOptionHolder.munouSpawnRate.data);

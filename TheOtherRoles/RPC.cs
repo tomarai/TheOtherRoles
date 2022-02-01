@@ -75,6 +75,7 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
+        SchrodingersCat,
 
 
         GM = 200,
@@ -610,6 +611,9 @@ namespace TheOtherRoles
                         break;
                     case RoleId.Munou2nd:
                         Munou2nd.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.SchrodingersCat:
+                        SchrodingersCat.swapRole(player, oldShifter);
                         break;
                 }
             }
