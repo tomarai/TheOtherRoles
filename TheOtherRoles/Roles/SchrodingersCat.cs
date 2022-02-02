@@ -1,5 +1,6 @@
 using HarmonyLib;
 using Hazel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,13 +24,21 @@ namespace TheOtherRoles
         public static bool becomesRandomTeamOnExiled {get {return CustomOptionHolder.schrodingersCatBecomesRandomTeamOnExiled.getBool();}}
         public static bool cantKillUntilLastOne {get {return CustomOptionHolder.schrodingersCatCantKillUntilLastOne.getBool();}}
         public static bool killsKiller {get {return CustomOptionHolder.schrodingersCatKillsKiller.getBool();}}
+        public static PlayerControl killer = null;
 
         public SchrodingersCat()
         {
             RoleType = roleId = RoleId.SchrodingersCat;
         }
 
-        public override void OnMeetingStart() { }
+        public override void OnMeetingStart()
+        {
+            // 時限爆弾よりも前にミーティングが来たら直後に死亡する
+            if(killer != null && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat))
+            {
+                Helpers.checkMuderAttemptAndKill(killer, killer, true, false);
+            }
+        } 
         public override void OnMeetingEnd() 
         {
             if (PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat))
@@ -67,22 +76,22 @@ namespace TheOtherRoles
                     switch(rndVal)
                     {
                         case 0:
-                            crewFlag = true;
+                            setCrewFlag();
                             break;
                         case 1:
-                            impostorFlag = true;
+                            setImpostorFlag();
                             break;
                         case 2:
-                            jackalFlag = true;
+                            setJackalFlag();
                             break;
                         default:
-                            crewFlag = true;
+                            setCrewFlag();
                             break;
                     }
                 }
                 else
                 {
-                    crewFlag = true;
+                    setCrewFlag();
                 }
                 return;
             }
@@ -90,28 +99,57 @@ namespace TheOtherRoles
             {
                 if(killer.isImpostor())
                 {
-                    impostorFlag = true;
+                    setImpostorFlag();
                     if(becomesImpostor)
                         DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
                 }
                 else if(killer.isRole(RoleId.Jackal))
                 {
-                    jackalFlag = true;
+                    setJackalFlag();
                 }
                 else if(killer.isRole(RoleId.Sheriff))
                 {
-                    crewFlag = true;
+                    setCrewFlag();
                 }
+                // 蘇生する
                 player.Revive();
+                // 死体を消す
                 DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
                 for (int i = 0; i < array.Length; i++) {
                     if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == player.PlayerId) {
                         array[i].gameObject.active = false;
                     }     
                 }
-                if(killsKiller)
-                {
-                    player.MurderPlayer(killer);
+                
+                SchrodingersCat.killer = killer;
+                if(PlayerControl.LocalPlayer == killer){
+                    // 死亡までのカウントダウン
+                    TMPro.TMP_Text text;
+                    RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
+                    GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
+                    UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                    gameObject.transform.SetParent(HudManager.Instance.transform);
+                    gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
+                    text = gameObject.GetComponent<TMPro.TMP_Text>();
+                    if(killsKiller)
+                    {
+                        HudManager.Instance.StartCoroutine(Effects.Lerp(15f, new Action<float>((p) => {
+                            string message = (15 -(p * 15f)).ToString("0");
+                            bool even = ((int)(p * 15f / 0.25f)) % 2 == 0; // Bool flips every 0.25 seconds
+                            string prefix = (even ? "<color=#FCBA03FF>" : "<color=#FF0000FF>");
+                            text.text = prefix + message + "</color>";
+                            if (text != null) text.color = even ? Color.yellow : Color.red;
+                            if (p == 1f && text != null && text.gameObject != null) {
+                                if(killer.isAlive()){
+                                    MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1);
+                                    killWriter.Write(killer.PlayerId);
+                                    AmongUsClient.Instance.FinishRpcImmediately(killWriter);
+                                    RPCProcedure.serialKillerSuicide(killer.PlayerId);
+                                }
+                                UnityEngine.Object.Destroy(text.gameObject);
+                            }
+                        })));
+                    }
                 }
             }
         }
@@ -151,6 +189,26 @@ namespace TheOtherRoles
             impostorFlag = false;
             crewFlag = false;
             jackalFlag = false;
+            RoleInfo.schrodingersCat.color = color;
+            killer = null;
+        }
+
+        public static void setImpostorFlag()
+        {
+            impostorFlag = true;
+            RoleInfo.schrodingersCat.color = Palette.ImpostorRed;
+        }
+
+        public static void setCrewFlag()
+        {
+            crewFlag = true;
+            RoleInfo.schrodingersCat.color = Color.white;
+        }
+
+        public static void setJackalFlag()
+        {
+            jackalFlag = true;
+            RoleInfo.schrodingersCat.color = Jackal.color;
         }
 
         public static bool isJackalButtonEnable()

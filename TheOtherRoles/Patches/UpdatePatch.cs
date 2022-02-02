@@ -249,8 +249,8 @@ namespace TheOtherRoles.Patches {
             }
 
             PlayerControl player = PlayerControl.LocalPlayer;
-            bool impostorFlag = player.isRole(RoleId.SchrodingersCat) || player.isDead() || player.isImpostor();
-            bool jackalFlag = player.isRole(RoleId.SchrodingersCat) || player.isDead() || player.isRole(RoleId.Jackal) || player.isRole(RoleId.Sidekick);
+            bool impostorFlag = player.isRole(RoleId.SchrodingersCat) ||  player.isImpostor();
+            bool jackalFlag = player.isRole(RoleId.SchrodingersCat) ||  player.isRole(RoleId.Jackal) || player.isRole(RoleId.Sidekick);
             if(SchrodingersCat.crewFlag)
             {
                 foreach (var p in SchrodingersCat.allPlayers)
