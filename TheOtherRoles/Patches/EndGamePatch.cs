@@ -879,16 +879,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    int numFoxAlive = 0;
-                    foreach(var fox in Fox.allPlayers)
-                    {
-                        if(fox.isAlive())
-                        {
-                            numFoxAlive += 1;
-                        }
-
-                    }
-                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - numFoxAlive && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
+                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
                     {
                         __instance.enabled = false;
                         ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.TeamJackalWin, false);
@@ -899,16 +890,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    int numFoxAlive = 0;
-                    foreach(var fox in Fox.allPlayers)
-                    {
-                        if(fox.isAlive())
-                        {
-                            numFoxAlive += 1;
-                        }
-
-                    }
-                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - numFoxAlive && statistics.TeamJackalAlive == 0 && statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
+                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - statistics.FoxAlive && statistics.TeamJackalAlive == 0 && statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
                     {
                         __instance.enabled = false;
                         GameOverReason endReason;
@@ -961,6 +943,7 @@ namespace TheOtherRoles.Patches
                 public int TotalAlive { get; set; }
                 public int TeamImpostorLovers { get; set; }
                 public int TeamJackalLovers { get; set; }
+                public int FoxAlive { get; set; }
 
                 public PlayerStatistics(ShipStatus __instance)
                 {
@@ -988,6 +971,8 @@ namespace TheOtherRoles.Patches
                     int numCouplesAlive = 0;
                     int impLovers = 0;
                     int jackalLovers = 0;
+
+                    int numFoxAlive = 0;
 
                     for (int i = 0; i < GameData.Instance.PlayerCount; i++)
                     {
@@ -1017,6 +1002,12 @@ namespace TheOtherRoles.Patches
                                     numJackalAlive++;
                                     if (lover) jackalLovers++;
                                 }
+
+                                if (Helpers.playerById(playerInfo.PlayerId).isRole(RoleId.Fox))
+                                {
+                                        numFoxAlive += 1;
+                                }
+
                                 if (SchrodingersCat.jackalFlag)
                                 {
                                     foreach(var p in SchrodingersCat.allPlayers)
@@ -1054,6 +1045,7 @@ namespace TheOtherRoles.Patches
                     CouplesAlive = numCouplesAlive;
                     TeamImpostorLovers = impLovers;
                     TeamJackalLovers = jackalLovers;
+                    FoxAlive = numFoxAlive;
                 }
             }
         }
