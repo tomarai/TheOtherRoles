@@ -23,6 +23,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.4.2| v1.6.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.2/TheOtherRoles-GM-Haoming.v1.6.2.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.6.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.1/TheOtherRoles-GM-Haoming.v1.6.1.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.6.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.0/TheOtherRoles-GM-Haoming.v1.6.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.5.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.8/TheOtherRoles-GM-Haoming.v1.5.8.zip)|
@@ -208,13 +209,16 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 1. インポスターにキルされるとインポスター陣営として復活する
 2. ジャッカルにキルされるとジャッカル陣営として復活する
 3. クルーに追放されるとクルー陣営として死亡する
-4. シェリフにキルされるとクルー陣営として復活する
+4. シェリフ/占い師にキルされるとクルー陣営として復活する
+  
+占い師は占いでシュレディンガーの猫を呪殺することができる  
+どこの陣営にも属していない場合はクルー陣営として復活し、どこかの陣営に属している場合はそのまま死亡する  
 
 |オプション名|説明|
 |-----------|----|
 |キルクールダウン|ジャッカル、インポスターとして復活した際のキルクルールダウン|
 |マッドメイトの代わりにインポスターになる|ONにするとインポスター陣営として復活した際にインポスターになる|
-|キラーが死亡する|シュレディンガーの猫をキルしたプレイヤーは死亡する|
+|キラーが死亡する|シュレディンガーの猫をキルしたプレイヤーは死亡する（クルー陣営は除く）|
 |最後の一人になるまでキルできない|インポスター、ジャッカル陣営になった場合に最後の一人になるまでキルできない|
 |追放時にランダムな陣営になる|追放時にインポスター・ジャッカル・クルー陣営のどれかに所属させられる|
 
