@@ -1033,6 +1033,19 @@ namespace TheOtherRoles.Patches
                         numImpostorsAlive = 0;
                     }
 
+                    // シュレディンガーの猫の自爆タイマー中のプレイヤーは1名にカウントしない
+                    if(SchrodingersCat.killer != null)
+                    {
+                        if (SchrodingersCat.impostorFlag)
+                        {
+                            numImpostorsAlive--;
+                        }
+                        else if(SchrodingersCat.jackalFlag)
+                        {
+                            numJackalAlive--;
+                        }
+                    }
+
                     TeamCrew = numCrew;
                     TeamJackalAlive = numJackalAlive;
                     TeamImpostorsAlive = numImpostorsAlive;

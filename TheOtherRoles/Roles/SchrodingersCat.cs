@@ -37,6 +37,7 @@ namespace TheOtherRoles
             if(killer != null && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat) && killsKiller)
             {
                 Helpers.checkMuderAttemptAndKill(killer, killer, true, false);
+                killer = null;
             }
         } 
         public override void OnMeetingEnd() 
@@ -111,6 +112,11 @@ namespace TheOtherRoles
                 {
                     setCrewFlag();
                 }
+
+                // EndGamePatchでゲームを終了させないために先にkillerに値を代入する
+                if(SchrodingersCat.killsKiller)
+                    SchrodingersCat.killer = killer;
+
                 // 蘇生する
                 player.Revive();
                 // 死体を消す
@@ -120,19 +126,19 @@ namespace TheOtherRoles
                         array[i].gameObject.active = false;
                     }     
                 }
-                
-                SchrodingersCat.killer = killer;
-                if(PlayerControl.LocalPlayer == killer){
-                    // 死亡までのカウントダウン
-                    TMPro.TMP_Text text;
-                    RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
-                    GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
-                    UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
-                    gameObject.transform.SetParent(HudManager.Instance.transform);
-                    gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
-                    text = gameObject.GetComponent<TMPro.TMP_Text>();
-                    if(killsKiller)
-                    {
+
+                if(SchrodingersCat.killsKiller)
+                {
+                    if(PlayerControl.LocalPlayer == killer){
+                        // 死亡までのカウントダウン
+                        TMPro.TMP_Text text;
+                        RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
+                        GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
+                        UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                        gameObject.transform.SetParent(HudManager.Instance.transform);
+                        gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
+                        gameObject.transform.localScale = Vector3.one * 3f;
+                        text = gameObject.GetComponent<TMPro.TMP_Text>();
                         HudManager.Instance.StartCoroutine(Effects.Lerp(15f, new Action<float>((p) => {
                             string message = (15 -(p * 15f)).ToString("0");
                             bool even = ((int)(p * 15f / 0.25f)) % 2 == 0; // Bool flips every 0.25 seconds
@@ -140,11 +146,12 @@ namespace TheOtherRoles
                             text.text = prefix + message + "</color>";
                             if (text != null) text.color = even ? Color.yellow : Color.red;
                             if (p == 1f && text != null && text.gameObject != null) {
-                                if(killer.isAlive()){
+                                if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive()){
                                     MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1);
                                     killWriter.Write(killer.PlayerId);
                                     AmongUsClient.Instance.FinishRpcImmediately(killWriter);
                                     RPCProcedure.serialKillerSuicide(killer.PlayerId);
+                                    SchrodingersCat.killer = null;
                                 }
                                 UnityEngine.Object.Destroy(text.gameObject);
                             }
