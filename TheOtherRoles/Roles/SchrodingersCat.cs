@@ -34,7 +34,7 @@ namespace TheOtherRoles
         public override void OnMeetingStart()
         {
             // 時限爆弾よりも前にミーティングが来たら直後に死亡する
-            if(killer != null && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat))
+            if(killer != null && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat) && killsKiller)
             {
                 Helpers.checkMuderAttemptAndKill(killer, killer, true, false);
             }
