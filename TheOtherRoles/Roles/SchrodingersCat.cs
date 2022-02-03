@@ -98,6 +98,7 @@ namespace TheOtherRoles
             }
             else
             {
+                bool isCrewOrSchrodingersCat = killer.isCrew() || killer.isRole(RoleId.SchrodingersCat);
                 if(killer.isImpostor())
                 {
                     setImpostorFlag();
@@ -108,13 +109,13 @@ namespace TheOtherRoles
                 {
                     setJackalFlag();
                 }
-                else if(killer.isRole(RoleId.Sheriff))
+                else if(isCrewOrSchrodingersCat)
                 {
                     setCrewFlag();
                 }
 
                 // EndGamePatchでゲームを終了させないために先にkillerに値を代入する
-                if(SchrodingersCat.killsKiller)
+                if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
                     SchrodingersCat.killer = killer;
 
                 // 蘇生する
@@ -127,7 +128,7 @@ namespace TheOtherRoles
                     }     
                 }
 
-                if(SchrodingersCat.killsKiller)
+                if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
                 {
                     if(PlayerControl.LocalPlayer == killer){
                         // 死亡までのカウントダウン

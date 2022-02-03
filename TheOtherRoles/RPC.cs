@@ -1150,7 +1150,7 @@ namespace TheOtherRoles
             if (target == null) return;
             if (target.isDead()) return;
             // 呪殺
-            if(target.isRole(RoleId.Fox)){
+            if(target.isRole(RoleId.Fox) || target.isRole(RoleId.SchrodingersCat)){
                 if(!PlayerControl.LocalPlayer.isRole(RoleId.Uranai))
                 {
                     KillAnimationCoPerformKillPatch.hideNextAnimation = true;
