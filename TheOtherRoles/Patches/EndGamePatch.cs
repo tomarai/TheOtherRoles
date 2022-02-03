@@ -217,7 +217,7 @@ namespace TheOtherRoles.Patches
             bool arsonistWin = Arsonist.arsonist != null && gameOverReason == (GameOverReason)CustomGameOverReason.ArsonistWin;
             bool miniLose = Mini.mini != null && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
             bool loversWin = Lovers.anyAlive() && !(Lovers.separateTeam && gameOverReason == GameOverReason.HumansByTask);
-            bool teamJackalWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin && ((Jackal.jackal != null && Jackal.jackal.isAlive()) || (Sidekick.sidekick != null && !Sidekick.sidekick.isAlive()));
+            bool teamJackalWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin;
             bool vultureWin = Vulture.vulture != null && gameOverReason == (GameOverReason)CustomGameOverReason.VultureWin;
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
@@ -879,7 +879,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
+                    if (statistics.TeamJackalAlive > 0 && statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
                     {
                         __instance.enabled = false;
                         ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.TeamJackalWin, false);
@@ -1010,12 +1010,9 @@ namespace TheOtherRoles.Patches
 
                                 if (SchrodingersCat.jackalFlag)
                                 {
-                                    foreach(var p in SchrodingersCat.allPlayers)
+                                    if(Helpers.playerById(playerInfo.PlayerId).isRole(RoleId.SchrodingersCat))
                                     {
-                                        if(p.PlayerId == playerInfo.PlayerId)
-                                        {
                                             numJackalAlive++;
-                                        }
                                     }
                                 }
 
