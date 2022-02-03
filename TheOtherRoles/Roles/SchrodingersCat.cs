@@ -31,15 +31,7 @@ namespace TheOtherRoles
             RoleType = roleId = RoleId.SchrodingersCat;
         }
 
-        public override void OnMeetingStart()
-        {
-            // 時限爆弾よりも前にミーティングが来たら直後に死亡する
-            if(killer != null && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat) && killsKiller)
-            {
-                Helpers.checkMuderAttemptAndKill(killer, killer, true, false);
-                killer = null;
-            }
-        } 
+        public override void OnMeetingStart() { }
         public override void OnMeetingEnd() 
         {
             if (PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat))
@@ -252,6 +244,21 @@ namespace TheOtherRoles
                 if(PlayerControl.LocalPlayer != p && p.isImpostor() && p.isAlive()) return false;
             }
             return true;
+        }
+
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CmdReportDeadBody))]
+        class PlayerControlCmdReportDeadBodyPatch
+        {
+            public static void Prefix(PlayerControl __instance)
+            {
+                // 時限爆弾よりも前にミーティングが来たら直後に死亡する
+                if(killer != null && killsKiller){
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicideOnMeeting, Hazel.SendOption.Reliable, -1);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.schrodingersCatSuicideOnMeeting();
+                    killer = null;
+                }
+            }
         }
     }
 }
