@@ -158,7 +158,7 @@ namespace TheOtherRoles
         FoxStealth,
         FoxCreatesImmoralist,
         ImpostorPromotesToLastImpostor,
-        SchrodingersCatSuicideOnMeeting,
+        SchrodingersCatSuicide,
     }
 
     public static class RPCProcedure {
@@ -1174,7 +1174,7 @@ namespace TheOtherRoles
             }
         }
 
-        public static void schrodingersCatSuicideOnMeeting()
+        public static void schrodingersCatSuicide()
         {
             KillAnimationCoPerformKillPatch.hideNextAnimation = true;
             SchrodingersCat.killer.MurderPlayer(SchrodingersCat.killer);
@@ -1436,8 +1436,8 @@ namespace TheOtherRoles
                 case (byte)CustomRPC.ImpostorPromotesToLastImpostor:
                     RPCProcedure.impostorPromotesToLastImpostor(reader.ReadByte());
                     break;
-                case (byte)CustomRPC.SchrodingersCatSuicideOnMeeting:
-                    RPCProcedure.schrodingersCatSuicideOnMeeting();
+                case (byte)CustomRPC.SchrodingersCatSuicide:
+                    RPCProcedure.schrodingersCatSuicide();
                     break;
             }
         }

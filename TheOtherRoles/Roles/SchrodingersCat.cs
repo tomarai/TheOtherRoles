@@ -139,11 +139,11 @@ namespace TheOtherRoles
                             text.text = prefix + message + "</color>";
                             if (text != null) text.color = even ? Color.yellow : Color.red;
                             if (p == 1f && text != null && text.gameObject != null) {
-                                if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive()){
-                                    MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1);
-                                    killWriter.Write(killer.PlayerId);
-                                    AmongUsClient.Instance.FinishRpcImmediately(killWriter);
-                                    RPCProcedure.serialKillerSuicide(killer.PlayerId);
+                                if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive())
+                                {
+                                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicide, Hazel.SendOption.Reliable, -1);
+                                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                    RPCProcedure.schrodingersCatSuicide();
                                     SchrodingersCat.killer = null;
                                 }
                                 UnityEngine.Object.Destroy(text.gameObject);
@@ -253,9 +253,9 @@ namespace TheOtherRoles
             {
                 // 時限爆弾よりも前にミーティングが来たら直後に死亡する
                 if(killer != null && killsKiller){
-                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicideOnMeeting, Hazel.SendOption.Reliable, -1);
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicide, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    RPCProcedure.schrodingersCatSuicideOnMeeting();
+                    RPCProcedure.schrodingersCatSuicide();
                     killer = null;
                 }
             }

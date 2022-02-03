@@ -17,12 +17,12 @@ using TheOtherRoles.Modules;
 namespace TheOtherRoles
 {
     [BepInPlugin(Id, "The Other Roles GM", VersionString)]
-    [BepInProcess("Among Us.exe")]
+    //[BepInProcess("Among Us.exe")]
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "me.eisbison.theotherroles";
 
-        public const string VersionString = "1.6.2";
+        public const string VersionString = "1.6.3";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
