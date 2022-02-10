@@ -700,5 +700,23 @@ namespace TheOtherRoles.Patches {
                 target = meetingTarget;
             }
         }
+        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Close))]
+        class MeetingHudClosePatch{
+            static void Postfix(MeetingHud __instance){
+                if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.polusRandomSpawn.getBool()){
+                    if(AmongUsClient.Instance.AmHost){
+                        foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+                            System.Random rand = new System.Random();
+                            int randVal = rand.Next(0,6);
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RandomSpawn, Hazel.SendOption.Reliable, -1);
+                            writer.Write((byte)player.Data.PlayerId);
+                            writer.Write((byte)randVal);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            RPCProcedure.randomSpawn((byte)player.Data.PlayerId, (byte)randVal);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

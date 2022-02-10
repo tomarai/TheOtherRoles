@@ -165,7 +165,8 @@ namespace TheOtherRoles
         ActivateTrap,
         DisableTrap,
         TrapperKill,
-        TrapperMeetingFlag
+        TrapperMeetingFlag,
+        RandomSpawn
     }
 
     public static class RPCProcedure {
@@ -184,6 +185,8 @@ namespace TheOtherRoles
             VitalsPatch.ResetData();
             MapBehaviorPatch.resetIcons();
             CustomOverlays.resetOverlays();
+            SpecimenVital.clearAndReload();
+            AdditionalVents.clearAndReload();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
@@ -1341,6 +1344,48 @@ namespace TheOtherRoles
         {
             Trapper.meetingFlag = true;
         }
+        public static void randomSpawn(byte playerId, byte locId){
+            HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => { // Delayed action
+                if (p == 1f) {
+                    Vector2 InitialSpawnCenter  = new Vector2(16.64f, -2.46f);
+                    Vector2 MeetingSpawnCenter  = new Vector2(17.4f, -16.286f);
+                    Vector2 ElectricalSpawn  = new Vector2(5.53f, -9.84f);
+                    Vector2 O2Spawn  = new Vector2(3.28f, -21.67f);
+                    Vector2 SpecimenSpawn  = new Vector2(36.54f, -20.84f);
+                    Vector2 LaboSpawn  = new Vector2(34.91f, -6.50f);
+                    Vector2 loc;
+                    switch(locId){
+                        case 0:
+                            loc = InitialSpawnCenter;
+                            break;
+                        case 1:
+                            loc = MeetingSpawnCenter;
+                            break;
+                        case 2: 
+                            loc = ElectricalSpawn;
+                            break;
+                        case 3:
+                            loc = O2Spawn;
+                            break;
+                        case 4:
+                            loc = SpecimenSpawn;
+                            break;
+                        case 5:
+                            loc = LaboSpawn;
+                            break;
+                        default:
+                            loc = InitialSpawnCenter;
+                            break;
+                    }
+                    foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+                        if(player.Data.PlayerId == playerId){
+                            player.transform.position = loc;
+                            break;
+                        } 
+                    }
+                }
+            })));
+        }
     }   
 
     
@@ -1620,7 +1665,11 @@ namespace TheOtherRoles
                 case (byte)CustomRPC.TrapperMeetingFlag:
                     RPCProcedure.trapperMeetingFlag();
                     break;
-                
+                case (byte)CustomRPC.RandomSpawn:
+                    byte pId = reader.ReadByte();
+                    byte locId = reader.ReadByte();
+                    RPCProcedure.randomSpawn(pId, locId);
+                    break;
             }
         }
     }

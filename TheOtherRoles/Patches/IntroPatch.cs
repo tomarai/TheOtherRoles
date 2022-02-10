@@ -82,6 +82,12 @@ namespace TheOtherRoles.Patches {
                 HudManager.Instance.roomTracker.enabled = false;
             }
 
+            // ベントを追加する
+            AdditionalVents.AddAdditionalVents();
+
+            // スペシメンにバイタルを移動する
+            SpecimenVital.moveVital();
+
             // 最初から一人の場合はLast Impostorになる
             if(AmongUsClient.Instance.AmHost)
             {
