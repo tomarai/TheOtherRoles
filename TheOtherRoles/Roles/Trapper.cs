@@ -175,10 +175,14 @@ namespace TheOtherRoles
     {
         trapperSetTrapButton = new CustomButton(
             () => { // ボタンが押された時に実行
-                var meetingButton = GameObject.Find("EmergencyConsole");
-                float distance = Vector2.Distance(meetingButton.transform.position, PlayerControl.LocalPlayer.transform.position);
-                Helpers.log($"{distance}m");
-                if (!PlayerControl.LocalPlayer.CanMove || Trapper.trappedPlayer != null|| distance < 3) return;
+
+                // skeldでボタンを置けなくする
+                if(PlayerControl.GameOptions.MapId == 0){
+                    var meetingButton = GameObject.Find("EmergencyConsole");
+                    float distance = Vector2.Distance(meetingButton.transform.position, PlayerControl.LocalPlayer.transform.position);
+                    if(distance < 3) return;
+                }
+                if (!PlayerControl.LocalPlayer.CanMove || Trapper.trappedPlayer != null) return;
                 Trapper.setTrap();
                 trapperSetTrapButton.Timer = trapperSetTrapButton.MaxTimer;
             },
