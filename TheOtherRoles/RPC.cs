@@ -1224,7 +1224,7 @@ namespace TheOtherRoles
             Trapper.audioSource.PlayOneShot(Trapper.place);
 
             // 猶予時間後にトラップの表示を消す
-            if(!PlayerControl.LocalPlayer.isImpostor())
+            if(!(PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleId.Fox)))
             {
                 HudManager.Instance.StartCoroutine(Effects.Lerp(Trapper.extensionTime, new Action<float>((p) =>
                 { // Delayed action
