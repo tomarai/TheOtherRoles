@@ -102,7 +102,6 @@ namespace TheOtherRoles.Patches {
             // Polusの湧き位置をランダムにする 無駄に人数分シャッフルが走るのをそのうち直す
             if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.polusRandomSpawn.getBool()){
                 if(AmongUsClient.Instance.AmHost){
-                    Helpers.log("PolusRandomRespawn ShipStatus.SpawnPlayer");
                     System.Random rand = new System.Random();
                     int randVal = rand.Next(0,6);
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RandomSpawn, Hazel.SendOption.Reliable, -1);
