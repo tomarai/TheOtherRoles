@@ -88,6 +88,19 @@ namespace TheOtherRoles.Patches {
             // スペシメンにバイタルを移動する
             SpecimenVital.moveVital();
 
+            //タスクバグ修正
+            if(PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipEnableWallCheck.getBool())
+            {
+                var objects = UnityEngine.GameObject.FindObjectsOfType<Console>().ToList();
+                objects.Find(x=> x.name == "task_garbage1").checkWalls = true;
+                objects.Find(x=> x.name == "task_garbage2").checkWalls = true;
+                objects.Find(x=> x.name == "task_garbage3").checkWalls = true;
+                objects.Find(x=> x.name == "task_garbage4").checkWalls = true;
+                objects.Find(x=> x.name == "task_garbage5").checkWalls = true;
+                objects.Find(x=> x.name == "task_shower").checkWalls = true;
+                objects.Find(x=> x.name == "task_developphotos").checkWalls = true;
+            }
+
             // 最初から一人の場合はLast Impostorになる
             if(AmongUsClient.Instance.AmHost)
             {

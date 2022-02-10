@@ -252,6 +252,7 @@ namespace TheOtherRoles {
         public static CustomOption pursuerBlanksNumber;
 
         public static CustomOption specialOptions;
+        public static CustomOption airshipEnableWallCheck;
         public static CustomOption airshipReactorDuration;
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
@@ -711,7 +712,8 @@ namespace TheOtherRoles {
             specimenVital = CustomOption.Create(9905, "ポーラスバイタル移動(スペシメン)", false, specialOptions);
             polusRandomSpawn = CustomOption.Create(9906, "ポーラスランダムリスポン", false, specialOptions);
 
-            airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, true, format: "unitSeconds");
+            airshipEnableWallCheck = CustomOption.Create(9907, "エアシップ壁判定有効化", true, specialOptions, true);
+            airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(5, "noVoteIsSelfVote", false, specialOptions);
