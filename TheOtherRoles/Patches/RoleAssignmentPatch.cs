@@ -132,6 +132,7 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleId.Witch, CustomOptionHolder.witchSpawnRate.data);
             impSettings.Add((byte)RoleId.Ninja, CustomOptionHolder.ninjaSpawnRate.data);
             impSettings.Add((byte)RoleId.SerialKiller, CustomOptionHolder.serialKillerSpawnRate.data);
+            impSettings.Add((byte)RoleId.Trapper, CustomOptionHolder.trapperSpawnRate.data);
 
             neutralSettings.Add((byte)RoleId.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleId.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);

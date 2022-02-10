@@ -30,6 +30,7 @@ namespace TheOtherRoles
             SerialKiller.SetButtonCooldowns();
             Immoralist.SetButtonCooldowns();
             SchrodingersCat.SetButtonCooldowns();
+            Trapper.SetButtonCooldowns();
 
             foreach (CustomButton gmButton in gmButtons)
             {
@@ -57,6 +58,7 @@ namespace TheOtherRoles
             Uranai.MakeButtons(hm);
             SoulPlayer.MakeButtons(hm);
             SchrodingersCat.MakeButtons(hm);
+            Trapper.MakeButtons(hm);
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();

@@ -39,6 +39,7 @@ namespace TheOtherRoles
             { typeof(RoleBase<Munou>), RoleId.Munou},
             { typeof(RoleBase<Munou2nd>), RoleId.Munou2nd},
             { typeof(RoleBase<SchrodingersCat>), RoleId.SchrodingersCat},
+            { typeof(RoleBase<Trapper>), RoleId.Trapper},
         };
     }
 

@@ -339,12 +339,23 @@ namespace TheOtherRoles {
         public static CustomOption lastImpostorFunctions;
         public static CustomOption lastImpostorResultIsCrewOrNot;
         public static CustomOption lastImpostorNumShots;
+
         public static CustomRoleOption schrodingersCatSpawnRate;
         public static CustomOption schrodingersCatKillCooldown;
         public static CustomOption schrodingersCatBecomesImpostor;
         public static CustomOption schrodingersCatKillsKiller;
         public static CustomOption schrodingersCatCantKillUntilLastOne;
         public static CustomOption schrodingersCatBecomesRandomTeamOnExiled;
+
+        public static CustomRoleOption trapperSpawnRate;
+        public static CustomOption trapperKillTimer;
+        public static CustomOption trapperCooldown;
+        public static CustomOption trapperMinDistance;
+        public static CustomOption trapperMaxDistance;
+        public static CustomOption trapperTrapRange;
+        public static CustomOption trapperExtensionTime;
+        public static CustomOption trapperPenaltyTime;
+        public static CustomOption trapperBonusTime;
 
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
@@ -458,6 +469,16 @@ namespace TheOtherRoles {
             serialKillerKillCooldown = CustomOption.Create(1012, "serialKillerKillCooldown", 15f, 2.5f, 60f, 2.5f, serialKillerSpawnRate, format: "unitSeconds");
             serialKillerSuicideTimer = CustomOption.Create(1013, "serialKillerSuicideTimer", 40f, 2.5f, 60f, 2.5f, serialKillerSpawnRate, format: "unitSeconds");
             serialKillerResetTimer = CustomOption.Create(1014, "serialKillerResetTimer", true, serialKillerSpawnRate);
+
+            trapperSpawnRate = new CustomRoleOption(1020, "トラッパー", Trapper.color, 1);
+            trapperExtensionTime = CustomOption.Create(1021, "設置後有効になるまでの時間", 5f, 2f, 10f, 0.5f, trapperSpawnRate);
+            trapperCooldown = CustomOption.Create(1022, "トラップクールダウン", 10f, 2.5f, 60f, 2.5f, trapperSpawnRate);
+            trapperKillTimer = CustomOption.Create(1023, "トラップ発動後キルまでの猶予時間", 5f, 1f, 30f, 1f, trapperSpawnRate);
+            trapperTrapRange = CustomOption.Create(1024, "トラップの有効範囲", 1f, 0f, 5f, 0.1f, trapperSpawnRate);
+            trapperMinDistance = CustomOption.Create(1025, "効果音の減衰開始距離", 0f, 0f, 10f, 0.1f, trapperSpawnRate);
+            trapperMaxDistance = CustomOption.Create(1026, "効果音の減衰終了距離", 10f, 1f, 50f, 1f, trapperSpawnRate);
+            trapperPenaltyTime = CustomOption.Create(1027, "通常キル時のペナルティタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
+            trapperBonusTime = CustomOption.Create(1028, "罠キル時のボーナスタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
 
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
             madmateCanDieToSheriff = CustomOption.Create(361, "madmateCanDieToSheriff", false, madmateSpawnRate);
