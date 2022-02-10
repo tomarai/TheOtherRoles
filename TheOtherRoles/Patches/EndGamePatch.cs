@@ -1034,7 +1034,7 @@ namespace TheOtherRoles.Patches
                     }
 
                     // シュレディンガーの猫の自爆タイマー中のプレイヤーは1名にカウントしない
-                    if(SchrodingersCat.killer != null)
+                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive())
                     {
                         if (SchrodingersCat.impostorFlag)
                         {
