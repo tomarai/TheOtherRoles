@@ -66,7 +66,7 @@ namespace TheOtherRoles
 
             if(DateTime.UtcNow.Subtract(placedTime).TotalSeconds < extensionTime) return;
             try{
-                if (PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trap != null && trappedPlayer == null && !playingKillSound)
+                if (PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trap != null && trappedPlayer == null && !playingKillSound && !meetingFlag)
                 {
                     // トラップを踏んだプレイヤーを動けなくする 
                     foreach(var p in PlayerControl.AllPlayerControls)
@@ -102,7 +102,7 @@ namespace TheOtherRoles
                     }
                 }
 
-                if(PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trappedPlayer != null && status== Status.active)
+                if(PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trappedPlayer != null && status== Status.active && !meetingFlag)
                 {
                     // トラップにかかっているプレイヤーを救出する
                     Vector3 p1 = trap.transform.position;
