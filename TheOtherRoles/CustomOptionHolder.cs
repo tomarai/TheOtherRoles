@@ -712,7 +712,7 @@ namespace TheOtherRoles {
             specimenVital = CustomOption.Create(9906, "ポーラスバイタル移動(スペシメン)", false, specialOptions);
             polusRandomSpawn = CustomOption.Create(9907, "ポーラスランダムリスポン", false, specialOptions);
 
-            airshipEnableWallCheck = CustomOption.Create(9907, "エアシップ壁判定有効化", true, specialOptions, true);
+            airshipEnableWallCheck = CustomOption.Create(9908, "エアシップ壁判定有効化", true, specialOptions, true);
             airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
