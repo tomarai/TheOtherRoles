@@ -957,12 +957,21 @@ namespace TheOtherRoles
 
         public static void guesserShoot(byte killerId, byte dyingTargetId, byte guessedTargetId, byte guessedRoleId) {
             PlayerControl dyingTarget = Helpers.playerById(dyingTargetId);
+            PlayerControl killer = Helpers.playerById(killerId);
             if (dyingTarget == null) return;
             dyingTarget.Exiled();
             PlayerControl dyingLoverPartner = Lovers.bothDie ? dyingTarget.getPartner() : null; // Lover check
             byte partnerId = dyingLoverPartner != null ? dyingLoverPartner.PlayerId : dyingTargetId;
 
-            Guesser.remainingShots(killerId, true);
+            if(killer.isRole(RoleId.LastImpostor))
+            {
+                Mathf.Max(0, LastImpostor.remainingShots - 1);
+            }
+            else
+            {
+                Guesser.remainingShots(killerId, true);
+            }
+
             if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(dyingTarget.KillSfx, false, 0.8f);
             if (MeetingHud.Instance) {
                 foreach (PlayerVoteArea pva in MeetingHud.Instance.playerStates) {

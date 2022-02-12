@@ -54,6 +54,7 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
+                    if(selectedFunction == 1) return;
                     PlayerControl p = Helpers.playerById(index);
                     LastImpostor.divine(p);
                 };
@@ -63,6 +64,7 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
+                    if(selectedFunction == 1) return false;
                     var p = PlayerControl.LocalPlayer;
                     if(!p.isRole(RoleId.LastImpostor)) return false;
                     if (p.isRole(RoleId.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
@@ -120,6 +122,8 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
+                    if(selectedFunction == 1) return false;
+
                     //　ラストインポスター以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
                     if (!playerIcons.ContainsKey(index) ||
