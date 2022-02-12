@@ -160,6 +160,7 @@ namespace TheOtherRoles
                 fortuneTeller,
                 uranai,
                 munou,
+                munou2nd,
                 schrodingersCat,
                 trapper
             };
