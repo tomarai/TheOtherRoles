@@ -179,11 +179,11 @@ namespace TheOtherRoles
             () => { // ボタンが押された時に実行
 
                 // skeldでボタンを置けなくする
-                if(PlayerControl.GameOptions.MapId == 0){
-                    var meetingButton = GameObject.Find("EmergencyConsole");
-                    float distance = Vector2.Distance(meetingButton.transform.position, PlayerControl.LocalPlayer.transform.position);
-                    if(distance < 3) return;
-                }
+                // if(PlayerControl.GameOptions.MapId == 0){
+                //     var meetingButton = GameObject.Find("EmergencyConsole");
+                //     float distance = Vector2.Distance(meetingButton.transform.position, PlayerControl.LocalPlayer.transform.position);
+                //     if(distance < 3) return;
+                // }
                 if (!PlayerControl.LocalPlayer.CanMove || Trapper.trappedPlayer != null) return;
                 Trapper.setTrap();
                 trapperSetTrapButton.Timer = trapperSetTrapButton.MaxTimer;
@@ -281,11 +281,9 @@ namespace TheOtherRoles
             public static void Prefix(PlayerControl __instance)
             {
                 // トラップ中にミーティングが来たら直後に死亡する
-                if(trappedPlayer != null){
-                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperMeetingFlag, Hazel.SendOption.Reliable, -1);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    RPCProcedure.trapperMeetingFlag();
-                }
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperMeetingFlag, Hazel.SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.trapperMeetingFlag();
             }
         }
         

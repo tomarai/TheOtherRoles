@@ -1267,6 +1267,7 @@ namespace TheOtherRoles
         }
         public static void activateTrap(byte trapperId, byte playerId)
         {
+            if(Trapper.meetingFlag) return;
             if(Trapper.status == Trapper.Status.placed) // トラップが設置されている
             {
                 Trapper.status = Trapper.Status.active;
@@ -1284,12 +1285,13 @@ namespace TheOtherRoles
                 {
                     try
                     {
+                        if(Trapper.meetingFlag) return;
                         if(Trapper.trappedPlayer == null)
                         {
                             player.moveable = true;
                             return;
                         }
-                        else if((p==1f || Trapper.meetingFlag) && Trapper.trappedPlayer.isAlive()){
+                        else if((p==1f) && Trapper.trappedPlayer.isAlive()){
                             player.moveable = true;
                             if(PlayerControl.LocalPlayer.isRole(RoleId.Trapper))
                             {
@@ -1316,15 +1318,18 @@ namespace TheOtherRoles
                 Helpers.log("何故かトラップが有効にできない");
             }
         }
-        public static void trapperKill(byte trapperId, byte playerId)
+        public static void trapperKill(byte trapperId, byte playerId, bool sound=true)
         {
             if(Trapper.status == Trapper.Status.active){
-                Trapper.playingKillSound = true;
-                Trapper.audioSource.clip = Trapper.kill;
-                Trapper.audioSource.Stop();
-                Trapper.audioSource.loop = false;
-                Trapper.audioSource.maxDistance = Trapper.maxDistance;
-                Trapper.audioSource.PlayOneShot(Trapper.kill);
+                if(sound)
+                {
+                    Trapper.playingKillSound = true;
+                    Trapper.audioSource.clip = Trapper.kill;
+                    Trapper.audioSource.Stop();
+                    Trapper.audioSource.loop = false;
+                    Trapper.audioSource.maxDistance = Trapper.maxDistance;
+                    Trapper.audioSource.PlayOneShot(Trapper.kill);
+                }
                 HudManager.Instance.StartCoroutine(Effects.Lerp(Trapper.kill.length, new Action<float>((p) => 
                 {
                     if(p ==1)
@@ -1343,6 +1348,15 @@ namespace TheOtherRoles
         public static void trapperMeetingFlag()
         {
             Trapper.meetingFlag = true;
+            Trapper.audioSource.Stop();
+            if(PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && Trapper.trappedPlayer != null)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperKill, Hazel.SendOption.Reliable, -1);
+                writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                writer.Write(Trapper.trappedPlayer.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.trapperKill(PlayerControl.LocalPlayer.PlayerId, Trapper.trappedPlayer.PlayerId, false);
+            }
         }
         public static void randomSpawn(byte playerId, byte locId){
             HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => { // Delayed action
