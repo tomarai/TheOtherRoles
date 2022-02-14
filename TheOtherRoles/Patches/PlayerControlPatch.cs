@@ -1010,6 +1010,8 @@ namespace TheOtherRoles.Patches
                 // Witch
                 witchSetTarget();
                 hackerUpdate();
+                // Bomber
+                BombEffect.UpdateAll();
             }
 
             TheOtherRolesGM.FixedUpdate(__instance);

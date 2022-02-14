@@ -422,6 +422,7 @@ namespace TheOtherRoles.Patches {
                     roleInfo == RoleInfo.gm ||
                     roleInfo == RoleInfo.createdMadmate && RoleInfo.madmate.enabled||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings) ||
+                    roleInfo == RoleInfo.bomberB ||
                     roleInfo == RoleInfo.lastImpostor)
                     continue; // Not guessable roles
                 Transform buttonParent = (new GameObject()).transform;
@@ -464,12 +465,17 @@ namespace TheOtherRoles.Patches {
                         if (mainRoleInfo == null) return;
 
                         // createdMadmateとmadmateを同等に扱う
+                        // BomberAとBomberBを同等に扱う
                         PlayerControl dyingTarget;
                         if(mainRoleInfo == roleInfo)
                         {
                             dyingTarget = focusedTarget;
                         }
                         else if(roleInfo == RoleInfo.madmate && mainRoleInfo == RoleInfo.createdMadmate)
+                        {
+                            dyingTarget = focusedTarget;
+                        }
+                        else if(roleInfo == RoleInfo.bomberA && mainRoleInfo == RoleInfo.bomberB)
                         {
                             dyingTarget = focusedTarget;
                         }

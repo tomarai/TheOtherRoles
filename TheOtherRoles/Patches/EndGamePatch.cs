@@ -1033,17 +1033,22 @@ namespace TheOtherRoles.Patches
                         numImpostorsAlive = 0;
                     }
 
-                    // シュレディンガーの猫の自爆タイマー中のプレイヤーは1名にカウントしない
-                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive())
+                    // 爆弾魔を一人としてカウントする、猫の自爆中はインポスターのカウントを一人減らす
+                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive() && SchrodingersCat.impostorFlag)
                     {
-                        if (SchrodingersCat.impostorFlag)
-                        {
-                            numImpostorsAlive--;
-                        }
-                        else if(SchrodingersCat.jackalFlag)
-                        {
-                            numJackalAlive--;
-                        }
+                        numImpostorsAlive--;
+                    }
+                    else if(BomberA.isAlive() && BomberB.isAlive() && BomberA.countAsOne)
+                    {
+                        numImpostorsAlive--;
+                    }
+
+
+                    // 猫の自爆中はジャッカルのカウントを一人減らす
+                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive() && SchrodingersCat.jackalFlag)
+
+                    {
+                        numJackalAlive--;
                     }
 
                     TeamCrew = numCrew;

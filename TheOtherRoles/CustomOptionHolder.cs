@@ -357,7 +357,12 @@ namespace TheOtherRoles {
         public static CustomOption trapperExtensionTime;
         public static CustomOption trapperPenaltyTime;
         public static CustomOption trapperBonusTime;
-
+        public static CustomRoleOption bomberSpawnRate;
+        public static CustomOption bomberCooldown;
+        public static CustomOption bomberDuration;
+        public static CustomOption bomberCountAsOne;
+        public static CustomOption bomberShowEffects;
+        public static CustomOption bomberIfOneDiesBothDie;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -484,6 +489,13 @@ namespace TheOtherRoles {
             trapperMaxDistance = CustomOption.Create(1026, "効果音の減衰終了距離", 10f, 1f, 50f, 1f, trapperSpawnRate);
             trapperPenaltyTime = CustomOption.Create(1027, "通常キル時のペナルティタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
             trapperBonusTime = CustomOption.Create(1028, "罠キル時のボーナスタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
+
+            bomberSpawnRate = new CustomRoleOption(1030, "爆弾魔", BomberA.color, 1);
+            bomberCooldown = CustomOption.Create(1031, "爆弾クールダウン", 20f, 2f, 60f, 1f, bomberSpawnRate);
+            bomberDuration = CustomOption.Create(1032, "爆弾設置時間", 2f, 0f, 60f, 0.5f, bomberSpawnRate);
+            bomberCountAsOne = CustomOption.Create(1033, "１インポスターとしてカウントする", true, bomberSpawnRate);
+            bomberShowEffects = CustomOption.Create(1034, "キル時にエフェクトを表示する", true, bomberSpawnRate);
+            bomberIfOneDiesBothDie = CustomOption.Create(1035, "一人が死んだら両方死ぬ", true, bomberSpawnRate);
 
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
             madmateCanDieToSheriff = CustomOption.Create(361, "madmateCanDieToSheriff", false, madmateSpawnRate);

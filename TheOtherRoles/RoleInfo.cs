@@ -98,6 +98,8 @@ namespace TheOtherRoles
         public static RoleInfo munou2nd = new RoleInfo("無能2nd", Munou2nd.color, CustomOptionHolder.munou2ndSpawnRate, RoleId.Munou2nd);
         public static RoleInfo schrodingersCat = new RoleInfo("シュレディンガーの猫", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleId.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("トラッパー", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleId.Trapper);
+        public static RoleInfo bomberA = new RoleInfo("爆弾魔", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleId.BomberA);
+        public static RoleInfo bomberB = new RoleInfo("爆弾魔", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleId.BomberB);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -162,7 +164,8 @@ namespace TheOtherRoles
                 munou,
                 munou2nd,
                 schrodingersCat,
-                trapper
+                trapper,
+                bomberA,
             };
 
         public static string tl(string key)
@@ -251,6 +254,8 @@ namespace TheOtherRoles
             }
             if(p.isRole(RoleId.SchrodingersCat)) infos.Add(schrodingersCat);
             if(p.isRole(RoleId.Trapper)) infos.Add(trapper);
+            if(p.isRole(RoleId.BomberA)) infos.Add(bomberA);
+            if(p.isRole(RoleId.BomberB)) infos.Add(bomberB);
 
             if (p.isRole(RoleId.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 

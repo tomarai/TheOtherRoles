@@ -46,6 +46,8 @@ namespace TheOtherRoles
             Munou2nd.Clear();
             SchrodingersCat.Clear();
             Trapper.Clear();
+            BomberA.Clear();
+            BomberB.Clear();
             Role.ClearAll();
         }
 

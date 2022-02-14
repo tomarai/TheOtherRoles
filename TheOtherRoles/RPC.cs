@@ -59,6 +59,8 @@ namespace TheOtherRoles
         CreatedMadmate,
         LastImpostor,
         Trapper,
+        BomberA,
+        BomberB,
 
 
         Mini = 150,
@@ -166,7 +168,10 @@ namespace TheOtherRoles
         DisableTrap,
         TrapperKill,
         TrapperMeetingFlag,
-        RandomSpawn
+        RandomSpawn,
+        PlantBomb,
+        ReleaseBomb,
+        BomberKill
     }
 
     public static class RPCProcedure {
@@ -187,6 +192,7 @@ namespace TheOtherRoles
             CustomOverlays.resetOverlays();
             SpecimenVital.clearAndReload();
             AdditionalVents.clearAndReload();
+            BombEffect.clearBombEffects();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
@@ -628,6 +634,12 @@ namespace TheOtherRoles
                         break;
                     case RoleId.Trapper:
                         Trapper.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.BomberA:
+                        BomberA.swapRole(player, oldShifter);
+                        break;
+                    case RoleId.BomberB:
+                        BomberB.swapRole(player, oldShifter);
                         break;
                 }
             }
@@ -1409,6 +1421,42 @@ namespace TheOtherRoles
                 }
             })));
         }
+        public static void plantBomb(byte playerId)
+        {
+            var p = Helpers.playerById(playerId);
+            if (PlayerControl.LocalPlayer.isRole(RoleId.BomberA)) BomberB.bombTarget = p;
+            if (PlayerControl.LocalPlayer.isRole(RoleId.BomberB)) BomberA.bombTarget = p;
+        }
+        public static void releaseBomb(byte killer, byte target)
+        {
+            // 同時押しでダブルキルが発生するのを防止するためにBomberAで一度受け取ってから実行する
+            if(PlayerControl.LocalPlayer.isRole(RoleId.BomberA))
+            {
+                if (BomberA.bombTarget != null && BomberB.bombTarget != null)
+                {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.BomberKill, Hazel.SendOption.Reliable, -1);
+                    writer.Write(killer);
+                    writer.Write(target);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.bomberKill(killer, target);
+                }
+            }
+        }
+        public static void bomberKill(byte killer, byte target)
+        {
+            BomberA.bombTarget = null;
+            BomberB.bombTarget = null;
+            var k = Helpers.playerById(killer);
+            var t = Helpers.playerById(target);
+            KillAnimationCoPerformKillPatch.hideNextAnimation = true;
+            k.MurderPlayer(t);
+            if(BomberA.showEffects)
+            {
+                new BombEffect(t);
+            }
+            BomberA.bomberButton.Timer = BomberA.bomberButton.MaxTimer;
+            BomberB.bomberButton.Timer = BomberB.bomberButton.MaxTimer;
+        }
     }   
 
     
@@ -1692,6 +1740,15 @@ namespace TheOtherRoles
                     byte pId = reader.ReadByte();
                     byte locId = reader.ReadByte();
                     RPCProcedure.randomSpawn(pId, locId);
+                    break;
+                case (byte)CustomRPC.PlantBomb:
+                    RPCProcedure.plantBomb(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.ReleaseBomb:
+                    RPCProcedure.releaseBomb(reader.ReadByte(), reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.BomberKill:
+                    RPCProcedure.bomberKill(reader.ReadByte(), reader.ReadByte());
                     break;
             }
         }

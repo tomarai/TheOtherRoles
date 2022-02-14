@@ -279,6 +279,14 @@ namespace TheOtherRoles.Patches
                 setRoleToRandomPlayer((byte)RoleId.Mafioso, data.impostors);
                 data.maxImpostorRoles -= 3;
             }
+
+            // Assign Bomber
+            if (data.impostors.Count >= 2 && data.maxImpostorRoles >= 2 && (rnd.Next(1, 101) <= CustomOptionHolder.bomberSpawnRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleId.BomberA, data.impostors);
+                setRoleToRandomPlayer((byte)RoleId.BomberB, data.impostors);
+                data.maxImpostorRoles -= 3;
+            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)

@@ -44,6 +44,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
+            arrows = new List<Arrow>();
             players = new List<Immoralist>();
         }
         public static void suicide() {
@@ -97,8 +98,11 @@ namespace TheOtherRoles
 
                 // 前回のArrowをすべて破棄する
                 foreach(Arrow arrow in arrows){
-                    arrow.arrow.SetActive(false);
-                    UnityEngine.Object.Destroy(arrow.arrow);
+                    if(arrow != null)
+                    {
+                        arrow.arrow.SetActive(false);
+                        UnityEngine.Object.Destroy(arrow.arrow);
+                    }
                 }
 
                 // Arrorw一覧
