@@ -2064,7 +2064,14 @@
         "0": "Update failed.\nTry again later,\nor update manually.",
         "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044"
     },
-<<<<<<< HEAD
+    "announcementUpdate": {
+        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM Edition</color> update to v{ver} is available:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}"
+    },
+    "announcementChangelog": {
+        "0": "<size=150%><color=#FC0303>TheOtherRoles GM Edition</color> Version {0}:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}"
+    },
     "evilHacker": {
         "0": "EvilHacker",
         "11": "\u30a4\u30d3\u30eb\u30cf\u30c3\u30ab\u30fc"
@@ -2140,15 +2147,6 @@
     "madmateExileCrewmate": {
         "0": "Exile A Crewmate When Madmate Is Exiled",
         "11": "\u8ffd\u653e\u6642\u30af\u30eb\u30fc\u3092\u8ffd\u653e\u3059\u308b"
-=======
-    "announcementUpdate": {
-        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM Edition</color> update to v{ver} is available:</size>\n\n{1}",
-        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}"
-    },
-    "announcementChangelog": {
-        "0": "<size=150%><color=#FC0303>TheOtherRoles GM Edition</color> Version {0}:</size>\n\n{1}",
-        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}"
->>>>>>> origin/gm-main
     },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
@@ -2687,6 +2685,9 @@
         "0": "Until Suicide",
         "11": "\u81ea\u6bba\u307e\u3067"
     },
+    "MadmateText": {
+        "11": "\u30de\u30c3\u30c9\u30e1\u30a4\u30c8"
+    },
     "colorSalmon": {
         "0": "Salmon",
         "11": "\u30b5\u30fc\u30e2\u30f3"
@@ -2778,137 +2779,5 @@
     "gmEditionGeneral": {
         "0": "GM Edition Exclusive",
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a"
-    },
-    "watcher": {
-        "0": "Watcher",
-        "11": "\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
-    },
-    "niceWatcher": {
-        "0": "Nice Watcher",
-        "11": "\u30ca\u30a4\u30b9\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
-    },
-    "niceWatcherIntroDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
-    },
-    "niceWatcherShortDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
-    },
-    "evilWatcher": {
-        "0": "Evil Watcher",
-        "11": "\u30a4\u30d3\u30eb\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
-    },
-    "evilWatcherIntroDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
-    },
-    "evilWatcherShortDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
-    },
-    "roleAssignEqually": {
-        "0": "Assign Each Team Equally",
-        "11": "\u4e21\u9663\u55b6\u5e73\u7b49\u306b\u5272\u308a\u632f\u308b"
-    },
-    "roleImpChance": {
-        "0": "Impostor Chance",
-        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u306a\u308b\u78ba\u7387"
-    },
-    "fox": {
-        "0": "Fox",
-        "11": "\u5996\u72d0"
-    },
-    "foxCanFixReactorAndO2": {
-        "0": "Can Fix Reactor/O2",
-        "11": "\u30ea\u30a2\u30af\u30bf\u30fc\u3068O2\u3092\u76f4\u305b\u308b"
-    },
-    "foxCrewWinsByTasks": {
-        "0": "Crew Task Win Takes Priority",
-        "11": "\u30af\u30eb\u30fc\u306e\u30bf\u30b9\u30af\u52dd\u5229\u304c\u512a\u5148\u3055\u308c\u308b"
-    },
-    "foxNumCommonTasks": {
-        "0": "Common Tasks",
-        "11": "\u901a\u5e38\u30bf\u30b9\u30af"
-    },
-    "foxNumLongTasks": {
-        "0": "Long Tasks",
-        "11": "\u30ed\u30f3\u30b0\u30bf\u30b9\u30af"
-    },
-    "foxNumShortTasks": {
-        "0": "Short Tasks",
-        "11": "\u30b7\u30e7\u30fc\u30c8\u30bf\u30b9\u30af"
-    },
-    "foxStealthCooldown": {
-        "0": "Stealth Cooldown",
-        "11": "\u900f\u660e\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
-    },
-    "foxStealthDuration": {
-        "0": "Stealth Duration",
-        "11": "\u900f\u660e\u6642\u9593"
-    },
-    "foxCanCreateImmoralist": {
-        "0": "Can Create Immoralist",
-        "11": "\u80cc\u5fb3\u8005\u3092\u4f5c\u308c\u308b"
-    },
-    "foxNumRepair": {
-        "0": "Number of Repairs",
-        "11": "\u30ea\u30da\u30a2\u56de\u6570"
-    },
-    "jackalCanCreateSidekickFromFox": {
-        "0": "Can Make Fox Into Sidekick",
-        "11": "\u5996\u72d0\u3092\u30b5\u30a4\u30c9\u30ad\u30c3\u30af\u306b\u6307\u540d\u3067\u304d\u308b"
-    },
-    "immoralist": {
-        "0": "Immoralist",
-        "11": "\u80cc\u5fb3\u8005"
-    },
-    "fortuneTeller": {
-        "0": "Fortune Teller",
-        "11": "\u5360\u3044\u5e2b"
-    },
-    "fortuneTellerNumTasks": {
-        "0": "Number of Tasks to Divine",
-        "11": "\u5360\u3044\u306b\u5fc5\u8981\u306a\u30bf\u30b9\u30af\u6570"
-    },
-    "fortuneTellerResultIsCrewOrNot": {
-        "0": "Divination Only Reveals Crew or Not",
-        "11": "\u5360\u3044\u7d50\u679c\u304c\u767d\u9ed2\u306e\u307f"
-    },
-    "fortuneTellerDuration": {
-        "0": "Time to Divine",
-        "11": "\u63a5\u89e6\u6642\u9593"
-    },
-    "fortuneTellerDistance": {
-        "0": "Divination Range",
-        "11": "\u63a5\u89e6\u5224\u5b9a\u8ddd\u96e2"
-    },
-    "fortuneTellerDivinedSomeone": {
-        "0": "Someone Was Just Divined",
-        "11": "\u5360\u3044\u5e2b\u304c\u8ab0\u304b\u3092\u5360\u3063\u305f"
-    },
-    "fortuneTellerDivinedYou": {
-        "0": "You Were Just Divined",
-        "11": "\u5360\u3044\u5e2b\u304c\u3042\u306a\u305f\u3092\u5360\u3063\u305f"
-    },
-    "divineCrew": {
-        "0": "Crewmate",
-        "11": "\u30af\u30eb\u30fc"
-    },
-    "divineNeutral": {
-        "0": "Neutral",
-        "11": "\u305d\u306e\u4ed6"
-    },
-    "divineImpostor": {
-        "0": "Impostor",
-        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
-    },
-    "divineMessageTeam": {
-        "0": "{0} is a(n) {1}",
-        "11": "{0} \u306f{1}\u9663\u55b6"
-    },
-    "divineMessageRole": {
-        "0": "{0}'s role is {1}",
-        "11": "{0} \u306e\u30ed\u30fc\u30eb\u306f\u306f\u300c{1}\u300d"
     }
 }
