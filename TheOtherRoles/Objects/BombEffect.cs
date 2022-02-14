@@ -30,6 +30,15 @@ namespace TheOtherRoles{
         }
 
         public static void clearBombEffects() {
+            foreach(var bombeffect in bombeffects)
+            {
+                if(bombeffect != null && bombeffect.bombeffect != null)
+                {
+                    bombeffect.bombeffect.SetActive(false);
+                    UnityEngine.Object.Destroy(bombeffect.bombeffect);
+
+                }
+            }
             bombeffects = new List<BombEffect>();
         }
 
