@@ -30,9 +30,6 @@ namespace TheOtherRoles{
         }
 
         public static void clearBombEffects() {
-            foreach(BombEffect bombeffect in bombeffects){
-                bombeffect.bombeffect.SetActive(false);
-            }
             bombeffects = new List<BombEffect>();
         }
 
