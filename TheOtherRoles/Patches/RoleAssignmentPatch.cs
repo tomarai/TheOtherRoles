@@ -293,7 +293,7 @@ namespace TheOtherRoles.Patches
             {
                 setRoleToRandomPlayer((byte)RoleType.BomberA, data.impostors);
                 setRoleToRandomPlayer((byte)RoleType.BomberB, data.impostors);
-                data.maxImpostorRoles -= 3;
+                data.maxImpostorRoles -= 2;
             }
         }
 
