@@ -1559,11 +1559,14 @@ namespace TheOtherRoles
             BomberB.bombTarget = null;
             var k = Helpers.playerById(killer);
             var t = Helpers.playerById(target);
-            KillAnimationCoPerformKillPatch.hideNextAnimation = true;
-            k.MurderPlayer(t);
-            if(BomberA.showEffects)
+            if (t.isAlive())
             {
-                new BombEffect(t);
+                KillAnimationCoPerformKillPatch.hideNextAnimation = true;
+                k.MurderPlayer(t);
+                if(BomberA.showEffects)
+                {
+                    new BombEffect(t);
+                }
             }
             BomberA.bomberButton.Timer = BomberA.bomberButton.MaxTimer;
             BomberB.bomberButton.Timer = BomberB.bomberButton.MaxTimer;
