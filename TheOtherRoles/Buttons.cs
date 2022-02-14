@@ -40,6 +40,7 @@ namespace TheOtherRoles
         public static CustomButton cleanerCleanButton;
         public static CustomButton warlockCurseButton;
         public static CustomButton securityGuardButton;
+        public static CustomButton securityGuardCamButton;
         public static CustomButton arsonistButton;
         public static CustomButton arsonistIgniteButton;
         public static CustomButton vultureEatButton;
@@ -47,8 +48,9 @@ namespace TheOtherRoles
         public static CustomButton pursuerButton;
         public static CustomButton witchSpellButton;
 
-        public static TMPro.TMP_Text securityGuardButtonScrewsText;
         public static TMPro.TMP_Text vultureNumCorpsesText;
+        public static TMPro.TMP_Text securityGuardButtonScrewsText;
+        public static TMPro.TMP_Text securityGuardChargesText;
         public static TMPro.TMP_Text pursuerButtonBlanksText;
         public static TMPro.TMP_Text hackerAdminTableChargesText;
         public static TMPro.TMP_Text hackerVitalsChargesText;
@@ -79,6 +81,7 @@ namespace TheOtherRoles
             cleanerCleanButton.MaxTimer = Cleaner.cooldown;
             warlockCurseButton.MaxTimer = Warlock.cooldown;
             securityGuardButton.MaxTimer = SecurityGuard.cooldown;
+            securityGuardCamButton.MaxTimer = SecurityGuard.cooldown;
             arsonistButton.MaxTimer = Arsonist.cooldown;
             vultureEatButton.MaxTimer = Vulture.cooldown;
             mediumButton.MaxTimer = Medium.cooldown;
@@ -98,6 +101,7 @@ namespace TheOtherRoles
             mediumButton.EffectDuration = Medium.duration;
             trackerTrackCorpsesButton.EffectDuration = Tracker.corpsesTrackingDuration;
             witchSpellButton.EffectDuration = Witch.spellCastingDuration;
+            securityGuardCamButton.EffectDuration = SecurityGuard.duration;
             // Already set the timer to the max, as the button is enabled during the game and not available at the start
             lightsOutButton.Timer = lightsOutButton.MaxTimer;
 
@@ -433,7 +437,7 @@ namespace TheOtherRoles
                     Hacker.hackerTimer = Hacker.duration;
                 },
                 () => { return Hacker.hacker != null && Hacker.hacker == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.isAlive(); },
-                () => { return PlayerControl.LocalPlayer.CanMove; },
+                () => { return true; },
                 () =>
                 {
                     hackerButton.Timer = hackerButton.MaxTimer;
@@ -457,6 +461,8 @@ namespace TheOtherRoles
                    if (!MapBehaviour.Instance || !MapBehaviour.Instance.isActiveAndEnabled)
                        DestroyableSingleton<HudManager>.Instance.ShowMap((System.Action<MapBehaviour>)(m => m.ShowCountOverlay()));
 
+                   if (Hacker.cantMove) PlayerControl.LocalPlayer.moveable = false;
+                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
                    Hacker.chargesAdminTable--;
                },
                () => { return Hacker.hacker != null && Hacker.hacker == PlayerControl.LocalPlayer && MapOptions.couldUseAdmin && PlayerControl.LocalPlayer.isAlive(); },
@@ -464,7 +470,7 @@ namespace TheOtherRoles
                {
                    if (hackerAdminTableChargesText != null)
                        hackerAdminTableChargesText.text = hackerVitalsChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), Hacker.chargesAdminTable, Hacker.toolsNumber);
-                   return PlayerControl.LocalPlayer.CanMove && Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin;
+                   return Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin;; 
                },
                () =>
                {
@@ -482,6 +488,7 @@ namespace TheOtherRoles
                () =>
                {
                    hackerAdminTableButton.Timer = hackerAdminTableButton.MaxTimer;
+                   if (!hackerVitalsButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
                    if (MapBehaviour.Instance && MapBehaviour.Instance.isActiveAndEnabled) MapBehaviour.Instance.Close();
                },
                PlayerControl.GameOptions.MapId == 3,
@@ -522,6 +529,10 @@ namespace TheOtherRoles
                        Hacker.doorLog.transform.localPosition = new Vector3(0.0f, 0.0f, -50f);
                        Hacker.doorLog.Begin(null);
                    }
+
+                   if (Hacker.cantMove) PlayerControl.LocalPlayer.moveable = false;
+                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
+
                    Hacker.chargesVitals--;
                },
                () => { return Hacker.hacker != null && Hacker.hacker == PlayerControl.LocalPlayer && MapOptions.couldUseVitals && PlayerControl.LocalPlayer.isAlive() && PlayerControl.GameOptions.MapId != 0 && PlayerControl.GameOptions.MapId != 3; },
@@ -533,7 +544,7 @@ namespace TheOtherRoles
                    hackerVitalsButton.actionButton.OverrideText(PlayerControl.GameOptions.MapId == 1 ?
                         TranslationController.Instance.GetString(StringNames.DoorlogLabel) :
                         TranslationController.Instance.GetString(StringNames.VitalsLabel));
-                   return PlayerControl.LocalPlayer.CanMove && Hacker.chargesVitals > 0 && MapOptions.canUseVitals;
+                   return Hacker.chargesVitals > 0 && MapOptions.canUseVitals;
                },
                () =>
                {
@@ -551,6 +562,7 @@ namespace TheOtherRoles
                () =>
                {
                    hackerVitalsButton.Timer = hackerVitalsButton.MaxTimer;
+                   if(!hackerAdminTableButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
                    if (Minigame.Instance)
                    {
                        if (PlayerControl.GameOptions.MapId == 1) Hacker.doorLog.ForceClose();
@@ -756,7 +768,7 @@ namespace TheOtherRoles
                     jackalKillButton.Timer = jackalKillButton.MaxTimer;
                     Jackal.currentTarget = null;
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Jackal) && PlayerControl.LocalPlayer.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Jackal) && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return Jackal.currentTarget && PlayerControl.LocalPlayer.CanMove; },
                 () => { jackalKillButton.Timer = jackalKillButton.MaxTimer; },
                 __instance.KillButton.graphic.sprite,
@@ -1032,6 +1044,77 @@ namespace TheOtherRoles
             securityGuardButtonScrewsText.enableWordWrapping = false;
             securityGuardButtonScrewsText.transform.localScale = Vector3.one * 0.5f;
             securityGuardButtonScrewsText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
+
+            securityGuardCamButton = new CustomButton(
+                () => {
+                    if (PlayerControl.GameOptions.MapId != 1) {
+                        if (SecurityGuard.minigame == null) {
+                            byte mapId = PlayerControl.GameOptions.MapId;
+                            var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("Surv_Panel"));
+                            if (mapId == 0 || mapId == 3) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvConsole"));
+                            else if (mapId == 4) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("task_cams"));
+                            if (e == null || Camera.main == null) return;
+                            SecurityGuard.minigame = UnityEngine.Object.Instantiate(e.MinigamePrefab, Camera.main.transform, false);
+                        }
+                        SecurityGuard.minigame.transform.SetParent(Camera.main.transform, false);
+                        SecurityGuard.minigame.transform.localPosition = new Vector3(0.0f, 0.0f, -50f);
+                        SecurityGuard.minigame.Begin(null);
+                    } else {
+                        if (SecurityGuard.minigame == null) {
+                            var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvLogConsole"));
+                            if (e == null || Camera.main == null) return;
+                            SecurityGuard.minigame = UnityEngine.Object.Instantiate(e.MinigamePrefab, Camera.main.transform, false);
+                        }
+                        SecurityGuard.minigame.transform.SetParent(Camera.main.transform, false);
+                        SecurityGuard.minigame.transform.localPosition = new Vector3(0.0f, 0.0f, -50f);
+                        SecurityGuard.minigame.Begin(null);
+                    }
+                    SecurityGuard.charges--;
+
+                    if (SecurityGuard.cantMove) PlayerControl.LocalPlayer.moveable = false;
+                    PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
+                },
+                () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews < Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice); },
+                () => {
+                    if (securityGuardChargesText != null)
+                        securityGuardChargesText.text = securityGuardChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), SecurityGuard.charges, SecurityGuard.maxCharges);
+                    securityGuardCamButton.actionButton.graphic.sprite = PlayerControl.GameOptions.MapId == 1 ? SecurityGuard.getLogSprite() : SecurityGuard.getCamSprite();
+                    securityGuardCamButton.actionButton.OverrideText(PlayerControl.GameOptions.MapId == 1 ?
+                        TranslationController.Instance.GetString(StringNames.DoorlogLabel) :
+                        TranslationController.Instance.GetString(StringNames.VitalsLabel));
+                    return PlayerControl.LocalPlayer.CanMove && SecurityGuard.charges > 0;
+                },
+                () => {
+                    securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
+                    securityGuardCamButton.isEffectActive = false;
+                    securityGuardCamButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
+                },
+                SecurityGuard.getCamSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.UseButton,
+                KeyCode.Q,
+                true,
+                0f,
+                () => {
+                    securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
+                    if (Minigame.Instance) {
+                        SecurityGuard.minigame.ForceClose();
+                    }
+                    PlayerControl.LocalPlayer.moveable = true;
+                },
+                false,
+                PlayerControl.GameOptions.MapId == 1 ?
+                    TranslationController.Instance.GetString(StringNames.DoorlogLabel) :
+                    TranslationController.Instance.GetString(StringNames.VitalsLabel)
+            );
+
+            // Security Guard cam button charges
+            securityGuardChargesText = GameObject.Instantiate(securityGuardCamButton.actionButton.cooldownTimerText, securityGuardCamButton.actionButton.cooldownTimerText.transform.parent);
+            securityGuardChargesText.text = "";
+            securityGuardChargesText.enableWordWrapping = false;
+            securityGuardChargesText.transform.localScale = Vector3.one * 0.5f;
+            securityGuardChargesText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
 
             // Arsonist button
             arsonistButton = new CustomButton(

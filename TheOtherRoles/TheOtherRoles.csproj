@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+<<<<<<< HEAD
         <Version>1.7.6</Version>
+=======
+        <Version>3.5.0</Version>
+>>>>>>> origin/gm-main
         <Description>TheOtherRoles: GM Edition</Description>
         <Authors>Eisbison</Authors>
     </PropertyGroup>

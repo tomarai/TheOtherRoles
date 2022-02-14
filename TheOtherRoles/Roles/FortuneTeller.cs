@@ -26,7 +26,7 @@ namespace TheOtherRoles
 
         public FortuneTeller()
         {
-            RoleType = roleId = RoleId.FortuneTeller;
+            RoleType = roleId = RoleType.FortuneTeller;
         }
 
         public override void OnMeetingStart() { }
@@ -73,7 +73,7 @@ namespace TheOtherRoles
             numUsed += 1;
 
             // 狐の場合はキルする
-            if(p.isRole(RoleId.Fox))
+            if(p.isRole(RoleType.Fox))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.FortuneTellerShoot, Hazel.SendOption.Reliable, -1);
                 writer.Write(PlayerControl.LocalPlayer.PlayerId);
@@ -96,7 +96,7 @@ namespace TheOtherRoles
         {
             // Add FortuneTeller Buttons
             PlayerControl player = PlayerControl.LocalPlayer;
-            if (player.isRole(RoleId.FortuneTeller) && !player.Data.IsDead) {
+            if (player.isRole(RoleType.FortuneTeller) && !player.Data.IsDead) {
                 FortuneTeller.targetBoxes = new List<GameObject>();
                 for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
@@ -139,7 +139,7 @@ namespace TheOtherRoles
             static void Postfix(MeetingHud __instance) {
                 // Deactivate FortuneTeller Button
                 PlayerControl player = PlayerControl.LocalPlayer;
-                if (player.isRole(RoleId.FortuneTeller)){
+                if (player.isRole(RoleType.FortuneTeller)){
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(player.Data);
                     int divineNum = ((int)tasksCompleted - ((int)FortuneTeller.numTasks*FortuneTeller.numUsed))/(int)FortuneTeller.numTasks;
                     bool isActive = divineNum > 0;

@@ -28,13 +28,13 @@ namespace TheOtherRoles
 
         public SchrodingersCat()
         {
-            RoleType = roleId = RoleId.SchrodingersCat;
+            RoleType = roleId = RoleType.SchrodingersCat;
         }
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() 
         {
-            if (PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat))
+            if (PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat))
                 PlayerControl.LocalPlayer.SetKillTimerUnchecked(killCooldown);
         }
         public override void FixedUpdate()
@@ -90,14 +90,14 @@ namespace TheOtherRoles
             }
             else
             {
-                bool isCrewOrSchrodingersCat = killer.isCrew() || killer.isRole(RoleId.SchrodingersCat);
+                bool isCrewOrSchrodingersCat = killer.isCrew() || killer.isRole(RoleType.SchrodingersCat);
                 if(killer.isImpostor())
                 {
                     setImpostorFlag();
                     if(becomesImpostor)
                         DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
                 }
-                else if(killer.isRole(RoleId.Jackal))
+                else if(killer.isRole(RoleType.Jackal))
                 {
                     setJackalFlag();
                 }
@@ -213,7 +213,7 @@ namespace TheOtherRoles
 
         public static bool isJackalButtonEnable()
         {
-            if(jackalFlag && PlayerControl.LocalPlayer.isRole(RoleId.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
+            if(jackalFlag && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
             {
                 if(!isTeamJackalAlive() || !cantKillUntilLastOne )
                 {
@@ -227,10 +227,10 @@ namespace TheOtherRoles
         {
             foreach(var p in PlayerControl.AllPlayerControls)
             {
-                if(p.isRole(RoleId.Jackal) && p.isAlive()){
+                if(p.isRole(RoleType.Jackal) && p.isAlive()){
                     return true;
                 }
-                else if(p.isRole(RoleId.Sidekick) && p.isAlive()){
+                else if(p.isRole(RoleType.Sidekick) && p.isAlive()){
                     return true;
                 }
             }

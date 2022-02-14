@@ -18,14 +18,14 @@ namespace TheOtherRoles
 
         public Munou()
         {
-            RoleType = roleId = RoleId.Munou;
+            RoleType = roleId = RoleType.Munou;
         }
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Munou) && PlayerControl.LocalPlayer.isAlive())
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
                 // ずっとカモフラージュ
                 camouflagerTimer -= Time.fixedDeltaTime;

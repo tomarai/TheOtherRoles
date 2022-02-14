@@ -16,7 +16,7 @@ namespace TheOtherRoles
 
         public Template()
         {
-            RoleType = roleId = RoleId.NoRole;
+            RoleType = roleId = RoleType.NoRole;
         }
 
         public override void OnMeetingStart() { }

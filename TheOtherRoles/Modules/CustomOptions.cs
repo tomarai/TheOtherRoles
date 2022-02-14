@@ -67,6 +67,11 @@ namespace TheOtherRoles
             {
                 entry = TheOtherRolesPlugin.Instance.Config.Bind($"Preset{preset}", id.ToString(), defaultSelection);
                 selection = Mathf.Clamp(entry.Value, 0, selections.Length - 1);
+
+                if (options.Any(x => x.id == id))
+                {
+                    TheOtherRolesPlugin.Instance.Log.LogWarning($"CustomOption id {id} is used in multiple places.");
+                }
             }
             options.Add(this);
         }
@@ -211,6 +216,27 @@ namespace TheOtherRoles
         {
             if (max > 1)
                 countOption = CustomOption.Create(id + 10000, "roleNumAssigned", 1f, 1f, 15f, 1f, this, format: "unitPlayers");
+        }
+    }
+
+    public class CustomDualRoleOption : CustomRoleOption
+    {
+        public static List<CustomDualRoleOption> dualRoles = new List<CustomDualRoleOption>();
+        public CustomOption roleImpChance = null;
+        public CustomOption roleAssignEqually = null;
+        public RoleType roleType;
+
+        public int impChance { get { return roleImpChance.getSelection(); } }
+        
+        public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
+
+        public CustomDualRoleOption(int id, string name, Color color, RoleType roleType, int max = 15) : base(id, name, color, max)
+        {
+            roleAssignEqually = new CustomOption(id + 10011, "roleAssignEqually", new string[] { "optionOn", "optionOff" }, "optionOff", this, false, false, "");
+            roleImpChance = CustomOption.Create(id + 10010, "roleImpChance", CustomOptionHolder.rates, roleAssignEqually);
+            this.roleType = roleType;
+
+            dualRoles.Add(this);
         }
     }
 

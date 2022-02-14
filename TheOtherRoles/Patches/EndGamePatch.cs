@@ -43,7 +43,8 @@ namespace TheOtherRoles.Patches
         AdditionalLawyerStolenWin,
         AdditionalAlivePursuerWin,
         PlagueDoctorWin,
-        FoxWin
+        EveryoneDied,
+        FoxWin,
     }
 
     enum FinalStatus
@@ -56,6 +57,8 @@ namespace TheOtherRoles.Patches
         Dead,
         Suicide,
         Misfire,
+        Revenge,
+        Diseased,
         GMExecuted,
         Disconnected
     }
@@ -139,8 +142,7 @@ namespace TheOtherRoles.Patches
             AdditionalTempData.clear();
 
 
-            //foreach (var pc in PlayerControl.AllPlayerControls)
-            var hideRoles = new RoleId[] { RoleId.Lovers };
+            var hideRoles = new RoleType[] { RoleType.Lovers };
             foreach (var p in GameData.Instance.AllPlayers)
             {
                 //var p = pc.Data;
@@ -169,6 +171,7 @@ namespace TheOtherRoles.Patches
             AdditionalTempData.isGM = CustomOptionHolder.gmEnabled.getBool() && PlayerControl.LocalPlayer.isGM();
             AdditionalTempData.plagueDoctorInfected = PlagueDoctor.infected;
             AdditionalTempData.plagueDoctorProgress = PlagueDoctor.progress;
+
 
             // Remove Jester, Arsonist, Vulture, Jackal, former Jackals and Sidekick from winners (if they win, they'll be readded)
             List<PlayerControl> notWinners = new List<PlayerControl>();
@@ -222,10 +225,15 @@ namespace TheOtherRoles.Patches
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
             bool foxWin = Fox.exists && gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
+            bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
-
+            if (everyoneDead && !plagueDoctorWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                AdditionalTempData.winCondition = WinCondition.EveryoneDied;
+            }
             // Mini lose
-            if (miniLose)
+            else if (miniLose)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 WinningPlayerData wpd = new WinningPlayerData(Mini.mini.Data);
@@ -580,6 +588,12 @@ namespace TheOtherRoles.Patches
                         textRenderer.color = Jackal.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Jackal.color);
                     }
+                    else if (AdditionalTempData.winCondition == WinCondition.EveryoneDied)
+                    {
+                        bonusText = "everyoneDied";
+                        textRenderer.color = Palette.DisabledGrey;
+                        __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+                    }
                     else if (AdditionalTempData.winCondition == WinCondition.MiniLose)
                     {
                         bonusText = "miniDied";
@@ -651,8 +665,8 @@ namespace TheOtherRoles.Patches
                         {
                             RoleInfo roleX = x.Roles.FirstOrDefault();
                             RoleInfo roleY = y.Roles.FirstOrDefault();
-                            RoleId idX = roleX == null ? RoleId.NoRole : roleX.roleId;
-                            RoleId idY = roleY == null ? RoleId.NoRole : roleY.roleId;
+                            RoleType idX = roleX == null ? RoleType.NoRole : roleX.roleId;
+                            RoleType idY = roleY == null ? RoleType.NoRole : roleY.roleId;
 
                             if (x.Status == y.Status)
                             {
@@ -678,14 +692,10 @@ namespace TheOtherRoles.Patches
                                 {
                                     result += Helpers.cs(Color.red, ModTranslation.getString("plagueDoctorInfectedText"));
                                 }
-                                else 
+                                else if (!data.Roles.Contains(RoleInfo.plagueDoctor))
                                 {
                                     float progress = AdditionalTempData.plagueDoctorProgress.ContainsKey(data.PlayerId) ? AdditionalTempData.plagueDoctorProgress[data.PlayerId] : 0f;
-                                    if (progress > 0f)
-                                    {
-                                        float currProgress = 100 * progress / PlagueDoctor.infectDuration;
-                                        result += $"{currProgress.ToString("F1")}%";
-                                    }
+                                    result += PlagueDoctor.getProgressString(progress);
                                 }
                             }
                             roleSummaryText.AppendLine(result);
@@ -846,7 +856,7 @@ namespace TheOtherRoles.Patches
                     int numDeadPlayerUncompletedTasks = 0;
                     foreach(var player in PlayerControl.AllPlayerControls){
                         foreach(var task in player.Data.Tasks){
-                            if(player.Data.IsDead && Helpers.isCrew(player) && !player.isRole(RoleId.Madmate) && !player.isRole(RoleId.CreatedMadmate))
+                            if(player.Data.IsDead && Helpers.isCrew(player) && !player.isRole(RoleType.Madmate) && !player.isRole(RoleType.CreatedMadmate))
                             {
                                 if(!task.Complete)
                                 {
@@ -1003,14 +1013,14 @@ namespace TheOtherRoles.Patches
                                     if (lover) jackalLovers++;
                                 }
 
-                                if (Helpers.playerById(playerInfo.PlayerId).isRole(RoleId.Fox))
+                                if (Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.Fox))
                                 {
                                         numFoxAlive += 1;
                                 }
 
                                 if (SchrodingersCat.jackalFlag)
                                 {
-                                    if(Helpers.playerById(playerInfo.PlayerId).isRole(RoleId.SchrodingersCat))
+                                    if(Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.SchrodingersCat))
                                     {
                                             numJackalAlive++;
                                     }

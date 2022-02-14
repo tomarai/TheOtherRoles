@@ -39,8 +39,8 @@ namespace TheOtherRoles {
                 playerInfo.Role && playerInfo.Role.TasksCountTowardProgress &&
                 !(playerInfo.Object.isGM() && !GM.hasTasks) &&
                 !(playerInfo.Object.isLovers() && !Lovers.hasTasks) &&
-                ((!playerInfo.Object.isRole(RoleId.Madmate) && playerInfo.Object != CreatedMadmate.madmate) || 
-                (madmateCount && (PlayerControl.LocalPlayer.isRole(RoleId.Madmate) || PlayerControl.LocalPlayer == CreatedMadmate.madmate))) &&
+                ((!playerInfo.Object.isRole(RoleType.Madmate) && playerInfo.Object != CreatedMadmate.madmate) || 
+                (madmateCount && (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) || PlayerControl.LocalPlayer == CreatedMadmate.madmate))) &&
                 !playerInfo.Object.hasFakeTasks()
                 ) {
 

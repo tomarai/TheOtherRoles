@@ -30,7 +30,7 @@ namespace TheOtherRoles
 
         public Sheriff()
         {
-            RoleType = roleId = RoleId.Sheriff;
+            RoleType = roleId = RoleType.Sheriff;
             numShots = maxShots;
         }
 
@@ -69,7 +69,7 @@ namespace TheOtherRoles
                         byte targetId = local.currentTarget.PlayerId; ;
                         if ((local.currentTarget.Data.Role.IsImpostor && (local.currentTarget != Mini.mini || Mini.isGrownUp())) ||
                             (Sheriff.spyCanDieToSheriff && Spy.spy == local.currentTarget) ||
-                            (Sheriff.madmateCanDieToSheriff && local.currentTarget.isRole(RoleId.Madmate)) ||
+                            (Sheriff.madmateCanDieToSheriff && local.currentTarget.isRole(RoleType.Madmate)) ||
                             (Sheriff.createdMadmateCanDieToSheriff && CreatedMadmate.madmate == local.currentTarget) ||
                             (Sheriff.canKillNeutrals && local.currentTarget.isNeutral()) ||
                             (Jackal.jackal == local.currentTarget || Sidekick.sidekick == local.currentTarget))
@@ -93,7 +93,7 @@ namespace TheOtherRoles
                     sheriffKillButton.Timer = sheriffKillButton.MaxTimer;
                     local.currentTarget = null;
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Sheriff) && local.numShots > 0 && PlayerControl.LocalPlayer.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Sheriff) && local.numShots > 0 && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>
                 {
                     if (sheriffNumShotsText != null)

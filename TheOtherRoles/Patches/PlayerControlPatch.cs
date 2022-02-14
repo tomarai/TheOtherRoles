@@ -298,7 +298,7 @@ namespace TheOtherRoles.Patches
         {
             // If LocalPlayer is Sidekick, the Jackal is disconnected and Sidekick promotion is enabled, then trigger promotion
             if (Sidekick.promotesToJackal && 
-                PlayerControl.LocalPlayer.isRole(RoleId.Sidekick) &&
+                PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) &&
                 PlayerControl.LocalPlayer.isAlive() && 
                 (Jackal.jackal == null || Jackal.jackal.Data.Disconnected))
             {
@@ -539,10 +539,8 @@ namespace TheOtherRoles.Patches
                         playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);    
                     }
 
-                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data, true);
-
-                    RoleId[] exclude = new RoleId[] {RoleId.Lovers};
-                    string roleNames = RoleInfo.GetRolesString(p, true, exclude);
+                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
+                    string roleNames = RoleInfo.GetRolesString(p, true, new RoleType[] { RoleType.Lovers });
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
                     string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({completedStr}/{tasksTotal})</color>" : "";
@@ -581,7 +579,7 @@ namespace TheOtherRoles.Patches
                     }
 
                     playerInfo.text = playerInfoText;
-                    playerInfo.gameObject.SetActive(p.Visible);
+                    playerInfo.gameObject.SetActive(p.Visible && !Helpers.hidePlayerName(p));
                     if (meetingInfo != null) meetingInfo.text = MeetingHud.Instance.state == MeetingHud.VoteStates.Results ? "" : meetingInfoText;
                 }
             }
@@ -606,6 +604,15 @@ namespace TheOtherRoles.Patches
                 }
             }
             SecurityGuard.ventTarget = target;
+        }
+
+        public static void securityGuardUpdate() {
+            if (SecurityGuard.securityGuard == null || PlayerControl.LocalPlayer != SecurityGuard.securityGuard || SecurityGuard.securityGuard.Data.IsDead) return;
+            var (playerCompleted, _) = TasksHandler.taskInfo(SecurityGuard.securityGuard.Data);
+            if (playerCompleted == SecurityGuard.rechargedTasks) {
+                SecurityGuard.rechargedTasks += SecurityGuard.rechargeTasksNumber;
+                if (SecurityGuard.maxCharges > SecurityGuard.charges) SecurityGuard.charges++;
+            }
         }
 
         public static void arsonistSetTarget()
@@ -648,7 +655,7 @@ namespace TheOtherRoles.Patches
                 {
                     bool arrowForImp = p.Data.Role.IsImpostor;
                     bool arrowForTeamJackal = Snitch.includeTeamJackal && (p == Jackal.jackal || p == Sidekick.sidekick);
-                    bool arrowForFox = p.isRole(RoleId.Fox) || p.isRole(RoleId.Immoralist);
+                    bool arrowForFox = p.isRole(RoleType.Fox) || p.isRole(RoleType.Immoralist);
 
                     // Update the arrows' color every time bc things go weird when you add a sidekick or someone dies
                     Color c = Palette.ImpostorRed;
@@ -706,7 +713,7 @@ namespace TheOtherRoles.Patches
                 var possibleTargets = new List<PlayerControl>();
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p != Mini.mini || Mini.isGrownUp()) && !p.isGM()) possibleTargets.Add(p);
+                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p != Mini.mini || Mini.isGrownUp()) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
@@ -856,6 +863,12 @@ namespace TheOtherRoles.Patches
             {
                 PlayerControl pc = Helpers.playerById(playerID);
                 PoolablePlayer pp = MapOptions.playerIcons[playerID];
+                if (pc.Data.Disconnected)
+                {
+                    pp.gameObject.SetActive(false);
+                    continue;
+                }
+
                 pp.gameObject.SetActive(showIcon);
                 if (pc.Data.IsDead)
                 {
@@ -989,6 +1002,7 @@ namespace TheOtherRoles.Patches
                 sidekickCheckPromotion();
                 // SecurityGuard
                 securityGuardSetTarget();
+                securityGuardUpdate();
                 // Arsonist
                 arsonistSetTarget();
                 // Snitch
@@ -1263,9 +1277,9 @@ namespace TheOtherRoles.Patches
             if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
-            if (PlayerControl.LocalPlayer.isRole(RoleId.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp() ? 0.66f : 2f;
-            if (PlayerControl.LocalPlayer.isRole(RoleId.BountyHunter)) addition = BountyHunter.punishmentTime;
-            if (PlayerControl.LocalPlayer.isRole(RoleId.Ninja) && Ninja.isPenalized(PlayerControl.LocalPlayer)) addition = Ninja.killPenalty;
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp() ? 0.66f : 2f;
+            if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.punishmentTime;
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Ninja) && Ninja.isPenalized(PlayerControl.LocalPlayer)) addition = Ninja.killPenalty;
 
             float max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
             __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, max), max);

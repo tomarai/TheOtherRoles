@@ -30,7 +30,7 @@ namespace TheOtherRoles
 
         public Uranai()
         {
-            RoleType = roleId = RoleId.Uranai;
+            RoleType = roleId = RoleType.Uranai;
         }
 
         public override void OnMeetingStart()
@@ -105,7 +105,7 @@ namespace TheOtherRoles
                 return () =>
                 {
                     var p = PlayerControl.LocalPlayer;
-                    if(!p.isRole(RoleId.Uranai)) return false;
+                    if(!p.isRole(RoleType.Uranai)) return false;
                     if (p.CanMove && p.isAlive() & p.PlayerId != index
                         && MapOptions.playerIcons.ContainsKey(index) && isCompletedNumTasks(p) && numUsed < 1)
                     {
@@ -150,7 +150,7 @@ namespace TheOtherRoles
                     //　占い師以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
                     if (!MapOptions.playerIcons.ContainsKey(index) ||
-                        !PlayerControl.LocalPlayer.isRole(RoleId.Uranai)) 
+                        !PlayerControl.LocalPlayer.isRole(RoleType.Uranai)) 
                     {
                         return false;
                     }
@@ -214,7 +214,7 @@ namespace TheOtherRoles
         private static void uranaiUpdate()
         {
             if(meetingFlag) return;
-            if(!PlayerControl.LocalPlayer.isRole(RoleId.Uranai)) return;
+            if(!PlayerControl.LocalPlayer.isRole(RoleType.Uranai)) return;
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
@@ -257,7 +257,7 @@ namespace TheOtherRoles
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
                     // float distance = Vector2.Distance(p.transform.position, PlayerControl.LocalPlayer.transform.position);
-                    if(p.isRole(RoleId.Uranai)){
+                    if(p.isRole(RoleType.Uranai)){
                         arrow = new Arrow(Uranai.color);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.transform.position);

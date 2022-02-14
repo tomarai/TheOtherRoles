@@ -22,7 +22,7 @@ namespace TheOtherRoles
 
         public Munou2nd()
         {
-            RoleType = roleId = RoleId.Munou2nd;
+            RoleType = roleId = RoleType.Munou2nd;
         }
 
         public override void OnMeetingStart()
@@ -31,7 +31,7 @@ namespace TheOtherRoles
         }
         public override void OnMeetingEnd()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Munou2nd) && PlayerControl.LocalPlayer.isAlive())
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou2nd) && PlayerControl.LocalPlayer.isAlive())
             {
                 randomColors();
             }
@@ -39,7 +39,7 @@ namespace TheOtherRoles
 
         public override void FixedUpdate()
         {
-            // if(PlayerControl.LocalPlayer.isRole(RoleId.Munou2nd) && PlayerControl.LocalPlayer.isAlive())
+            // if(PlayerControl.LocalPlayer.isRole(RoleType.Munou2nd) && PlayerControl.LocalPlayer.isAlive())
             // {
             //     if(!randomColorFlag)
             //     {
@@ -50,7 +50,7 @@ namespace TheOtherRoles
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Munou2nd)) resetColors();
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou2nd)) resetColors();
         }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 

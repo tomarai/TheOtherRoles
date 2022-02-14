@@ -26,7 +26,7 @@ namespace TheOtherRoles
 
         public LastImpostor()
         {
-            RoleType = roleId = RoleId.LastImpostor;
+            RoleType = roleId = RoleType.LastImpostor;
         }
 
         public override void OnMeetingStart() { }
@@ -66,8 +66,8 @@ namespace TheOtherRoles
                 {
                     if(selectedFunction == 1) return false;
                     var p = PlayerControl.LocalPlayer;
-                    if(!p.isRole(RoleId.LastImpostor)) return false;
-                    if (p.isRole(RoleId.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
+                    if(!p.isRole(RoleType.LastImpostor)) return false;
+                    if (p.isRole(RoleType.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
                         && MapOptions.playerIcons.ContainsKey(index) && numUsed < 1 && isCounterMax())
                     {
                         return true;
@@ -77,7 +77,7 @@ namespace TheOtherRoles
                         if(playerIcons.ContainsKey(index))
                         {
                             playerIcons[index].gameObject.SetActive(false);
-                            if(PlayerControl.LocalPlayer.isRole(RoleId.BountyHunter))
+                            if(PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                                 setBountyIconPos(Vector3.zero);
                         }
                         if(lastImpostorButtons.Count > index)
@@ -127,7 +127,7 @@ namespace TheOtherRoles
                     //　ラストインポスター以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
                     if (!playerIcons.ContainsKey(index) ||
-                        !PlayerControl.LocalPlayer.isRole(RoleId.LastImpostor) ||
+                        !PlayerControl.LocalPlayer.isRole(RoleType.LastImpostor) ||
                         !isCounterMax()) 
                     {
                         return false;
@@ -143,7 +143,7 @@ namespace TheOtherRoles
                     setIconStatus(index, false);
 
                     // Bounty Hunterの場合賞金首の位置をずらして表示する
-                    if(PlayerControl.LocalPlayer.isRole(RoleId.BountyHunter))
+                    if(PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {
                         Vector3 offset = new Vector3(0f, 1f, 0f);
                         setBountyIconPos(offset);

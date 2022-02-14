@@ -21,17 +21,17 @@ namespace TheOtherRoles.Patches
             bool isReactor = task.TaskType == TaskTypes.StopCharles || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.ResetReactor;
             bool isO2 = task.TaskType == TaskTypes.RestoreOxy;
 
-            if (pc.isRole(RoleId.Swapper) && (isLights || isComms))
+            if (pc.isRole(RoleType.Swapper) && (isLights || isComms))
             {
                 return true;
             }
 
-            if (pc.isRole(RoleId.Madmate) && (isLights || (isComms && !Madmate.canFixComm)))
+            if (pc.isRole(RoleType.Madmate) && (isLights || (isComms && !Madmate.canFixComm)))
             {
                 return true;
             }
 
-            if (pc.isRole(RoleId.CreatedMadmate) && (isLights || (isComms && !CreatedMadmate.canFixComm)))
+            if (pc.isRole(RoleType.CreatedMadmate) && (isLights || (isComms && !CreatedMadmate.canFixComm)))
             {
                 return true;
             }
@@ -41,7 +41,7 @@ namespace TheOtherRoles.Patches
                 return true;
             }
             
-            if (pc.isRole(RoleId.Fox) && (isLights || isComms || isReactor || isO2))
+            if (pc.isRole(RoleType.Fox) && (isLights || isComms || isReactor || isO2))
             {
                 if(Fox.foxCanFixSabotageWhileStealth && Fox.isStealthed(pc))
                 {
@@ -57,7 +57,7 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            if (pc.isRole(RoleId.Munou) && (isLights || isComms || isReactor || isO2))
+            if (pc.isRole(RoleType.Munou) && (isLights || isComms || isReactor || isO2))
             {
                 return true;
             }
@@ -89,7 +89,7 @@ namespace TheOtherRoles.Patches
             bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
 
             if ((isSecurity && !MapOptions.canUseCameras) || (isVitals && !MapOptions.canUseVitals)) return true;
-            if (pc.isRole(RoleId.Munou) && (isVitals || isButton)) return true;
+            if (pc.isRole(RoleType.Munou) && (isVitals || isButton)) return true;
             return false;
         }
 
@@ -106,7 +106,7 @@ namespace TheOtherRoles.Patches
             {
                 return true;
             }
-            if(pc.isRole(RoleId.Munou) && targetMapConsole != null) return true;
+            if(pc.isRole(RoleType.Munou) && targetMapConsole != null) return true;
             return false;
         }
 
@@ -184,7 +184,7 @@ namespace TheOtherRoles.Patches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.isRole(RoleId.Madmate) && !PlayerControl.LocalPlayer.isRole(RoleId.CreatedMadmate);
+                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && !PlayerControl.LocalPlayer.isRole(RoleType.CreatedMadmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;
@@ -264,7 +264,7 @@ namespace TheOtherRoles.Patches
                 if (__instance.isActiveAndEnabled && __instance.currentTarget && !__instance.isCoolingDown && PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.CanMove)
                 {
                     bool showAnimation = true;
-                    if (PlayerControl.LocalPlayer.isRole(RoleId.Ninja) && Ninja.isStealthed(PlayerControl.LocalPlayer))
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.Ninja) && Ninja.isStealthed(PlayerControl.LocalPlayer))
                     {
                         showAnimation = false;
                     }
@@ -357,7 +357,7 @@ namespace TheOtherRoles.Patches
                 }
 
                 // Deactivate emergency button for FortuneTeller
-                if (PlayerControl.LocalPlayer.isRole(RoleId.Uranai) && Uranai.isCompletedNumTasks(PlayerControl.LocalPlayer))
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Uranai) && Uranai.isCompletedNumTasks(PlayerControl.LocalPlayer))
                 {
                     roleCanCallEmergency = false;
                     statusText = ModTranslation.getString("占い師は会議ボタンを押せない");

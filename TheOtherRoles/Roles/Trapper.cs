@@ -51,7 +51,7 @@ namespace TheOtherRoles
 
         public Trapper()
         {
-            RoleType = roleId = RoleId.NoRole;
+            RoleType = roleId = RoleType.NoRole;
         }
 
         public override void OnMeetingStart() { }
@@ -66,7 +66,7 @@ namespace TheOtherRoles
 
             if(DateTime.UtcNow.Subtract(placedTime).TotalSeconds < extensionTime) return;
             try{
-                if (PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trap != null && trappedPlayer == null && !playingKillSound && !meetingFlag)
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && trap != null && trappedPlayer == null && !playingKillSound && !meetingFlag)
                 {
                     // トラップを踏んだプレイヤーを動けなくする 
                     foreach(var p in PlayerControl.AllPlayerControls)
@@ -102,13 +102,13 @@ namespace TheOtherRoles
                     }
                 }
 
-                if(PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && trappedPlayer != null && status== Status.active && !meetingFlag)
+                if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && trappedPlayer != null && status== Status.active && !meetingFlag)
                 {
                     // トラップにかかっているプレイヤーを救出する
                     Vector3 p1 = trap.transform.position;
                     foreach(var player in PlayerControl.AllPlayerControls)
                     {
-                        if (player.PlayerId == trappedPlayer.PlayerId || player.isDead() || player.inVent|| player.isRole(RoleId.Trapper)) continue;
+                        if (player.PlayerId == trappedPlayer.PlayerId || player.isDead() || player.inVent|| player.isRole(RoleType.Trapper)) continue;
                         Vector3 p2 = player.transform.position;
                         float distance = Vector3.Distance(p1, p2);
                         if(distance < 0.5)
@@ -130,7 +130,7 @@ namespace TheOtherRoles
     public override void OnKill(PlayerControl target) 
     {
         //　キルクールダウン設定
-        if (PlayerControl.LocalPlayer.isRole(RoleId.Trapper))
+        if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper))
         {
             if (target == Trapper.trappedPlayer && !isTrapKill)  // トラップにかかっている対象をキルした場合のボーナス
             {
@@ -189,7 +189,7 @@ namespace TheOtherRoles
                 trapperSetTrapButton.Timer = trapperSetTrapButton.MaxTimer;
             },
             () => { /*ボタン有効になる条件*/
-                return PlayerControl.LocalPlayer.isRole(RoleId.Trapper) && !PlayerControl.LocalPlayer.Data.IsDead;
+                return PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && !PlayerControl.LocalPlayer.Data.IsDead;
             },
             () => { /*ボタンが使える条件*/
                 return PlayerControl.LocalPlayer.CanMove && Trapper.trappedPlayer == null;

@@ -21,14 +21,14 @@ namespace TheOtherRoles
 
         public Immoralist()
         {
-            RoleType = roleId = RoleId.Immoralist;
+            RoleType = roleId = RoleType.Immoralist;
         }
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleId.Immoralist) && immoralistArrow)
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Immoralist) && immoralistArrow)
             {
                 arrowUpdate();
             }
@@ -68,7 +68,7 @@ namespace TheOtherRoles
                 () => {
                     suicide();
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Immoralist) && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Immoralist) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => {return true;},
                 () => {
                     immoralistButton.Timer = immoralistButton.MaxTimer = 20;
@@ -112,7 +112,7 @@ namespace TheOtherRoles
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
-                    if(p.isRole(RoleId.Fox)){
+                    if(p.isRole(RoleType.Fox)){
                         arrow = new Arrow(Fox.color);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.transform.position);
@@ -129,7 +129,7 @@ namespace TheOtherRoles
             public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
-                if(player.isRole(RoleId.Immoralist) && player.isAlive()){
+                if(player.isRole(RoleType.Immoralist) && player.isAlive()){
 
                     HudManager.Instance.FullScreen.enabled = true;
                     HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>

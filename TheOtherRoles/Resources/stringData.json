@@ -407,6 +407,10 @@
         "0": "Tasks Are Counted While Alive",
         "11": "\u751f\u5b58\u6642\u3001\u30bf\u30b9\u30af\u304c\u30ab\u30a6\u30f3\u30c8\u3055\u308c\u308b"
     },
+    "loversEnableChat": {
+        "0": "Enable Lover Chat",
+        "11": "\u30e9\u30d0\u30fc\u30ba\u30c1\u30e3\u30c3\u30c8"
+    },
     "guesser": {
         "0": "Guesser",
         "11": "\u30b2\u30c3\u30b5\u30fc"
@@ -467,6 +471,10 @@
         "0": "Both Guesser Spawn Rate",
         "11": "\u30ca\u30a4\u30b9\u30fb\u30a4\u30d3\u30eb\u4e21\u65b9\u51fa\u73fe\u7387"
     },
+    "guesserCantGuessSnitchIfTaksDone": {
+        "0": "Can't Guess Snitch When Tasks Completed",
+        "11": "\u30bf\u30b9\u30af\u3092\u5b8c\u4e86\u3057\u305f\u30b9\u30cb\u30c3\u30c1\u3092\u6483\u3066\u306a\u3044"
+    },
     "guesserGuessChat": {
         "0": "Guesser guessed the role {0} for {1}!",
         "11": "\u30b2\u30c3\u30b5\u30fc\u306f\u300c{1}\u300d\u306e\u30ed\u30fc\u30eb\u304c\u300c{0}\u300d\u3060\u3068\u63a8\u6e2c\u3057\u305f\uff01"
@@ -495,6 +503,10 @@
         "0": "Can Sabotage",
         "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u3067\u304d\u308b"
     },
+    "jesterHasImpostorVision": {
+        "0": "Has Impostor Vision",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u3068\u540c\u3058\u8996\u91ce"
+    },
     "arsonist": {
         "0": "Arsonist",
         "11": "\u30a2\u30fc\u30bd\u30cb\u30b9\u30c8"
@@ -514,6 +526,10 @@
     "arsonistDuration": {
         "0": "Douse Duration",
         "11": "\u706f\u6cb9\u304b\u3051\u6642\u9593"
+    },
+    "arsonistCanBeLovers": {
+        "0": "Can Be Lovers",
+        "11": "\u30e9\u30d0\u30fc\u30ba\u306b\u306a\u308c\u308b"
     },
     "jackal": {
         "0": "Jackal",
@@ -995,6 +1011,10 @@
         "0": "Number Of Tasks Needed For Recharging",
         "11": "\u5145\u96fb\u306b\u5fc5\u8981\u306a\u30bf\u30b9\u30af\u6570"
     },
+    "hackerNoMove": {
+        "0": "Can't Move During Mobile Gadget Duration",
+        "11": "\u643a\u5e2f\u88c5\u7f6e\u4f7f\u7528\u6642\u3001\u79fb\u52d5\u4e0d\u80fd"
+    },
     "hackerChargesText": {
         "0": "Charges: {0}/{1}",
         "11": "\u30c1\u30e3\u30fc\u30b8\u6570: {0}/{1}"
@@ -1110,6 +1130,22 @@
     "securityGuardVentPrice": {
         "0": "Screws Per Vent",
         "11": "\u30d9\u30f3\u30c8\u5c01\u9396\u306b\u8981\u3059\u308b\u30cd\u30b8\u6570"
+    },
+    "securityGuardCamDuration": {
+        "0": "Camera Duration",
+        "11": "\u643a\u5e2f\u30ab\u30e1\u30e9\u4f7f\u7528\u53ef\u80fd\u6642\u9593"
+    },
+    "securityGuardCamMaxCharges": {
+        "0": "Max Mobile Gadget Charges",
+        "11": "\u6700\u5927\u30c1\u30e3\u30fc\u30b8\u6570"
+    },
+    "securityGuardCamRechargeTasksNumber": {
+        "0": "Number Of Tasks Needed For Recharging",
+        "11": "\u5145\u96fb\u306b\u5fc5\u8981\u306a\u30bf\u30b9\u30af\u6570"
+    },
+    "securityGuardNoMove": {
+        "0": "Can't Move During Camera Duration",
+        "11": "\u643a\u5e2f\u30ab\u30e1\u30e9\u4f7f\u7528\u6642\u3001\u79fb\u52d5\u4e0d\u80fd"
     },
     "securityGuardScrews": {
         "0": "Screws: {0}",
@@ -1489,6 +1525,9 @@
         "0": "You crave blood",
         "11": "\u6bba\u4eba\u885d\u52d5\u304c\u6291\u3048\u3089\u308c\u306a\u3044"
     },
+    "serialKillerFullDesc": {
+        "11": "\u30fb\u30ad\u30eb\u30af\u30fc\u30eb\u304c\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u3084\u30b8\u30e3\u30c3\u30ab\u30eb\u3088\u308a\u77ed\u3044\n\u30fb\u30ad\u30eb\u3092\u3057\u305f\u3089\u6b21\u306e\u30ad\u30eb\u307e\u3067\u306e\u6642\u9593\u304c\u8868\u793a\u3055\u308c\u6642\u9593\u5185\u306b\u30ad\u30eb\u3092\u3057\u306a\u3044\u3068\u81ea\u7206\u3059\u308b\n\u30fb\u30ad\u30eb\u3092\u3057\u7d9a\u3051\u308c\u3070\u81ea\u7206\u306f\u3057\u306a\u3044\n\u30fb\u4f1a\u8b70\u3067\u81ea\u7206\u30bf\u30a4\u30de\u30fc\u304c\u30ea\u30bb\u30c3\u30c8\u3055\u308c\u308b\uff08\u8a2d\u5b9a\u306b\u3088\u308b\uff09"
+    },
     "serialKillerKillCooldown": {
         "0": "Kill Cooldown",
         "11": "\u30ad\u30eb\u30af\u30fc\u30eb"
@@ -1500,6 +1539,38 @@
     "serialKillerResetTimer": {
         "0": "Reset Suicide Timer After Meetings",
         "11": "\u4f1a\u8b70\u5f8c\u3001\u81ea\u6bba\u30bf\u30a4\u30de\u30fc\u304c\u30ea\u30bb\u30c3\u30c8\u3055\u308c\u308b"
+    },
+    "nekoKabocha": {
+        "0": "Neko-Kabocha",
+        "11": "\u30cd\u30b3\u30ab\u30dc\u30c1\u30e3"
+    },
+    "nekoKabochaIntroDesc": {
+        "0": "You will never die alone",
+        "11": "\u72ec\u308a\u3067\u306f\u7d76\u5bfe\u306b\u6b7b\u306d\u306a\u3044"
+    },
+    "nekoKabochaShortDesc": {
+        "0": "You will never die alone",
+        "11": "\u72ec\u308a\u3067\u306f\u7d76\u5bfe\u306b\u6b7b\u306d\u306a\u3044"
+    },
+    "nekoKabochaFullDesc": {
+        "0": "An Impostor capable of revenge-killing their killer.",
+        "11": "\u30fb\u6bba\u5bb3\u3055\u308c\u305f\u5834\u5408\u306e\u307f\u6bba\u5bb3\u3057\u305f\u30d7\u30ec\u30a4\u30e4\u30fc\u3092\u9053\u9023\u308c\u306b\u3059\u308b\n\n\u4ee5\u4e0b\u306f\u8a2d\u5b9a\u306b\u3088\u3063\u3066\u5909\u66f4\u53ef\u80fd\n\u30fb\u30af\u30eb\u30fc\u9663\u55b6\uff08\u30b7\u30a7\u30ea\u30d5\u7b49\uff09\u306b\u6bba\u3055\u308c\u305f\u5834\u5408\u3001\u9053\u9023\u308c\u304c\u767a\u751f\u3059\u308bor\u3057\u306a\u3044\n\u30fb\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\uff08\u30b9\u30d1\u30a4\u304c\u3044\u308b\u6642\uff09\u306b\u6bba\u3055\u308c\u305f\u5834\u5408\u3001\u9053\u9023\u308c\u304c\u767a\u751f\u3059\u308bor\u3057\u306a\u3044\n\u30fb\u305d\u306e\u4ed6\u9663\u55b6\uff08\u30b8\u30e3\u30c3\u30ab\u30eb\u7b49\uff09\u306b\u6bba\u5bb3\u3055\u308c\u305f\u5834\u5408\u3001\u9053\u9023\u308c\u304c\u767a\u751f\u3059\u308bor\u3057\u306a\u3044 "
+    },
+    "nekoKabochaRevengeCrew": {
+        "0": "Take Revenge on Crew Killer",
+        "11": "\u30af\u30eb\u30fc\u306b\u6bba\u3055\u308c\u305f\u3089\u3001\u9053\u9023\u308c\u306b\u3059\u308b"
+    },
+    "nekoKabochaRevengeNeutral": {
+        "0": "Take Revenge on Neutral Killer",
+        "11": "\u305d\u306e\u4ed6\u9663\u55b6\u306b\u6bba\u3055\u308c\u305f\u3089\u3001\u9053\u9023\u308c\u306b\u3059\u308b"
+    },
+    "nekoKabochaRevengeImpostor": {
+        "0": "Take Revenge on Impostor Killer",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u6bba\u3055\u308c\u305f\u3089\u3001\u9053\u9023\u308c\u306b\u3059\u308b"
+    },
+    "nekoKabochaRevengeExile": {
+        "0": "Take Revenge When Exiled",
+        "11": "\u8ffd\u653e\u3055\u308c\u305f\u3089\u3001\u30e9\u30f3\u30c0\u30e0\u306b\u9053\u9023\u308c\u306b\u3059\u308b"
     },
     "husk": {
         "0": "Husk",
@@ -1565,6 +1636,10 @@
         "0": "Allow Parallel MedBay Scans",
         "11": "\u30e1\u30c3\u30c9\u30d9\u30a4\u30b9\u30ad\u30e3\u30f3\u540c\u6642\u4f7f\u7528\u53ef"
     },
+    "hideOutOfSightNametags": {
+        "0": "Hide Out-Of-Sight Nametags",
+        "11": "\u8996\u754c\u5916\u306e\u30d7\u30ec\u30a4\u30e4\u30fc\u306e\u540d\u524d\u3092\u975e\u8868\u793a\u306b\u3059\u308b"
+    },
     "restrictDevices": {
         "0": "Restrict Special Devices",
         "11": "\u7279\u6b8a\u88c5\u7f6e\u306e\u5236\u9650"
@@ -1616,6 +1691,26 @@
     "playRandomMaps": {
         "0": "Play On A Random Map",
         "11": "\u6bce\u56de\u30de\u30c3\u30d7\u304c\u30e9\u30f3\u30c0\u30e0\u306b"
+    },
+    "dynamicMapEnableSkeld": {
+        "0": "Enable Skeld Rotation",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u306bSkeld\u304c\u542b\u307e\u308c\u308b"
+    },
+    "dynamicMapEnableMira": {
+        "0": "Enable Mira Rotation",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u306bMira\u304c\u542b\u307e\u308c\u308b"
+    },
+    "dynamicMapEnablePolus": {
+        "0": "Enable Polus Rotation",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u306bPolus\u304c\u542b\u307e\u308c\u308b"
+    },
+    "dynamicMapEnableAirShip": {
+        "0": "Enable Airship Rotation",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u306bAirship\u304c\u542b\u307e\u308c\u308b"
+    },
+    "dynamicMapEnableDleks": {
+        "0": "Enable dlekS Rotation",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u306bdkelS\u304c\u542b\u307e\u308c\u308b"
     },
     "roleNumAssigned": {
         "0": "Role Count",
@@ -1725,6 +1820,10 @@
         "0": "Plague Doctor Wins",
         "11": "\u30da\u30b9\u30c8\u533b\u5e2b\u52dd\u5229"
     },
+    "everyoneDied": {
+        "0": "Everyone Died",
+        "11": "\u8ab0\u3082\u3044\u306a\u304f\u306a\u3063\u305f"
+    },
     "crewWinExtra": {
         "0": "Crewmates {0} Win",
         "11": "\u30af\u30eb\u30fc{0}\u52dd\u5229"
@@ -1824,6 +1923,10 @@
     "roleSummaryRevenge": {
         "0": "Revenge",
         "11": "\u9053\u9023\u308c"
+    },
+    "roleSummaryDiseased": {
+        "0": "Diseased",
+        "11": "\u75c5\u6b7b"
     },
     "roleSummaryDisconnected": {
         "0": "DC'd",
@@ -1961,6 +2064,7 @@
         "0": "Update failed.\nTry again later,\nor update manually.",
         "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044"
     },
+<<<<<<< HEAD
     "evilHacker": {
         "0": "EvilHacker",
         "11": "\u30a4\u30d3\u30eb\u30cf\u30c3\u30ab\u30fc"
@@ -2036,6 +2140,15 @@
     "madmateExileCrewmate": {
         "0": "Exile A Crewmate When Madmate Is Exiled",
         "11": "\u8ffd\u653e\u6642\u30af\u30eb\u30fc\u3092\u8ffd\u653e\u3059\u308b"
+=======
+    "announcementUpdate": {
+        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM Edition</color> update to v{ver} is available:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}"
+    },
+    "announcementChangelog": {
+        "0": "<size=150%><color=#FC0303>TheOtherRoles GM Edition</color> Version {0}:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}"
+>>>>>>> origin/gm-main
     },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
@@ -2055,7 +2168,7 @@
     },
     "lighterFullDesc": {
         "0": "The Lighter can turn on their Lighter every now and then,\nwhich increases their vision by a customizable amount.",
-        "11": "\u30fb\u80fd\u529b\u3092\u4f7f\u3046\u3068\u4e00\u5b9a\u6642\u9593\u8996\u754c\u304c\u5e83\u304f\u306a\u308b"
+        "11": "\u30fb\u80fd\u529b\u3092\u4f7f\u3046\u3068\u4e00\u5b9a\u6642\u9593\u8996\u754c\u304c\u5e83\u304f\u306a\u308b\n\u30fb\u80fd\u529b\u4f7f\u7528\u6642\u3001\u900f\u660e\u5316\u4e2d\u306e<color=#ff1919ff>\u30cb\u30f3\u30b8\u30e3</color>\u3092\u8996\u8a8d\u3067\u304d\u308b"
     },
     "godfatherFullDesc": {
         "0": "The Mafia are a group of three Impostors.\nThe Godfather works like a normal Impostor.",
@@ -2165,11 +2278,11 @@
         "0": "The Arsonist does not have any tasks, they have to win the game solo.\nThe Arsonist can douse other players by pressing the douse button and remaining\nnext to the player for a few seconds.\nIf the player that the Arsonist douses walks out of range, the cooldown will reset to 0.\nAfter dousing everyone alive the Arsonist can ignite all the players which results in\nan Arsonist win.",
         "11": "\u30fb\u5168\u30d7\u30ec\u30a4\u30e4\u30fc\u306b\u30ac\u30bd\u30ea\u30f3\u3092\u5857\u308b\u3053\u3068\u304c\u3067\u304d\u308b\n\u30fb\u5168\u30d7\u30ec\u30a4\u30e4\u30fc\u306b\u30ac\u30bd\u30ea\u30f3\u3092\u5857\u308b\u3053\u3068\u304c\u3067\u304d\u305f\u3068\u304d\u653e\u706b\u3059\u308b\u3068\u52dd\u5229\u3059\u308b\n\u30fb\u6b7b\u3093\u3060\u30d7\u30ec\u30a4\u30e4\u30fc\u306f\u30ab\u30a6\u30f3\u30c8\u3055\u308c\u306a\u3044"
     },
-    "goodGuesserFullDesc": {
+    "niceGuesserFullDesc": {
         "0": "The Guesser can be a Crewmate or an Impostor (depending on the settings).\nThe Guesser can shoot a player during the meeting, by guessing its role.\nIf the guess is wrong, the Guesser dies instead.\nYou can select how many players can be shot per meeting and how many players can\nbe shot per game.\nThe guesses Impostor and Crewmate are only right, if the player is part of the\ncorresponding team and has no special role.\nYou can only shoot during the voting time.",
         "11": "\u30fb\u4f1a\u8b70\u4e2d\u306b\u8ab0\u304b\u306e\u5f79\u8077\u3092\u9078\u3093\u3067\u5f53\u3066\u3089\u308c\u308c\u3070\u30ad\u30eb\u3067\u304d\u308b\n\u30fb\u5931\u6557\u3059\u308c\u3070\u81ea\u5206\u304c\u4f1a\u8b70\u4e2d\u306b\u6b7b\u3093\u3067\u3057\u307e\u3046"
     },
-    "badGuesserFullDesc": {
+    "evilGuesserFullDesc": {
         "0": "The Guesser can be a Crewmate or an Impostor (depending on the settings).\nThe Guesser can shoot a player during the meeting, by guessing its role.\nIf the guess is wrong, the Guesser dies instead.\nYou can select how many players can be shot per meeting and how many players can\nbe shot per game.\nThe guesses Impostor and Crewmate are only right, if the player is part of the\ncorresponding team and has no special role.\nYou can only shoot during the voting time.",
         "11": "\u30fb\u4f1a\u8b70\u4e2d\u306b\u8ab0\u304b\u306e\u5f79\u8077\u3092\u9078\u3093\u3067\u5f53\u3066\u3089\u308c\u308c\u3070\u30ad\u30eb\u3067\u304d\u308b\n\u30fb\u5931\u6557\u3059\u308c\u3070\u81ea\u5206\u304c\u4f1a\u8b70\u4e2d\u306b\u6b7b\u3093\u3067\u3057\u307e\u3046"
     },
@@ -2439,96 +2552,127 @@
         "0": "VampireButton.png"
     },
     "CamoText": {
+        "0": "[BLANK]",
         "11": "\u30ab\u30e2"
     },
     "CleanText": {
+        "0": "[BLANK]",
         "11": "\u6383\u9664"
     },
     "CloseVentText": {
+        "0": "[BLANK]",
         "11": "\u5c01\u9396"
     },
     "CurseText": {
+        "0": "[BLANK]",
         "11": "\u546a\u3046"
     },
     "CurseKillText": {
+        "0": "[BLANK]",
         "11": "\u546a\u6bba"
     },
     "DouseText": {
+        "0": "[BLANK]",
         "11": "\u304b\u3051\u308b"
     },
     "EraserText": {
+        "0": "[BLANK]",
         "11": "\u524a\u9664"
     },
     "GarlicText": {
+        "0": "[BLANK]",
         "11": "\u30cb\u30f3\u30cb\u30af"
     },
     "HackerText": {
+        "0": "[BLANK]",
         "11": "\u30cf\u30c3\u30af"
     },
     "IgniteText": {
+        "0": "[BLANK]",
         "11": "\u7740\u706b"
     },
     "LighterText": {
+        "0": "[BLANK]",
         "11": "\u30e9\u30a4\u30c8"
     },
     "LightsOutText": {
+        "0": "[BLANK]",
         "11": "\u5f37\u5236\u505c\u96fb"
     },
     "MorphText": {
+        "0": "[BLANK]",
         "11": "\u5909\u8eab"
     },
     "PlaceCameraText": {
+        "0": "[BLANK]",
         "11": "\u8a2d\u7f6e"
     },
     "PlaceJackInTheBoxText": {
+        "0": "[BLANK]",
         "11": "\u8a2d\u7f6e"
     },
     "RepairText": {
+        "0": "[BLANK]",
         "11": "\u4fee\u5fa9"
     },
     "RewindText": {
+        "0": "[BLANK]",
         "11": "\u5dfb\u304d\u623b\u3059"
     },
     "SampleText": {
+        "0": "[BLANK]",
         "11": "\u30b5\u30f3\u30d7\u30eb"
     },
     "SeerText": {
+        "0": "[BLANK]",
         "11": "\u898b\u305b\u308b"
     },
     "ShieldText": {
+        "0": "[BLANK]",
         "11": "\u30b7\u30fc\u30eb\u30c9"
     },
     "ShiftText": {
+        "0": "[BLANK]",
         "11": "\u30b7\u30d5\u30c8"
     },
     "SidekickText": {
+        "0": "[BLANK]",
         "11": "\u30b5\u30a4\u30c9\u30ad\u30c3\u30af"
     },
     "TimeShieldText": {
+        "0": "[BLANK]",
         "11": "\u30b7\u30fc\u30eb\u30c9"
     },
     "TrackerText": {
+        "0": "[BLANK]",
         "11": "\u30c8\u30e9\u30c3\u30af"
     },
     "TricksterVentText": {
+        "0": "[BLANK]",
         "11": "\u30d9\u30f3\u30c8"
     },
     "VampireText": {
+        "0": "[BLANK]",
         "11": "\u565b\u3080"
     },
     "VultureText": {
+        "0": "[BLANK]",
         "11": "\u55b0\u3089\u3046"
     },
     "MediumText": {
+        "0": "[BLANK]",
         "11": "\u970a\u80fd\u529b"
     },
     "PathfindText": {
+        "0": "[BLANK]",
         "11": "\u63a2\u3059"
     },
     "PursuerText": {
+        "0": "[BLANK]",
         "11": "\u7a7a\u5305"
     },
     "WitchText": {
+        "0": "[BLANK]",
         "11": "\u9b54\u8853"
     },
     "NinjaText": {
@@ -2634,5 +2778,137 @@
     "gmEditionGeneral": {
         "0": "GM Edition Exclusive",
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a"
+    },
+    "watcher": {
+        "0": "Watcher",
+        "11": "\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
+    },
+    "niceWatcher": {
+        "0": "Nice Watcher",
+        "11": "\u30ca\u30a4\u30b9\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
+    },
+    "niceWatcherIntroDesc": {
+        "0": "Pay close attention to the crew's votes",
+        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
+    },
+    "niceWatcherShortDesc": {
+        "0": "Pay close attention to the crew's votes",
+        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
+    },
+    "evilWatcher": {
+        "0": "Evil Watcher",
+        "11": "\u30a4\u30d3\u30eb\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc"
+    },
+    "evilWatcherIntroDesc": {
+        "0": "Pay close attention to the crew's votes",
+        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
+    },
+    "evilWatcherShortDesc": {
+        "0": "Pay close attention to the crew's votes",
+        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
+    },
+    "roleAssignEqually": {
+        "0": "Assign Each Team Equally",
+        "11": "\u4e21\u9663\u55b6\u5e73\u7b49\u306b\u5272\u308a\u632f\u308b"
+    },
+    "roleImpChance": {
+        "0": "Impostor Chance",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u306a\u308b\u78ba\u7387"
+    },
+    "fox": {
+        "0": "Fox",
+        "11": "\u5996\u72d0"
+    },
+    "foxCanFixReactorAndO2": {
+        "0": "Can Fix Reactor/O2",
+        "11": "\u30ea\u30a2\u30af\u30bf\u30fc\u3068O2\u3092\u76f4\u305b\u308b"
+    },
+    "foxCrewWinsByTasks": {
+        "0": "Crew Task Win Takes Priority",
+        "11": "\u30af\u30eb\u30fc\u306e\u30bf\u30b9\u30af\u52dd\u5229\u304c\u512a\u5148\u3055\u308c\u308b"
+    },
+    "foxNumCommonTasks": {
+        "0": "Common Tasks",
+        "11": "\u901a\u5e38\u30bf\u30b9\u30af"
+    },
+    "foxNumLongTasks": {
+        "0": "Long Tasks",
+        "11": "\u30ed\u30f3\u30b0\u30bf\u30b9\u30af"
+    },
+    "foxNumShortTasks": {
+        "0": "Short Tasks",
+        "11": "\u30b7\u30e7\u30fc\u30c8\u30bf\u30b9\u30af"
+    },
+    "foxStealthCooldown": {
+        "0": "Stealth Cooldown",
+        "11": "\u900f\u660e\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "foxStealthDuration": {
+        "0": "Stealth Duration",
+        "11": "\u900f\u660e\u6642\u9593"
+    },
+    "foxCanCreateImmoralist": {
+        "0": "Can Create Immoralist",
+        "11": "\u80cc\u5fb3\u8005\u3092\u4f5c\u308c\u308b"
+    },
+    "foxNumRepair": {
+        "0": "Number of Repairs",
+        "11": "\u30ea\u30da\u30a2\u56de\u6570"
+    },
+    "jackalCanCreateSidekickFromFox": {
+        "0": "Can Make Fox Into Sidekick",
+        "11": "\u5996\u72d0\u3092\u30b5\u30a4\u30c9\u30ad\u30c3\u30af\u306b\u6307\u540d\u3067\u304d\u308b"
+    },
+    "immoralist": {
+        "0": "Immoralist",
+        "11": "\u80cc\u5fb3\u8005"
+    },
+    "fortuneTeller": {
+        "0": "Fortune Teller",
+        "11": "\u5360\u3044\u5e2b"
+    },
+    "fortuneTellerNumTasks": {
+        "0": "Number of Tasks to Divine",
+        "11": "\u5360\u3044\u306b\u5fc5\u8981\u306a\u30bf\u30b9\u30af\u6570"
+    },
+    "fortuneTellerResultIsCrewOrNot": {
+        "0": "Divination Only Reveals Crew or Not",
+        "11": "\u5360\u3044\u7d50\u679c\u304c\u767d\u9ed2\u306e\u307f"
+    },
+    "fortuneTellerDuration": {
+        "0": "Time to Divine",
+        "11": "\u63a5\u89e6\u6642\u9593"
+    },
+    "fortuneTellerDistance": {
+        "0": "Divination Range",
+        "11": "\u63a5\u89e6\u5224\u5b9a\u8ddd\u96e2"
+    },
+    "fortuneTellerDivinedSomeone": {
+        "0": "Someone Was Just Divined",
+        "11": "\u5360\u3044\u5e2b\u304c\u8ab0\u304b\u3092\u5360\u3063\u305f"
+    },
+    "fortuneTellerDivinedYou": {
+        "0": "You Were Just Divined",
+        "11": "\u5360\u3044\u5e2b\u304c\u3042\u306a\u305f\u3092\u5360\u3063\u305f"
+    },
+    "divineCrew": {
+        "0": "Crewmate",
+        "11": "\u30af\u30eb\u30fc"
+    },
+    "divineNeutral": {
+        "0": "Neutral",
+        "11": "\u305d\u306e\u4ed6"
+    },
+    "divineImpostor": {
+        "0": "Impostor",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
+    },
+    "divineMessageTeam": {
+        "0": "{0} is a(n) {1}",
+        "11": "{0} \u306f{1}\u9663\u55b6"
+    },
+    "divineMessageRole": {
+        "0": "{0}'s role is {1}",
+        "11": "{0} \u306e\u30ed\u30fc\u30eb\u306f\u306f\u300c{1}\u300d"
     }
 }

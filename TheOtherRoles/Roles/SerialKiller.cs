@@ -25,7 +25,7 @@ namespace TheOtherRoles
 
         public SerialKiller()
         {
-            RoleType = roleId = RoleId.SerialKiller;
+            RoleType = roleId = RoleType.SerialKiller;
             isCountDown = false;
         }
 
@@ -33,7 +33,7 @@ namespace TheOtherRoles
 
         public override void OnMeetingEnd()
         {
-            if (PlayerControl.LocalPlayer.isRole(RoleId.SerialKiller))
+            if (PlayerControl.LocalPlayer.isRole(RoleType.SerialKiller))
             {
                 PlayerControl.LocalPlayer.SetKillTimerUnchecked(killCooldown);
 
@@ -69,7 +69,7 @@ namespace TheOtherRoles
             // SerialKiller Suicide Countdown
             serialKillerButton = new CustomButton(
                 () => { },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.SerialKiller) && PlayerControl.LocalPlayer.isAlive() && local.isCountDown; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.SerialKiller) && PlayerControl.LocalPlayer.isAlive() && local.isCountDown; },
                 () => { return true; },
                 () => { },
                 SerialKiller.getButtonSprite(),

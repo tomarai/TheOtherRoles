@@ -21,7 +21,7 @@ namespace TheOtherRoles
 
         public Madmate()
         {
-            RoleType = roleId = RoleId.Madmate;
+            RoleType = roleId = RoleType.Madmate;
         }
 
         public override void OnMeetingStart() { }

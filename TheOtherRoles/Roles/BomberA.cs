@@ -35,7 +35,7 @@ namespace TheOtherRoles
 
         public BomberA()
         {
-            RoleType = roleId = RoleId.BomberA;
+            RoleType = roleId = RoleType.BomberA;
         }
 
         public override void OnMeetingStart() { }
@@ -104,7 +104,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.BomberA)  && PlayerControl.LocalPlayer.isAlive() && BomberB.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberA)  && PlayerControl.LocalPlayer.isAlive() && BomberB.isAlive(); },
                 // CouldUse
                 () =>
                 {
@@ -167,7 +167,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.BomberA)  && PlayerControl.LocalPlayer.isAlive() && BomberB.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberA)  && PlayerControl.LocalPlayer.isAlive() && BomberB.isAlive(); },
                 // CouldUse
                 () =>
                 {
@@ -251,7 +251,7 @@ namespace TheOtherRoles
                 // 相方の位置を示すArrorwを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
-                    if(p.isRole(RoleId.BomberB))
+                    if(p.isRole(RoleType.BomberB))
                     {
                         Arrow arrow;
                         arrow = new Arrow(Color.red);
