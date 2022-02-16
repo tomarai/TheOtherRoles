@@ -99,6 +99,8 @@ namespace TheOtherRoles.Patches {
                 objects.Find(x=> x.name == "task_garbage5").checkWalls = true;
                 objects.Find(x=> x.name == "task_shower").checkWalls = true;
                 objects.Find(x=> x.name == "task_developphotos").checkWalls = true;
+                objects.Find(x=> x.name == "divert_receive_armory").checkWalls = true;
+                objects.Find(x=> x.name == "divert_receive_mainhall").checkWalls = true;
             }
 
             // 最初から一人の場合はLast Impostorになる
