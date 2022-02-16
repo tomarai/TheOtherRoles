@@ -32,6 +32,8 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.5.0| v1.8.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.1/TheOtherRoles-GM-Haoming.v1.8.1.zip)|
+|2021.12.15s (build num: 1421)|v3.5.0| v1.8.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)|
 |2021.12.15s (build num: 1421)|v3.5.0| v1.8.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.7.6|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.6/TheOtherRoles-GM-Haoming.v1.7.6.zip)|
 |2021.12.15s (build num: 1421)|v3.4.2| v1.7.5|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.5/TheOtherRoles-GM-Haoming.v1.7.5.zip)|
@@ -158,6 +160,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |１インポスターとしてカウントする|2人で１人分のインポスターとしてカウントされる|
 |キル時にエフェクトを表示する|バグあるかも機能 キル時に死体の横に爆破エフェクトを表示する|
 |一人が死んだら両方死ぬ|片方が死んだらもう片方も死亡する|
+|投票が1票になる|爆弾魔の片方の投票がカウントされなくなる|
 
 
 
