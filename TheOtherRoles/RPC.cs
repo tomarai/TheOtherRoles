@@ -1820,6 +1820,9 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.SwapperAnimate:
                         RPCProcedure.swapperAnimate();
                         break;
+                    case (byte)CustomRPC.EvilHackerCreatesMadmate:
+                        RPCProcedure.evilHackerCreatesMadmate(reader.ReadByte());
+                        break;
                     case (byte)CustomRPC.FortuneTellerShoot:
                         byte fortuneTellerId = reader.ReadByte();
                         byte targetId = reader.ReadByte();

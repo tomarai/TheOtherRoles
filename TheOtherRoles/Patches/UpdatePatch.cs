@@ -66,7 +66,7 @@ namespace TheOtherRoles.Patches {
                 }
             }
 
-            if (PlayerControl.LocalPlayer.isImpostor()) {
+            if (CanPlayerSeeImpostorName()) {
                 List<PlayerControl> impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.isImpostor()).ToList();
                 foreach (PlayerControl player in impostors)
                     player.nameText.color = Palette.ImpostorRed;
