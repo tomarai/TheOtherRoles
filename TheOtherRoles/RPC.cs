@@ -160,6 +160,7 @@ namespace TheOtherRoles
         PlagueDoctorUpdateProgress,
         NekoKabochaExile,
         SerialKillerSuicide,
+        SwapperAnimate,
         FortuneTellerShoot,
         FortuneTellerUsedDivine,
         FoxStealth,
@@ -714,6 +715,11 @@ namespace TheOtherRoles
                 Swapper.playerId1 = playerId1;
                 Swapper.playerId2 = playerId2;
             }
+        }
+
+        public static void swapperAnimate()
+        {
+            MeetingHudPatch.animateSwap = true;
         }
 
         public static void morphlingMorph(byte playerId)
@@ -1810,6 +1816,9 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.SerialKillerSuicide:
                         RPCProcedure.serialKillerSuicide(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.SwapperAnimate:
+                        RPCProcedure.swapperAnimate();
                         break;
                     case (byte)CustomRPC.FortuneTellerShoot:
                         byte fortuneTellerId = reader.ReadByte();

@@ -1123,7 +1123,6 @@ namespace TheOtherRoles
                     if (Arsonist.currentTarget != null)
                     {
                         Arsonist.douseTarget = Arsonist.currentTarget;
-                        arsonistButton.HasEffect = true;
                     }
                 },
                 () => { return Arsonist.arsonist != null && Arsonist.arsonist == PlayerControl.LocalPlayer && !Arsonist.dousedEveryone && PlayerControl.LocalPlayer.isAlive(); },
@@ -1136,7 +1135,7 @@ namespace TheOtherRoles
                         arsonistButton.isEffectActive = false;
                     }
 
-                    return PlayerControl.LocalPlayer.CanMove && (Arsonist.dousedEveryone || Arsonist.currentTarget != null);
+                    return PlayerControl.LocalPlayer.CanMove && Arsonist.currentTarget != null;
                 },
                 () =>
                 {

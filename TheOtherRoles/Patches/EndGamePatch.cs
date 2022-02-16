@@ -59,6 +59,7 @@ namespace TheOtherRoles.Patches
         Misfire,
         Revenge,
         Diseased,
+        Divined,
         GMExecuted,
         Disconnected
     }
@@ -227,13 +228,9 @@ namespace TheOtherRoles.Patches
             bool foxWin = Fox.exists && gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
             bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
-            if (everyoneDead && !plagueDoctorWin)
-            {
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                AdditionalTempData.winCondition = WinCondition.EveryoneDied;
-            }
+            
             // Mini lose
-            else if (miniLose)
+            if (miniLose)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 WinningPlayerData wpd = new WinningPlayerData(Mini.mini.Data);
@@ -258,6 +255,23 @@ namespace TheOtherRoles.Patches
                 WinningPlayerData wpd = new WinningPlayerData(Arsonist.arsonist.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.ArsonistWin;
+            }
+
+            else if (plagueDoctorWin)
+            {
+                foreach (var pd in PlagueDoctor.players)
+                {
+                    TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                    WinningPlayerData wpd = new WinningPlayerData(pd.player.Data);
+                    TempData.winners.Add(wpd);
+                    AdditionalTempData.winCondition = WinCondition.PlagueDoctorWin;
+                }
+            }
+
+            else if (everyoneDead)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                AdditionalTempData.winCondition = WinCondition.EveryoneDied;
             }
 
             // Vulture win
