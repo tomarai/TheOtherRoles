@@ -387,6 +387,7 @@ namespace TheOtherRoles {
         public static CustomOption bomberCountAsOne;
         public static CustomOption bomberShowEffects;
         public static CustomOption bomberIfOneDiesBothDie;
+        public static CustomOption bomberHasOneVote;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -519,6 +520,7 @@ namespace TheOtherRoles {
             bomberCountAsOne = CustomOption.Create(1033, "１インポスターとしてカウントする", true, bomberSpawnRate);
             bomberShowEffects = CustomOption.Create(1034, "キル時にエフェクトを表示する", true, bomberSpawnRate);
             bomberIfOneDiesBothDie = CustomOption.Create(1035, "一人が死んだら両方死ぬ", true, bomberSpawnRate);
+            bomberHasOneVote = CustomOption.Create(1036, "投票が１票になる", true, bomberSpawnRate);
 
             nekoKabochaSpawnRate = new CustomRoleOption(1020, "nekoKabocha", NekoKabocha.color, 3);
             nekoKabochaRevengeCrew = CustomOption.Create(1021, "nekoKabochaRevengeCrew", true, nekoKabochaSpawnRate);

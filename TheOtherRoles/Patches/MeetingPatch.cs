@@ -107,6 +107,8 @@ namespace TheOtherRoles.Patches {
                         // don't try to vote for the GM
                         if (GM.gm != null && votedFor == GM.gm.PlayerId) continue;
 
+                        if (player.isRole(RoleType.BomberB) && BomberA.hasOneVote) continue;
+
                         int currentVotes;
                         int additionalVotes = (Mayor.mayor != null && Mayor.mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.numVotes : 1; // Mayor vote
                         if (dictionary.TryGetValue(votedFor, out currentVotes))

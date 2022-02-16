@@ -27,6 +27,7 @@ namespace TheOtherRoles
         public static bool countAsOne {get {return CustomOptionHolder.bomberCountAsOne.getBool();}}
         public static bool showEffects {get {return CustomOptionHolder.bomberShowEffects.getBool();}}
         public static bool ifOneDiesBothDie {get {return CustomOptionHolder.bomberIfOneDiesBothDie.getBool();}}
+        public static bool hasOneVote {get {return CustomOptionHolder.bomberHasOneVote.getBool();}}
         public static Sprite bomberButtonSprite;
         public static Sprite releaseButtonSprite;
         public static float updateTimer = 0f;
