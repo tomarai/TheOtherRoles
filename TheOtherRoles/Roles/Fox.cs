@@ -135,7 +135,7 @@ namespace TheOtherRoles
          public static Sprite getButtonSprite()
         {
             if (buttonSprite) return buttonSprite;
-            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.NinjaButton.png", 115f);
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.FoxButton.png", 115f);
             return buttonSprite;
         }
          public static Sprite getRepairButtonSprite()
