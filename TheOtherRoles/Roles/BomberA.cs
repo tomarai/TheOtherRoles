@@ -210,7 +210,7 @@ namespace TheOtherRoles
         {
             foreach(var bomber in players)
             {
-                if(bomber.player.isAlive())
+                if(!(bomber.player.Data.IsDead || bomber.player.Data.Disconnected))
                     return true;
             }
             return false;

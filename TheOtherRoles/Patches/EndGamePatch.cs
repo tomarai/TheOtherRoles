@@ -1058,7 +1058,8 @@ namespace TheOtherRoles.Patches
                     }
 
                     // 爆弾魔を一人としてカウントする、猫の自爆中はインポスターのカウントを一人減らす
-                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive() && SchrodingersCat.impostorFlag)
+                    // PlayerControl.isAlive()を使うと会議での追放時にカウントバグが発生するので使用禁止
+                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.impostorFlag)
                     {
                         numImpostorsAlive--;
                     }
