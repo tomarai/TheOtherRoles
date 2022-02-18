@@ -381,7 +381,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForMiniLose(ShipStatus __instance) {
             if (Mini.triggerMiniLose) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.MiniLose, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.MiniLose, false);
                 return true;
             }
             return false;
@@ -390,7 +390,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForJesterWin(ShipStatus __instance) {
             if (Jester.triggerJesterWin) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.JesterWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.JesterWin, false);
                 return true;
             }
             return false;
@@ -399,7 +399,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForArsonistWin(ShipStatus __instance) {
             if (Arsonist.triggerArsonistWin) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.ArsonistWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.ArsonistWin, false);
                 return true;
             }
             return false;
@@ -408,7 +408,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForVultureWin(ShipStatus __instance) {
             if (Vulture.triggerVultureWin) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.VultureWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.VultureWin, false);
                 return true;
             }
             return false;
@@ -417,7 +417,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForLawyerMeetingWin(ShipStatus __instance) {
             if (Lawyer.triggerLawyerWin) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.LawyerSoloWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.LawyerSoloWin, false);
                 return true;
             }
             return false;
@@ -452,7 +452,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForTaskWin(ShipStatus __instance) {
             if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                UncheckedEndGame(GameOverReason.HumansByTask, false);
                 return true;
             }
             return false;
@@ -461,7 +461,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForLoverWin(ShipStatus __instance, PlayerStatistics statistics) {
             if (statistics.TeamLoversAlive == 2 && statistics.TotalAlive <= 3) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.LoversWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.LoversWin, false);
                 return true;
             }
             return false;
@@ -470,7 +470,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics) {
             if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive && statistics.TeamImpostorsAlive == 0 && !(statistics.TeamJackalHasAliveLover && statistics.TeamLoversAlive == 2)) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.TeamJackalWin, false);
+                UncheckedEndGame((GameOverReason)CustomGameOverReason.TeamJackalWin, false);
                 return true;
             }
             return false;
@@ -491,7 +491,7 @@ namespace TheOtherRoles.Patches {
                         endReason = GameOverReason.ImpostorByVote;
                         break;
                 }
-                ShipStatus.RpcEndGame(endReason, false);
+                UncheckedEndGame(endReason, false);
                 return true;
             }
             return false;
@@ -500,7 +500,7 @@ namespace TheOtherRoles.Patches {
         private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics) {
             if (statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalAlive == 0) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
+                UncheckedEndGame(GameOverReason.HumansByVote, false);
                 return true;
             }
             return false;
@@ -508,8 +508,20 @@ namespace TheOtherRoles.Patches {
 
         private static void EndGameForSabotage(ShipStatus __instance) {
             __instance.enabled = false;
-            ShipStatus.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
+            UncheckedEndGame(GameOverReason.ImpostorBySabotage, false);
             return;
+        }
+
+        private static void UncheckedEndGame(GameOverReason reason, bool never_used) {
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.UncheckedEndGame, Hazel.SendOption.Reliable, -1);
+            writer.Write((byte)reason);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.uncheckedEndGame((byte)reason);
+        }
+
+        private static void UncheckedEndGame(CustomGameOverReason reason) {
+            UncheckedEndGame((GameOverReason)reason, false);
         }
 
     }
