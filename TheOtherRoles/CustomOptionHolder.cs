@@ -648,7 +648,7 @@ namespace TheOtherRoles {
             schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "追放時にランダムな陣営になる", false, schrodingersCatSpawnRate);
 
             munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
-            munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 1);
+            munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 15);
             munou2ndProbability = CustomOption.Create(961, "見た目が入れ替わる確率", 20f, 0f, 100f, 10f, munou2ndSpawnRate);
             munou2ndNumShufflePlayers = CustomOption.Create(962, "見た目が入れ替わる人数", 0f, 2f, 15f, 1f, munou2ndSpawnRate);
 
