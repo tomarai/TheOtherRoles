@@ -1066,12 +1066,12 @@ namespace TheOtherRoles.Patches
                     else if(BomberA.isAlive() && BomberB.isAlive() && BomberA.countAsOne)
                     {
                         numImpostorsAlive--;
+                        TotalAlive--;
                     }
 
 
                     // 猫の自爆中はジャッカルのカウントを一人減らす
-                    if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive() && SchrodingersCat.jackalFlag)
-
+                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.jackalFlag)
                     {
                         numJackalAlive--;
                     }
