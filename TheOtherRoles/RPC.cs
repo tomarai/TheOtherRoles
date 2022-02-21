@@ -63,6 +63,7 @@ namespace TheOtherRoles
         Trapper,
         BomberA,
         BomberB,
+        EvilTracker,
 
 
         Mini = 150,
@@ -712,6 +713,9 @@ namespace TheOtherRoles
                         break;
                     case RoleType.BomberB:
                         BomberB.swapRole(player, oldShifter);
+                        break;
+                    case RoleType.EvilTracker:
+                        EvilTracker.swapRole(player, oldShifter);
                         break;
                 }
             }

@@ -388,6 +388,10 @@ namespace TheOtherRoles {
         public static CustomOption bomberShowEffects;
         public static CustomOption bomberIfOneDiesBothDie;
         public static CustomOption bomberHasOneVote;
+        public static CustomRoleOption evilTrackerSpawnRate;
+        public static CustomOption evilTrackerCooldown;
+        public static CustomOption evilTrackerResetTargetAfterMeeting;
+        public static CustomOption evilTrackerCanSeeDeathFlash;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -521,6 +525,11 @@ namespace TheOtherRoles {
             bomberShowEffects = CustomOption.Create(1034, "キル時にエフェクトを表示する", true, bomberSpawnRate);
             bomberIfOneDiesBothDie = CustomOption.Create(1035, "一人が死んだら両方死ぬ", true, bomberSpawnRate);
             bomberHasOneVote = CustomOption.Create(1036, "投票が１票になる", true, bomberSpawnRate);
+
+            evilTrackerSpawnRate = new CustomRoleOption(1050, "イビルトラッカー", EvilTracker.color, 1);
+            evilTrackerCooldown = CustomOption.Create(1052, "トラッカークールダウン", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
+            evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, "会議後に再度ターゲットを設定できる", true, evilTrackerSpawnRate);
+            evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, "インポスターキルのデスフラッシュを見ることができる", true, evilTrackerSpawnRate);
 
             nekoKabochaSpawnRate = new CustomRoleOption(1020, "nekoKabocha", NekoKabocha.color, 3);
             nekoKabochaRevengeCrew = CustomOption.Create(1021, "nekoKabochaRevengeCrew", true, nekoKabochaSpawnRate);

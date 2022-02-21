@@ -99,6 +99,7 @@ namespace TheOtherRoles
         public static RoleInfo trapper = new RoleInfo("トラッパー", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo bomberA = new RoleInfo("爆弾魔", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
         public static RoleInfo bomberB = new RoleInfo("爆弾魔", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberB);
+        public static RoleInfo evilTracker = new RoleInfo("イビルトラッカー", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
         public static RoleInfo createdMadmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.CreatedMadmate);
 
@@ -167,7 +168,8 @@ namespace TheOtherRoles
                 schrodingersCat,
                 trapper,
                 bomberA,
-                bomberB
+                bomberB,
+                evilTracker
             };
 
         public static string tl(string key)
@@ -259,6 +261,7 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.Trapper)) infos.Add(trapper);
             if(p.isRole(RoleType.BomberA)) infos.Add(bomberA);
             if(p.isRole(RoleType.BomberB)) infos.Add(bomberB);
+            if(p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
 
             if (p.isRole(RoleType.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 

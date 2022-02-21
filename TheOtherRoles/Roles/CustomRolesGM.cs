@@ -48,6 +48,7 @@ namespace TheOtherRoles
             Trapper.Clear();
             BomberA.Clear();
             BomberB.Clear();
+            EvilTracker.Clear();
             Role.ClearAll();
         }
 

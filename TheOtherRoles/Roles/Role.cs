@@ -41,6 +41,7 @@ namespace TheOtherRoles
             { RoleType.Trapper, typeof(RoleBase<Trapper>)},
             { RoleType.BomberA, typeof(RoleBase<BomberA>)},
             { RoleType.BomberB, typeof(RoleBase<BomberB>)},
+            { RoleType.EvilTracker, typeof(RoleBase<EvilTracker>)},
 
             // Neutral
             { RoleType.Opportunist, typeof(RoleBase<Opportunist>) },
