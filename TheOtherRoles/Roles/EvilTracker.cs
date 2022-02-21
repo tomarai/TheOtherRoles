@@ -90,6 +90,7 @@ namespace TheOtherRoles
             players = new List<EvilTracker>();
             target = null;
             currentTarget = null;
+            arrows = new List<Arrow>();
         }
        public static List<Arrow> arrows = new List<Arrow>();
         public static float updateTimer = 0f;
@@ -104,7 +105,7 @@ namespace TheOtherRoles
 
                 // 前回のArrowをすべて破棄する
                 foreach(Arrow arrow in arrows){
-                    if(arrow != null)
+                    if(arrow != null && arrow.arrow != null)
                     {
                         arrow.arrow.SetActive(false);
                         UnityEngine.Object.Destroy(arrow.arrow);
@@ -145,7 +146,7 @@ namespace TheOtherRoles
             public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
-                if(__instance.isImpostor() && player.isRole(RoleType.EvilTracker) && player.isAlive() && canSeeDeathFlash){
+                if(__instance.isImpostor() && __instance != player && player.isRole(RoleType.EvilTracker) && player.isAlive() && canSeeDeathFlash){
 
                     HudManager.Instance.FullScreen.enabled = true;
                     HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
