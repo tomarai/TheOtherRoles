@@ -27,11 +27,13 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |[ラストインポスター](#ラストインポスター)|[無能](#無能)|[シュレディンガーの猫](#シュレディンガーの猫)|
 |[トラッパー(テスト中)](#トラッパー)|[無能2nd](#無能2nd)||
 |[爆弾魔(テスト中)](#爆弾魔)||||
+|[イビルトラッカー(テスト中)](#イビルトラッカー)||||
 
 
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.5.1| v1.9.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.0/TheOtherRoles-GM-Haoming.v1.9.0.zip)|
 |2021.12.15s (build num: 1421)|v3.5.1| v1.8.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.3/TheOtherRoles-GM-Haoming.v1.8.3.zip)|
 |2021.12.15s (build num: 1421)|v3.5.1| v1.8.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.2/TheOtherRoles-GM-Haoming.v1.8.2.zip)|
 |2021.12.15s (build num: 1421)|v3.5.0| v1.8.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.1/TheOtherRoles-GM-Haoming.v1.8.1.zip)|
@@ -164,7 +166,18 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |一人が死んだら両方死ぬ|片方が死んだらもう片方も死亡する|
 |投票が1票になる|爆弾魔の片方の投票がカウントされなくなる|
 
+## イビルトラッカー
+※テスト中、バグがあったら報告をお願いします  
+味方インポスターの行動を把握することができる役職
+- 味方インポスターの位置に矢印が表示される
+- 味方インポスターのキル時にキルフラッシュが表示される(オプション)
+- 任意のプレイヤーを指定して矢印を表示することができる
 
+|オプション名|説明|
+|-----------|----|
+|トラッカークールダウン|トラッカー対象指定のクールダウン|
+|会議後に再度ターゲットを設定できる|ターゲットを再指定できるON/OFF|
+|インポスターキルのデスフラッシュを見ることができる|キルフラッシュ機能のON/OFF|
 
 ## 占い師
 ※現在調整中  
