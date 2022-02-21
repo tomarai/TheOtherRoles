@@ -1066,7 +1066,7 @@ namespace TheOtherRoles.Patches
                     else if(BomberA.isAlive() && BomberB.isAlive() && BomberA.countAsOne)
                     {
                         numImpostorsAlive--;
-                        TotalAlive--;
+                        numTotalAlive--;
                     }
 
 
