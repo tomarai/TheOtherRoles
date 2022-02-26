@@ -49,6 +49,7 @@ namespace TheOtherRoles
             BomberA.Clear();
             BomberB.Clear();
             EvilTracker.Clear();
+            Puppeteer.Clear();
             Role.ClearAll();
         }
 

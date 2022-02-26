@@ -24,7 +24,8 @@ namespace TheOtherRoles.Patches
         VultureWin = 15,
         LawyerSoloWin = 16,
         PlagueDoctorWin = 17,
-        FoxWin = 18
+        FoxWin = 18,
+        PuppeteerWin = 19,
     }
 
     enum WinCondition
@@ -45,6 +46,7 @@ namespace TheOtherRoles.Patches
         PlagueDoctorWin,
         EveryoneDied,
         FoxWin,
+        PuppeteerWin,
     }
 
     enum FinalStatus
@@ -134,6 +136,7 @@ namespace TheOtherRoles.Patches
                 gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
+                gameOverReason != (GameOverReason)CustomGameOverReason.PuppeteerWin &&
                 gameOverReason != (GameOverReason)GameOverReason.HumansByTask &&
                 gameOverReason != (GameOverReason)GameOverReason.ImpostorBySabotage)
                 {
@@ -191,6 +194,7 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(PlagueDoctor.allPlayers);
             notWinners.AddRange(Fox.allPlayers);
             notWinners.AddRange(Immoralist.allPlayers);
+            notWinners.AddRange(Puppeteer.allPlayers);
             if (!SchrodingersCat.crewFlag) notWinners.AddRange(SchrodingersCat.allPlayers);
 
             // Neutral shifter can't win
@@ -226,6 +230,7 @@ namespace TheOtherRoles.Patches
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
             bool foxWin = Fox.exists && gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
+            bool puppeteerWin = Puppeteer.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PuppeteerWin;
             bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
             
@@ -375,6 +380,18 @@ namespace TheOtherRoles.Patches
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
+            }
+
+            // Puppeter win
+            else if (puppeteerWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var puppeteer in Puppeteer.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(puppeteer.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.PuppeteerWin;
             }
 
             
@@ -584,6 +601,12 @@ namespace TheOtherRoles.Patches
                         textRenderer.color = Fox.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Fox.color);
                     }
+                    else if (AdditionalTempData.winCondition == WinCondition.PuppeteerWin)
+                    {
+                        bonusText = "PuppeteerWin";
+                        textRenderer.color = Puppeteer.color;
+                        __instance.BackgroundBar.material.SetColor("_Color", Puppeteer.color);
+                    }
                     else if (AdditionalTempData.winCondition == WinCondition.LoversTeamWin)
                     {
                         bonusText = "crewWin";
@@ -747,6 +770,7 @@ namespace TheOtherRoles.Patches
                     if (CheckAndEndGameForArsonistWin(__instance)) return false;
                     if (CheckAndEndGameForVultureWin(__instance)) return false;
                     if (CheckAndEndGameForPlagueDoctorWin(__instance)) return false;
+                    if (CheckAndEndGameForPuppeteerWin(__instance)) return false;
                     if (CheckAndEndGameForSabotageWin(__instance)) return false;
                     if (CheckAndEndGameForTaskWin(__instance)) return false;
                     if (CheckAndEndGameForLoverWin(__instance, statistics)) return false;
@@ -811,6 +835,15 @@ namespace TheOtherRoles.Patches
                     if (PlagueDoctor.triggerPlagueDoctorWin)
                     {
                         UncheckedEndGame(CustomGameOverReason.PlagueDoctorWin);
+                        return true;
+                    }
+                    return false;
+                }
+                private static bool CheckAndEndGameForPuppeteerWin(ShipStatus __instance)
+                {
+                    if (Puppeteer.triggerPuppeteerWin)
+                    {
+                        UncheckedEndGame(CustomGameOverReason.PuppeteerWin);
                         return true;
                     }
                     return false;
@@ -1074,6 +1107,12 @@ namespace TheOtherRoles.Patches
                     if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.jackalFlag)
                     {
                         numJackalAlive--;
+                    }
+
+                    // 人形使いのダミーはカウントしない
+                    if(Puppeteer.dummy != null)
+                    {
+                        numTotalAlive--;
                     }
 
                     TeamCrew = numCrew;

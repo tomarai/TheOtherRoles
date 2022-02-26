@@ -49,6 +49,7 @@ namespace TheOtherRoles
             { RoleType.Fox, typeof(RoleBase<Fox>)},
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>)},
             { RoleType.SchrodingersCat, typeof(RoleBase<SchrodingersCat>)},
+            { RoleType.Puppeteer, typeof(RoleBase<Puppeteer>)},
 
         };
     }

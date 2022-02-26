@@ -64,6 +64,7 @@ namespace TheOtherRoles
         BomberA,
         BomberB,
         EvilTracker,
+        Puppeteer,
 
 
         Mini = 150,
@@ -178,7 +179,15 @@ namespace TheOtherRoles
         RandomSpawn,
         PlantBomb,
         ReleaseBomb,
-        BomberKill
+        BomberKill,
+        SpawnDummy,
+        WalkDummy,
+        MoveDummy,
+        PuppeteerStealth,
+        PuppeteerMorph,
+        PuppeteerWin,
+        PuppeteerKill,
+        PuppeteerClimbRadder,
     }
 
     public static class RPCProcedure
@@ -716,6 +725,9 @@ namespace TheOtherRoles
                         break;
                     case RoleType.EvilTracker:
                         EvilTracker.swapRole(player, oldShifter);
+                        break;
+                    case RoleType.Puppeteer:
+                        Puppeteer.swapRole(player, oldShifter);
                         break;
                 }
             }
@@ -1606,6 +1618,80 @@ namespace TheOtherRoles
             BomberA.bomberButton.Timer = BomberA.bomberButton.MaxTimer;
             BomberB.bomberButton.Timer = BomberB.bomberButton.MaxTimer;
         }
+
+        public static void spawnDummy(byte playerId, Vector3 pos)
+        {
+            var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
+            playerControl.PlayerId = playerId;
+
+            Puppeteer.dummy = playerControl;
+            GameData.Instance.AddPlayer(playerControl);
+
+            playerControl.transform.position = pos;
+            playerControl.GetComponent<DummyBehaviour>().enabled = false;
+            playerControl.NetTransform.enabled = true;
+            playerControl.NetTransform.Halt();
+            playerControl.Visible = false;
+            playerControl.Data.Tasks = new Il2CppSystem.Collections.Generic.List<GameData.TaskInfo>();
+            // GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
+            // playerControl.clearAllTasks();
+        }
+
+        public static void walkDummy(Vector3 direction)
+        {
+            if(Puppeteer.dummy == null) return;
+            var dummy = Puppeteer.dummy;
+            dummy.NetTransform.targetSyncPosition = dummy.transform.position + direction;
+        }
+
+        public static void moveDummy(Vector3 pos)
+        {
+            if(Puppeteer.dummy == null) return;
+            var dummy = Puppeteer.dummy;
+            dummy.transform.position = pos;
+            dummy.NetTransform.Halt();
+            dummy.Visible = true;
+            dummy.moveable = true;
+        }
+
+        public static void puppeteerStealth(bool stealthed)
+        {
+            Puppeteer.setStealthed(stealthed);
+        }
+        public static void puppeteerMorph(byte playerId)
+        {
+            if (Puppeteer.dummy != null)
+            {
+                var to  = Helpers.playerById(playerId);
+                MorphHandler.setOutfit(Puppeteer.dummy, to.Data.DefaultOutfit);
+            }
+        }
+        public static void puppeteerWin()
+        {
+            Puppeteer.triggerPuppeteerWin = true;
+            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.isRole(RoleType.Puppeteer) && p.isAlive());
+            foreach (PlayerControl p in livingPlayers)
+            {
+                p.Exiled();
+                finalStatuses[p.PlayerId] = FinalStatus.Spelled;
+            }
+        }
+
+        public static void puppeteerKill(byte killer, byte target)
+        {
+            var k = Helpers.playerById(killer);
+            var t = Helpers.playerById(target);
+            KillAnimationCoPerformKillPatch.hideNextAnimation = true;
+            k.MurderPlayer(t);
+        }
+
+        public static void puppeteerClimbRadder(byte dummyId, byte targetId)
+        {
+            PlayerControl dummy = Helpers.playerById(dummyId);
+            Ladder target = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>().ToList().Find(x=> x.Id == targetId);
+            if(target == null) return;
+            dummy.MyPhysics.ClimbLadder(target, (byte)(dummy.MyPhysics.lastClimbLadderSid + 1));
+        }
        
 
 
@@ -1910,6 +1996,47 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.BomberKill:
                         RPCProcedure.bomberKill(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.SpawnDummy:
+                        byte newId = reader.ReadByte();
+                        byte[] spawnTmp = reader.ReadBytes(4);
+                        float spawnX = System.BitConverter.ToSingle(spawnTmp, 0);
+                        spawnTmp = reader.ReadBytes(4);
+                        float spawnY = System.BitConverter.ToSingle(spawnTmp, 0);
+                        spawnTmp = reader.ReadBytes(4);
+                        float spawnZ = System.BitConverter.ToSingle(spawnTmp, 0);
+                        RPCProcedure.spawnDummy(newId, new Vector3(spawnX, spawnY, spawnZ));
+                        break;
+                    case (byte)CustomRPC.MoveDummy:
+                        byte[] moveTmp = reader.ReadBytes(4);
+                        float moveX = System.BitConverter.ToSingle(moveTmp, 0);
+                        moveTmp = reader.ReadBytes(4);
+                        float moveY = System.BitConverter.ToSingle(moveTmp, 0);
+                        moveTmp = reader.ReadBytes(4);
+                        float moveZ = System.BitConverter.ToSingle(moveTmp, 0);
+                        RPCProcedure.moveDummy(new Vector3(moveX, moveY, moveZ));
+                        break;
+                    case (byte)CustomRPC.WalkDummy:
+                        byte[] walkTmp = reader.ReadBytes(4);
+                        float walkX = System.BitConverter.ToSingle(walkTmp, 0);
+                        walkTmp = reader.ReadBytes(4);
+                        float walkY = System.BitConverter.ToSingle(walkTmp, 0);
+                        RPCProcedure.walkDummy(new Vector3(walkX, walkY, 0f));
+                        break;
+                    case (byte)CustomRPC.PuppeteerStealth:
+                        RPCProcedure.puppeteerStealth(reader.ReadBoolean());
+                        break;
+                    case (byte)CustomRPC.PuppeteerMorph:
+                        RPCProcedure.puppeteerMorph(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.PuppeteerKill:
+                        RPCProcedure.puppeteerKill(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.PuppeteerWin:
+                        RPCProcedure.puppeteerWin();
+                        break;
+                    case (byte)CustomRPC.PuppeteerClimbRadder:
+                        RPCProcedure.puppeteerClimbRadder(reader.ReadByte(), reader.ReadByte());
                         break;
                 }
             }

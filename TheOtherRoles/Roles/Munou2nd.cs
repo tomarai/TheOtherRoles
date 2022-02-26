@@ -76,6 +76,7 @@ namespace TheOtherRoles
             foreach(var p in allPlayers)
             {
                 if(p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                if(p == Puppeteer.dummy) continue;
                 if(p.isAlive()) alivePlayers.Add(p.PlayerId);
             }
             alivePlayers.shuffle();

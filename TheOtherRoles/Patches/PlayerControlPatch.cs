@@ -53,6 +53,20 @@ namespace TheOtherRoles.Patches
                 if(f.stealthed) untargetablePlayers.Add(f.player);
             }
 
+            // 透明になっている人形使い or ダミーをターゲット不可にする
+            if (Puppeteer.exists)
+            {
+                if (Puppeteer.stealthed)
+                {
+                    var puppeteer = Puppeteer.players.FirstOrDefault().player;
+                    untargetablePlayers.Add(puppeteer);
+                }
+                else if(!Puppeteer.stealthed && Puppeteer.dummy != null)
+                {
+                    untargetablePlayers.Add(Puppeteer.dummy);
+                }
+            }
+
 
             Vector2 truePosition = targetingPlayer.GetTruePosition();
             Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
@@ -1262,6 +1276,21 @@ namespace TheOtherRoles.Patches
             if(target.isImpostor() && AmongUsClient.Instance.AmHost)
             {
                 LastImpostor.promoteToLastImpostor();
+            }
+
+            // 人形使いのダミー死亡処理
+            if(target == Puppeteer.dummy)
+            {
+                // 蘇生する
+                target.Revive();
+                // 死体を消す
+                DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+                for (int i = 0; i < array.Length; i++) {
+                    if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == target.PlayerId) {
+                        array[i].gameObject.active = false;
+                    }     
+                }
+                Puppeteer.OnDummyDeath(__instance);
             }
 
             __instance.OnKill(target);

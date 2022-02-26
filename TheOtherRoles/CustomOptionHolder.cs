@@ -392,6 +392,9 @@ namespace TheOtherRoles {
         public static CustomOption evilTrackerCooldown;
         public static CustomOption evilTrackerResetTargetAfterMeeting;
         public static CustomOption evilTrackerCanSeeDeathFlash;
+        public static CustomRoleOption puppeteerSpawnRate;
+        public static CustomOption puppeteerNumKills;
+        public static CustomOption puppeteerSampleDuration;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -531,6 +534,7 @@ namespace TheOtherRoles {
             evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, "会議後に再度ターゲットを設定できる", true, evilTrackerSpawnRate);
             evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, "インポスターキルのデスフラッシュを見ることができる", true, evilTrackerSpawnRate);
 
+
             nekoKabochaSpawnRate = new CustomRoleOption(1020, "nekoKabocha", NekoKabocha.color, 3);
             nekoKabochaRevengeCrew = CustomOption.Create(1021, "nekoKabochaRevengeCrew", true, nekoKabochaSpawnRate);
             nekoKabochaRevengeNeutral = CustomOption.Create(1022, "nekoKabochaRevengeNeutral", true, nekoKabochaSpawnRate);
@@ -655,6 +659,10 @@ namespace TheOtherRoles {
             schrodingersCatKillsKiller = CustomOption.Create(973, "キラーが死亡する", false, schrodingersCatSpawnRate);
             schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, "最後の一人になるまでキルできない", false, schrodingersCatSpawnRate);
             schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "追放時にランダムな陣営になる", false, schrodingersCatSpawnRate);
+
+            puppeteerSpawnRate = new CustomRoleOption(1060, "人形遣い", Puppeteer.color, 1);
+            puppeteerNumKills = CustomOption.Create(1061, "人形が殺されると勝利する回数", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
+            puppeteerSampleDuration = CustomOption.Create(1062, "サンプル取得に必要な時間", 1f, 0f, 20f, 0.25f, puppeteerSpawnRate);
 
             munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
             munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 15);

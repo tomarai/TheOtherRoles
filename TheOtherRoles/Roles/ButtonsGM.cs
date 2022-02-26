@@ -34,6 +34,7 @@ namespace TheOtherRoles
             BomberA.SetButtonCooldowns();
             BomberB.SetButtonCooldowns();
             EvilTracker.SetButtonCooldowns();
+            Puppeteer.SetButtonCooldowns();
 
             foreach (CustomButton gmButton in gmButtons)
             {
@@ -65,6 +66,7 @@ namespace TheOtherRoles
             BomberA.MakeButtons(hm);
             BomberB.MakeButtons(hm);
             EvilTracker.MakeButtons(hm);
+            Puppeteer.MakeButtons(hm);
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();

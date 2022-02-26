@@ -244,6 +244,8 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Fox) ||
                     player.isRole(RoleType.SchrodingersCat) ||
                     player.isRole(RoleType.Immoralist) ||
+                    player.isRole(RoleType.Puppeteer) ||
+                    player == Puppeteer.dummy ||
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
                     player.isRole(RoleType.Pursuer) ||
@@ -356,6 +358,8 @@ namespace TheOtherRoles {
             if (Camouflager.camouflageTimer > 0f) return true; // No names are visible
             if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
+            if (!source.isRole(RoleType.Puppeteer) && !source.Data.IsDead && target.isRole(RoleType.Puppeteer) && Puppeteer.stealthed) return true;
+            if (!source.isRole(RoleType.Puppeteer) && !source.Data.IsDead && target ==  Puppeteer.dummy && !Puppeteer.stealthed) return true;
             if (MapOptions.hideOutOfSightNametags && GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
             {
                 float distMod = 1.025f;

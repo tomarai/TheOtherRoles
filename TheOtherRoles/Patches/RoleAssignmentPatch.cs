@@ -152,6 +152,7 @@ namespace TheOtherRoles.Patches
             neutralSettings.Add((byte)RoleType.PlagueDoctor, CustomOptionHolder.plagueDoctorSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Fox, CustomOptionHolder.foxSpawnRate.data);
             neutralSettings.Add((byte)RoleType.SchrodingersCat, CustomOptionHolder.schrodingersCatSpawnRate.data);
+            neutralSettings.Add((byte)RoleType.Puppeteer, CustomOptionHolder.puppeteerSpawnRate.data);
 
             crewSettings.Add((byte)RoleType.Uranai, CustomOptionHolder.uranaiSpawnRate.data);
             crewSettings.Add((byte)RoleType.Munou, CustomOptionHolder.munouSpawnRate.data);

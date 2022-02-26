@@ -26,6 +26,7 @@ namespace TheOtherRoles
         public static bool meetingFlag = true;
         public static Dictionary<byte, bool> playerStatus = new Dictionary<byte, bool>();
         public static bool endGameFlag = false;
+        public static bool startGameFlag = true;
 
 
         public Uranai()
@@ -106,7 +107,8 @@ namespace TheOtherRoles
                 {
                     var p = PlayerControl.LocalPlayer;
                     if(!p.isRole(RoleType.Uranai)) return false;
-                    if (p.CanMove && p.isAlive() & p.PlayerId != index
+                    bool isDummy = (Puppeteer.dummy != null && Puppeteer.dummy.PlayerId == index);
+                    if (p.CanMove && p.isAlive() && p.PlayerId != index && !isDummy
                         && MapOptions.playerIcons.ContainsKey(index) && isCompletedNumTasks(p) && numUsed < 1)
                     {
                         return true;
@@ -213,13 +215,15 @@ namespace TheOtherRoles
 
         private static void uranaiUpdate()
         {
-            if(meetingFlag) return;
+            if(meetingFlag || startGameFlag) return;
             if(!PlayerControl.LocalPlayer.isRole(RoleType.Uranai)) return;
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
                 if(!progress.ContainsKey(p.PlayerId)) progress[p.PlayerId] = 0f;
                 if (p.isDead()) continue;
+                if (p == Puppeteer.dummy) continue;
+                if (p.isRole(RoleType.Puppeteer) && Puppeteer.stealthed) continue;
                 var uranai = PlayerControl.LocalPlayer;
                 float distance = Vector3.Distance(p.transform.position, uranai.transform.position);
                 // 障害物判定
@@ -279,6 +283,7 @@ namespace TheOtherRoles
             numUsed = 0;
             meetingFlag = true;
             endGameFlag = false;
+            startGameFlag = true;
             playerStatus = new Dictionary<byte, bool>();
         }
 
@@ -351,11 +356,11 @@ namespace TheOtherRoles
             public static void Prefix(IntroCutscene __instance)
             {
                 
-                HudManager.Instance.StartCoroutine(Effects.Lerp(20.0f, new Action<float>((p) =>
+                HudManager.Instance.StartCoroutine(Effects.Lerp(10.0f, new Action<float>((p) =>
                 {
                     if (p == 1f)
                     {
-                        meetingFlag = false;
+                        startGameFlag = false;
                     }
                 })));
             }

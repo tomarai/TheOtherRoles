@@ -100,6 +100,7 @@ namespace TheOtherRoles
         public static RoleInfo bomberA = new RoleInfo("爆弾魔", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
         public static RoleInfo bomberB = new RoleInfo("爆弾魔", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberB);
         public static RoleInfo evilTracker = new RoleInfo("イビルトラッカー", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
+        public static RoleInfo puppeteer = new RoleInfo("人形遣い", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
         public static RoleInfo createdMadmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.CreatedMadmate);
 
@@ -169,7 +170,8 @@ namespace TheOtherRoles
                 trapper,
                 bomberA,
                 bomberB,
-                evilTracker
+                evilTracker,
+                puppeteer
             };
 
         public static string tl(string key)
@@ -262,6 +264,7 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.BomberA)) infos.Add(bomberA);
             if(p.isRole(RoleType.BomberB)) infos.Add(bomberB);
             if(p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
+            if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
 
             if (p.isRole(RoleType.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 
