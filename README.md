@@ -33,6 +33,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.5.2| v1.10.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.1/TheOtherRoles-GM-Haoming.v1.10.1.zip)|
 |2021.12.15s (build num: 1421)|v3.5.2| v1.10.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.0/TheOtherRoles-GM-Haoming.v1.10.0.zip)|
 |2021.12.15s (build num: 1421)|v3.5.2| v1.9.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.2/TheOtherRoles-GM-Haoming.v1.9.2.zip)|
 |2021.12.15s (build num: 1421)|v3.5.2| v1.9.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.1/TheOtherRoles-GM-Haoming.v1.9.1.zip)|
@@ -320,7 +321,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 - ダミー生成後に人形ボタンを押すと自身とダミーの操作を切り替えることができる
 - ダミー操作切替時にダミーは常にプレイヤーの位置から開始される
 - ダミー操作中は自身が透明になり、自身を操作中はダミーが透明になる
-- ダミーはWASDで移動、E/SPACEで梯子の上り下りを行うことができる
+- ダミーはWASDで移動、E/SPACEで梯子の上り下り、扉の開放を行うことができる
 - ダミー操作時の視点は千里眼（範囲は少しせまい）になる
 - ダミーが切られた後は再度サンプル取得が可能になりサンプルからダミーを生成することができる
 - ダミーキル時にサンプル元が死亡する
