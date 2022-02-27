@@ -195,6 +195,7 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(Fox.allPlayers);
             notWinners.AddRange(Immoralist.allPlayers);
             notWinners.AddRange(Puppeteer.allPlayers);
+            if(Puppeteer.dummy != null) notWinners.Add(Puppeteer.dummy);
             if (!SchrodingersCat.crewFlag) notWinners.AddRange(SchrodingersCat.allPlayers);
 
             // Neutral shifter can't win
@@ -719,6 +720,7 @@ namespace TheOtherRoles.Patches
 
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
+                            if (data.PlayerName == "") continue;
                             var taskInfo = data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : "";
                             string aliveDead = ModTranslation.getString("roleSummary" + data.Status.ToString(), def: "-");
                             string result = $"{data.PlayerName + data.NameSuffix}<pos=18.5%>{taskInfo}<pos=25%>{aliveDead}<pos=34%>{data.RoleString}";

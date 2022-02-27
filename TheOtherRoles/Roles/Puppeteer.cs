@@ -380,17 +380,7 @@ namespace TheOtherRoles
             isActive = false;
             canSample = true;
             canSpawn = false;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerStealth, Hazel.SendOption.Reliable, -1);
-            writer.Write(false);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
-            RPCProcedure.puppeteerStealth(false);
-            var hudManager = DestroyableSingleton<HudManager>.Instance;
-            hudManager.PlayerCam.SetTarget(PlayerControl.LocalPlayer);
-            var player = PlayerControl.LocalPlayer;
-            player.myLight = UnityEngine.Object.Instantiate<LightSource>(player.LightPrefab);
-            player.myLight.transform.SetParent(player.transform);
-            player.myLight.transform.localPosition = player.Collider.offset;
-            PlayerControl.LocalPlayer.moveable = true;
+            switchStealth(false);
         }
 
         static void arrowUpdate(){
@@ -599,9 +589,43 @@ namespace TheOtherRoles
 
                 if (stealthed)
                 {
-                    // 梯子を使う
+                    // 梯子を使う/ドアを開ける
                     if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                     {
+                        PlainDoor[] doors;
+                        if(PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.additionalVents.getBool())
+                        {
+                            doors = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
+                        }
+                        else if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.additionalVents.getBool())
+                        {
+                            doors = DestroyableSingleton<PolusShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
+                        }
+                        else if(PlayerControl.GameOptions.MapId == 1 && CustomOptionHolder.additionalVents.getBool())
+                        {
+                            doors = DestroyableSingleton<MiraShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
+                        }
+                        else
+                        {
+                            doors = DestroyableSingleton<SkeldShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
+                        }
+                        PlainDoor t = null;
+                        foreach(var door in doors)
+                        {
+                            float distance = Vector2.Distance(door.transform.position, dummy.transform.position);
+                            if(distance < 1.5f)
+                            {
+                                t = door;
+                                break;
+                            }
+                        }
+                        if(t != null)
+                        {
+                            DestroyableSingleton<ShipStatus>.Instance.RpcRepairSystem(SystemTypes.Doors, t.Id | 64);
+                            t.SetDoorway(true);
+                        }
+
+
                         Ladder[] ladders = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>();
                         Ladder target = null;
                         foreach(var ladder in ladders)
@@ -610,6 +634,7 @@ namespace TheOtherRoles
                             if(distance < 0.5f)
                             {
                                 target = ladder;
+                                break;
                             }
                         }
                         if (target != null)
