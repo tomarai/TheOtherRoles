@@ -273,6 +273,17 @@ namespace TheOtherRoles.Patches
                     AdditionalTempData.winCondition = WinCondition.PlagueDoctorWin;
                 }
             }
+            // Puppeter win
+            else if (puppeteerWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var puppeteer in Puppeteer.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(puppeteer.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.PuppeteerWin;
+            }
 
             else if (everyoneDead)
             {
@@ -383,17 +394,6 @@ namespace TheOtherRoles.Patches
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
             }
 
-            // Puppeter win
-            else if (puppeteerWin)
-            {
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                foreach (var puppeteer in Puppeteer.players)
-                {
-                    WinningPlayerData wpd = new WinningPlayerData(puppeteer.player.Data);
-                    TempData.winners.Add(wpd);
-                }
-                AdditionalTempData.winCondition = WinCondition.PuppeteerWin;
-            }
 
             
             // Madmate win with impostors

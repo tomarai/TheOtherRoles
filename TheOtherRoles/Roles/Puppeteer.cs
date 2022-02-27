@@ -19,6 +19,7 @@ namespace TheOtherRoles
         public static int counter = 0;
         public static int numKills {get {return (int)CustomOptionHolder.puppeteerNumKills.getFloat();}}
         public static float sampleDuration {get {return CustomOptionHolder.puppeteerSampleDuration.getFloat();}}
+        public static bool canControlDummyEvenIfDead {get {return CustomOptionHolder.puppeteerCanControlDummyEvenIfDead.getBool();}}
         public static bool triggerPuppeteerWin = false;
         public static bool isActive = false;
         public static bool canSample = true;
@@ -107,7 +108,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && PlayerControl.LocalPlayer.isAlive() && Puppeteer.canSample; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && Puppeteer.canSample; },
                 // CouldUse
                 () =>
                 {
@@ -167,7 +168,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && PlayerControl.LocalPlayer.isAlive() && !canSample; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && !canSample; },
                 // CouldUse
                 () =>
                 {
@@ -248,7 +249,7 @@ namespace TheOtherRoles
             writer.Write(PlayerControl.LocalPlayer.transform.position.z);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             // 暫定遅延実行　何故か透明化が解除されないため
-            DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>( p =>{
+            DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.25f, new Action<float>( p =>{
                 if(p== 1)
                 {
                     RPCProcedure.moveDummy(PlayerControl.LocalPlayer.transform.position);
@@ -346,7 +347,8 @@ namespace TheOtherRoles
 
         public static void OnTargetExiled()
         {
-            if(!target.isImpostor() && !target.isRole(RoleType.Jackal))
+            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
+            if(!target.isImpostor() && !target.isRole(RoleType.Jackal) && isAlive)
             {
                 counter += 1;
             }
@@ -362,6 +364,11 @@ namespace TheOtherRoles
         {
             counter += 1;
             soundFlag = true;
+            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
+            if(!isAlive) // 人形遣い死亡時は空キルになるのでクールダウンにしない
+            {
+                killer.SetKillTimer(0f);
+            }
             if(!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
             if(counter >= numKills)
             {
@@ -369,7 +376,7 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.FinishRpcImmediately(winWriter);
                 RPCProcedure.puppeteerWin();
             }
-            if(target.isAlive())
+            if(target.isAlive() && isAlive)
             {
                 MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerKill, Hazel.SendOption.Reliable, -1);
                 killWriter.Write(killer.PlayerId);
@@ -593,15 +600,15 @@ namespace TheOtherRoles
                     if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                     {
                         PlainDoor[] doors;
-                        if(PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.additionalVents.getBool())
+                        if(PlayerControl.GameOptions.MapId == 4)
                         {
                             doors = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
-                        else if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.additionalVents.getBool())
+                        else if(PlayerControl.GameOptions.MapId == 2)
                         {
                             doors = DestroyableSingleton<PolusShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
-                        else if(PlayerControl.GameOptions.MapId == 1 && CustomOptionHolder.additionalVents.getBool())
+                        else if(PlayerControl.GameOptions.MapId == 1)
                         {
                             doors = DestroyableSingleton<MiraShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }

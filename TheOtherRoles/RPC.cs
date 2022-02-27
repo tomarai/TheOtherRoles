@@ -1672,7 +1672,7 @@ namespace TheOtherRoles
             var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.isRole(RoleType.Puppeteer) && p.isAlive());
             foreach (PlayerControl p in livingPlayers)
             {
-                p.Exiled();
+                // p.Exiled();
                 finalStatuses[p.PlayerId] = FinalStatus.Spelled;
             }
         }
