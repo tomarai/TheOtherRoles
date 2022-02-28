@@ -665,10 +665,10 @@ namespace TheOtherRoles {
             schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "追放時にランダムな陣営になる", false, schrodingersCatSpawnRate);
 
             puppeteerSpawnRate = new CustomRoleOption(1060, "人形遣い", Puppeteer.color, 1);
-            puppeteerNumKills = CustomOption.Create(1061, "人形が殺されると勝利する回数", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
+            puppeteerNumKills = CustomOption.Create(1061, "勝利に必要なポイント数", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
             puppeteerSampleDuration = CustomOption.Create(1062, "サンプル取得に必要な時間", 1f, 0f, 20f, 0.25f, puppeteerSpawnRate);
-            puppeteerPenaltyOnDeath= CustomOption.Create(1064, "本体死亡時のペナルティ", 1f, 0f, 5f, 1f, puppeteerSpawnRate);
             puppeteerCanControlDummyEvenIfDead = CustomOption.Create(1063, "死亡後にもダミーを操作できる", true, puppeteerSpawnRate);
+            puppeteerPenaltyOnDeath= CustomOption.Create(1064, "本体死亡時のペナルティ", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
             puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, "死亡後に千里眼能力を失う", true,puppeteerCanControlDummyEvenIfDead);
             
 
