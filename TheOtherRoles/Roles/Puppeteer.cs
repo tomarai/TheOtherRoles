@@ -20,6 +20,8 @@ namespace TheOtherRoles
         public static int numKills {get {return (int)CustomOptionHolder.puppeteerNumKills.getFloat();}}
         public static float sampleDuration {get {return CustomOptionHolder.puppeteerSampleDuration.getFloat();}}
         public static bool canControlDummyEvenIfDead {get {return CustomOptionHolder.puppeteerCanControlDummyEvenIfDead.getBool();}}
+        public static int penaltyOnDeath {get {return (int)CustomOptionHolder.puppeteerPenaltyOnDeath.getFloat();}}
+        public static bool losesSenriganOnDeath {get {return CustomOptionHolder.puppeteerLosesSenriganOnDeath.getBool();}}
         public static bool triggerPuppeteerWin = false;
         public static bool isActive = false;
         public static bool canSample = true;
@@ -49,11 +51,21 @@ namespace TheOtherRoles
 
         public override void OnMeetingStart()
         {
-            if(soundFlag)
+            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
+            if(soundFlag && isAlive)
             {
                 SoundManager._Instance.PlaySound(laugh, false, 1f);
-                soundFlag = false;
             }
+            soundFlag = false;
+            if(!isAlive)
+            {
+                string msg = $"人形遣いのカウント数 {counter}/{numKills}";
+                if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
+                {
+                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, msg);
+                }
+            }
+
         }
 
         public override void OnMeetingEnd()
@@ -78,7 +90,10 @@ namespace TheOtherRoles
             }
         }
         public override void OnKill(PlayerControl target) { }
-        public override void OnDeath(PlayerControl killer = null) { }
+        public override void OnDeath(PlayerControl killer = null)
+        {
+            counter -= penaltyOnDeath;
+        } 
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public static Sprite getSampleButtonSprite()
@@ -286,8 +301,6 @@ namespace TheOtherRoles
                 DestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize =originalZoom * 3;
                 DestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(false);
             }
-
-
         }
         public static void switchStealth(bool flag)
         {
@@ -323,7 +336,15 @@ namespace TheOtherRoles
                 var hudManager = DestroyableSingleton<HudManager>.Instance;
                 var dummy = Puppeteer.dummy;
                 hudManager.PlayerCam.SetTarget(dummy);
-                senrigan(true);
+                if(losesSenriganOnDeath)
+                {
+                    bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
+                    senrigan(isAlive);
+                }
+                else
+                {
+                    senrigan(true);
+                }
                 dummy.myLight = UnityEngine.Object.Instantiate<LightSource>(dummy.LightPrefab);
                 dummy.myLight.transform.SetParent(dummy.transform);
                 dummy.myLight.transform.localPosition = dummy.Collider.offset;
@@ -362,21 +383,31 @@ namespace TheOtherRoles
 
         public static void OnDummyDeath(PlayerControl killer)
         {
-            counter += 1;
-            soundFlag = true;
+            // クルーがダミーを殺した場合は本体が死ぬのでカウント対象外とする
+            if(!killer.isCrew())
+                counter += 1;
+                soundFlag = true;
+
+            // 人形遣い死亡時は空キルになるのでクールダウンにしない
             bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
-            if(!isAlive) // 人形遣い死亡時は空キルになるのでクールダウンにしない
+            if(!isAlive)
             {
                 killer.SetKillTimer(0f);
             }
+
+            // 人形遣い専用の処理なので人形遣い以外はreturn
             if(!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
+
+            // 勝利条件を満たしていたら勝利
             if(counter >= numKills)
             {
                 MessageWriter winWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerWin, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(winWriter);
                 RPCProcedure.puppeteerWin();
             }
-            if(target.isAlive() && isAlive)
+
+            // ダミー死亡時に連動して発動するキル処理
+            if(target.isAlive() && isAlive && !killer.isCrew())
             {
                 MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerKill, Hazel.SendOption.Reliable, -1);
                 killWriter.Write(killer.PlayerId);
@@ -384,6 +415,16 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.FinishRpcImmediately(killWriter);
                 RPCProcedure.puppeteerKill(killer.PlayerId, target.PlayerId);
             }
+            else if(isAlive && killer.isCrew()) // ダミーをクルーがキルした場合は人形遣いが死亡する
+            {
+                MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerKill, Hazel.SendOption.Reliable, -1);
+                killWriter.Write(killer.PlayerId);
+                killWriter.Write(PlayerControl.LocalPlayer.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(killWriter);
+                RPCProcedure.puppeteerKill(killer.PlayerId, PlayerControl.LocalPlayer.PlayerId);
+            }
+
+
             isActive = false;
             canSample = true;
             canSpawn = false;
@@ -418,7 +459,7 @@ namespace TheOtherRoles
                         if(p.Data.Role.IsImpostor){
                             arrow = new Arrow(Color.red);
                         }
-                        else if(p.isRole(RoleType.Jackal)){
+                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.jackalFlag)){
                             arrow = new Arrow(Jackal.color);
                         }else if(p.isRole(RoleType.Sheriff)){
                             arrow = new Arrow(Color.white);
