@@ -100,6 +100,19 @@ namespace TheOtherRoles.Patches {
             return false;
         }
     }
+    [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
+    public static class EnterVentAnimPatch {
+        public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
+            return pc.AmOwner;
+        }
+    }
+
+    [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
+    public static class ExitVentAnimPatch {
+        public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
+            return pc.AmOwner;
+        }
+    }
 
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
     class VentButtonVisibilityPatch {
