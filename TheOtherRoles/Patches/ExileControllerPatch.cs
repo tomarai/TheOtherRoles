@@ -111,35 +111,20 @@ namespace TheOtherRoles.Patches {
         }
 
         private static PlayerControl pickRandomCrewmate(int exiledPlayerId) {
-            int numAliveCrewmates = 0;
-            // count alive crewmates
+            var possibleTargets = new List<PlayerControl>();
+            // make possible targets
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+                if (player.Data.Disconnected)
+                    continue;
                 if (player.Data.Role.IsImpostor)
                     continue;
                 if (player.Data.IsDead)
                     continue;
                 if (player.PlayerId == exiledPlayerId)
                     continue;
-                numAliveCrewmates++;
-                TheOtherRolesPlugin.Instance.Log.LogInfo($"pickRandomCrewmate: {player.PlayerId}");
+                possibleTargets.Add(player);
             }
-            // get random number range 0, num of alive crewmates
-            int targetPlayerIndex = TheOtherRoles.rnd.Next(0, numAliveCrewmates);
-            TheOtherRolesPlugin.Instance.Log.LogInfo($"targetPlayerIndex: {targetPlayerIndex}");
-            int currentPlayerIndex = 0;
-            // return the player
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
-                if (player.Data.Role.IsImpostor)
-                    continue;
-                if (player.Data.IsDead)
-                    continue;
-                if (player.PlayerId == exiledPlayerId)
-                    continue;
-                if (currentPlayerIndex == targetPlayerIndex)
-                    return player;
-                currentPlayerIndex++;
-            }
-            return null;
+            return possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
         }
     }
 
