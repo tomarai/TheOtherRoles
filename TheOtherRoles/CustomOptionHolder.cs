@@ -644,38 +644,38 @@ namespace TheOtherRoles {
             plagueDoctorWinDead = CustomOption.Create(908, "plagueDoctorWinDead", true, plagueDoctorSpawnRate);
 
 
-            foxSpawnRate = new CustomRoleOption(910, "妖狐", Fox.color, 1);
-            foxCanFixReactorAndO2 = CustomOption.Create(911, "リアクターとO2を直せる", false, foxSpawnRate);
-            foxCrewWinsByTasks= CustomOption.Create(912, "クルーはタスクで勝利する", true, foxSpawnRate);
-            foxImpostorWinsBySabotage= CustomOption.Create(913, "インポスターはサボタージュで勝利する", true, foxSpawnRate);
-            foxNumCommonTasks = CustomOption.Create(914, "コモンタスク数", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxNumLongTasks = CustomOption.Create(915, "ロングタスク数", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxNumShortTasks = CustomOption.Create(916, "ショートタスク数", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxStealthCooldown = CustomOption.Create(917, "透明クールダウン", 15f, 1f, 30f, 1f, foxSpawnRate);
-            foxStealthDuration = CustomOption.Create(918, "透明時間", 15f, 1f, 30f, 1f, foxSpawnRate);
-            foxCanFixSabotageWhileStealth  = CustomOption.Create(919, "透明中にサボタージュを直せる", true, foxSpawnRate);
-            foxCanCreateImmoralist = CustomOption.Create(920, "背徳者を作れる", true, foxSpawnRate);
-            foxImmoralistArrow = CustomOption.Create(921, "背徳者矢印(背徳者→妖狐)", true, foxSpawnRate);
+            foxSpawnRate = new CustomRoleOption(910, "fox", Fox.color, 1);
+            foxCanFixReactorAndO2 = CustomOption.Create(911, "foxCanFixReactorAndO2", false, foxSpawnRate);
+            foxCrewWinsByTasks= CustomOption.Create(912, "foxCrewWinsByTasks", true, foxSpawnRate);
+            foxImpostorWinsBySabotage= CustomOption.Create(913, "foxImpostorWinsBySabotage", true, foxSpawnRate);
+            foxNumCommonTasks = CustomOption.Create(914, "foxNumCommonTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
+            foxNumLongTasks = CustomOption.Create(915, "foxNumLongTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
+            foxNumShortTasks = CustomOption.Create(916, "foxNumShortTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
+            foxStealthCooldown = CustomOption.Create(917, "foxStealthCooldown", 15f, 1f, 30f, 1f, foxSpawnRate);
+            foxStealthDuration = CustomOption.Create(918, "foxStealthDuration", 15f, 1f, 30f, 1f, foxSpawnRate);
+            foxCanFixSabotageWhileStealth  = CustomOption.Create(919, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
+            foxCanCreateImmoralist = CustomOption.Create(920, "foxCanCreateImmoralist", true, foxSpawnRate);
+            foxImmoralistArrow = CustomOption.Create(921, "foxImmoralistArrow", true, foxSpawnRate);
 
-            schrodingersCatSpawnRate = new CustomRoleOption(970, "シュレディンガーの猫", SchrodingersCat.color, 1);
-            schrodingersCatKillCooldown = CustomOption.Create(971, "キルクールダウン", 20f, 1f, 60f, 0.5f, schrodingersCatSpawnRate);
-            schrodingersCatBecomesImpostor = CustomOption.Create(972, "マッドメイトの代わりにインポスターになる", true, schrodingersCatSpawnRate);
-            schrodingersCatKillsKiller = CustomOption.Create(973, "キラーが死亡する", false, schrodingersCatSpawnRate);
-            schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, "最後の一人になるまでキルできない", false, schrodingersCatSpawnRate);
-            schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "追放時にランダムな陣営になる", false, schrodingersCatSpawnRate);
+            schrodingersCatSpawnRate = new CustomRoleOption(970, "schrodingersCat", SchrodingersCat.color, 1);
+            schrodingersCatKillCooldown = CustomOption.Create(971, "schrodingersCatKillCooldown", 20f, 1f, 60f, 0.5f, schrodingersCatSpawnRate);
+            schrodingersCatBecomesImpostor = CustomOption.Create(972, "schrodingersCatBecomesImpostor", true, schrodingersCatSpawnRate);
+            schrodingersCatKillsKiller = CustomOption.Create(973, "schrodingersCatKillsKiller", false, schrodingersCatSpawnRate);
+            schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, "schrodingersCatCantKillUntilLastOne", false, schrodingersCatSpawnRate);
+            schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "schrodingersCatBecomesRandomTeamOnExiled", false, schrodingersCatSpawnRate);
 
-            puppeteerSpawnRate = new CustomRoleOption(1060, "人形遣い", Puppeteer.color, 1);
-            puppeteerNumKills = CustomOption.Create(1061, "勝利に必要なポイント数", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
-            puppeteerSampleDuration = CustomOption.Create(1062, "サンプル取得に必要な時間", 1f, 0f, 20f, 0.25f, puppeteerSpawnRate);
-            puppeteerCanControlDummyEvenIfDead = CustomOption.Create(1063, "死亡後にもダミーを操作できる", true, puppeteerSpawnRate);
-            puppeteerPenaltyOnDeath= CustomOption.Create(1064, "本体死亡時のペナルティ", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
-            puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, "死亡後に千里眼能力を失う", true,puppeteerCanControlDummyEvenIfDead);
+            puppeteerSpawnRate = new CustomRoleOption(1060, "puppeteer", Puppeteer.color, 1);
+            puppeteerNumKills = CustomOption.Create(1061, "puppeteerNumKills", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
+            puppeteerSampleDuration = CustomOption.Create(1062, "puppeteerSampleDuration", 1f, 0f, 20f, 0.25f, puppeteerSpawnRate);
+            puppeteerCanControlDummyEvenIfDead = CustomOption.Create(1063, "puppeteerCanControlDummyEvenIfDead", true, puppeteerSpawnRate);
+            puppeteerPenaltyOnDeath= CustomOption.Create(1064, "puppeteerPenaltyOnDeath", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
+            puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, "puppeteerLosesSenriganOnDeath", true,puppeteerCanControlDummyEvenIfDead);
             
 
-            munouSpawnRate = new CustomRoleOption(950, "無能", Munou.color, 1);
-            munou2ndSpawnRate = new CustomRoleOption(960, "無能2nd", Munou2nd.color, 15);
-            munou2ndProbability = CustomOption.Create(961, "見た目が入れ替わる確率", 20f, 0f, 100f, 10f, munou2ndSpawnRate);
-            munou2ndNumShufflePlayers = CustomOption.Create(962, "見た目が入れ替わる人数", 0f, 2f, 15f, 1f, munou2ndSpawnRate);
+            munouSpawnRate = new CustomRoleOption(950, "incompetent", Munou.color, 1);
+            munou2ndSpawnRate = new CustomRoleOption(960, "incompetent2nd", Munou2nd.color, 15);
+            munou2ndProbability = CustomOption.Create(961, "incompetent2ndProbability", 60f, 0f, 100f, 10f, munou2ndSpawnRate);
+            munou2ndNumShufflePlayers = CustomOption.Create(962, "incompetent2ndNumShufflePlayers", 4f, 2f, 15f, 1f, munou2ndSpawnRate);
 
             fortuneTellerSpawnRate = new CustomRoleOption(930, "占い師", FortuneTeller.color, 1);
             fortuneTellerNumTasks = CustomOption.Create(931, "占いに必要なタスク数", 4f, 1f, 10f, 1f, fortuneTellerSpawnRate);

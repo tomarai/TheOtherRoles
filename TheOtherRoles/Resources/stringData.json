@@ -1,4 +1,126 @@
 {
+    "fox": {
+        "0": "Fox",
+        "11": "\u5996\u72d0"
+    },
+    "foxCanFixReactorAndO2": {
+        "0": "Fox can fix reactor and O2",
+        "11": "\u30ea\u30a2\u30af\u30bf\u30fc\u3068O2\u3092\u76f4\u3059\u3053\u3068\u304c\u3067\u304d\u308b"
+    },
+    "foxCrewWinsByTasks": {
+        "0": "Crewmate wins by Tasks",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u306f\u30bf\u30b9\u30af\u52dd\u5229\u304c\u53ef\u80fd"
+    },
+    "foxImpostorWinsBySabotage": {
+        "0": "Impostor wins by sabotage",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306f\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u52dd\u5229\u304c\u53ef\u80fd"
+    },
+    "foxNumCommonTasks": {
+        "0": "Number of common tasks",
+        "11": "\u901a\u5e38\u30bf\u30b9\u30af\u6570"
+    },
+    "foxNumLongTasks": {
+        "0": "Number of long tasks",
+        "11": "\u30ed\u30f3\u30b0\u30bf\u30b9\u30af\u6570"
+    },
+    "foxNumShortTasks": {
+        "0": "Number of short tasks",
+        "11": "\u30b7\u30e7\u30fc\u30c8\u30bf\u30b9\u30af\u6570"
+    },
+    "foxStealthCooldown": {
+        "0": "Stealth cooldown",
+        "11": "\u900f\u660e\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "foxStealthDuration": {
+        "0": "Stealth duration",
+        "11": "\u900f\u660e\u6642\u9593"
+    },
+    "foxCanFixSabotageWhileStealth": {
+        "0": "Fox can fix sabotage in stealth",
+        "11": "\u900f\u660e\u4e2d\u306b\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u3092\u76f4\u305b\u308b"
+    },
+    "foxCanCreateImmoralist": {
+        "0": "Fox can create Immoralist",
+        "11": "\u80cc\u5fb3\u8005\u3092\u4f5c\u308b\u3053\u3068\u304c\u3067\u304d\u308b"
+    },
+    "foxImmoralistArrow": {
+        "0": "Immoralist has Arrow to Fox",
+        "11": "\u80cc\u5fb3\u8005\u304b\u3089\u5996\u72d0\u306b\u77e2\u5370\u304c\u8868\u793a\u3055\u308c\u308b"
+    },
+    "foxShortDesc": {
+        "0": "Complete tasks and survive to win",
+        "11": "\u30bf\u30b9\u30af\u3092\u7d42\u308f\u3089\u305b\u3066\u751f\u304d\u5ef6\u3073\u308d"
+    },
+    "foxIntroDesc": {
+        "0": "Complete tasks and survive to win",
+        "11": "\u30bf\u30b9\u30af\u3092\u7d42\u308f\u3089\u305b\u3066\u751f\u304d\u5ef6\u3073\u308d"
+    },
+    "foxFullDesc": {
+        "0": "Fox is neutral role has unique win condition.\nHis win condition is to complete tasks and survive until the end.\nHe has strong win condition but he can't fix sabotage.\nHe can create Immoralist from crewmates, Immoralist can help fox to pretend  to fix sabotage. \n\nRule1.\nIf he fills his win condition, he overwrites others win except neutral role's solo win.\n (Exceptions: jester,arsonist,vulture, plague doctor etc...) \nIn other words\uff0cFox cant win until others fills win condition  \n\nRule2.\nFox has two ability to survive\none is stealth, no one can target fox if he is invisible. \nsecond one is showing arrows to player who can kill Fox.\n\nRule3. \nImmoralist has ability to help fox. \n1. Immoralist dies if fox dies.\n2. Immoralist can see flash when other player dead.\n3. Immoralist can suicide\n4. Immoralist can see arrows to Fox(Option)"
+    },
+    "schrodingersCat": {
+        "0": "Schrodinger\u2019s Cat"
+    },
+    "schrodingersCatKillCooldown": {
+        "0": "Kill cooldown"
+    },
+    "schrodingersCatBecomesImpostor": {
+        "0": "Becomes Impostor instead of Madmate"
+    },
+    "schrodingersCatKillsKiller": {
+        "0": "Killer suicides after 15s"
+    },
+    "schrodingersCatCantKillUntilLastOne": {
+        "0": "Cant kill until last one"
+    },
+    "schrodingersCatBecomesRandomTeamOnExiled": {
+        "0": "Becomes random team on exiled"
+    },
+    "schrodingersCatShortDesc": {
+        "0": "Get killed and join killer team"
+    },
+    "schrodingersCatIntroDesc": {
+        "0": "Get killed and join killer team"
+    },
+    "puppeteer": {
+        "0": "Puppeteer"
+    },
+    "puppeteerNumKills": {
+        "0": "Number of points is required to win"
+    },
+    "puppeteerSampleDuration": {
+        "0": "Sample Duration"
+    },
+    "puppeteerCanControlDummyEvenIfDead": {
+        "0": "Can control dummy even if dead"
+    },
+    "puppeteerPenaltyOnDeath": {
+        "0": "Number of points is lost on death"
+    },
+    "puppeteerLosesSenriganOnDeath": {
+        "0": "Loses Far Sight on death"
+    },
+    "puppeteerShortDesc": {
+        "0": "Control dummy and get killed"
+    },
+    "puppeteerIntroDesc": {
+        "0": "Control dummy and get killed"
+    },
+    "incompetent": {
+        "11": "\u7121\u80fd"
+    },
+    "incompetent2nd": {
+        "11": "\u7121\u80fd2nd"
+    },
+    "incompetent2ndShortDesc": {
+        "11": "\u8868\u793a\u3055\u308c\u306a\u3044\u306e\u3067\u66f8\u304f\u5fc5\u8981\u306a\u3057"
+    },
+    "incompetent2ndIntroDesc": {
+        "11": "\u8868\u793a\u3055\u308c\u306a\u3044\u306e\u3067\u66f8\u304f\u5fc5\u8981\u306a\u3057"
+    },
+    "incompetentFullDesc": {
+        "11": "\u8868\u793a\u3055\u308c\u306a\u3044\u306e\u3067\u66f8\u304f\u5fc5\u8981\u306a\u3057"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a"
