@@ -172,7 +172,7 @@ namespace TheOtherRoles
                     }
                     else
                     {
-                        uranaiButtons[index].buttonText = "死亡";
+                        uranaiButtons[index].buttonText = ModTranslation.getString("fortuneTeller2ndDead");
                     }
 
                     // アイコンの位置と透明度を変更
@@ -294,20 +294,20 @@ namespace TheOtherRoles
             if(!isTwoSelections){
                 string roleNames = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
                 // roleNames = Regex.Replace(roleNames, "<[^>]*>", "");
-                msg = $"{p.name}は{roleNames}";
+                msg = $"{p.name}" + ModTranslation.getString("fortuneTeller2ndIs") + $"{roleNames}";
             }else{
                 string ret;
                 if(p.isCrew())
                 {
-                    ret = "クルー";
+                    ret = ModTranslation.getString("fortuneTeller2ndCrew");
                     color = Color.white;
                 }
                 else
                 {
-                    ret = "クルー以外";
+                    ret = ModTranslation.getString("fortuneTeller2ndNotCrew");
                     color = Palette.ImpostorRed;
                 }
-                msg = $"{p.name}は{ret}";
+                msg = $"{p.name}" + ModTranslation.getString("fortuneTeller2ndIs") + $"{ret}";
             }
 
             if (!string.IsNullOrWhiteSpace(msg))

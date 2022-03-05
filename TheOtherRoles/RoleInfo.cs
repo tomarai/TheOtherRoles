@@ -89,13 +89,13 @@ namespace TheOtherRoles
         public static RoleInfo nekoKabocha = new RoleInfo("nekoKabocha", NekoKabocha.color, CustomOptionHolder.nekoKabochaSpawnRate, RoleType.NekoKabocha);
         public static RoleInfo serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleType.SerialKiller);
         public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
-        public static RoleInfo immoralist = new RoleInfo("Immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
+        public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
         public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
         public static RoleInfo uranai= new RoleInfo("fortuneTeller2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleType.Uranai);
         public static RoleInfo munou = new RoleInfo("incompetent", Munou.color, CustomOptionHolder.munouSpawnRate, RoleType.Munou);
         public static RoleInfo munou2nd = new RoleInfo("incompetent2nd", Munou2nd.color, CustomOptionHolder.munou2ndSpawnRate, RoleType.Munou2nd);
-        public static RoleInfo schrodingersCat = new RoleInfo("schoringersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
+        public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
         public static RoleInfo bomberB = new RoleInfo("bomber", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberB);

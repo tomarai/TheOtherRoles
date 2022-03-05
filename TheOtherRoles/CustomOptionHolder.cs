@@ -515,28 +515,28 @@ namespace TheOtherRoles {
             serialKillerSuicideTimer = CustomOption.Create(1013, "serialKillerSuicideTimer", 40f, 2.5f, 60f, 2.5f, serialKillerSpawnRate, format: "unitSeconds");
             serialKillerResetTimer = CustomOption.Create(1014, "serialKillerResetTimer", true, serialKillerSpawnRate);
 
-            trapperSpawnRate = new CustomRoleOption(1040, "トラッパー", Trapper.color, 1);
-            trapperExtensionTime = CustomOption.Create(1041, "設置後有効になるまでの時間", 5f, 2f, 10f, 0.5f, trapperSpawnRate);
-            trapperCooldown = CustomOption.Create(1042, "トラップクールダウン", 10f, 2.5f, 60f, 2.5f, trapperSpawnRate);
-            trapperKillTimer = CustomOption.Create(1043, "トラップ発動後キルまでの猶予時間", 5f, 1f, 30f, 1f, trapperSpawnRate);
-            trapperTrapRange = CustomOption.Create(1044, "トラップの有効範囲", 1f, 0f, 5f, 0.1f, trapperSpawnRate);
-            trapperMinDistance = CustomOption.Create(1045, "効果音の減衰開始距離", 0f, 0f, 10f, 0.1f, trapperSpawnRate);
-            trapperMaxDistance = CustomOption.Create(1046, "効果音の減衰終了距離", 10f, 1f, 50f, 1f, trapperSpawnRate);
-            trapperPenaltyTime = CustomOption.Create(1047, "通常キル時のペナルティタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
-            trapperBonusTime = CustomOption.Create(1048, "罠キル時のボーナスタイム", 10f, 0f, 50f, 1f, trapperSpawnRate);
+            trapperSpawnRate = new CustomRoleOption(1040, "trapper", Trapper.color, 1);
+            trapperExtensionTime = CustomOption.Create(1041, "trapperExtensionTime", 5f, 2f, 10f, 0.5f, trapperSpawnRate);
+            trapperCooldown = CustomOption.Create(1042, "trapperCooldown", 10f, 2.5f, 60f, 2.5f, trapperSpawnRate);
+            trapperKillTimer = CustomOption.Create(1043, "trapperKillTimer", 5f, 1f, 30f, 1f, trapperSpawnRate);
+            trapperTrapRange = CustomOption.Create(1044, "trapperTrapRange", 1f, 0f, 5f, 0.1f, trapperSpawnRate);
+            trapperMinDistance = CustomOption.Create(1045, "trapperMinDistance", 0f, 0f, 10f, 0.1f, trapperSpawnRate);
+            trapperMaxDistance = CustomOption.Create(1046, "trapperMaxDistance", 10f, 1f, 50f, 1f, trapperSpawnRate);
+            trapperPenaltyTime = CustomOption.Create(1047, "trapperPenaltyTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
+            trapperBonusTime = CustomOption.Create(1048, "trapperBonusTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
 
-            bomberSpawnRate = new CustomRoleOption(1030, "爆弾魔", BomberA.color, 1);
-            bomberCooldown = CustomOption.Create(1031, "爆弾クールダウン", 20f, 2f, 60f, 1f, bomberSpawnRate);
-            bomberDuration = CustomOption.Create(1032, "爆弾設置時間", 2f, 0f, 60f, 0.5f, bomberSpawnRate);
-            bomberCountAsOne = CustomOption.Create(1033, "１インポスターとしてカウントする", true, bomberSpawnRate);
-            bomberShowEffects = CustomOption.Create(1034, "キル時にエフェクトを表示する", true, bomberSpawnRate);
-            bomberIfOneDiesBothDie = CustomOption.Create(1035, "一人が死んだら両方死ぬ", true, bomberSpawnRate);
-            bomberHasOneVote = CustomOption.Create(1036, "投票が１票になる", true, bomberSpawnRate);
+            bomberSpawnRate = new CustomRoleOption(1030, "bomber", BomberA.color, 1);
+            bomberCooldown = CustomOption.Create(1031, "bomberCooldown", 20f, 2f, 60f, 1f, bomberSpawnRate);
+            bomberDuration = CustomOption.Create(1032, "bomberDuration", 2f, 0f, 60f, 0.5f, bomberSpawnRate);
+            bomberCountAsOne = CustomOption.Create(1033, "bomberCountAsOne", true, bomberSpawnRate);
+            bomberShowEffects = CustomOption.Create(1034, "bomberShowEffects", true, bomberSpawnRate);
+            bomberIfOneDiesBothDie = CustomOption.Create(1035, "bomberIfOneDiesBothDie", true, bomberSpawnRate);
+            bomberHasOneVote = CustomOption.Create(1036, "bomberHasOneVote", true, bomberSpawnRate);
 
-            evilTrackerSpawnRate = new CustomRoleOption(1050, "イビルトラッカー", EvilTracker.color, 1);
-            evilTrackerCooldown = CustomOption.Create(1052, "トラッカークールダウン", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
-            evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, "会議後に再度ターゲットを設定できる", true, evilTrackerSpawnRate);
-            evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, "インポスターキルのデスフラッシュを見ることができる", true, evilTrackerSpawnRate);
+            evilTrackerSpawnRate = new CustomRoleOption(1050, "evilTracker", EvilTracker.color, 1);
+            evilTrackerCooldown = CustomOption.Create(1052, "evilTrackerCooldown", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
+            evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, "evilTrackerResetTargetAfterMeeting", true, evilTrackerSpawnRate);
+            evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, "evilTrackerCanSeeDeathFlash", true, evilTrackerSpawnRate);
 
 
             nekoKabochaSpawnRate = new CustomRoleOption(1020, "nekoKabocha", NekoKabocha.color, 3);
@@ -682,11 +682,11 @@ namespace TheOtherRoles {
             fortuneTellerDivineOnDiscussTime = CustomOption.Create(932, "議論時間のみ占うことができる", true, fortuneTellerSpawnRate);
             fortuneTellerResultIsCrewOrNot = CustomOption.Create(933, "占い結果が白黒のみ ", true, fortuneTellerSpawnRate);
 
-            uranaiSpawnRate = new CustomRoleOption(940, "占い師2nd", Uranai.color, 1);
-            uranaiNumTasks = CustomOption.Create(941, "占いに必要なタスク数", 4f, 1f, 10f, 1f, uranaiSpawnRate);
-            uranaiResultIsCrewOrNot = CustomOption.Create(942, "占い結果が白黒のみ ", true, uranaiSpawnRate);
-            uranaiDuration = CustomOption.Create(943, "接触時間 ", 20f, 1f, 50f, 0.5f, uranaiSpawnRate);
-            uranaiDistance = CustomOption.Create(944, "接触判定距離 ", 2.5f, 1f, 10f, 0.5f, uranaiSpawnRate, format: "unitMeters");
+            uranaiSpawnRate = new CustomRoleOption(940, "fortuneTeller2nd", Uranai.color, 1);
+            uranaiNumTasks = CustomOption.Create(941, "fortuneTeller2ndNumTasks", 4f, 1f, 10f, 1f, uranaiSpawnRate);
+            uranaiResultIsCrewOrNot = CustomOption.Create(942, "fortuneTeller2ndResultIsCrewOrNot", true, uranaiSpawnRate);
+            uranaiDuration = CustomOption.Create(943, "fortuneTeller2ndDuration", 20f, 1f, 50f, 0.5f, uranaiSpawnRate);
+            uranaiDistance = CustomOption.Create(944, "fortuneTeller2ndDistance", 2.5f, 1f, 10f, 0.5f, uranaiSpawnRate, format: "unitMeters");
 
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(81, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
@@ -780,18 +780,19 @@ namespace TheOtherRoles {
 
             // Other options
             specialOptions = new CustomOptionBlank(null);
-            lastImpostorEnable = CustomOption.Create(9900, "ラストインポスター有効化", true, specialOptions, true);
-            lastImpostorFunctions = CustomOption.Create(9901, "ラストインポスター時に有効になる能力", new string[]{"占い", "ゲッサー"}, lastImpostorEnable);
-            lastImpostorNumKills = CustomOption.Create(9902, "能力発動に必要なキル数", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
-            lastImpostorResultIsCrewOrNot = CustomOption.Create(9903, "占い結果がクルーとクルー以外になる", true, lastImpostorEnable);
-            lastImpostorNumShots = CustomOption.Create(9904, "ゲッサー弾丸数", 1f, 1f, 15f, 1f, lastImpostorEnable );
+            lastImpostorEnable = CustomOption.Create(9900, "lastImpostorEnable", true, specialOptions, true);
+            lastImpostorFunctions = CustomOption.Create(9901, "lastImpostorFunctions", new string[]{ModTranslation.getString("lastImpostorDivine"), ModTranslation.getString("lastImpostorGuesser")}, lastImpostorEnable);
+            lastImpostorNumKills = CustomOption.Create(9902, "lastImpostorNumKills", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
+            lastImpostorResultIsCrewOrNot = CustomOption.Create(9903, "lastImpostorResultIsCrewOrNot", true, lastImpostorEnable);
+            lastImpostorNumShots = CustomOption.Create(9904, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
 
-            additionalVents = CustomOption.Create(9905, "ポーラス追加ベント", false, specialOptions, true);
-            specimenVital = CustomOption.Create(9906, "ポーラスバイタル移動(スペシメン)", false, specialOptions);
-            polusRandomSpawn = CustomOption.Create(9907, "ポーラスランダムリスポン", false, specialOptions);
+            additionalVents = CustomOption.Create(9905, "additionalVents", false, specialOptions, true);
+            specimenVital = CustomOption.Create(9906, "specimenVital", false, specialOptions);
+            polusRandomSpawn = CustomOption.Create(9907, "polusRandomSpawn", false, specialOptions);
 
-            airshipEnableWallCheck = CustomOption.Create(9908, "エアシップ壁判定有効化", true, specialOptions, true);
-            airshipReactorDuration = CustomOption.Create(9999, "エアシップリアクター時間", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
+            airshipEnableWallCheck = CustomOption.Create(9908, "airshipEnableWallCheck", true, specialOptions, true);
+            airshipReactorDuration = CustomOption.Create(9999, "airshipReactorDuration", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
+
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(5, "noVoteIsSelfVote", false, specialOptions);
