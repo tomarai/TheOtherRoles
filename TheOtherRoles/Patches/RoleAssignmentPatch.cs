@@ -78,7 +78,11 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            blockLovers = new List<byte> { (byte)RoleType.Snitch };
+            blockLovers = new List<byte> {
+                (byte)RoleType.Snitch,
+                (byte)RoleType.Bait,
+            };
+
             if (!CustomOptionHolder.arsonistCanBeLovers.getBool())
             {
                 blockLovers.Add((byte)RoleType.Arsonist);
@@ -90,6 +94,7 @@ namespace TheOtherRoles.Patches
             assignEnsuredRoles(data); // Assign roles that should always be in the game next
             assignChanceRoles(data); // Assign roles that may or may not be in the game last
             assignRoleTargets(data);
+            assignRoleModifiers(data);
         }
 
         private static RoleAssignmentData getRoleAssignmentData()
@@ -154,9 +159,8 @@ namespace TheOtherRoles.Patches
             neutralSettings.Add((byte)RoleType.SchrodingersCat, CustomOptionHolder.schrodingersCatSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Puppeteer, CustomOptionHolder.puppeteerSpawnRate.data);
 
-            crewSettings.Add((byte)RoleType.Uranai, CustomOptionHolder.uranaiSpawnRate.data);
+
             crewSettings.Add((byte)RoleType.Munou, CustomOptionHolder.munouSpawnRate.data);
-            crewSettings.Add((byte)RoleType.Munou2nd, CustomOptionHolder.munou2ndSpawnRate.data);
             crewSettings.Add((byte)RoleType.FortuneTeller, CustomOptionHolder.fortuneTellerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Mayor, CustomOptionHolder.mayorSpawnRate.data);
             crewSettings.Add((byte)RoleType.Engineer, CustomOptionHolder.engineerSpawnRate.data);
@@ -170,7 +174,6 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Tracker, CustomOptionHolder.trackerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Snitch, CustomOptionHolder.snitchSpawnRate.data);
             crewSettings.Add((byte)RoleType.Bait, CustomOptionHolder.baitSpawnRate.data);
-            crewSettings.Add((byte)RoleType.Madmate, CustomOptionHolder.madmateSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);
             if (impostors.Count > 1)
@@ -361,6 +364,8 @@ namespace TheOtherRoles.Patches
             // Assign any dual role types
             foreach (var option in CustomDualRoleOption.dualRoles)
             {
+                if (option.count <= 0 || !option.roleEnabled) continue;
+
                 int niceCount = 0;
                 int evilCount = 0;
                 while (niceCount + evilCount < option.count)
@@ -560,6 +565,33 @@ namespace TheOtherRoles.Patches
             }
         }
 
+        private static void assignRoleModifiers(RoleAssignmentData data)
+        {
+            // Madmate
+            for (int i = 0; i < CustomOptionHolder.madmateSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.madmateSpawnRate.rate * 10)
+                {
+                    var candidates = Madmate.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+
+                    if (Madmate.madmateType == Madmate.MadmateType.Simple)
+                    {
+                        if (data.maxCrewmateRoles <= 0) break;
+                        setModifierToRandomPlayer((byte)ModifierType.Madmate, Madmate.candidates);
+                        data.maxCrewmateRoles--;
+                    }
+                    else
+                    {
+                        setModifierToRandomPlayer((byte)ModifierType.Madmate, Madmate.candidates);
+                    }
+                }
+            }
+        }
+
         private static byte setRoleToRandomPlayer(byte roleId, List<PlayerControl> playerList, byte flag = 0, bool removePlayer = true)
         {
             var index = rnd.Next(0, playerList.Count);
@@ -579,6 +611,24 @@ namespace TheOtherRoles.Patches
             writer.Write(flag);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.setRole(roleId, playerId, flag);
+            return playerId;
+        }
+
+        private static byte setModifierToRandomPlayer(byte modId, List<PlayerControl> playerList)
+        {
+            if (playerList.Count <= 0)
+            {
+                return byte.MaxValue;
+            }
+
+            var index = rnd.Next(0, playerList.Count);
+            byte playerId = playerList[index].PlayerId;
+
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.AddModifier, Hazel.SendOption.Reliable, -1);
+            writer.Write(modId);
+            writer.Write(playerId);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.addModifier(modId, playerId);
             return playerId;
         }
 

@@ -38,12 +38,10 @@ namespace TheOtherRoles
             SerialKiller.Clear();
             Fox.Clear();
             Immoralist.Clear();
-            LastImpostor.Clear();
             FortuneTeller.Clear();
-            Uranai.Clear();
+            LastImpostor.Clear();
             SoulPlayer.Clear();
             Munou.Clear();
-            Munou2nd.Clear();
             SchrodingersCat.Clear();
             Trapper.Clear();
             BomberA.Clear();
@@ -56,14 +54,13 @@ namespace TheOtherRoles
         public static void FixedUpdate(PlayerControl player)
         {
             Role.allRoles.DoIf(x => x.player == player, x => x.FixedUpdate());
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.FixedUpdate());
         }
 
         public static void OnMeetingStart()
         {
-            foreach (var role in Role.allRoles)
-            {
-                role.OnMeetingStart();
-            }
+            Role.allRoles.Do(x => x.OnMeetingStart());
+            Modifier.allModifiers.Do(x => x.OnMeetingStart());
 
             GM.resetZoom();
             Camouflager.resetCamouflage();
@@ -72,10 +69,8 @@ namespace TheOtherRoles
 
         public static void OnMeetingEnd()
         {
-            foreach (var role in Role.allRoles)
-            {
-                role.OnMeetingEnd();
-            }
+            Role.allRoles.Do(x => x.OnMeetingEnd());
+            Modifier.allModifiers.Do(x => x.OnMeetingEnd());
 
             CustomOverlays.hideInfoOverlay();
             CustomOverlays.hideBlackBG();
@@ -88,10 +83,9 @@ namespace TheOtherRoles
             {
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
-                    foreach (var role in Role.allRoles)
-                    {
-                        role.HandleDisconnect(player, reason);
-                    }
+                    Role.allRoles.Do(x => x.HandleDisconnect(player, reason));
+                    Modifier.allModifiers.Do(x => x.HandleDisconnect(player, reason));
+
                     Lovers.HandleDisconnect(player, reason);
                     Shifter.HandleDisconnect(player, reason);
 

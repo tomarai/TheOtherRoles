@@ -26,7 +26,13 @@ namespace TheOtherRoles {
         public static CustomOption impostorRolesCountMax;
 
         public static CustomRoleOption mafiaSpawnRate;
+        public static CustomOption mafiosoCanSabotage;
+        public static CustomOption mafiosoCanRepair;
+        public static CustomOption mafiosoCanVent;
         public static CustomOption janitorCooldown;
+        public static CustomOption janitorCanSabotage;
+        public static CustomOption janitorCanRepair;
+        public static CustomOption janitorCanVent;
 
         public static CustomRoleOption morphlingSpawnRate;
         public static CustomOption morphlingCooldown;
@@ -46,7 +52,8 @@ namespace TheOtherRoles {
         public static CustomOption createdMadmateHasImpostorVision;
         public static CustomOption createdMadmateCanSabotage;
         public static CustomOption createdMadmateCanFixComm;
-        public static CustomOption createdMadmateNoticeImpostors;
+        public static CustomOption createdMadmateAbility;
+        public static CustomOption createdMadmateNumTasks;
         public static CustomOption createdMadmateExileCrewmate;
 
         public static CustomRoleOption vampireSpawnRate;
@@ -129,13 +136,9 @@ namespace TheOtherRoles {
 
         public static CustomRoleOption fortuneTellerSpawnRate;
         public static CustomOption fortuneTellerNumTasks;
-        public static CustomOption fortuneTellerDivineOnDiscussTime;
-        public static CustomOption fortuneTellerResultIsCrewOrNot;
-        public static CustomRoleOption uranaiSpawnRate;
-        public static CustomOption uranaiNumTasks;
-        public static CustomOption uranaiResultIsCrewOrNot;
-        public static CustomOption uranaiDistance;
-        public static CustomOption uranaiDuration;
+        public static CustomOption fortuneTellerResults;
+        public static CustomOption fortuneTellerDistance;
+        public static CustomOption fortuneTellerDuration;
 
         public static CustomRoleOption mayorSpawnRate;
         public static CustomOption mayorNumVotes;
@@ -284,11 +287,11 @@ namespace TheOtherRoles {
         public static CustomOption madmateHasImpostorVision;
         public static CustomOption madmateCanSabotage;
         public static CustomOption madmateCanFixComm;
-        public static CustomOption madmateNoticeImpostors;
-        public static CustomOption madmateCommonTasks;
-        public static CustomOption madmateShortTasks;
-        public static CustomOption madmateLongTasks;
-        public static CustomOption madmateExileCrewmate;
+        public static CustomOption madmateType;
+        public static CustomRoleSelectionOption madmateRole;
+        public static CustomOption madmateAbility;
+        public static CustomTasksOption madmateTasks;
+        public static CustomOption madmateExilePlayer;
 
         public static CustomRoleOption opportunistSpawnRate;
 
@@ -324,6 +327,8 @@ namespace TheOtherRoles {
         public static CustomOption nekoKabochaRevengeImpostor;
         public static CustomOption nekoKabochaRevengeExile;
 
+        public static CustomDualRoleOption watcherSpawnRate;
+
         public static CustomOption hideSettings;
         public static CustomOption restrictDevices;
         public static CustomOption restrictAdmin;
@@ -344,25 +349,21 @@ namespace TheOtherRoles {
         public static CustomRoleOption foxSpawnRate;
         public static CustomOption foxCanFixReactorAndO2;
         public static CustomOption foxCanCreateImmoralist;
+        public static CustomOption foxNumRepair;
         public static CustomOption foxCanFixSabotageWhileStealth;
-
         public static CustomOption foxCrewWinsByTasks;
         public static CustomOption foxImpostorWinsBySabotage;
         public static CustomOption foxStealthCooldown;
         public static CustomOption foxStealthDuration;
-        public static CustomOption foxNumCommonTasks;
-        public static CustomOption foxNumLongTasks;
-        public static CustomOption foxNumShortTasks;
-        public static CustomOption foxImmoralistArrow;
+        public static CustomTasksOption foxTasks;
         public static CustomRoleOption munouSpawnRate;
-        public static CustomRoleOption munou2ndSpawnRate;
-        public static CustomOption munou2ndProbability;
-        public static CustomOption munou2ndNumShufflePlayers;
+        public static CustomOption munouProbability;
+        public static CustomOption munouNumShufflePlayers;
 
         public static CustomOption lastImpostorEnable;
         public static CustomOption lastImpostorNumKills;
         public static CustomOption lastImpostorFunctions;
-        public static CustomOption lastImpostorResultIsCrewOrNot;
+        public static CustomOption lastImpostorResults;
         public static CustomOption lastImpostorNumShots;
 
         public static CustomRoleOption schrodingersCatSpawnRate;
@@ -404,6 +405,7 @@ namespace TheOtherRoles {
         public static CustomOption polusRandomSpawn;
 
 
+
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
         public static string cs(Color c, string s) {
@@ -440,7 +442,13 @@ namespace TheOtherRoles {
 
 
             mafiaSpawnRate = new CustomRoleOption(10, "mafia", Janitor.color, 1);
-            janitorCooldown = CustomOption.Create(11, "janitorCooldown", 30f, 2.5f, 60f, 2.5f, mafiaSpawnRate, format : "unitSeconds");
+            mafiosoCanSabotage = CustomOption.Create(12, "mafiosoCanSabotage", false, mafiaSpawnRate);
+            mafiosoCanRepair = CustomOption.Create(13, "mafiosoCanRepair", false, mafiaSpawnRate);
+            mafiosoCanVent = CustomOption.Create(14, "mafiosoCanVent", false, mafiaSpawnRate);
+            janitorCooldown = CustomOption.Create(11, "janitorCooldown", 30f, 2.5f, 60f, 2.5f, mafiaSpawnRate, format: "unitSeconds");
+            janitorCanSabotage = CustomOption.Create(15, "janitorCanSabotage", false, mafiaSpawnRate);
+            janitorCanRepair = CustomOption.Create(16, "janitorCanRepair", false, mafiaSpawnRate);
+            janitorCanVent = CustomOption.Create(17, "janitorCanVent", false, mafiaSpawnRate);
 
             morphlingSpawnRate = new CustomRoleOption(20, "morphling", Morphling.color, 1);
             morphlingCooldown = CustomOption.Create(21, "morphlingCooldown", 30f, 2.5f, 60f, 2.5f, morphlingSpawnRate, format: "unitSeconds");
@@ -453,15 +461,16 @@ namespace TheOtherRoles {
 
             evilHackerSpawnRate = new CustomRoleOption(1900, "evilHacker", EvilHacker.color, 1);
             evilHackerCanCreateMadmate = CustomOption.Create(1901, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
-            evilHackerCanCreateMadmateFromFox = CustomOption.Create(1907, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
-            evilHackerCanCreateMadmateFromJackal = CustomOption.Create(1908, "evilHackerCanCreateMadmateFromJackal", false, evilHackerCanCreateMadmate);
             createdMadmateCanDieToSheriff = CustomOption.Create(1902, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
             createdMadmateCanEnterVents = CustomOption.Create(1903, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
-            createdMadmateHasImpostorVision = CustomOption.Create(1904, "createdMadmateHasImpostorVision", false, evilHackerCanCreateMadmate);
-            createdMadmateCanSabotage = CustomOption.Create(1364, "createdMadmateCanSabotage", false, evilHackerCanCreateMadmate);
-            createdMadmateCanFixComm = CustomOption.Create(1365, "createdMadmateCanFixComm", true, evilHackerCanCreateMadmate);
-            createdMadmateNoticeImpostors = CustomOption.Create(1905, "createdMadmateNoticeImpostors", false, evilHackerCanCreateMadmate);
-            createdMadmateExileCrewmate = CustomOption.Create(1906, "createdMadmateExileCrewmate", false, evilHackerCanCreateMadmate);
+            evilHackerCanCreateMadmateFromFox = CustomOption.Create(1904, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
+            evilHackerCanCreateMadmateFromJackal = CustomOption.Create(1905, "evilHackerCanCreateMadmateFromJackal", false, evilHackerCanCreateMadmate);
+            createdMadmateHasImpostorVision = CustomOption.Create(1906, "createdMadmateHasImpostorVision", false, evilHackerCanCreateMadmate);
+            createdMadmateCanSabotage = CustomOption.Create(1907, "createdMadmateCanSabotage", false, evilHackerCanCreateMadmate);
+            createdMadmateCanFixComm = CustomOption.Create(1908, "createdMadmateCanFixComm", true, evilHackerCanCreateMadmate);
+            createdMadmateAbility = CustomOption.Create(1909, "madmateAbility", new string[] { "madmateNone", "madmateFanatic" }, evilHackerCanCreateMadmate);
+            createdMadmateNumTasks = CustomOption.Create(1910, "createdMadmateNumTasks", 4f, 1f, 20f, 1f, createdMadmateAbility);
+            createdMadmateExileCrewmate = CustomOption.Create(1911, "createdMadmateExileCrewmate", false, evilHackerCanCreateMadmate);
 
             vampireSpawnRate = new CustomRoleOption(40, "vampire", Vampire.color, 1);
             vampireKillDelay = CustomOption.Create(41, "vampireKillDelay", 10f, 1f, 20f, 1f, vampireSpawnRate, format: "unitSeconds");
@@ -515,15 +524,15 @@ namespace TheOtherRoles {
             serialKillerSuicideTimer = CustomOption.Create(1013, "serialKillerSuicideTimer", 40f, 2.5f, 60f, 2.5f, serialKillerSpawnRate, format: "unitSeconds");
             serialKillerResetTimer = CustomOption.Create(1014, "serialKillerResetTimer", true, serialKillerSpawnRate);
 
-            trapperSpawnRate = new CustomRoleOption(1040, "trapper", Trapper.color, 1);
-            trapperExtensionTime = CustomOption.Create(1041, "trapperExtensionTime", 5f, 2f, 10f, 0.5f, trapperSpawnRate);
-            trapperCooldown = CustomOption.Create(1042, "trapperCooldown", 10f, 2.5f, 60f, 2.5f, trapperSpawnRate);
-            trapperKillTimer = CustomOption.Create(1043, "trapperKillTimer", 5f, 1f, 30f, 1f, trapperSpawnRate);
-            trapperTrapRange = CustomOption.Create(1044, "trapperTrapRange", 1f, 0f, 5f, 0.1f, trapperSpawnRate);
-            trapperMinDistance = CustomOption.Create(1045, "trapperMinDistance", 0f, 0f, 10f, 0.1f, trapperSpawnRate);
-            trapperMaxDistance = CustomOption.Create(1046, "trapperMaxDistance", 10f, 1f, 50f, 1f, trapperSpawnRate);
-            trapperPenaltyTime = CustomOption.Create(1047, "trapperPenaltyTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
-            trapperBonusTime = CustomOption.Create(1048, "trapperBonusTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
+            trapperSpawnRate = new CustomRoleOption(1070, "trapper", Trapper.color, 1);
+            trapperExtensionTime = CustomOption.Create(1071, "trapperExtensionTime", 5f, 2f, 10f, 0.5f, trapperSpawnRate);
+            trapperCooldown = CustomOption.Create(1072, "trapperCooldown", 10f, 2.5f, 60f, 2.5f, trapperSpawnRate);
+            trapperKillTimer = CustomOption.Create(1073, "trapperKillTimer", 5f, 1f, 30f, 1f, trapperSpawnRate);
+            trapperTrapRange = CustomOption.Create(1074, "trapperTrapRange", 1f, 0f, 5f, 0.1f, trapperSpawnRate);
+            trapperMinDistance = CustomOption.Create(1075, "trapperMinDistance", 0f, 0f, 10f, 0.1f, trapperSpawnRate);
+            trapperMaxDistance = CustomOption.Create(1076, "trapperMaxDistance", 10f, 1f, 50f, 1f, trapperSpawnRate);
+            trapperPenaltyTime = CustomOption.Create(1077, "trapperPenaltyTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
+            trapperBonusTime = CustomOption.Create(1078, "trapperBonusTime", 10f, 0f, 50f, 1f, trapperSpawnRate);
 
             bomberSpawnRate = new CustomRoleOption(1030, "bomber", BomberA.color, 1);
             bomberCooldown = CustomOption.Create(1031, "bomberCooldown", 20f, 2f, 60f, 1f, bomberSpawnRate);
@@ -547,16 +556,16 @@ namespace TheOtherRoles {
 
 
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
+            //madmateType = CustomOption.Create(366, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
+            //madmateRole = new CustomRoleSelectionOption(369, "madmateRole", Madmate.validRoles, madmateType);
+            madmateAbility = CustomOption.Create(367, "madmateAbility", new string[] { "madmateNone", "madmateFanatic" }, madmateSpawnRate);
+            madmateTasks = new CustomTasksOption(368, 1, 1, 3, madmateAbility);
             madmateCanDieToSheriff = CustomOption.Create(361, "madmateCanDieToSheriff", false, madmateSpawnRate);
             madmateCanEnterVents = CustomOption.Create(362, "madmateCanEnterVents", false, madmateSpawnRate);
             madmateHasImpostorVision = CustomOption.Create(363, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(364, "madmateCanSabotage", false, madmateSpawnRate);
             madmateCanFixComm = CustomOption.Create(365, "madmateCanFixComm", true, madmateSpawnRate);
-            madmateNoticeImpostors = CustomOption.Create(1914, "madmateNoticeImpostors", false, madmateSpawnRate);
-            madmateCommonTasks = CustomOption.Create(1915, "madmateCommonTasks", 0f, 0f, 4f, 1f, madmateNoticeImpostors);
-            madmateShortTasks = CustomOption.Create(1916, "madmateShortTasks", 0f, 0f, 23f, 1f, madmateNoticeImpostors);
-            madmateLongTasks = CustomOption.Create(1917, "madmateLongTasks", 0f, 0f, 15f, 1f, madmateNoticeImpostors);
-            madmateExileCrewmate = CustomOption.Create(1918, "madmateExileCrewmate", false, madmateSpawnRate);
+            madmateExilePlayer = CustomOption.Create(366, "createdMadmateExileCrewmate", false, madmateSpawnRate);
 
             miniSpawnRate = new CustomRoleOption(180, "mini", Mini.color, 1);
             miniIsImpRate = CustomOption.Create(182, "miniIsImpRate", rates, miniSpawnRate);
@@ -644,18 +653,26 @@ namespace TheOtherRoles {
             plagueDoctorWinDead = CustomOption.Create(908, "plagueDoctorWinDead", true, plagueDoctorSpawnRate);
 
 
+            watcherSpawnRate = new CustomDualRoleOption(1040, "watcher", Watcher.color, RoleType.Watcher, 15, roleEnabled: false);
+
+
             foxSpawnRate = new CustomRoleOption(910, "fox", Fox.color, 1);
             foxCanFixReactorAndO2 = CustomOption.Create(911, "foxCanFixReactorAndO2", false, foxSpawnRate);
-            foxCrewWinsByTasks= CustomOption.Create(912, "foxCrewWinsByTasks", true, foxSpawnRate);
-            foxImpostorWinsBySabotage= CustomOption.Create(913, "foxImpostorWinsBySabotage", true, foxSpawnRate);
-            foxNumCommonTasks = CustomOption.Create(914, "foxNumCommonTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxNumLongTasks = CustomOption.Create(915, "foxNumLongTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxNumShortTasks = CustomOption.Create(916, "foxNumShortTasks", 2f, 0f, 4f, 1f, foxSpawnRate);
-            foxStealthCooldown = CustomOption.Create(917, "foxStealthCooldown", 15f, 1f, 30f, 1f, foxSpawnRate);
-            foxStealthDuration = CustomOption.Create(918, "foxStealthDuration", 15f, 1f, 30f, 1f, foxSpawnRate);
-            foxCanFixSabotageWhileStealth  = CustomOption.Create(919, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
-            foxCanCreateImmoralist = CustomOption.Create(920, "foxCanCreateImmoralist", true, foxSpawnRate);
-            foxImmoralistArrow = CustomOption.Create(921, "foxImmoralistArrow", true, foxSpawnRate);
+            foxCrewWinsByTasks = CustomOption.Create(912, "foxCrewWinsByTasks", true, foxSpawnRate);
+            foxImpostorWinsBySabotage = CustomOption.Create(919, "foxImpostorWinsBySabotage", true, foxSpawnRate);
+            foxTasks = new CustomTasksOption(913, 1, 1, 3, foxSpawnRate);
+            foxStealthCooldown = CustomOption.Create(916, "foxStealthCooldown", 15f, 1f, 30f, 1f, foxSpawnRate, format: "unitSeconds");
+            foxStealthDuration = CustomOption.Create(917, "foxStealthDuration", 15f, 1f, 30f, 1f, foxSpawnRate, format: "unitSeconds");
+            foxCanCreateImmoralist = CustomOption.Create(918, "foxCanCreateImmoralist", true, foxSpawnRate);
+            foxNumRepair = CustomOption.Create(920, "foxNumRepair", 0f, 0f, 5f, 1f, foxSpawnRate, format: "unitTimes");
+            foxCanFixSabotageWhileStealth  = CustomOption.Create(921, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
+
+
+            fortuneTellerSpawnRate = new CustomRoleOption(940, "fortuneTeller", FortuneTeller.color, 15);
+            fortuneTellerNumTasks = CustomOption.Create(941, "fortuneTellerNumTasks", 4f, 0f, 25f, 1f, fortuneTellerSpawnRate);
+            fortuneTellerResults = CustomOption.Create(942, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, fortuneTellerSpawnRate);
+            fortuneTellerDuration = CustomOption.Create(943, "fortuneTellerDuration ", 20f, 1f, 50f, 0.5f, fortuneTellerSpawnRate, format: "unitSeconds");
+            fortuneTellerDistance = CustomOption.Create(944, "fortuneTellerDistance ", 2.5f, 1f, 10f, 0.5f, fortuneTellerSpawnRate, format: "unitMeters");
 
             schrodingersCatSpawnRate = new CustomRoleOption(970, "schrodingersCat", SchrodingersCat.color, 1);
             schrodingersCatKillCooldown = CustomOption.Create(971, "schrodingersCatKillCooldown", 20f, 1f, 60f, 0.5f, schrodingersCatSpawnRate);
@@ -671,22 +688,9 @@ namespace TheOtherRoles {
             puppeteerPenaltyOnDeath= CustomOption.Create(1064, "puppeteerPenaltyOnDeath", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
             puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, "puppeteerLosesSenriganOnDeath", true,puppeteerCanControlDummyEvenIfDead);
             
-
-            munouSpawnRate = new CustomRoleOption(950, "incompetent", Munou.color, 1);
-            munou2ndSpawnRate = new CustomRoleOption(960, "incompetent2nd", Munou2nd.color, 15);
-            munou2ndProbability = CustomOption.Create(961, "incompetent2ndProbability", 60f, 0f, 100f, 10f, munou2ndSpawnRate);
-            munou2ndNumShufflePlayers = CustomOption.Create(962, "incompetent2ndNumShufflePlayers", 4f, 2f, 15f, 1f, munou2ndSpawnRate);
-
-            fortuneTellerSpawnRate = new CustomRoleOption(930, "占い師", FortuneTeller.color, 1);
-            fortuneTellerNumTasks = CustomOption.Create(931, "占いに必要なタスク数", 4f, 1f, 10f, 1f, fortuneTellerSpawnRate);
-            fortuneTellerDivineOnDiscussTime = CustomOption.Create(932, "議論時間のみ占うことができる", true, fortuneTellerSpawnRate);
-            fortuneTellerResultIsCrewOrNot = CustomOption.Create(933, "占い結果が白黒のみ ", true, fortuneTellerSpawnRate);
-
-            uranaiSpawnRate = new CustomRoleOption(940, "fortuneTeller2nd", Uranai.color, 1);
-            uranaiNumTasks = CustomOption.Create(941, "fortuneTeller2ndNumTasks", 4f, 1f, 10f, 1f, uranaiSpawnRate);
-            uranaiResultIsCrewOrNot = CustomOption.Create(942, "fortuneTeller2ndResultIsCrewOrNot", true, uranaiSpawnRate);
-            uranaiDuration = CustomOption.Create(943, "fortuneTeller2ndDuration", 20f, 1f, 50f, 0.5f, uranaiSpawnRate);
-            uranaiDistance = CustomOption.Create(944, "fortuneTeller2ndDistance", 2.5f, 1f, 10f, 0.5f, uranaiSpawnRate, format: "unitMeters");
+            munouSpawnRate = new CustomRoleOption(960, "incompetent", Munou.color, 15);
+            munouProbability = CustomOption.Create(961, "incompetentProbability", 60f, 0f, 100f, 10f, munouSpawnRate);
+            munouNumShufflePlayers = CustomOption.Create(962, "incompetentNumShufflePlayers", 4f, 2f, 15f, 1f, munouSpawnRate);
 
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(81, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
@@ -741,7 +745,7 @@ namespace TheOtherRoles {
             hackerNoMove = CustomOption.Create(176, "hackerNoMove", true, hackerSpawnRate);
 
             trackerSpawnRate = new CustomRoleOption(200, "tracker", Tracker.color, 1);
-            trackerUpdateIntervall = CustomOption.Create(201, "trackerUpdateIntervall", 5f, 2.5f, 30f, 2.5f, trackerSpawnRate, format: "unitSeconds");
+            trackerUpdateIntervall = CustomOption.Create(201, "Tracker Update Intervall", 5f, 1f, 30f, 1f, trackerSpawnRate);
             trackerResetTargetAfterMeeting = CustomOption.Create(202, "trackerResetTargetAfterMeeting", false, trackerSpawnRate);
             trackerCanTrackCorpses = CustomOption.Create(203, "trackerTrackCorpses", true, trackerSpawnRate);
             trackerCorpsesTrackingCooldown = CustomOption.Create(204, "trackerCorpseCooldown", 30f, 0f, 120f, 5f, trackerCanTrackCorpses, format: "unitSeconds");
@@ -783,7 +787,7 @@ namespace TheOtherRoles {
             lastImpostorEnable = CustomOption.Create(9900, "lastImpostorEnable", true, specialOptions, true);
             lastImpostorFunctions = CustomOption.Create(9901, "lastImpostorFunctions", new string[]{ModTranslation.getString("lastImpostorDivine"), ModTranslation.getString("lastImpostorGuesser")}, lastImpostorEnable);
             lastImpostorNumKills = CustomOption.Create(9902, "lastImpostorNumKills", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
-            lastImpostorResultIsCrewOrNot = CustomOption.Create(9903, "lastImpostorResultIsCrewOrNot", true, lastImpostorEnable);
+            lastImpostorResults = CustomOption.Create(9903, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, lastImpostorEnable);
             lastImpostorNumShots = CustomOption.Create(9904, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
 
             additionalVents = CustomOption.Create(9905, "additionalVents", false, specialOptions, true);

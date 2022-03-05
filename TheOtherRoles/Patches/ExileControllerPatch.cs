@@ -30,9 +30,9 @@ namespace TheOtherRoles.Patches {
             if (AmongUsClient.Instance.AmHost
                 && exiled != null
                 && ((CreatedMadmate.exileCrewmate
-                && exiled.Object.isRole(RoleType.CreatedMadmate))
+                && exiled.Object.hasModifier(ModifierType.CreatedMadmate))
                 || (Madmate.exileCrewmate
-                && exiled.Object.isRole(RoleType.Madmate)))) {
+                && exiled.Object.hasModifier(ModifierType.Madmate)))) {
                 // pick random crewmate
                 PlayerControl target = pickRandomCrewmate(exiled.PlayerId);
                 if (target != null) {

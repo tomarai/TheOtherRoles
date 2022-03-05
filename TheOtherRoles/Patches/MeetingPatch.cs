@@ -190,7 +190,7 @@ namespace TheOtherRoles.Patches {
         class MeetingHudBloopAVoteIconPatch {
             public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)]GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)]int index, [HarmonyArgument(2)]Transform parent) {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
-                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes))
+                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.isRole(RoleType.Watcher))
                     PlayerControl.SetPlayerMaterialColors(voterPlayer.DefaultOutfit.ColorId, spriteRenderer);
                 else
                     PlayerControl.SetPlayerMaterialColors(Palette.DisabledGrey, spriteRenderer);
@@ -428,12 +428,11 @@ namespace TheOtherRoles.Patches {
                 }
                 
                 if (roleInfo == null || 
-                    roleInfo.roleId == RoleType.Lovers || 
-                    roleInfo.roleId == guesserRole || 
+                    roleInfo.roleType == RoleType.Lovers || 
+                    roleInfo.roleType == guesserRole || 
                     roleInfo == RoleInfo.niceMini || 
-					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleId == RoleType.Spy) ||
+					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleType == RoleType.Spy) ||
                     roleInfo == RoleInfo.gm ||
-                    roleInfo == RoleInfo.createdMadmate && RoleInfo.madmate.enabled||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings) ||
                     roleInfo == RoleInfo.bomberB ||
                     roleInfo == RoleInfo.lastImpostor)
@@ -441,7 +440,7 @@ namespace TheOtherRoles.Patches {
 				if (Guesser.guesserCantGuessSnitch && Snitch.snitch != null) {
                     var (playerCompleted, playerTotal) = TasksHandler.taskInfo(Snitch.snitch.Data);
                     int numberOfLeftTasks = playerTotal - playerCompleted;
-                    if (numberOfLeftTasks <= 0 && roleInfo.roleId == RoleType.Snitch) continue;
+                    if (numberOfLeftTasks <= 0 && roleInfo.roleType == RoleType.Snitch) continue;
                 }
                 Transform buttonParent = (new GameObject()).transform;
                 buttonParent.SetParent(container);
@@ -489,10 +488,6 @@ namespace TheOtherRoles.Patches {
                         {
                             dyingTarget = focusedTarget;
                         }
-                        else if(roleInfo == RoleInfo.madmate && mainRoleInfo == RoleInfo.createdMadmate)
-                        {
-                            dyingTarget = focusedTarget;
-                        }
                         else if(roleInfo == RoleInfo.bomberA && mainRoleInfo == RoleInfo.bomberB)
                         {
                             dyingTarget = focusedTarget;
@@ -520,9 +515,9 @@ namespace TheOtherRoles.Patches {
                         writer.Write(PlayerControl.LocalPlayer.PlayerId);
                         writer.Write(dyingTarget.PlayerId);
                         writer.Write(focusedTarget.PlayerId);
-                        writer.Write((byte)roleInfo.roleId);
+                        writer.Write((byte)roleInfo.roleType);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.guesserShoot(PlayerControl.LocalPlayer.PlayerId, dyingTarget.PlayerId, focusedTarget.PlayerId, (byte)roleInfo.roleId);
+                        RPCProcedure.guesserShoot(PlayerControl.LocalPlayer.PlayerId, dyingTarget.PlayerId, focusedTarget.PlayerId, (byte)roleInfo.roleType);
                     }
                 }));
 

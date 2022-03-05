@@ -19,6 +19,83 @@ using System.Reflection;
 
 namespace TheOtherRoles
 {
+    public enum RoleType
+    {
+        Crewmate = 0,
+        Shifter,
+        Mayor,
+        Engineer,
+        Sheriff,
+        Lighter,
+        Detective,
+        TimeMaster,
+        Medic,
+        Swapper,
+        Seer,
+        Hacker,
+        Tracker,
+        Snitch,
+        Spy,
+        SecurityGuard,
+        Bait,
+        Medium,
+        FortuneTeller,
+
+
+        Impostor = 100,
+        Godfather,
+        Mafioso,
+        Janitor,
+        Morphling,
+        Camouflager,
+        Vampire,
+        Eraser,
+        Trickster,
+        Cleaner,
+        Warlock,
+        BountyHunter,
+        Witch,
+        Ninja,
+        NekoKabocha,
+        Madmate,
+        SerialKiller,
+
+
+        Mini = 150,
+        Lovers,
+        EvilGuesser,
+        NiceGuesser,
+        Jester,
+        Arsonist,
+        Jackal,
+        Sidekick,
+        Opportunist,
+        Vulture,
+        Lawyer,
+        Pursuer,
+        PlagueDoctor,
+        Watcher,
+        Fox,
+        Immoralist,
+        Munou,
+        SchrodingersCat,
+        Puppeteer,
+        Trapper,
+        LastImpostor,
+        BomberA,
+        BomberB,
+        EvilTracker,
+        EvilHacker,
+
+
+
+        GM = 200,
+
+
+        // don't put anything below this
+        NoRole = int.MaxValue
+    }
+
     [HarmonyPatch]
     public static class RoleData
     {
@@ -27,11 +104,8 @@ namespace TheOtherRoles
             // Crew
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
-            { RoleType.Madmate, typeof(RoleBase<Madmate>) },
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>)},
-            { RoleType.Uranai, typeof(RoleBase<Uranai>)},
             { RoleType.Munou, typeof(RoleBase<Munou>)},
-            { RoleType.Munou2nd, typeof(RoleBase<Munou2nd>)},
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -51,6 +125,8 @@ namespace TheOtherRoles
             { RoleType.SchrodingersCat, typeof(RoleBase<SchrodingersCat>)},
             { RoleType.Puppeteer, typeof(RoleBase<Puppeteer>)},
 
+            // Other
+            { RoleType.Watcher, typeof(RoleBase<Watcher>) },
         };
     }
 
@@ -121,7 +197,7 @@ namespace TheOtherRoles
 
         public static bool exists
         {
-            get { return players.Count > 0; }
+            get { return Helpers.RolesEnabled && players.Count > 0; }
         }
 
         public static T getRole(PlayerControl player = null)
@@ -253,8 +329,6 @@ namespace TheOtherRoles
                     return Lawyer.lawyer == player;
                 case RoleType.Pursuer:
                     return Pursuer.pursuer == player;
-                case RoleType.CreatedMadmate:
-                    return CreatedMadmate.madmate == player;
                 default:
                     TheOtherRolesPlugin.Logger.LogError($"isRole: no method found for role type {role}");
                     return false;
@@ -391,9 +465,6 @@ namespace TheOtherRoles
                 case RoleType.Pursuer:
                     Pursuer.pursuer = player;
                     break;
-                case RoleType.CreatedMadmate:
-                    CreatedMadmate.madmate = player;
-                    break;
                 default:
                     TheOtherRolesPlugin.Logger.LogError($"setRole: no method found for role type {role}");
                     return;
@@ -440,7 +511,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.SecurityGuard)) SecurityGuard.clearAndReload();
             if (player.isRole(RoleType.Bait)) Bait.clearAndReload();
             if (player.isRole(RoleType.Medium)) Medium.clearAndReload();
-            if (player.isRole(RoleType.CreatedMadmate)) CreatedMadmate.clearAndReload();
 
             // Impostor roles
             if (player.isRole(RoleType.Morphling)) Morphling.clearAndReload();
@@ -480,26 +550,68 @@ namespace TheOtherRoles
             }
         }
 
-        public static void OnKill(this PlayerControl player, PlayerControl target)
+        public static void swapRoles(this PlayerControl player, PlayerControl target)
         {
-            foreach (var r in Role.allRoles)
+            foreach (var t in RoleData.allRoleTypes)
             {
-                if (r.player == player)
+                if (player.isRole(t.Key))
                 {
-                    r.OnKill(target);
+                    t.Value.GetMethod("swapRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player, target });
                 }
             }
+
+            if (player.isRole(RoleType.Mayor)) Mayor.mayor = target;
+            if (player.isRole(RoleType.Engineer)) Engineer.engineer = target;
+            if (player.isRole(RoleType.Detective)) Detective.detective = target;
+            if (player.isRole(RoleType.TimeMaster)) TimeMaster.timeMaster = target;
+            if (player.isRole(RoleType.Medic)) Medic.medic = target;
+            if (player.isRole(RoleType.Swapper)) Swapper.swapper = target;
+            if (player.isRole(RoleType.Seer)) Seer.seer = target;
+            if (player.isRole(RoleType.Hacker)) Hacker.hacker = target;
+            if (player.isRole(RoleType.Tracker)) Tracker.tracker = target;
+            if (player.isRole(RoleType.Snitch)) Snitch.snitch = target;
+            if (player.isRole(RoleType.Spy)) Spy.spy = target;
+            if (player.isRole(RoleType.SecurityGuard)) SecurityGuard.securityGuard = target;
+            if (player.isRole(RoleType.Bait))
+            {
+                Bait.bait = target;
+                if (Bait.bait.Data.IsDead) Bait.reported = true;
+            }
+            if (player.isRole(RoleType.Medium)) Medium.medium = target;
+            if (player.isRole(RoleType.Godfather)) Godfather.godfather = target;
+            if (player.isRole(RoleType.Mafioso)) Mafioso.mafioso = target;
+            if (player.isRole(RoleType.Janitor)) Janitor.janitor = target;
+            if (player.isRole(RoleType.Morphling)) Morphling.morphling = target;
+            if (player.isRole(RoleType.Camouflager)) Camouflager.camouflager = target;
+            if (player.isRole(RoleType.Vampire)) Vampire.vampire = target;
+            if (player.isRole(RoleType.Eraser)) Eraser.eraser = target;
+            if (player.isRole(RoleType.Trickster)) Trickster.trickster = target;
+            if (player.isRole(RoleType.Cleaner)) Cleaner.cleaner = target;
+            if (player.isRole(RoleType.Warlock)) Warlock.warlock = target;
+            if (player.isRole(RoleType.BountyHunter)) BountyHunter.bountyHunter = target;
+            if (player.isRole(RoleType.Witch)) Witch.witch = target;
+            if (player.isRole(RoleType.Mini)) Mini.mini = target;
+            if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;
+            if (player.isRole(RoleType.NiceGuesser)) Guesser.niceGuesser = target;
+            if (player.isRole(RoleType.Jester)) Jester.jester = target;
+            if (player.isRole(RoleType.Arsonist)) Arsonist.arsonist = target;
+            if (player.isRole(RoleType.Jackal)) Jackal.jackal = target;
+            if (player.isRole(RoleType.Sidekick)) Sidekick.sidekick = target;
+            if (player.isRole(RoleType.Vulture)) Vulture.vulture = target;
+            if (player.isRole(RoleType.Lawyer)) Lawyer.lawyer = target;
+            if (player.isRole(RoleType.Pursuer)) Pursuer.pursuer = target;
+        }
+
+        public static void OnKill(this PlayerControl player, PlayerControl target)
+        {
+            Role.allRoles.DoIf(x => x.player == player, x => x.OnKill(target));
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnKill(target));
         }
 
         public static void OnDeath(this PlayerControl player, PlayerControl killer)
         {
-            foreach (var r in Role.allRoles)
-            {
-                if (r.player == player)
-                {
-                    r.OnDeath(killer);
-                }
-            }
+            Role.allRoles.DoIf(x => x.player == player, x => x.OnDeath(killer));
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnDeath(killer));
 
             // Lover suicide trigger on exile/death
             if (player.isLovers())

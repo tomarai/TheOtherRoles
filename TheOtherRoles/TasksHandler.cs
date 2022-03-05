@@ -39,8 +39,6 @@ namespace TheOtherRoles {
                 playerInfo.Role && playerInfo.Role.TasksCountTowardProgress &&
                 !(playerInfo.Object.isGM() && !GM.hasTasks) &&
                 !(playerInfo.Object.isLovers() && !Lovers.hasTasks) &&
-                ((!playerInfo.Object.isRole(RoleType.Madmate) && playerInfo.Object != CreatedMadmate.madmate) || 
-                (madmateCount && (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) || PlayerControl.LocalPlayer == CreatedMadmate.madmate))) &&
                 !playerInfo.Object.hasFakeTasks()
                 ) {
 
@@ -62,10 +60,13 @@ namespace TheOtherRoles {
                 for (int i = 0; i < __instance.AllPlayers.Count; i++) {
                     GameData.PlayerInfo playerInfo = __instance.AllPlayers[i];
                     if (playerInfo.Object &&
-                        ((playerInfo.Object?.isLovers() == true && !Lovers.hasTasks) ||
+                        ((playerInfo.Object?.isLovers() == true && !Lovers.tasksCount) ||
                          (playerInfo.PlayerId == Shifter.shifter?.PlayerId && Shifter.isNeutral) || // Neutral shifter has tasks, but they don't count
                           playerInfo.PlayerId == Lawyer.lawyer?.PlayerId || // Tasks of the Lawyer do not count
-                         (playerInfo.PlayerId == Pursuer.pursuer?.PlayerId && Pursuer.pursuer.Data.IsDead) // Tasks of the Pursuer only count, if he's alive
+                         (playerInfo.PlayerId == Pursuer.pursuer?.PlayerId && Pursuer.pursuer.Data.IsDead) || // Tasks of the Pursuer only count, if he's alive
+                          playerInfo.Object?.isRole(RoleType.Fox) == true ||
+                         (Madmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.Madmate) == true) ||
+                         (CreatedMadmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.CreatedMadmate) == true) 
                         )
                     )
                         continue;

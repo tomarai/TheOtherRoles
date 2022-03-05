@@ -521,8 +521,13 @@ namespace TheOtherRoles.Patches
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
-                if (p != PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.isAlive() && !p.isGM() && !PlayerControl.LocalPlayer.isGM()) continue;
-                if ((Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target) || p == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead)
+                var canSeeInfo =
+                    p == PlayerControl.LocalPlayer ||
+                    PlayerControl.LocalPlayer.isDead() ||
+                    p.isGM() || PlayerControl.LocalPlayer.isGM() ||
+                    (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target);
+
+                if (canSeeInfo)
                 {
                     Transform playerInfoTransform = p.nameText.transform.parent.FindChild("Info");
                     TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
@@ -771,14 +776,20 @@ namespace TheOtherRoles.Patches
                 DeadPlayer deadPlayer = deadPlayers?.Where(x => x.player?.PlayerId == Bait.bait.PlayerId)?.FirstOrDefault();
                 if (deadPlayer.killerIfExisting != null && Bait.reportDelay <= 0f)
                 {
-
                     Helpers.handleVampireBiteOnBodyReport(); // Manually call Vampire handling, since the CmdReportDeadBody Prefix won't be called
-                    RPCProcedure.uncheckedCmdReportDeadBody(deadPlayer.killerIfExisting.PlayerId, Bait.bait.PlayerId);
+
+                    byte reporter = deadPlayer.killerIfExisting.PlayerId;
+                    if (Bait.bait.hasModifier(ModifierType.Madmate))
+                    {
+                        var candidates = PlayerControl.AllPlayerControls.ToArray().Where(x => x.isAlive() && !x.isImpostor() && !x.isDummy).ToList();
+                        reporter = candidates.Count > 0 ? (byte)rnd.Next(0, candidates.Count) : deadPlayer.killerIfExisting.PlayerId;
+                    }
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedCmdReportDeadBody, Hazel.SendOption.Reliable, -1);
-                    writer.Write(deadPlayer.killerIfExisting.PlayerId);
+                    writer.Write(reporter);
                     writer.Write(Bait.bait.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.uncheckedCmdReportDeadBody(reporter, Bait.bait.PlayerId);
                     Bait.reported = true;
                 }
             }

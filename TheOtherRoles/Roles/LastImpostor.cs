@@ -15,6 +15,12 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public class LastImpostor : RoleBase<LastImpostor>
     {
+        public enum DivineResults
+        {
+            BlackWhite,
+            Team,
+            Role,
+        }
         public static Color color = Palette.ImpostorRed;
         public static bool isEnable {get {return CustomOptionHolder.lastImpostorEnable.getBool();}}
         public static int killCounter = 0;
@@ -22,7 +28,7 @@ namespace TheOtherRoles
         public static int numUsed = 0;
         public static int remainingShots = 0;
         public static int selectedFunction {get {return CustomOptionHolder.lastImpostorFunctions.getSelection();}}
-        public static bool resultIsCrewOrNot {get {return CustomOptionHolder.lastImpostorResultIsCrewOrNot.getBool();}}
+        public static DivineResults divineResult {get {return (DivineResults)CustomOptionHolder.lastImpostorResults.getSelection();}}
 
         public LastImpostor()
         {
@@ -217,9 +223,66 @@ namespace TheOtherRoles
         }
         public static void divine(PlayerControl p)
         {
-            Uranai.divine(p, resultIsCrewOrNot);
+            // FortuneTeller.divine(p, resultIsCrewOrNot);
+            string msgBase = "";
+            string msgInfo = "";
+            Color color = Color.white;
+
+            if (divineResult == DivineResults.BlackWhite) {
+                if (p.isCrew())
+                {
+                    msgBase = "divineMessageIsCrew";
+                    color = Color.white;
+                }
+                else
+                {
+                    msgBase = "divineMessageIsntCrew";
+                    color = Palette.ImpostorRed;
+                }
+            }
+
+            else if (divineResult == DivineResults.Team) {
+                msgBase = "divineMessageTeam";
+                if (p.isCrew())
+                {
+                    msgInfo = ModTranslation.getString("divineCrew");
+                    color = Color.white;
+                }
+                else if (p.isNeutral())
+                {
+                    msgInfo = ModTranslation.getString("divineNeutral");
+                    color = Color.yellow;
+                }
+                else
+                {
+                    msgInfo = ModTranslation.getString("divineImpostor");
+                    color = Palette.ImpostorRed;
+                }
+            }
+
+            else if (divineResult == DivineResults.Role) { 
+                msgBase = "divineMessageRole";
+                msgInfo = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
+            }
+
+            string msg = string.Format(ModTranslation.getString(msgBase), p.name, msgInfo);
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                FortuneTeller.fortuneTellerMessage(msg, 5f, color);
+            }
+
+            if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(DestroyableSingleton<HudManager>.Instance.TaskCompleteSound, false, 0.8f);
+            numUsed += 1;
+
+            // 占いを実行したことで発火される処理を他クライアントに通知
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.FortuneTellerUsedDivine, Hazel.SendOption.Reliable, -1);
+            writer.Write(PlayerControl.LocalPlayer.PlayerId);
+            writer.Write(p.PlayerId);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.fortuneTellerUsedDivine(PlayerControl.LocalPlayer.PlayerId, p.PlayerId);
             numUsed += 1;
         }
+
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
         class IntroCutsceneOnDestroyPatch
         {

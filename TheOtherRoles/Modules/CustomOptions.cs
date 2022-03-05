@@ -34,7 +34,7 @@ namespace TheOtherRoles
         {
             get
             {
-                return this.getBool();
+                return Helpers.RolesEnabled && this.getBool();
             }
         }
 
@@ -45,6 +45,11 @@ namespace TheOtherRoles
         }
 
         public CustomOption(int id, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
+        {
+            Init(id, name, selections, defaultValue, parent, isHeader, isHidden, format);
+        }
+
+        public void Init(int id, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
         {
             this.id = id;
             this.name = name;
@@ -180,15 +185,25 @@ namespace TheOtherRoles
         }
     }
 
+
     public class CustomRoleOption : CustomOption
     {
         public CustomOption countOption = null;
+        public bool roleEnabled = true;
+
+        public override bool enabled
+        {
+            get
+            {
+                return Helpers.RolesEnabled && roleEnabled && this.getBool();
+            }
+        }
 
         public int rate
         {
             get
             {
-                return getSelection();
+                return enabled ? getSelection() : 0;
             }
         }
 
@@ -196,6 +211,9 @@ namespace TheOtherRoles
         {
             get
             {
+                if (!enabled)
+                    return 0;
+
                 if (countOption != null)
                     return Mathf.RoundToInt(countOption.getFloat());
 
@@ -211,11 +229,19 @@ namespace TheOtherRoles
             }
         }
 
-        public CustomRoleOption(int id, string name, Color color, int max = 15) :
+        public CustomRoleOption(int id, string name, Color color, int max = 15, bool roleEnabled = true) :
             base(id, Helpers.cs(color, name), CustomOptionHolder.rates, "", null, true, false, "")
         {
+            this.roleEnabled = roleEnabled;
+
+            if (max <= 0 || !roleEnabled)
+            {
+                isHidden = true;
+                this.roleEnabled = false;
+            }
+
             if (max > 1)
-                countOption = CustomOption.Create(id + 10000, "roleNumAssigned", 1f, 1f, 15f, 1f, this, format: "unitPlayers");
+                countOption = Create(id + 10000, "roleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "unitPlayers");
         }
     }
 
@@ -230,13 +256,55 @@ namespace TheOtherRoles
         
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
-        public CustomDualRoleOption(int id, string name, Color color, RoleType roleType, int max = 15) : base(id, name, color, max)
+        public CustomDualRoleOption(int id, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, name, color, max, roleEnabled)
         {
-            roleAssignEqually = new CustomOption(id + 10011, "roleAssignEqually", new string[] { "optionOn", "optionOff" }, "optionOff", this, false, false, "");
-            roleImpChance = CustomOption.Create(id + 10010, "roleImpChance", CustomOptionHolder.rates, roleAssignEqually);
-            this.roleType = roleType;
+            roleAssignEqually = new CustomOption(id + 10011, "roleAssignEqually", new string[] { "optionOn", "optionOff" }, "optionOff", this, false, isHidden, "");
+            roleImpChance = Create(id + 10010, "roleImpChance", CustomOptionHolder.rates, roleAssignEqually, false, isHidden);
 
+            this.roleType = roleType;
             dualRoles.Add(this);
+        }
+    }
+
+    public class CustomTasksOption : CustomOption
+    {
+        public CustomOption commonTasksOption = null;
+        public CustomOption longTasksOption = null;
+        public CustomOption shortTasksOption = null;
+
+        public int commonTasks { get { return Mathf.RoundToInt(commonTasksOption.getSelection()); } }
+        public int longTasks { get { return Mathf.RoundToInt(longTasksOption.getSelection()); } }
+        public int shortTasks { get { return Mathf.RoundToInt(shortTasksOption.getSelection()); } }
+
+        public List<byte> generateTasks()
+        {
+            return Helpers.generateTasks(commonTasks, shortTasks, longTasks);
+        }
+
+        public CustomTasksOption(int id, int commonDef, int longDef, int shortDef, CustomOption parent = null)
+        {
+            commonTasksOption = Create(id + 20000, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
+            longTasksOption = Create(id + 20001, "numLongTasks", longDef, 0f, 15f, 1f, parent);
+            shortTasksOption = Create(id + 20002, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
+        }
+    }
+
+    public class CustomRoleSelectionOption : CustomOption
+    {
+        public List<RoleType> roleTypes;
+
+        public CustomRoleSelectionOption(int id, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
+        {
+            if (roleTypes == null)
+            {
+                roleTypes = Enum.GetValues(typeof(RoleType)).Cast<RoleType>().ToList();
+                roleTypes.Remove(RoleType.NoRole);
+            }
+
+            this.roleTypes = roleTypes;
+            var strings = roleTypes.Select(x => RoleInfo.allRoleInfos.First(y => y.roleType == x).nameColored).ToArray();
+
+            Init(id, name, strings, 0, parent, false, false, "");
         }
     }
 

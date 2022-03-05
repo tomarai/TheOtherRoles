@@ -23,17 +23,17 @@ namespace TheOtherRoles
                 return GameOptionsDataPatch.optionsToString(baseOption, true);
             }
         }
-        public bool enabled { get { return baseOption == null || baseOption.enabled; } }
-        public RoleType roleId;
+        public bool enabled { get { return Helpers.RolesEnabled && (baseOption == null || baseOption.enabled); } }
+        public RoleType roleType;
 
         private string nameKey;
         private CustomOption baseOption;
 
-        RoleInfo(string name, Color color, CustomOption baseOption, RoleType roleId) {
+        RoleInfo(string name, Color color, CustomOption baseOption, RoleType roleType) {
             this.color = color;
             this.nameKey = name;
             this.baseOption = baseOption;
-            this.roleId = roleId;
+            this.roleType = roleType;
         }
 
         public static RoleInfo jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
@@ -73,7 +73,6 @@ namespace TheOtherRoles
         public static RoleInfo niceGuesser = new RoleInfo("niceGuesser", Guesser.color, CustomOptionHolder.guesserSpawnRate, RoleType.NiceGuesser);
         public static RoleInfo evilGuesser = new RoleInfo("evilGuesser", Palette.ImpostorRed, CustomOptionHolder.guesserSpawnRate, RoleType.EvilGuesser);
         public static RoleInfo bait = new RoleInfo("bait", Bait.color, CustomOptionHolder.baitSpawnRate, RoleType.Bait);
-        public static RoleInfo madmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.madmateSpawnRate, RoleType.Madmate);
         public static RoleInfo impostor = new RoleInfo("impostor", Palette.ImpostorRed,null, RoleType.Impostor);
         public static RoleInfo lawyer = new RoleInfo("lawyer", Lawyer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Lawyer);
         public static RoleInfo pursuer = new RoleInfo("pursuer", Pursuer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Pursuer);
@@ -87,14 +86,14 @@ namespace TheOtherRoles
         public static RoleInfo ninja = new RoleInfo("ninja", Ninja.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Ninja);
         public static RoleInfo plagueDoctor = new RoleInfo("plagueDoctor", PlagueDoctor.color, CustomOptionHolder.plagueDoctorSpawnRate, RoleType.PlagueDoctor);
         public static RoleInfo nekoKabocha = new RoleInfo("nekoKabocha", NekoKabocha.color, CustomOptionHolder.nekoKabochaSpawnRate, RoleType.NekoKabocha);
+        public static RoleInfo niceWatcher = new RoleInfo("niceWatcher", Watcher.color, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
+        public static RoleInfo evilWatcher = new RoleInfo("evilWatcher", Palette.ImpostorRed, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
         public static RoleInfo serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleType.SerialKiller);
         public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
         public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
-        public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
-        public static RoleInfo uranai= new RoleInfo("fortuneTeller2nd", Uranai.color, CustomOptionHolder.uranaiSpawnRate, RoleType.Uranai);
+        public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
         public static RoleInfo munou = new RoleInfo("incompetent", Munou.color, CustomOptionHolder.munouSpawnRate, RoleType.Munou);
-        public static RoleInfo munou2nd = new RoleInfo("incompetent2nd", Munou2nd.color, CustomOptionHolder.munou2ndSpawnRate, RoleType.Munou2nd);
         public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
@@ -102,7 +101,6 @@ namespace TheOtherRoles
         public static RoleInfo evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
         public static RoleInfo puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
-        public static RoleInfo createdMadmate = new RoleInfo("madmate", Madmate.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.CreatedMadmate);
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -152,26 +150,24 @@ namespace TheOtherRoles
                 spy,
                 securityGuard,
                 bait,
-                madmate,
-                createdMadmate,
                 gm,
                 opportunist,
 	            medium,
                 plagueDoctor,
                 nekoKabocha,
+                niceWatcher,
+                evilWatcher,
                 fox,
                 immoralist,
-                lastImpostor,
                 fortuneTeller,
-                uranai,
+                lastImpostor,
                 munou,
-                munou2nd,
                 schrodingersCat,
                 trapper,
                 bomberA,
                 bomberB,
                 evilTracker,
-                puppeteer
+                puppeteer,
             };
 
         public static string tl(string key)
@@ -220,8 +216,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.EvilGuesser)) infos.Add(evilGuesser);
             if (p.isRole(RoleType.BountyHunter)) infos.Add(bountyHunter);
             if (p.isRole(RoleType.Bait)) infos.Add(bait);
-            if (p.isRole(RoleType.Madmate)) infos.Add(madmate);
-            if (p.isRole(RoleType.CreatedMadmate)) infos.Add(createdMadmate);
             if (p.isRole(RoleType.GM)) infos.Add(gm);
             if (p.isRole(RoleType.Opportunist)) infos.Add(opportunist);
             if (p.isRole(RoleType.Vulture)) infos.Add(vulture);
@@ -232,27 +226,32 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
             if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);
             if (p.isRole(RoleType.NekoKabocha)) infos.Add(nekoKabocha);
+            if (p.isRole(RoleType.Watcher))
+            {
+                if (p.isImpostor()) infos.Add(evilWatcher);
+                else infos.Add(niceWatcher);
+            }
             if (p.isRole(RoleType.Fox)) infos.Add(fox);
             if (p.isRole(RoleType.Immoralist)) infos.Add(immoralist);
-            if (p.isRole(RoleType.FortuneTeller)) infos.Add(fortuneTeller);
-            if(p.isRole(RoleType.Uranai))
+            if (p.isRole(RoleType.FortuneTeller))
             {
-                if(PlayerControl.LocalPlayer.Data.IsDead || Uranai.endGameFlag)
+                if (PlayerControl.LocalPlayer.Data.IsDead || FortuneTeller.endGameFlag)
                 {
-                    infos.Add(uranai);
+                    infos.Add(fortuneTeller);
                 }
                 else
                 {
-                    var info = Uranai.isCompletedNumTasks(p) ? uranai: crewmate;
+                    var info = FortuneTeller.isCompletedNumTasks(p) ? fortuneTeller: crewmate;
                     infos.Add(info);
                 }
             }
-            if (p.isRole(RoleType.Munou)) infos.Add(munou);
-            if(p.isRole(RoleType.Munou2nd))
+
+            // はおみんオリジナル
+            if(p.isRole(RoleType.Munou))
             {
-                if(PlayerControl.LocalPlayer.Data.IsDead || Munou2nd.endGameFlag)
+                if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
                 {
-                    infos.Add(munou2nd);
+                    infos.Add(munou);
                 }
                 else
                 {
@@ -266,8 +265,8 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
             if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
 
-            if (p.isRole(RoleType.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 
+            if (p.isRole(RoleType.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
@@ -282,17 +281,32 @@ namespace TheOtherRoles
             if (p.isLovers()) infos.Add(lovers);
 
             if (excludeRoles != null)
-                infos.RemoveAll(x => excludeRoles.Contains(x.roleId));
+                infos.RemoveAll(x => excludeRoles.Contains(x.roleType));
 
             return infos;
         }
 
         public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null) {
-            string roleName = "";
-            if (p?.Data?.Disconnected != false) return roleName;
+            if (p?.Data?.Disconnected != false) return "";
 
-            roleName = String.Join(" ", getRoleInfoForPlayer(p, excludeRoles).Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
+            var roleInfo = getRoleInfoForPlayer(p, excludeRoles);
+            string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
             if (Lawyer.target != null && p?.PlayerId == Lawyer.target.PlayerId && PlayerControl.LocalPlayer != Lawyer.target) roleName += (useColors ? Helpers.cs(Pursuer.color, " §") : " §");
+
+            if (p.hasModifier(ModifierType.Madmate) || p.hasModifier(ModifierType.CreatedMadmate))
+            {
+                // Madmate only
+                if (roleInfo.Contains(crewmate))
+                {
+                    roleName = useColors ? Helpers.cs(Madmate.color, Madmate.fullName) : Madmate.fullName;
+                }
+                else
+                {
+                    string prefix = useColors ? Helpers.cs(Madmate.color, Madmate.prefix) : Madmate.prefix;
+                    roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(Madmate.color, x.name) : x.name).ToArray());
+                    roleName = prefix + roleName;
+                }
+            }
             return roleName;
         }
     }

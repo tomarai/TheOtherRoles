@@ -13,7 +13,11 @@ namespace TheOtherRoles
     public class Munou: RoleBase<Munou>
     {
         public static Color color = Color.grey;
-        public static float camouflagerTimer = 0f;
+        public static bool endGameFlag = false;
+        public static bool randomColorFlag = false;
+        public static int probability {get {return (int)CustomOptionHolder.munouProbability.getFloat();}}
+        public static int numShufflePlayers {get {return (int)CustomOptionHolder.munouNumShufflePlayers.getFloat();}}
+        public static Dictionary<byte, byte> randomPlayers = new Dictionary<byte, byte>();
 
 
         public Munou()
@@ -21,24 +25,33 @@ namespace TheOtherRoles
             RoleType = roleId = RoleType.Munou;
         }
 
-        public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() { }
-        public override void FixedUpdate()
+        public override void OnMeetingStart()
+        {
+            resetColors();
+        }
+        public override void OnMeetingEnd()
         {
             if(PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
-                // ずっとカモフラージュ
-                camouflagerTimer -= Time.fixedDeltaTime;
-                if(camouflagerTimer <= 0)
-                {
-                    TheOtherRolesGM.Camouflager.camouflageTimer = 10f;
-                    TheOtherRolesGM.Camouflager.startCamouflage();
-                    camouflagerTimer = 5f;
-                }
+                randomColors();
             }
         }
+
+        public override void FixedUpdate()
+        {
+            // if(PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.isAlive())
+            // {
+            //     if(!randomColorFlag)
+            //     {
+            //         randomColors();
+            //     }
+            // }
+        }
         public override void OnKill(PlayerControl target) { }
-        public override void OnDeath(PlayerControl killer = null) { }
+        public override void OnDeath(PlayerControl killer = null)
+        {
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou)) resetColors();
+        }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public static void MakeButtons(HudManager hm) { }
@@ -47,6 +60,65 @@ namespace TheOtherRoles
         public static void Clear()
         {
             players = new List<Munou>();
+            randomPlayers = new Dictionary<byte, byte>();
+            endGameFlag = false;
+            resetColors();
+        }
+
+        public static void randomColors(){
+            // 発生確率
+            int random = rnd.Next(100);
+            if(random > probability) return;
+
+            var allPlayers = PlayerControl.AllPlayerControls;
+            List<byte> alivePlayers = new List<byte>();
+            List<int> tempList = new List<int>();
+            foreach(var p in allPlayers)
+            {
+                if(p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                if(p == Puppeteer.dummy) continue;
+                if(p.isAlive()) alivePlayers.Add(p.PlayerId);
+            }
+            alivePlayers.shuffle();
+            List<byte> shuffleTargets = alivePlayers.Count > numShufflePlayers ? alivePlayers.Take(numShufflePlayers).ToList() : alivePlayers;
+            foreach(byte id in shuffleTargets)
+            {
+                if(id == PlayerControl.LocalPlayer.PlayerId) continue;
+                var p = Helpers.playerById(id);
+                int rnd;
+                int coutner = 0;
+                while(true){
+                    rnd = TheOtherRoles.rnd.Next(shuffleTargets.Count);
+                    if(shuffleTargets[rnd] == PlayerControl.LocalPlayer.PlayerId) continue;
+                    if(!tempList.Contains(rnd))
+                    {
+                        tempList.Add(rnd);
+                        break;
+                    }
+                    coutner++;
+                }
+                var to =Helpers.playerById((byte)shuffleTargets[rnd]);
+                MorphHandler.morphToPlayer(p, to);
+            }
+            randomColorFlag = true;
+        }
+        public static void resetColors(){
+            var allPlayers = PlayerControl.AllPlayerControls;
+            foreach(var p in allPlayers)
+            {
+                MorphHandler.morphToPlayer(p, p);
+            }
+            randomColorFlag = false;
+        }
+
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
+        public class OnGameEndPatch
+        {
+
+            public static void Prefix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
+            {
+                    Munou.endGameFlag = true;
+            }
         }
     }
 }

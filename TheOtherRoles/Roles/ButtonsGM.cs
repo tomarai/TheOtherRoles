@@ -35,7 +35,6 @@ namespace TheOtherRoles
             BomberB.SetButtonCooldowns();
             EvilTracker.SetButtonCooldowns();
             Puppeteer.SetButtonCooldowns();
-
             foreach (CustomButton gmButton in gmButtons)
             {
                 gmButton.MaxTimer = 0.0f;
@@ -58,8 +57,8 @@ namespace TheOtherRoles
             SerialKiller.MakeButtons(hm);
             Fox.MakeButtons(hm);
             Immoralist.MakeButtons(hm);
+            FortuneTeller.MakeButtons(hm);
             LastImpostor.MakeButtons(hm);
-            Uranai.MakeButtons(hm);
             SoulPlayer.MakeButtons(hm);
             SchrodingersCat.MakeButtons(hm);
             Trapper.MakeButtons(hm);

@@ -42,6 +42,14 @@ namespace TheOtherRoles {
             }
         }
 
+        public static bool RolesEnabled
+        {
+            get
+            {
+                return CustomOptionHolder.activateRoles.getBool();
+            }
+        }
+
         public static void destroyList<T>(Il2CppSystem.Collections.Generic.List<T> items) where T : UnityEngine.Object
         {
             if (items == null) return;
@@ -63,6 +71,50 @@ namespace TheOtherRoles {
         public static void log(string msg)
         {
             TheOtherRolesPlugin.Instance.Log.LogInfo(msg);
+        }
+
+        public static List<byte> generateTasks(int numCommon, int numShort, int numLong)
+        {
+            if (numCommon + numShort + numLong <= 0)
+            {
+                numShort = 1;
+            }
+
+            var tasks = new Il2CppSystem.Collections.Generic.List<byte>();
+            var hashSet = new Il2CppSystem.Collections.Generic.HashSet<TaskTypes>();
+
+            var commonTasks = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
+            foreach (var task in ShipStatus.Instance.CommonTasks.OrderBy(x => rnd.Next())) commonTasks.Add(task);
+
+            var shortTasks = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
+            foreach (var task in ShipStatus.Instance.NormalTasks.OrderBy(x => rnd.Next())) shortTasks.Add(task);
+
+            var longTasks = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
+            foreach (var task in ShipStatus.Instance.LongTasks.OrderBy(x => rnd.Next())) longTasks.Add(task);
+
+            int start = 0;
+            ShipStatus.Instance.AddTasksFromList(ref start, numCommon, tasks, hashSet, commonTasks);
+
+            start = 0;
+            ShipStatus.Instance.AddTasksFromList(ref start, numShort, tasks, hashSet, shortTasks);
+
+            start = 0;
+            ShipStatus.Instance.AddTasksFromList(ref start, numLong, tasks, hashSet, longTasks);
+
+            return tasks.ToArray().ToList();
+        }
+
+        public static void generateAndAssignTasks(this PlayerControl player, int numCommon, int numShort, int numLong)
+        {
+            if (player == null) return;
+
+            List<byte> taskTypeIds = generateTasks(numCommon, numShort, numLong);
+
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedSetTasks, Hazel.SendOption.Reliable, -1);
+            writer.Write(player.PlayerId);
+            writer.WriteBytesAndSize(taskTypeIds.ToArray());
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.uncheckedSetTasks(player.PlayerId, taskTypeIds.ToArray());
         }
 
         public static void setSkinWithAnim(PlayerPhysics playerPhysics, string SkinId)
@@ -191,7 +243,7 @@ namespace TheOtherRoles {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
 
-                if (roleInfo.roleId == RoleType.Jackal) {
+                if (roleInfo.roleType == RoleType.Jackal) {
                     if (Jackal.canCreateSidekick)
                     {
                         task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalWithSidekick"));
@@ -206,6 +258,14 @@ namespace TheOtherRoles {
                     task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");  
                 }
 
+                player.myTasks.Insert(0, task);
+            }
+
+            if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate))
+            {
+                var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
+                task.transform.SetParent(player.transform, false);
+                task.Text = cs(Madmate.color, $"{Madmate.fullName}: " + ModTranslation.getString("madmateShortDesc"));
                 player.myTasks.Insert(0, task);
             }
         }
@@ -242,8 +302,8 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Opportunist) ||
                     player.isRole(RoleType.PlagueDoctor) ||
                     player.isRole(RoleType.Fox) ||
-                    player.isRole(RoleType.SchrodingersCat) ||
                     player.isRole(RoleType.Immoralist) ||
+                    player.isRole(RoleType.SchrodingersCat) ||
                     player.isRole(RoleType.Puppeteer) ||
                     player == Puppeteer.dummy ||
                     player.isRole(RoleType.Vulture) ||
@@ -254,7 +314,7 @@ namespace TheOtherRoles {
 
         public static bool isCrew(this PlayerControl player)
         {
-            return player != null && !player.isImpostor() && !player.isNeutral();
+            return player != null && !player.isImpostor() && !player.isNeutral() && !player.isGM();
         }
 
         public static bool isImpostor(this PlayerControl player)
@@ -264,14 +324,14 @@ namespace TheOtherRoles {
 
         public static bool hasFakeTasks(this PlayerControl player) {
             return (player.isNeutral() && !player.neutralHasTasks()) || 
-                   (player.isRole(RoleType.Madmate) && !Madmate.noticeImpostors) || 
-                   (player.isRole(RoleType.CreatedMadmate) && !CreatedMadmate.noticeImpostors) || 
+                   (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) || 
+                   (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) || 
                    (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
         }
 
         public static bool neutralHasTasks(this PlayerControl player)
         {
-            return player.isNeutral() && (player.isRole(RoleType.Lawyer) || player.isRole(RoleType.Pursuer) || player.isRole(RoleType.Shifter)) || player.isRole(RoleType.Fox);
+            return player.isNeutral() && (player.isRole(RoleType.Lawyer) || player.isRole(RoleType.Pursuer) || player.isRole(RoleType.Shifter) || player.isRole(RoleType.Fox));
         }
 
         public static bool isGM(this PlayerControl player)
@@ -421,17 +481,17 @@ namespace TheOtherRoles {
                 roleCouldUse = true;
             else if (Spy.canEnterVents && player.isRole(RoleType.Spy))
                 roleCouldUse = true;
-            else if (Madmate.canEnterVents && player.isRole(RoleType.Madmate))
+            else if (Madmate.canEnterVents && player.hasModifier(ModifierType.Madmate))
                 roleCouldUse = true;
-            else if (CreatedMadmate.canEnterVents && player.isRole(RoleType.CreatedMadmate))
+            else if (CreatedMadmate.canEnterVents && player.hasModifier(ModifierType.CreatedMadmate))
                 roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleType.Vulture))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
-                if (player.isRole(RoleType.Janitor))
+                if (!Janitor.canVent && player.isRole(RoleType.Janitor))
                     roleCouldUse = false;
-                else if (player.isRole(RoleType.Mafioso) && Godfather.godfather != null && Godfather.godfather.isAlive())
+                else if (!Mafioso.canVent && player.isRole(RoleType.Mafioso))
                     roleCouldUse = false;
                 else if (!Ninja.canUseVents && player.isRole(RoleType.Ninja))
                     roleCouldUse = false;
@@ -444,12 +504,16 @@ namespace TheOtherRoles {
         public static bool roleCanSabotage(this PlayerControl player)
         {
             bool roleCouldUse = false;
-            if (Madmate.canSabotage && player.isRole(RoleType.Madmate))
+            if (Madmate.canSabotage && player.hasModifier(ModifierType.Madmate))
                 roleCouldUse = true;
-            else if (CreatedMadmate.canSabotage && player.isRole(RoleType.CreatedMadmate))
+            else if (CreatedMadmate.canSabotage && player.hasModifier(ModifierType.CreatedMadmate))
                 roleCouldUse = true;
             else if (Jester.canSabotage && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
+            else if (!Mafioso.canSabotage && player.isRole(RoleType.Mafioso))
+                roleCouldUse = false;
+            else if (!Janitor.canSabotage && player.isRole(RoleType.Janitor))
+                roleCouldUse = false;
             else if (player.Data?.Role != null && player.Data.Role.IsImpostor)
                 roleCouldUse = true;
 
@@ -495,19 +559,6 @@ namespace TheOtherRoles {
                 }
                 return MurderAttemptResult.SuppressKill;
             }
-
-            // Block Fox kill
-            // else if (Fox.exists && Fox.cantKillFox){
-            //     if(Fox.cantKillFoxExceptions==0 && target.isRole(RoleId.Fox)){
-            //         return MurderAttemptResult.SuppressKill;
-            //     }
-            //     else if (Fox.cantKillFoxExceptions==1 && !killer.isRole(RoleId.Sheriff) && target.isRole(RoleId.Fox)){
-            //         return MurderAttemptResult.SuppressKill;
-            //     }
-            //     else if (Fox.cantKillFoxExceptions==2 && killer.Data.Role.IsImpostor && target.isRole(RoleId.Fox)){
-            //         return MurderAttemptResult.SuppressKill;
-            //     }
-            // }
 
             return MurderAttemptResult.PerformKill;
         }
