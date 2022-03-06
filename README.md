@@ -23,16 +23,17 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 | Impostors | Crewmates | Neutral | Other | 
 |----------|-------------|-----------------|----------------|
 |[シリアルキラー](#シリアルキラー)| [占い師](#占い師) |[妖狐](#妖狐) ||
-|[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[占い師2nd](#占い師2nd)|[背徳者](#背徳者)|
-|[ラストインポスター](#ラストインポスター)|[無能](#無能)|[シュレディンガーの猫](#シュレディンガーの猫)|
-|[トラッパー(テスト中)](#トラッパー)|[無能2nd](#無能2nd)|[人形遣い](#人形遣い)|
+|[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[無能](#無能)|[背徳者](#背徳者)|
+|[ラストインポスター](#ラストインポスター)||[シュレディンガーの猫](#シュレディンガーの猫)|
+|[トラッパー(テスト中)](#トラッパー)||[人形遣い(テスト中)](#人形遣い)|
 |[爆弾魔(テスト中)](#爆弾魔)||||
-|[イビルトラッカー(テスト中)](#イビルトラッカー)||||
+|[イビルトラッカー](#イビルトラッカー)||||
 
 
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2021.12.15s (build num: 1421)|v3.5.3| v1.11.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.1/TheOtherRoles-GM-Haoming.v1.11.1.zip)|l
 |2021.12.15s (build num: 1421)|v3.5.3| v1.11.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.0/TheOtherRoles-GM-Haoming.v1.11.0.zip)|l
 |2021.12.15s (build num: 1421)|v3.5.2| v1.10.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.3/TheOtherRoles-GM-Haoming.v1.10.3.zip)|l
 |2021.12.15s (build num: 1421)|v3.5.2| v1.10.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.2/TheOtherRoles-GM-Haoming.v1.10.2.zip)|l
@@ -187,19 +188,6 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |インポスターキルのデスフラッシュを見ることができる|キルフラッシュ機能のON/OFF|
 
 ## 占い師
-※現在調整中  
-クルーメイト陣営  
-タスクを一定数行うと議論時間に任意のプレイヤーを占うことができる  
-占いの結果は役職名が表示される or クルー/クルー以外の表記の2パターンがオプションで選択できる  
-<b><font color="red">強すぎるので基本的にイビルゲッサーとセットじゃないとゲームバランス崩壊します</font></b>
-
-|オプション名|説明|
-|-----------|----|
-|占いに必要なタスク数|占い師を自認、占いを行えるようになるのに必要なタスク数|
-|占い結果が白黒のみ|ONにすると占いの結果がクルー orクルー以外となる、OFFの場合は役職名が表示される|
-
-## 占い師2nd
-※現在調整中  
 クルーメイト陣営  
 - 占いは１回しかできない
 - タスク数を一定以上満たすまで占い師と認識できない
@@ -224,14 +212,6 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 (他のクルーがボタンを押してくれることを祈りながら逃げる)
 
 ## 無能
-クルー陣営のハズレ枠  
-
-- 他のプレイヤーが全員カモフラージュ状態になる
-- サボタージュを止めることができない、アドミン、バイタルを見ることができない
-- カメラは見ることができるが、カモフラージュ状態になっているためあまり意味がない
-- 投票を行うことはできる
-
-## 無能2nd
 クルー陣営のハズレ枠  
 
 - 自身の表示はクルーメイトとなる
@@ -404,12 +384,9 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 # Releases
 | Among Us - Version | Mod Version | Link |
 |----------|-------------|-----------------|
-<<<<<<< HEAD
-=======
 | 2022.2.24s | v3.5.3 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.3/TheOtherRoles-GM.v3.5.3.zip)
 | 2022.2.8s | v3.5.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.2/TheOtherRoles-GM.v3.5.2.zip)
 | 2021.12.15s (build num: 1421) | v3.5.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.1/TheOtherRoles-GM.v3.5.1.zip)
->>>>>>> origin/gm-main
 | 2021.12.15s (build num: 1421) | v3.5.0 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.0/TheOtherRoles-GM.v3.5.0.zip)
 | 2021.12.15s (build num: 1421) | v3.4.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.1/TheOtherRoles-GM.v3.4.1.zip)
 | 2021.12.15s (build num: 1421) | v3.4.0 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.0/TheOtherRoles-GM.v3.4.0.zip)
