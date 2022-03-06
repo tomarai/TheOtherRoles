@@ -57,7 +57,7 @@ namespace TheOtherRoles
                 SoundManager._Instance.PlaySound(laugh, false, 1f);
             }
             soundFlag = false;
-            if(!isAlive)
+            if(!isAlive && (PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Jackal)))
             {
                 string msg = $"人形遣いのカウント数 {counter}/{numKills}";
                 if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)

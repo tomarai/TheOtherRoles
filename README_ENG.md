@@ -135,7 +135,7 @@ He gets ability, according to joining team
 - Impostor: ability to kill and sabotage/ no ability (depends by option)  
 - Crewmate: no ability, no tasks  
 
-### Puppetter
+### Puppeteer
 Puppeteer is neutral role has unique win condition.  
 He gets enough points that set in settings to win.  
 
