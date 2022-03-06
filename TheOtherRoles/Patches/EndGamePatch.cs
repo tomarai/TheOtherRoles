@@ -383,33 +383,6 @@ namespace TheOtherRoles.Patches
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
             }
 
-            else if (plagueDoctorWin)
-            {
-                foreach (var pd in PlagueDoctor.players)
-                {
-                    TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                    WinningPlayerData wpd = new WinningPlayerData(pd.player.Data);
-                    TempData.winners.Add(wpd);
-                    AdditionalTempData.winCondition = WinCondition.PlagueDoctorWin;
-                }
-            }
-
-            else if (foxWin)
-            {
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                foreach (var fox in Fox.players)
-                {
-                    WinningPlayerData wpd = new WinningPlayerData(fox.player.Data);
-                    TempData.winners.Add(wpd);
-                }
-                foreach (var immoralist in Immoralist.players)
-                {
-                    WinningPlayerData wpd = new WinningPlayerData(immoralist.player.Data);
-                    TempData.winners.Add(wpd);
-                }
-                AdditionalTempData.winCondition = WinCondition.FoxWin;
-            }
-
 
             
             // Madmate win with impostors

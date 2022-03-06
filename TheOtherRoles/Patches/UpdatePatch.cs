@@ -188,10 +188,6 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, LastImpostor.color);
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.FortuneTeller))
-            {
-                setPlayerNameColor(PlayerControl.LocalPlayer, FortuneTeller.color);
-            }
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Munou))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);
