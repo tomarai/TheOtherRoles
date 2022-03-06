@@ -244,7 +244,7 @@ namespace TheOtherRoles
 
         public static Sprite getTrapButtonSprite() {
             if (trapButtonSprite) return trapButtonSprite;
-            trapButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.TrapperTrapButton.png", 115f);
+            trapButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.TrapperButton.png", 115f);
             return trapButtonSprite;
         }
         public static void setTrap(){
