@@ -21,10 +21,10 @@ Description of Roles I created.(some of them are exported to The Other Roles GM)
 | Impostors | Crewmates | Neutral | Other | 
 |----------|-------------|-----------------|----------------|
 |[SerialKiller(exported)](#SerialKiller)| [FortuneTeller(exported)](#FortuneTeller) |[Fox(exported)](#Fox) ||
-|[EvilHacker](#イビルハッカー) # original idead from [here](https://github.com/tomarai/TheOtherRoles)|[Incompetent](#Incompetent)|[Immoralist(exported)](#Immoralist)|
+|[EvilHacker](#EvilHacker) # original idead from [here](https://github.com/tomarai/TheOtherRoles)|[Incompetent](#Incompetent)|[Immoralist(exported)](#Immoralist)|
 |[LastImpostor](#LastImpostor)||[Schrodinger's Cat](#Schrodinger'sCat)|
-|[Trapper(experimental)](#トラッパー)||[Puppeteer(experimental)](#Puppeteer)|
-|[Bomber(experimental)](#爆弾魔)||||
+|[Trapper(experimental)](#Trapper)||[Puppeteer(experimental)](#Puppeteer)|
+|[Bomber(experimental)](#Bomber)||||
 |[EvilTracker](#EvilTracker)||||
 
 ### SerialKiller
