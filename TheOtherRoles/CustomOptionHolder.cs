@@ -389,6 +389,8 @@ namespace TheOtherRoles {
         public static CustomOption bomberShowEffects;
         public static CustomOption bomberIfOneDiesBothDie;
         public static CustomOption bomberHasOneVote;
+        public static CustomOption bomberAlwaysShowArrow;
+
         public static CustomRoleOption evilTrackerSpawnRate;
         public static CustomOption evilTrackerCooldown;
         public static CustomOption evilTrackerResetTargetAfterMeeting;
@@ -541,6 +543,7 @@ namespace TheOtherRoles {
             bomberShowEffects = CustomOption.Create(1034, "bomberShowEffects", true, bomberSpawnRate);
             bomberIfOneDiesBothDie = CustomOption.Create(1035, "bomberIfOneDiesBothDie", true, bomberSpawnRate);
             bomberHasOneVote = CustomOption.Create(1036, "bomberHasOneVote", true, bomberSpawnRate);
+            bomberAlwaysShowArrow = CustomOption.Create(1037, "bomberAlwaysShowArrow", true, bomberSpawnRate);
 
             evilTrackerSpawnRate = new CustomRoleOption(1050, "evilTracker", EvilTracker.color, 1);
             evilTrackerCooldown = CustomOption.Create(1052, "evilTrackerCooldown", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
