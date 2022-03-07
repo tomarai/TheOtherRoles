@@ -80,6 +80,7 @@ namespace TheOtherRoles
             RoleType.Mini,
             RoleType.NiceGuesser,
             RoleType.Watcher,
+            RoleType.Munou,
         };
 
         public static List<PlayerControl> candidates
@@ -93,7 +94,7 @@ namespace TheOtherRoles
                 foreach (var player in PlayerControl.AllPlayerControls.ToArray().Where(x => x.isCrew() && !hasModifier(x)).ToList())
                 {
                     var info = RoleInfo.getRoleInfoForPlayer(player);
-                    if (info.Contains(RoleInfo.crewmate))
+                    if (info.Contains(RoleInfo.crewmate) && !player.isRole(RoleType.Munou) && !player.isRole(RoleType.FortuneTeller))
                     {
                         crewNoRole.Add(player);
                     }
