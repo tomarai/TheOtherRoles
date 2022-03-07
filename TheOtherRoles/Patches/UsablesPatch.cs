@@ -106,7 +106,6 @@ namespace TheOtherRoles.Patches
             bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
 
             if ((isSecurity && !MapOptions.canUseCameras) || (isVitals && !MapOptions.canUseVitals)) return true;
-            if (pc.isRole(RoleType.Munou) && (isVitals || isButton)) return true;
             return false;
         }
 
@@ -123,7 +122,6 @@ namespace TheOtherRoles.Patches
             {
                 return true;
             }
-            if(pc.isRole(RoleType.Munou) && targetMapConsole != null) return true;
             return false;
         }
 
