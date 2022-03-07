@@ -57,11 +57,6 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            if (pc.isRole(RoleType.Munou) && (isLights || isComms || isReactor || isO2))
-            {
-                return true;
-            }
-
             if (pc.isRole(RoleType.Mafioso) && !Mafioso.canRepair && (isLights || isComms))
             {
                 return true;

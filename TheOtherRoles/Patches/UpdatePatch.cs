@@ -188,10 +188,6 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, LastImpostor.color);
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.Munou))
-            {
-                setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);
-            }
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.Data.IsDead)
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);

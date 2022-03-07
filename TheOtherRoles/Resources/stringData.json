@@ -186,7 +186,7 @@
         "11": "2\u4eba\u30671\u7968\u6271\u3044"
     },
     "bomberPlantBomb": {
-        "0": "PlantBomb",
+        "0": "Plant bomb",
         "11": "\u7206\u5f3e\u8a2d\u7f6e"
     },
     "bomberDetonate": {
@@ -194,11 +194,11 @@
         "11": "\u7206\u7834"
     },
     "bomberTarget": {
-        "0": "Target",
+        "0": "Your target",
         "11": "\u30bf\u30fc\u30b2\u30c3\u30c8"
     },
     "bomberPartnerTarget": {
-        "0": "Partner Target",
+        "0": "Partner\u2019s target",
         "11": "\u76f8\u65b9\u306e\u30bf\u30fc\u30b2\u30c3\u30c8"
     },
     "bomberShortDesc": {
