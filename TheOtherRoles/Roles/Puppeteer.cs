@@ -24,7 +24,6 @@ namespace TheOtherRoles
         public static bool losesSenriganOnDeath {get {return CustomOptionHolder.puppeteerLosesSenriganOnDeath.getBool();}}
         public static bool triggerPuppeteerWin = false;
         public static bool isActive = false;
-        public static bool canSample = true;
         public static bool canSpawn = true;
         public static PlayerControl dummy = null;
         public static PlayerControl target = null;
@@ -71,7 +70,6 @@ namespace TheOtherRoles
         public override void OnMeetingEnd()
         {
             target = null;
-            canSample = true;
             canSpawn = false;
             isActive = false;
             if(PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
@@ -123,7 +121,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && Puppeteer.canSample; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead); },
                 // CouldUse
                 () =>
                 {
@@ -145,10 +143,10 @@ namespace TheOtherRoles
                     tmpTarget = null;
                 },
                 getSampleButtonSprite(), 
-                new Vector3(-1.8f, -0.06f, 0),
+                new Vector3(-0.9f, 1f, 0),
                 hm,
                 hm.KillButton,
-                KeyCode.F,
+                KeyCode.G,
                 true,
                 sampleDuration,
                 // OnEffectsEnd
@@ -157,7 +155,6 @@ namespace TheOtherRoles
                     if (tmpTarget != null)
                     {
                         target = tmpTarget;
-                        canSample = false;
                         canSpawn = true;
                     }
 
@@ -183,7 +180,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && !canSample; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && target != null; },
                 // CouldUse
                 () =>
                 {
@@ -199,7 +196,7 @@ namespace TheOtherRoles
                     puppeteerButton.Timer = puppeteerButton.MaxTimer;
                 },
                 getPuppeteerButtonSprite(), 
-                new Vector3(-1.8f, -0.06f, 0),
+                new Vector3(0.0f, 1f, 0),
                 hm,
                 hm.UseButton,
                 KeyCode.F,
@@ -227,7 +224,6 @@ namespace TheOtherRoles
             if(dummy != null) GameData.Instance.RemovePlayer(dummy.PlayerId);
             dummy = null;
             stealthed = false;
-            canSample = true;
             isActive = false;
             canSpawn = false;
             triggerPuppeteerWin = false;
@@ -426,7 +422,6 @@ namespace TheOtherRoles
 
 
             isActive = false;
-            canSample = true;
             canSpawn = false;
             switchStealth(false);
         }
