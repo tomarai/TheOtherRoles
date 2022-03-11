@@ -23,18 +23,8 @@ namespace TheOtherRoles
         }
         public static Color color = Palette.ImpostorRed;
         public static Sprite trapButtonSprite;
-        public static GameObject trap;
-        public static GameObject sound;
-        public static AudioSource audioSource;
-        public static PlayerControl trappedPlayer;
-        public static bool playingKillSound;
         public static DateTime placedTime;
-        public static AudioClip place;
-        public static AudioClip activate;
-        public static AudioClip disable;
-        public static AudioClip countdown;
-        public static AudioClip kill;
-        public static AudioRolloffMode rollOffMode = UnityEngine.AudioRolloffMode.Linear;
+        public static int numTrap {get {return (int)CustomOptionHolder.trapperNumTrap.getFloat();}}
         public static float extensionTime {get {return CustomOptionHolder.trapperExtensionTime.getFloat();}}
         public static float killTimer {get {return CustomOptionHolder.trapperKillTimer.getFloat();}}
         public static float cooldown {get {return CustomOptionHolder.trapperCooldown.getFloat();}}
@@ -44,8 +34,6 @@ namespace TheOtherRoles
         public static float penaltyTime {get {return CustomOptionHolder.trapperPenaltyTime.getFloat();}}
         public static float bonusTime {get {return CustomOptionHolder.trapperBonusTime.getFloat();}}
         public static bool isTrapKill = false;
-        public static Status status = Status.notPlaced;
-        public static Vector3 pos;
         public static bool meetingFlag;
         
 
@@ -57,70 +45,78 @@ namespace TheOtherRoles
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() 
         {
-            unsetTrap();
+            Trap.clearAllTraps();
             meetingFlag = false;
         }
 
         public override void FixedUpdate() 
         {
-
-            if(DateTime.UtcNow.Subtract(placedTime).TotalSeconds < extensionTime) return;
+            // 処理に自身がないので念の為tryで囲っておく
             try{
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && trap != null && trappedPlayer == null && !playingKillSound && !meetingFlag)
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && Trap.traps.Count != 0 && !Trap.hasTrappedPlayer() && !meetingFlag)
                 {
                     // トラップを踏んだプレイヤーを動けなくする 
                     foreach(var p in PlayerControl.AllPlayerControls)
                     {
-                        if(p.isDead() || p.inVent || status != Status.placed || meetingFlag) continue;
-                        var p1 = p.transform.localPosition;
-                        Dictionary<GameObject, byte> listActivate = new Dictionary<GameObject, byte>();
-                        var p2 = trap.transform.localPosition;
-                        var distance = Vector3.Distance(p1, p2);
-                        if(distance < trapRange)
+                        foreach(var trap in Trap.traps)
                         {
-                            TMPro.TMP_Text text;
-                            RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
-                            GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
-                            UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
-                            gameObject.transform.SetParent(HudManager.Instance.transform);
-                            gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
-                            gameObject.transform.localScale = Vector3.one * 2f;
-                            text = gameObject.GetComponent<TMPro.TMP_Text>();
-                            text.text = p.name + "が罠にかかった";
-                            HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => {
-                                if (p == 1f && text != null && text.gameObject != null) {
-                                    UnityEngine.Object.Destroy(text.gameObject);
-                                }
-                            })));
-                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ActivateTrap, Hazel.SendOption.Reliable, -1);
-                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                            writer.Write(p.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-                            RPCProcedure.activateTrap(PlayerControl.LocalPlayer.PlayerId, p.PlayerId);
-                            break;
+                            if(DateTime.UtcNow.Subtract(trap.Value.placedTime).TotalSeconds < extensionTime) continue;
+                            if(trap.Value.isActive || p.isDead() || p.inVent || meetingFlag) continue;
+                            var p1 = p.transform.localPosition;
+                            Dictionary<GameObject, byte> listActivate = new Dictionary<GameObject, byte>();
+                            var p2 = trap.Value.trap.transform.localPosition;
+                            var distance = Vector3.Distance(p1, p2);
+                            if(distance < trapRange)
+                            {
+                                TMPro.TMP_Text text;
+                                RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
+                                GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
+                                UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                                gameObject.transform.SetParent(HudManager.Instance.transform);
+                                gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
+                                gameObject.transform.localScale = Vector3.one * 2f;
+                                text = gameObject.GetComponent<TMPro.TMP_Text>();
+                                text.text = p.name + "が罠にかかった";
+                                HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => {
+                                    if (p == 1f && text != null && text.gameObject != null) {
+                                        UnityEngine.Object.Destroy(text.gameObject);
+                                    }
+                                })));
+                                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ActivateTrap, Hazel.SendOption.Reliable, -1);
+                                writer.Write(trap.Key);
+                                writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                                writer.Write(p.PlayerId);
+                                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                RPCProcedure.activateTrap(trap.Key, PlayerControl.LocalPlayer.PlayerId, p.PlayerId);
+                                break;
+                            }
                         }
                     }
                 }
 
-                if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && trappedPlayer != null && status== Status.active && !meetingFlag)
+                if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && Trap.hasTrappedPlayer() && !meetingFlag)
                 {
                     // トラップにかかっているプレイヤーを救出する
-                    Vector3 p1 = trap.transform.position;
-                    foreach(var player in PlayerControl.AllPlayerControls)
+                    foreach(var trap in Trap.traps)
                     {
-                        if (player.PlayerId == trappedPlayer.PlayerId || player.isDead() || player.inVent|| player.isRole(RoleType.Trapper)) continue;
-                        Vector3 p2 = player.transform.position;
-                        float distance = Vector3.Distance(p1, p2);
-                        if(distance < 0.5)
+                        if(trap.Value.trap == null || !trap.Value.isActive) return;
+                        Vector3 p1 = trap.Value.trap.transform.position;
+                        foreach(var player in PlayerControl.AllPlayerControls)
                         {
-                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DisableTrap, Hazel.SendOption.Reliable, -1);
-                            writer.Write(player.PlayerId);
-                            writer.Write((byte)1);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-                            RPCProcedure.disableTrap(player.PlayerId, true);
-
+                            if (player.PlayerId == trap.Value.target.PlayerId || player.isDead() || player.inVent|| player.isRole(RoleType.Trapper)) continue;
+                            Vector3 p2 = player.transform.position;
+                            float distance = Vector3.Distance(p1, p2);
+                            if(distance < 0.5)
+                            {
+                                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DisableTrap, Hazel.SendOption.Reliable, -1);
+                                writer.Write(trap.Key);
+                                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                RPCProcedure.disableTrap(trap.Key);
+                            }
                         }
+
                     }
+                    
                 }
             }
             catch (NullReferenceException e){
@@ -132,17 +128,17 @@ namespace TheOtherRoles
         //　キルクールダウン設定
         if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper))
         {
-            if (target == Trapper.trappedPlayer && !isTrapKill)  // トラップにかかっている対象をキルした場合のボーナス
+            if (Trap.isTrapped(target) && !isTrapKill)  // トラップにかかっている対象をキルした場合のボーナス
             {
                 Helpers.log("トラップにかかっている対象をキルした場合のボーナス");
                 player.killTimer = PlayerControl.GameOptions.KillCooldown - bonusTime;
                 trapperSetTrapButton.Timer = cooldown - bonusTime;
             }
-            else if (Trapper.trappedPlayer != null && target == Trapper.trappedPlayer && isTrapKill)  // トラップキルした場合のペナルティ
+            else if (Trap.isTrapped(target) && isTrapKill)  // トラップキルした場合のペナルティ
             {
-                Helpers.log("トラップキルした場合のペナルティ");
-                player.killTimer = PlayerControl.GameOptions.KillCooldown + penaltyTime;
-                trapperSetTrapButton.Timer = cooldown + penaltyTime;
+                Helpers.log("トラップキルした場合のクールダウン");
+                player.killTimer = PlayerControl.GameOptions.KillCooldown;
+                trapperSetTrapButton.Timer = cooldown;
             }
             else // トラップにかかっていない対象を通常キルした場合はペナルティーを受ける
             {
@@ -150,19 +146,10 @@ namespace TheOtherRoles
                 player.killTimer = PlayerControl.GameOptions.KillCooldown + penaltyTime;
                 trapperSetTrapButton.Timer = cooldown + penaltyTime;
             }
-
-            // キル後に罠を解除する
-            if (trappedPlayer != null)
+            if(!isTrapKill)
             {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DisableTrap, Hazel.SendOption.Reliable, -1);
-                writer.Write(player.PlayerId);
-                writer.Write((byte)0);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.disableTrap(player.PlayerId, false);
-            }
-            else
-            {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ClearTrap, Hazel.SendOption.Reliable, -1);
+                MessageWriter writer;
+                writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ClearTrap, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.clearTrap();
             }
@@ -177,14 +164,7 @@ namespace TheOtherRoles
     {
         trapperSetTrapButton = new CustomButton(
             () => { // ボタンが押された時に実行
-
-                // skeldでボタンを置けなくする
-                // if(PlayerControl.GameOptions.MapId == 0){
-                //     var meetingButton = GameObject.Find("EmergencyConsole");
-                //     float distance = Vector2.Distance(meetingButton.transform.position, PlayerControl.LocalPlayer.transform.position);
-                //     if(distance < 3) return;
-                // }
-                if (!PlayerControl.LocalPlayer.CanMove || Trapper.trappedPlayer != null) return;
+                if (!PlayerControl.LocalPlayer.CanMove || Trap.hasTrappedPlayer()) return;
                 Trapper.setTrap();
                 trapperSetTrapButton.Timer = trapperSetTrapButton.MaxTimer;
             },
@@ -192,11 +172,10 @@ namespace TheOtherRoles
                 return PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && !PlayerControl.LocalPlayer.Data.IsDead;
             },
             () => { /*ボタンが使える条件*/
-                return PlayerControl.LocalPlayer.CanMove && Trapper.trappedPlayer == null;
+                return PlayerControl.LocalPlayer.CanMove && !Trap.hasTrappedPlayer();
             },
             () => { /*ミーティング終了時*/
                 trapperSetTrapButton.Timer = trapperSetTrapButton.MaxTimer;
-                Trapper.unsetTrap();
             },
             Trapper.getTrapButtonSprite(),
             // new Vector3(-2.6f, 0f, 0f),
@@ -215,31 +194,8 @@ namespace TheOtherRoles
         public static void Clear()
         {
             players = new List<Trapper>();
-            place = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperPlace.wav", false);
-            activate = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperActivate.wav", false);
-            disable = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperDisable.wav", false);
-            kill = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperKill.wav", false);
-            countdown = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperCountdown.wav", false);
-            Trapper.trap = new GameObject("Trap");
-            var trapRenderer = Trapper.trap.AddComponent<SpriteRenderer>();
-            Trapper.sound = new GameObject("TrapSound");
-            audioSource = Trapper.sound.gameObject.AddComponent<AudioSource>();
-            audioSource.priority = 0;
-            audioSource.spatialBlend = 1;
-            audioSource.clip = Trapper.place;
-            audioSource.loop = false;
-            audioSource.playOnAwake = false;
-            audioSource.minDistance = Trapper.minDsitance;
-            audioSource.rolloffMode = Trapper.rollOffMode;
             meetingFlag = false;
-            placedTime = DateTime.UtcNow;
-            playingKillSound = false;
-            trappedPlayer = null;
-            trap = null;
-            isTrapKill = false;
-            status = Status.notPlaced;
-            pos = Vector3.zero;
-            unsetTrap();
+            Trap.clearAllTraps();
         }
 
         public static Sprite getTrapButtonSprite() {
@@ -257,15 +213,6 @@ namespace TheOtherRoles
             writer.EndMessage();
             RPCProcedure.placeTrap(buff);
             placedTime = DateTime.UtcNow;
-        }
-        public static void unsetTrap()
-        {
-            if(Trapper.trap != null)
-            {
-                Trapper.trap.SetActive(false);
-            }
-            Trapper.trappedPlayer = null;
-            Trapper.status = Trapper.Status.notPlaced;
         }
 
         private static Sprite trapeffectSprite;

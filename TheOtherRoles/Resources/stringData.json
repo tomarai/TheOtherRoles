@@ -113,6 +113,10 @@
         "0": "Trapper",
         "11": "\u30c8\u30e9\u30c3\u30d1\u30fc"
     },
+    "trapperNumTrap": {
+        "0": "Number of Traps",
+        "11": "\u8a2d\u7f6e\u53ef\u80fd\u306a\u30c8\u30e9\u30c3\u30d7\u306e\u6570"
+    },
     "trapperExtensionTime": {
         "0": "Visible time of trap after set",
         "11": "\u8a2d\u7f6e\u5f8c\u306e\u76ee\u8996\u53ef\u80fd\u6642\u9593"
@@ -154,7 +158,7 @@
         "11": "\u7f60\u3092\u8a2d\u7f6e\u3057\u3066\u30d7\u30ec\u30a4\u30e4\u30fc\u3092\u6bba\u305b"
     },
     "trapperFullDesc": {
-        "0": "Trapper is an impostor role who has ability to set a trap.\nTrapper can also make normal kill but it makes penalty time to cooldown\nWhen Trapper set trap, it makes sounds and trap becomes visible for few secs\nIf player get caught by trap, trap will starts countdown to kill\nAfter certain time, player will be killed with sound.\nIf other player contact to trapped player, trap will be disabled\nIf trapper kills trapped player directly, trapper get bonus cooldown time\n\nNote\n1. if Trapper makes normal kill, trap will be disabled\n2. if next trap is set, first one will be disabled",
+        "0": "Trapper is an impostor role who has ability to set a trap.\nTrapper can also make normal kill but it makes penalty time to cooldown\nWhen Trapper set trap, it makes sounds and it will be available after few secs.\nIf player get caught by trap, trap will starts countdown to kill\nAfter certain time, player will be killed with sound.\nIf other player contact to trapped player, trap will be disabled\nIf trapper kills trapped player directly, trapper get bonus cooldown time\n\nNote\n1. if Trapper makes normal kill, trap will be disabled\n2. if next trap is set, first one will be disabled",
         "11": "\u30c8\u30e9\u30c3\u30d1\u30fc\u306f\u7f60\u3092\u8a2d\u7f6e\u3059\u308b\u80fd\u529b\u3092\u6301\u3064\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\n\u30c8\u30e9\u30c3\u30d1\u30fc\u306f\u901a\u5e38\u306e\u30ad\u30eb\u3092\u884c\u3046\u3053\u3068\u304c\u3067\u304d\u308b\u304c\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306b\u30da\u30ca\u30eb\u30c6\u30a3\u304c\u767a\u751f\u3059\u308b\n\u30c8\u30e9\u30c3\u30d7\u306f\u8a2d\u7f6e\u6642\u306b\u97f3\u304c\u306a\u308a\u6570\u79d2\u9593\u76ee\u8996\u53ef\u80fd\u306b\u306a\u308b\n\u30d7\u30ec\u30a4\u30e4\u30fc\u304c\u30c8\u30e9\u30c3\u30d7\u306b\u304b\u304b\u308b\u3068\u97f3\u304c\u306a\u308a\u30ad\u30eb\u307e\u3067\u306e\u30ab\u30a6\u30f3\u30c8\u30c0\u30a6\u30f3\u3092\u958b\u59cb\u3059\u308b\n\u4e00\u5b9a\u6642\u9593\u5f8c\u30d7\u30ec\u30a4\u30e4\u30fc\u306f\u97f3\u3068\u3068\u3082\u306b\u6bba\u5bb3\u3055\u308c\u308b\n\u30c8\u30e9\u30c3\u30d7\u306b\u304b\u304b\u3063\u3066\u3044\u308b\u30d7\u30ec\u30a4\u30e4\u30fc\u306b\u63a5\u89e6\u3059\u308b\u3053\u3068\u3067\u7f60\u3092\u89e3\u9664\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\n\u7f60\u306b\u304b\u304b\u3063\u3066\u3044\u308b\u30d7\u30ec\u30a4\u30e4\u30fc\u3092\u76f4\u63a5\u30c8\u30e9\u30c3\u30d1\u30fc\u304c\u30ad\u30eb\u3059\u308b\u3068\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306b\u30dc\u30fc\u30ca\u30b9\u3092\u5f97\u308b\u3053\u3068\u304c\u3067\u304d\u308b\n\n\u8ffd\u52a0\u8a73\u7d30\n1. \u30c8\u30e9\u30c3\u30d1\u30fc\u304c\u901a\u5e38\u30ad\u30eb\u3092\u884c\u3046\u3068\u7f60\u304c\u7121\u52b9\u5316\u3055\u308c\u308b\n2. \u6b21\u306e\u30c8\u30e9\u30c3\u30d7\u304c\u30bb\u30c3\u30c8\u3055\u308c\u308b\u30681\u3064\u76ee\u306e\u30c8\u30e9\u30c3\u30d7\u304c\u7121\u52b9\u5316\u3055\u308c\u308b"
     },
     "bomber": {
@@ -184,6 +188,10 @@
     "bomberHasOneVote": {
         "0": "One vote with 2 people",
         "11": "2\u4eba\u30671\u7968\u6271\u3044"
+    },
+    "bomberAlwaysShowArrow": {
+        "0": "Always can see arrow",
+        "11": "\u5e38\u306b\u77e2\u5370\u304c\u8868\u793a\u3055\u308c\u308b"
     },
     "bomberPlantBomb": {
         "0": "Plant bomb",
@@ -2667,20 +2675,20 @@
         "11": "{0}%"
     },
     "creditsMain": {
-        "0": "Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>Thunderstorm584</color>, <color=#FCCE03FF>EndOfFile</color> & <color=#FCCE03FF>Mall\u00f6ris</color>\nDesign by <color=#FCCE03FF>Bavari</color>, Customization by <color=#c1a9ff>Virtual_Dusk</color>",
-        "11": "MOD <color=#FCCE03FF>Eisbison</color>\u3001<color=#FCCE03FF>Thunderstorm584</color>\u3001<color=#FCCE03FF>EndOfFile</color>\u3001<color=#FCCE03FF>Mall\u00f6ris</color>\n\u30c7\u30b6\u30a4\u30f3 <color=#FCCE03FF>Bavari</color>\u3001\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30fb\u65e5\u672c\u8a9e\u8a33 <color=#c1a9ff>Virtual_Dusk</color>"
+        "0": "Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>Thunderstorm584</color>, <color=#FCCE03FF>EndOfFile</color> & <color=#FCCE03FF>Mall\u00f6ris</color>\nDesign by <color=#FCCE03FF>Bavari</color>, Customization by <color=#c1a9ff>Virtual_Dusk</color> & Haoming",
+        "11": "MOD <color=#FCCE03FF>Eisbison</color>\u3001<color=#FCCE03FF>Thunderstorm584</color>\u3001<color=#FCCE03FF>EndOfFile</color>\u3001<color=#FCCE03FF>Mall\u00f6ris</color>\n\u30c7\u30b6\u30a4\u30f3 <color=#FCCE03FF>Bavari</color>\u3001\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30fb\u65e5\u672c\u8a9e\u8a33 <color=#c1a9ff>Virtual_Dusk</color>\u3001\u306f\u304a\u307f\u3093"
     },
     "creditsFull": {
-        "0": "<size=80%>Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>EndOfFile</color>\n<color=#FCCE03FF>Thunderstorm584</color> & <color=#FCCE03FF>Mall\u00f6ris</color>\nButton design by <color=#FCCE03FF>Bavari</color>\nCustomization by <color=#c1a9ff>Virtual_Dusk</color></size>",
-        "11": "<size=80%>MOD <color=#FCCE03FF>Eisbison</color>\u3001<color=#FCCE03FF>EndOfFile</color>\n<color=#FCCE03FF>Thunderstorm584</color>\u3001<color=#FCCE03FF>Mall\u00f6ris</color>\n\u30dc\u30bf\u30f3\u30c7\u30b6\u30a4\u30f3 <color=#FCCE03FF>Bavari</color>\n\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30fb\u65e5\u672c\u8a9e\u8a33 <color=#c1a9ff>Virtual_Dusk</color></size>"
+        "0": "<size=80%>Modded by <color=#FCCE03FF>Eisbison</color>, <color=#FCCE03FF>EndOfFile</color>\n<color=#FCCE03FF>Thunderstorm584</color> & <color=#FCCE03FF>Mall\u00f6ris</color>\nButton design by <color=#FCCE03FF>Bavari</color>\nCustomization by <color=#c1a9ff>Virtual_Dusk</color> & Haoming</size>",
+        "11": "<size=80%>MOD <color=#FCCE03FF>Eisbison</color>\u3001<color=#FCCE03FF>EndOfFile</color>\n<color=#FCCE03FF>Thunderstorm584</color>\u3001<color=#FCCE03FF>Mall\u00f6ris</color>\n\u30dc\u30bf\u30f3\u30c7\u30b6\u30a4\u30f3 <color=#FCCE03FF>Bavari</color>\n\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30fb\u65e5\u672c\u8a9e\u8a33 <color=#c1a9ff>Virtual_Dusk</color>\u3001\u306f\u304a\u307f\u3093</size>\u3000"
     },
     "creditsVersion": {
-        "0": "GM Edition v{0}",
-        "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3 v{0}"
+        "0": "GM-Haoming Edition v{0}",
+        "11": "GM-Haoming\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3 v{0}"
     },
     "updateButton": {
         "0": "Update\nThe Other Roles GM",
-        "11": "TOR GM\u3092\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8"
+        "11": "TOR GM-Haoming\u3092\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8"
     },
     "updatePleaseWait": {
         "0": "Updating The Other Roles GM\nPlease wait...",
@@ -2696,19 +2704,19 @@
     },
     "updateRestart": {
         "0": "The Other Roles GM\nupdated successfully.\nPlease restart the game.",
-        "11": "The Other Roles GM\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044"
+        "11": "The Other Roles GM-Haoming\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044"
     },
     "updateFailed": {
         "0": "Update failed.\nTry again later,\nor update manually.",
         "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044"
     },
     "announcementUpdate": {
-        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM Edition</color> update to v{ver} is available:</size>\n\n{1}",
-        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}"
+        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM-Haoming Edition</color> update to v{ver} is available:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM-Haoming\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}"
     },
     "announcementChangelog": {
-        "0": "<size=150%><color=#FC0303>TheOtherRoles GM Edition</color> Version {0}:</size>\n\n{1}",
-        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}"
+        "0": "<size=150%><color=#FC0303>TheOtherRoles GM-Haoming Edition</color> Version {0}:</size>\n\n{1}",
+        "11": "<size=125%><color=#FC0303>TheOtherRoles GM-Haoming\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}"
     },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",

@@ -134,6 +134,7 @@ namespace TheOtherRoles
             SpecimenVital.clearAndReload();
             AdditionalVents.clearAndReload();
             BombEffect.clearBombEffects();
+            Trap.clearAllTraps();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
@@ -1087,168 +1088,34 @@ namespace TheOtherRoles
         }
         public static void placeTrap(byte[] buff)
         {
-            Trapper.unsetTrap();
-            if(Trapper.trap == null){
-                Trapper.trap = new GameObject("Trap");
-                var trapRenderer = Trapper.trap.AddComponent<SpriteRenderer>();
-                trapRenderer.sprite = Trapper.getTrapEffectSprite();
-            }
-            Trapper.status = Trapper.Status.placed;
             Vector3 pos = Vector3.zero;
             pos.x = BitConverter.ToSingle(buff, 0*sizeof(float));
             pos.y = BitConverter.ToSingle(buff, 1*sizeof(float));
-            Trapper.pos = new Vector3(pos.x, pos.y, PlayerControl.LocalPlayer.transform.localPosition.z - 0.001f); // just behind player
-            Trapper.trap.transform.position = Trapper.pos;
-            Trapper.trap.transform.localPosition = Trapper.pos;
-            Trapper.trap.SetActive(true);
-
-            // 音を鳴らす
-            if(Trapper.sound == null)
-            {
-                Trapper.sound = new GameObject("TrapSound");
-                Trapper.audioSource = Trapper.sound.gameObject.AddComponent<AudioSource>();
-            } 
-            Trapper.sound.transform.position = Trapper.pos;
-            Trapper.sound.transform.position = Trapper.pos;
-            Trapper.audioSource.clip = Trapper.place;
-            Trapper.audioSource.loop = false;
-            Trapper.audioSource.maxDistance = 2 * Trapper.maxDistance/3;
-            Trapper.audioSource.PlayOneShot(Trapper.place);
-
-            // 猶予時間後にトラップの表示を消す
-            if(!(PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Fox)))
-            {
-                HudManager.Instance.StartCoroutine(Effects.Lerp(Trapper.extensionTime, new Action<float>((p) =>
-                { // Delayed action
-                    if (p == 1f)
-                    {
-                        if(Trapper.trap != null)
-                        {
-                            Trapper.trap.SetActive(false);
-                        }
-                    }
-                })));
-            }
+            Trap trap = new Trap(pos);
         }
         public static void clearTrap()
         {
-            Trapper.unsetTrap();
+            Trap.clearAllTraps();
         }
-        public static void disableTrap(byte playerId, bool setCooldown)
+        public static void disableTrap(byte trapId)
         {
-            Trapper.trappedPlayer = null;
-
-            // カウントダウン音を止める
-            if(Trapper.audioSource.clip == Trapper.countdown)
-                Trapper.audioSource.Stop();
-
-            if(setCooldown) //　解除の場合
-            {
-                Trapper.audioSource.clip = Trapper.disable;
-                Trapper.audioSource.loop = false;
-                Trapper.audioSource.maxDistance = Trapper.maxDistance;
-                Trapper.audioSource.PlayOneShot(Trapper.disable);
-            }
-
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && setCooldown)
-            {
-                PlayerControl.LocalPlayer.killTimer = PlayerControl.GameOptions.KillCooldown + Trapper.penaltyTime;
-                Trapper.trapperSetTrapButton.Timer = Trapper.cooldown + Trapper.penaltyTime;
-            }
-            Trapper.unsetTrap();
+            Trap.disableTrap(trapId);
         }
-        public static void activateTrap(byte trapperId, byte playerId)
+        public static void activateTrap(byte trapId, byte trapperId, byte playerId)
         {
-            if(Trapper.meetingFlag) return;
-            if(Trapper.status == Trapper.Status.placed) // トラップが設置されている
-            {
-                Trapper.status = Trapper.Status.active;
-                var trapper = Helpers.playerById(trapperId);
-                var player = Helpers.playerById(playerId);
-                Trapper.trappedPlayer = player;
-                Trapper.trap.SetActive(true);
-                Trapper.audioSource.loop = true;
-                Trapper.audioSource.maxDistance = Trapper.maxDistance;
-                Trapper.audioSource.clip = Trapper.countdown;
-                Trapper.audioSource.Play();
-
-                player.NetTransform.Halt();
-                HudManager.Instance.StartCoroutine(Effects.Lerp(Trapper.killTimer, new Action<float>((p) => 
-                {
-                    try
-                    {
-                        if(Trapper.meetingFlag) return;
-                        if(Trapper.trappedPlayer == null)
-                        {
-                            player.moveable = true;
-                            return;
-                        }
-                        else if((p==1f) && Trapper.trappedPlayer.isAlive()){
-                            player.moveable = true;
-                            if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper))
-                            {
-                                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperKill, Hazel.SendOption.Reliable, -1);
-                                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                                writer.Write(player.PlayerId);
-                                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                                RPCProcedure.trapperKill(PlayerControl.LocalPlayer.PlayerId, player.PlayerId);
-                            }
-                        }else{
-                            player.moveable = false;
-                            player.transform.position = Trapper.trap.transform.position;
-                        }
-
-                    } catch (Exception e){
-                        Helpers.log("カウントダウン中にエラー発生");
-                        Helpers.log(e.Message);
-                    }
-                })));
-
-            }
-            else
-            {
-                Helpers.log("何故かトラップが有効にできない");
-            }
+            var trapper = Helpers.playerById(trapperId);
+            var player= Helpers.playerById(playerId);
+            Trap.activateTrap(trapId, trapper, player);
         }
-        public static void trapperKill(byte trapperId, byte playerId, bool sound=true)
+        public static void trapperKill(byte trapId, byte trapperId, byte playerId)
         {
-            if(Trapper.status == Trapper.Status.active){
-                if(sound)
-                {
-                    Trapper.playingKillSound = true;
-                    Trapper.audioSource.clip = Trapper.kill;
-                    Trapper.audioSource.Stop();
-                    Trapper.audioSource.loop = false;
-                    Trapper.audioSource.maxDistance = Trapper.maxDistance;
-                    Trapper.audioSource.PlayOneShot(Trapper.kill);
-                }
-                HudManager.Instance.StartCoroutine(Effects.Lerp(Trapper.kill.length, new Action<float>((p) => 
-                {
-                    if(p ==1)
-                    {
-                        Trapper.playingKillSound =  false;
-                        Trapper.unsetTrap();
-                    }
-                })));
-                Trapper.isTrapKill = true;
-                var trapper = Helpers.playerById(trapperId);
-                var player = Helpers.playerById(playerId);
-                KillAnimationCoPerformKillPatch.hideNextAnimation = true;
-                trapper.MurderPlayer(player);
-            }
+            var trapper = Helpers.playerById(trapperId);
+            var target = Helpers.playerById(playerId);
+            Trap.trapKill(trapId, trapper, target);
         }
         public static void trapperMeetingFlag()
         {
-            Trapper.meetingFlag = true;
-            Trapper.audioSource.Stop();
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && Trapper.trappedPlayer != null)
-            {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperKill, Hazel.SendOption.Reliable, -1);
-                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                writer.Write(Trapper.trappedPlayer.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.trapperKill(PlayerControl.LocalPlayer.PlayerId, Trapper.trappedPlayer.PlayerId, false);
-            }
+            Trap.onMeeting();
         }
         public static void randomSpawn(byte playerId, byte locId){
             HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => { // Delayed action
@@ -1684,15 +1551,13 @@ namespace TheOtherRoles
                         RPCProcedure.clearTrap();
                         break;
                     case (byte)CustomRPC.ActivateTrap:
-                        RPCProcedure.activateTrap(reader.ReadByte(), reader.ReadByte());
+                        RPCProcedure.activateTrap(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
                         break;
                     case (byte)CustomRPC.DisableTrap:
-                        byte trapperId = reader.ReadByte();
-                        bool setCooldown = reader.ReadByte() == (byte)1 ? true : false;
-                        RPCProcedure.disableTrap(trapperId, setCooldown);
+                        RPCProcedure.disableTrap(reader.ReadByte());
                         break;
                     case (byte)CustomRPC.TrapperKill:
-                        RPCProcedure.trapperKill(reader.ReadByte(), reader.ReadByte());
+                        RPCProcedure.trapperKill(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
                         break;
                     case (byte)CustomRPC.TrapperMeetingFlag:
                         RPCProcedure.trapperMeetingFlag();
