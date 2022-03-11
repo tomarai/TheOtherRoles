@@ -28,7 +28,7 @@ namespace TheOtherRoles
         public static float extensionTime {get {return CustomOptionHolder.trapperExtensionTime.getFloat();}}
         public static float killTimer {get {return CustomOptionHolder.trapperKillTimer.getFloat();}}
         public static float cooldown {get {return CustomOptionHolder.trapperCooldown.getFloat();}}
-        public static float minDsitance {get {return CustomOptionHolder.trapperMinDistance.getFloat();}}
+        public static float minDsitance = 0f;
         public static float maxDistance {get {return CustomOptionHolder.trapperMaxDistance.getFloat();}}
         public static float trapRange {get {return CustomOptionHolder.trapperTrapRange.getFloat();}}
         public static float penaltyTime {get {return CustomOptionHolder.trapperPenaltyTime.getFloat();}}
@@ -51,7 +51,7 @@ namespace TheOtherRoles
 
         public override void FixedUpdate() 
         {
-            // 処理に自身がないので念の為tryで囲っておく
+            // 処理に自信がないので念の為tryで囲っておく
             try{
                 if (PlayerControl.LocalPlayer.isRole(RoleType.Trapper) && Trap.traps.Count != 0 && !Trap.hasTrappedPlayer() && !meetingFlag)
                 {

@@ -118,8 +118,8 @@
         "11": "\u8a2d\u7f6e\u53ef\u80fd\u306a\u30c8\u30e9\u30c3\u30d7\u306e\u6570"
     },
     "trapperExtensionTime": {
-        "0": "Visible time of trap after set",
-        "11": "\u8a2d\u7f6e\u5f8c\u306e\u76ee\u8996\u53ef\u80fd\u6642\u9593"
+        "0": "time to activate trap after placed",
+        "11": "\u8a2d\u7f6e\u5f8c\u30c8\u30e9\u30c3\u30d7\u304c\u6709\u52b9\u306b\u306a\u308b\u307e\u3067\u306e\u6642\u9593"
     },
     "trapperCooldown": {
         "0": "Trap cooldown",
