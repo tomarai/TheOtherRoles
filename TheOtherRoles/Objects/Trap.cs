@@ -148,7 +148,7 @@ namespace TheOtherRoles.Objects {
                 try
                 {
                     if(Trapper.meetingFlag) return;
-                    if(trap == null || trap.isActive == false) //　解除された場合の処理
+                    if(trap == null || trap.trap == null || !trap.isActive) //　解除された場合の処理
                     {
                         if(!moveableFlag)
                         {
