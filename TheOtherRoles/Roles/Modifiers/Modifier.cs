@@ -23,6 +23,7 @@ namespace TheOtherRoles
     {
         Madmate = 0,
         CreatedMadmate,
+        LastImpostor,
 
         // don't put anything below this
         NoModifier = int.MaxValue
@@ -35,6 +36,7 @@ namespace TheOtherRoles
         {
             { ModifierType.Madmate, typeof(ModifierBase<Madmate>) },
             { ModifierType.CreatedMadmate, typeof(ModifierBase<CreatedMadmate>) },
+            { ModifierType.LastImpostor, typeof(ModifierBase<LastImpostor>) },
         };
     }
 

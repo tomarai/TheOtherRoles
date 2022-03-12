@@ -92,7 +92,7 @@ namespace TheOtherRoles
         public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
         public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
-        public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
+        // public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
         public static RoleInfo munou = new RoleInfo("incompetent", Munou.color, CustomOptionHolder.munouSpawnRate, RoleType.Munou);
         public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
@@ -160,7 +160,6 @@ namespace TheOtherRoles
                 fox,
                 immoralist,
                 fortuneTeller,
-                lastImpostor,
                 munou,
                 schrodingersCat,
                 trapper,
@@ -266,16 +265,9 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
 
 
-            if (p.isRole(RoleType.LastImpostor)) infos.Add(lastImpostor); // 一番最後にしておかないといけない
-
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
             if (infos.Count == 0 && !p.Data.Role.IsImpostor) infos.Add(crewmate); // Just Crewmate
-            if (infos.Count == 1 && infos[0] == lastImpostor)
-            {
-                infos[0] = impostor;
-                infos.Add(lastImpostor);
-            }
 
             // Modifier
             if (p.isLovers()) infos.Add(lovers);
@@ -305,6 +297,20 @@ namespace TheOtherRoles
                     string prefix = useColors ? Helpers.cs(Madmate.color, Madmate.prefix) : Madmate.prefix;
                     roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(Madmate.color, x.name) : x.name).ToArray());
                     roleName = prefix + roleName;
+                }
+            }
+
+            if (p.hasModifier(ModifierType.LastImpostor))
+            {
+                if (roleInfo.Contains(impostor))
+                {
+                    roleName = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.fullName) : LastImpostor.fullName;
+                }
+                else
+                {
+                    string postfix = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.postfix) : LastImpostor.postfix;
+                    roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    roleName = roleName + postfix;
                 }
             }
             return roleName;

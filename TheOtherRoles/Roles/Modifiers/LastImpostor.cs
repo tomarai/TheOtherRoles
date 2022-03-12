@@ -13,7 +13,7 @@ using static TheOtherRoles.GameHistory;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class LastImpostor : RoleBase<LastImpostor>
+    public class LastImpostor : ModifierBase<LastImpostor>
     {
         public enum DivineResults
         {
@@ -29,10 +29,24 @@ namespace TheOtherRoles
         public static int remainingShots = 0;
         public static int selectedFunction {get {return CustomOptionHolder.lastImpostorFunctions.getSelection();}}
         public static DivineResults divineResult {get {return (DivineResults)CustomOptionHolder.lastImpostorResults.getSelection();}}
+        public static string postfix
+        {
+            get
+            {
+                return ModTranslation.getString("lastImpostorPostfix");
+            }
+        }
+        public static string fullName
+        {
+            get
+            {
+                return ModTranslation.getString("lastImpostor");
+            }
+        }
 
         public LastImpostor()
         {
-            RoleType = roleId = RoleType.LastImpostor;
+            ModType = modId = ModifierType.LastImpostor;
         }
 
         public override void OnMeetingStart() { }
@@ -72,8 +86,8 @@ namespace TheOtherRoles
                 {
                     if(selectedFunction == 1) return false;
                     var p = PlayerControl.LocalPlayer;
-                    if(!p.isRole(RoleType.LastImpostor)) return false;
-                    if (p.isRole(RoleType.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
+                    if(!p.hasModifier(ModifierType.LastImpostor)) return false;
+                    if (p.hasModifier(ModifierType.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
                         && MapOptions.playerIcons.ContainsKey(index) && numUsed < 1 && isCounterMax())
                     {
                         return true;
@@ -133,7 +147,7 @@ namespace TheOtherRoles
                     //　ラストインポスター以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
                     if (!playerIcons.ContainsKey(index) ||
-                        !PlayerControl.LocalPlayer.isRole(RoleType.LastImpostor) ||
+                        !PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) ||
                         !isCounterMax()) 
                     {
                         return false;

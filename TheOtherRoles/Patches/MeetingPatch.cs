@@ -418,10 +418,6 @@ namespace TheOtherRoles.Patches {
                 {
                     guesserRole = RoleType.EvilGuesser;
                 }
-                else if(PlayerControl.LocalPlayer.isRole(RoleType.LastImpostor))
-                {
-                    guesserRole = RoleType.LastImpostor;
-                }
                 else
                 {
                     guesserRole = RoleType.NiceGuesser;
@@ -434,8 +430,7 @@ namespace TheOtherRoles.Patches {
 					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleType == RoleType.Spy) ||
                     roleInfo == RoleInfo.gm ||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings) ||
-                    roleInfo == RoleInfo.bomberB ||
-                    roleInfo == RoleInfo.lastImpostor)
+                    roleInfo == RoleInfo.bomberB)
                     continue; // Not guessable roles
 				if (Guesser.guesserCantGuessSnitch && Snitch.snitch != null) {
                     var (playerCompleted, playerTotal) = TasksHandler.taskInfo(Snitch.snitch.Data);
@@ -607,7 +602,7 @@ namespace TheOtherRoles.Patches {
 
             // Add Guesser Buttons
             bool isGuesserButton = Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) > 0;
-            bool isLastImpostorButton = PlayerControl.LocalPlayer.isRole(RoleType.LastImpostor) && LastImpostor.remainingShots > 0 && LastImpostor.selectedFunction == 1 && LastImpostor.isCounterMax();
+            bool isLastImpostorButton = PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) && LastImpostor.remainingShots > 0 && LastImpostor.selectedFunction == 1 && LastImpostor.isCounterMax();
             if (isGuesserButton || isLastImpostorButton) {
                 for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];

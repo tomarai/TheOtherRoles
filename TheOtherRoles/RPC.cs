@@ -837,7 +837,7 @@ namespace TheOtherRoles
             PlayerControl dyingLoverPartner = Lovers.bothDie ? dyingTarget.getPartner() : null; // Lover check
             byte partnerId = dyingLoverPartner != null ? dyingLoverPartner.PlayerId : dyingTargetId;
 
-            if(killer.isRole(RoleType.LastImpostor))
+            if(killer.hasModifier(ModifierType.LastImpostor))
             {
                 Mathf.Max(0, LastImpostor.remainingShots - 1);
             }
@@ -928,7 +928,7 @@ namespace TheOtherRoles
         public static void impostorPromotesToLastImpostor(byte targetId)
         {
             PlayerControl player = Helpers.playerById(targetId);
-            player.setRole(RoleType.LastImpostor);
+            player.addModifier(ModifierType.LastImpostor);
         }
 
         public static void GMKill(byte targetId)

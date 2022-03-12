@@ -184,10 +184,11 @@ namespace TheOtherRoles.Patches {
             }
 
 
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.LastImpostor))
+            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, LastImpostor.color);
             }
+
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.Data.IsDead)
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);

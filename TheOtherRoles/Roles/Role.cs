@@ -59,6 +59,7 @@ namespace TheOtherRoles
         NekoKabocha,
         Madmate,
         SerialKiller,
+        astImpostor,
 
 
         Mini = 150,
@@ -81,7 +82,6 @@ namespace TheOtherRoles
         SchrodingersCat,
         Puppeteer,
         Trapper,
-        LastImpostor,
         BomberA,
         BomberB,
         EvilTracker,
@@ -111,7 +111,6 @@ namespace TheOtherRoles
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
             { RoleType.NekoKabocha, typeof(RoleBase<NekoKabocha>) },
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
-            { RoleType.LastImpostor, typeof(RoleBase<LastImpostor>)},
             { RoleType.Trapper, typeof(RoleBase<Trapper>)},
             { RoleType.BomberA, typeof(RoleBase<BomberA>)},
             { RoleType.BomberB, typeof(RoleBase<BomberB>)},
