@@ -113,6 +113,13 @@ namespace TheOtherRoles.Objects {
         public static void activateTrap(byte trapId, PlayerControl trapper, PlayerControl target)
         {
             var trap = traps[trapId];
+
+            // 有効にする
+            trap.isActive = true;
+            trap.target = target;
+            var spriteRenderer = trap.trap.gameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = trapActiveSprite;
+
             // 他のトラップを全て無効化する
             var newTraps = new SortedDictionary<byte, Trap>();
             newTraps.Add(trapId, trap);
@@ -124,11 +131,6 @@ namespace TheOtherRoles.Objects {
             }
             traps = newTraps;
 
-            // 有効にする
-            trap.isActive = true;
-            trap.target = target;
-            var spriteRenderer = trap.trap.gameObject.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = trapActiveSprite;
 
             // 音を鳴らす
             trap.audioSource.Stop();
