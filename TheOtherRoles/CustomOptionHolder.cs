@@ -357,6 +357,7 @@ namespace TheOtherRoles {
         public static CustomOption foxStealthDuration;
         public static CustomTasksOption foxTasks;
         public static CustomRoleOption munouSpawnRate;
+        public static CustomOption munouType;
         public static CustomOption munouProbability;
         public static CustomOption munouNumShufflePlayers;
 
@@ -692,6 +693,7 @@ namespace TheOtherRoles {
             puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, "puppeteerLosesSenriganOnDeath", true,puppeteerCanControlDummyEvenIfDead);
             
             munouSpawnRate = new CustomRoleOption(960, "incompetent", Munou.color, 15);
+            munouType = CustomOption.Create(963, "incompetentType", new string[] { "incompetentSimple", "incompetentRandom" }, munouSpawnRate);
             munouProbability = CustomOption.Create(961, "incompetentProbability", 60f, 0f, 100f, 10f, munouSpawnRate);
             munouNumShufflePlayers = CustomOption.Create(962, "incompetentNumShufflePlayers", 4f, 2f, 15f, 1f, munouSpawnRate);
 

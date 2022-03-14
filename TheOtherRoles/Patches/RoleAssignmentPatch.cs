@@ -160,7 +160,6 @@ namespace TheOtherRoles.Patches
             neutralSettings.Add((byte)RoleType.Puppeteer, CustomOptionHolder.puppeteerSpawnRate.data);
 
 
-            crewSettings.Add((byte)RoleType.Munou, CustomOptionHolder.munouSpawnRate.data);
             crewSettings.Add((byte)RoleType.FortuneTeller, CustomOptionHolder.fortuneTellerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Mayor, CustomOptionHolder.mayorSpawnRate.data);
             crewSettings.Add((byte)RoleType.Engineer, CustomOptionHolder.engineerSpawnRate.data);
@@ -587,6 +586,29 @@ namespace TheOtherRoles.Patches
                     else
                     {
                         setModifierToRandomPlayer((byte)ModifierType.Madmate, Madmate.candidates);
+                    }
+                }
+            }
+            // Munou
+            for (int i = 0; i < CustomOptionHolder.munouSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.munouSpawnRate.rate * 10)
+                {
+                    var candidates = Munou.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+
+                    if (Munou.munouType == Munou.MunouType.Simple)
+                    {
+                        if (data.maxCrewmateRoles <= 0) break;
+                        setModifierToRandomPlayer((byte)ModifierType.Munou, Munou.candidates);
+                        data.maxCrewmateRoles--;
+                    }
+                    else
+                    {
+                        setModifierToRandomPlayer((byte)ModifierType.Munou, Munou.candidates);
                     }
                 }
             }

@@ -596,7 +596,7 @@ namespace TheOtherRoles.Patches
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.PuppeteerWin)
                     {
-                        bonusText = "PuppeteerWin";
+                        bonusText = "puppeteerWin";
                         textRenderer.color = Puppeteer.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Puppeteer.color);
                     }

@@ -93,7 +93,6 @@ namespace TheOtherRoles
         public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
         // public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
-        public static RoleInfo munou = new RoleInfo("incompetent", Munou.color, CustomOptionHolder.munouSpawnRate, RoleType.Munou);
         public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
@@ -160,7 +159,6 @@ namespace TheOtherRoles
                 fox,
                 immoralist,
                 fortuneTeller,
-                munou,
                 schrodingersCat,
                 trapper,
                 bomberA,
@@ -246,17 +244,6 @@ namespace TheOtherRoles
             }
 
             // はおみんオリジナル
-            if(p.isRole(RoleType.Munou))
-            {
-                if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
-                {
-                    infos.Add(munou);
-                }
-                else
-                {
-                    infos.Add(crewmate);
-                }
-            }
             if(p.isRole(RoleType.SchrodingersCat)) infos.Add(schrodingersCat);
             if(p.isRole(RoleType.Trapper)) infos.Add(trapper);
             if(p.isRole(RoleType.BomberA)) infos.Add(bomberA);
@@ -309,6 +296,16 @@ namespace TheOtherRoles
                 else
                 {
                     string postfix = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.postfix) : LastImpostor.postfix;
+                    roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    roleName = roleName + postfix;
+                }
+            }
+
+            if(p.hasModifier(ModifierType.Munou))
+            {
+                if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
+                {
+                    string postfix = useColors ? Helpers.cs(Munou.color, Munou.postfix) : Munou.postfix;
                     roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                     roleName = roleName + postfix;
                 }

@@ -12,19 +12,78 @@ using static TheOtherRoles.GameHistory;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Munou: RoleBase<Munou>
+    public class Munou: ModifierBase<Munou>
     {
+        public enum MunouType
+        {
+            Simple = 0,
+            Random = 1,
+        }
         public static Color color = Color.grey;
         public static bool endGameFlag = false;
         public static bool randomColorFlag = false;
         public static int probability {get {return (int)CustomOptionHolder.munouProbability.getFloat();}}
         public static int numShufflePlayers {get {return (int)CustomOptionHolder.munouNumShufflePlayers.getFloat();}}
         public static Dictionary<byte, byte> randomPlayers = new Dictionary<byte, byte>();
+        public static string postfix
+        {
+            get
+            {
+                return ModTranslation.getString("incompetent");
+            }
+        }
+
+        public static MunouType munouType {get {return (MunouType)CustomOptionHolder.munouType.getSelection();}}
+        public static List<RoleType> validRoles = new List<RoleType>
+        {
+            RoleType.Crewmate,
+            RoleType.Shifter,
+            RoleType.Mayor,
+            RoleType.Engineer,
+            RoleType.Sheriff,
+            RoleType.Lighter,
+            RoleType.Detective,
+            RoleType.TimeMaster,
+            RoleType.Medic,
+            RoleType.Swapper,
+            RoleType.Seer,
+            RoleType.Hacker,
+            RoleType.Tracker,
+            RoleType.SecurityGuard,
+            RoleType.Bait,
+            RoleType.Medium,
+            RoleType.FortuneTeller,
+            RoleType.Mini,
+            RoleType.NiceGuesser,
+            RoleType.Watcher,
+        };
+        public static List<PlayerControl> candidates
+        {
+            get
+            {
+                List<PlayerControl> crewNoRole = new List<PlayerControl>();
+                List<PlayerControl> validPlayers = new List<PlayerControl>();
+
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    var info = RoleInfo.getRoleInfoForPlayer(player);
+                    if (info.Contains(RoleInfo.crewmate) && !player.hasModifier(ModifierType.Munou) && !player.isRole(RoleType.FortuneTeller))
+                    {
+                        crewNoRole.Add(player);
+                    }
+                    validPlayers.Add(player);
+                }
+
+                if (munouType == MunouType.Simple) return crewNoRole;
+                else if (munouType == MunouType.Random) return validPlayers;
+                return validPlayers;
+            }
+        }
 
 
         public Munou()
         {
-            RoleType = roleId = RoleType.Munou;
+            ModType = modId = ModifierType.Munou;
         }
 
         public override void OnMeetingStart()
@@ -38,7 +97,7 @@ namespace TheOtherRoles
         }
         public override void OnMeetingEnd()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.isAlive())
+            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
                 randomColors();
             }
@@ -57,7 +116,7 @@ namespace TheOtherRoles
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Munou)) resetColors();
+            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou)) resetColors();
         }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 

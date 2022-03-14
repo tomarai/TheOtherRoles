@@ -78,7 +78,6 @@ namespace TheOtherRoles
         Watcher,
         Fox,
         Immoralist,
-        Munou,
         SchrodingersCat,
         Puppeteer,
         Trapper,
@@ -105,7 +104,6 @@ namespace TheOtherRoles
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>)},
-            { RoleType.Munou, typeof(RoleBase<Munou>)},
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
