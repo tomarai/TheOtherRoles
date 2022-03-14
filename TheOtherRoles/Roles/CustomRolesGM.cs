@@ -63,8 +63,13 @@ namespace TheOtherRoles
             Modifier.allModifiers.Do(x => x.OnMeetingStart());
 
             GM.resetZoom();
-            Camouflager.resetCamouflage();
-            Morphling.resetMorph();
+            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p)=>
+            {
+                if (p == 1){
+                    Camouflager.resetCamouflage();
+                    Morphling.resetMorph();
+                }
+            })));
         }
 
         public static void OnMeetingEnd()

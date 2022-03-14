@@ -253,6 +253,9 @@
         "0": "Last impostor",
         "11": "\u30e9\u30b9\u30c8\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
     },
+    "lastImpostorPostfix": {
+        "0": "LI"
+    },
     "lastImpostorEnable": {
         "0": "Enable Last impostor",
         "11": "\u30e9\u30b9\u30c8\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u6709\u52b9\u5316"

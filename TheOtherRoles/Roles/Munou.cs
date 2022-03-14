@@ -1,4 +1,6 @@
 using HarmonyLib;
+using Hazel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,7 +29,12 @@ namespace TheOtherRoles
 
         public override void OnMeetingStart()
         {
-            resetColors();
+            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p)=>
+            {
+                if (p == 1){
+                    resetColors();
+                }
+            })));
         }
         public override void OnMeetingEnd()
         {
