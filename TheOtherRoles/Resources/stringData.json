@@ -304,6 +304,10 @@
         "0": "Last impostor is an impostor role that the last living impostor acquires.\nlast impostor gets additional ability if he kills number of players is set in settings\nDepends in options, last impostor can  use guesser or divination ability.",
         "11": "\u30e9\u30b9\u30c8\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306f\u6700\u5f8c\u307e\u3067\u751f\u304d\u6b8b\u3063\u305f\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u4ed8\u4e0e\u3055\u308c\u308b\u5f79\u5272\u3067\u3059\u3002\n\u8a2d\u5b9a\u3055\u308c\u305f\u4eba\u6570\u3092\u30ad\u30eb\u3059\u308b\u3053\u3068\u3067\u8ffd\u52a0\u80fd\u529b\u3092\u5f97\u308b\u3053\u3068\u3067\u304d\u308b\n\u8ffd\u52a0\u80fd\u529b\u306f\u30aa\u30d7\u30b7\u30e7\u30f3\u306b\u3088\u308a\u30b2\u30c3\u30b5\u30fc\u3001\u5360\u3044\u306e\u3069\u3061\u3089\u304b\u3092\u5f97\u308b\u3053\u3068\u304c\u3067\u304d\u308b"
     },
+    "randomWireTask": {
+        "0": "Random fix wiring task",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u914d\u7dda\u30bf\u30b9\u30af"
+    },
     "additionalVents": {
         "0": "Additional vents(Polus)",
         "11": "\u8ffd\u52a0\u30d9\u30f3\u30c8(\u30dd\u30fc\u30e9\u30b9)"

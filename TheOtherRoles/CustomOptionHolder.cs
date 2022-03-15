@@ -403,6 +403,7 @@ namespace TheOtherRoles {
         public static CustomOption puppeteerPenaltyOnDeath;
         public static CustomOption puppeteerLosesSenriganOnDeath;
 
+        public static CustomOption randomWireTask;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -795,6 +796,7 @@ namespace TheOtherRoles {
             lastImpostorResults = CustomOption.Create(9903, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, lastImpostorEnable);
             lastImpostorNumShots = CustomOption.Create(9904, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
 
+            randomWireTask = CustomOption.Create(9909, "randomWireTask", false, specialOptions, true);
             additionalVents = CustomOption.Create(9905, "additionalVents", false, specialOptions, true);
             specimenVital = CustomOption.Create(9906, "specimenVital", false, specialOptions);
             polusRandomSpawn = CustomOption.Create(9907, "polusRandomSpawn", false, specialOptions);
