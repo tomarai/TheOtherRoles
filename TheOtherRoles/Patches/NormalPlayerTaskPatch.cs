@@ -21,7 +21,6 @@ namespace TheOtherRoles.Patches
             for (int i = 0; i < __instance.Data.Length; i++)
             {
                 int index = list.RandomIdx<global::Console>();
-                Helpers.log($"index={index}");
                 __instance.Data[i] = (byte)list[index].ConsoleId;
                 list.RemoveAt(index);
             }
