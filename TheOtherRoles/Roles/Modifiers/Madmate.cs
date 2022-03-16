@@ -40,7 +40,7 @@ namespace TheOtherRoles
         public static int numShortTasks { get { return CustomOptionHolder.madmateTasks.shortTasks; } }
 
         public static bool hasTasks { get { return madmateAbility == MadmateAbility.Fanatic; } }
-        public static bool exileCrewmate { get {return CustomOptionHolder.createdMadmateExileCrewmate.getBool(); } }
+        public static bool exileCrewmate { get {return CustomOptionHolder.madmateExilePlayer.getBool(); } }
 
         public static string prefix
         {
