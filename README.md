@@ -1,12 +1,16 @@
+# とりあえず最初に書いておくやつ
+This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+
 # The Other Roles: GM Edition 改造版
 GMエディションにPRを出す前にバランス調整等のお試しをするための環境  
 基本的にバグだらけなので使う人は自己責任でどうぞ  
 不具合を見つけた方はissue登録かDiscordのhaoming#1821まで
 
-安定したものを使いたい方は素直に[本家](https://github.com/yukinogatari/TheOtherRoles-GM)を使ってください
+安定したものを使いたい方は素直に[本家GM](https://github.com/yukinogatari/TheOtherRoles-GM)を使ってください
 
 
 # 追加機能
+- 配線タスクの順番のランダム化
 - エアシップのリアクター時間変更(オプション)
 - エアシップの一部のタスクに壁判定を追加（現像、シャワー、ゴミ箱）
 - ポーラスのランダムリスポン（オプション）
@@ -33,6 +37,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2022.2.24s|v3.5.3| v1.11.10|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.10/TheOtherRoles-GM-Haoming.v1.11.10.zip)|l
 |2022.2.24s|v3.5.3| v1.11.9|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.9/TheOtherRoles-GM-Haoming.v1.11.9.zip)|l
 |2022.2.24s|v3.5.3| v1.11.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.8/TheOtherRoles-GM-Haoming.v1.11.8.zip)|l
 |2022.2.24s|v3.5.3| v1.11.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.7/TheOtherRoles-GM-Haoming.v1.11.7.zip)|l
