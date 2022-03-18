@@ -172,7 +172,7 @@ namespace TheOtherRoles.Objects {
                         }
                     }else{ // カウントダウン中の処理
                         target.moveable = false;
-                        target.transform.position = trap.trap.transform.position;
+                        target.transform.position = trap.trap.transform.position + new Vector3(0, 0.3f, 0);
                     }
                 } catch (Exception e){
                     Helpers.log("カウントダウン中にエラー発生");
