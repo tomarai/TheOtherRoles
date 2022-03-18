@@ -229,6 +229,23 @@ namespace TheOtherRoles.Patches
             }
         }
 
+        // disable vent animation
+        [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
+        public static class EnterVentPatch {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
+                if(!CustomOptionHolder.disableVentAnimation.getBool()) return true;
+                return pc.AmOwner;
+            }
+        }
+
+        [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
+        public static class ExitVentPatch {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
+                if(!CustomOptionHolder.disableVentAnimation.getBool()) return true;
+                return pc.AmOwner;
+            }
+        }
+
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
         class VentButtonVisibilityPatch
         {
