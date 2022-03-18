@@ -155,6 +155,16 @@
         "11": "\u30c8\u30e9\u30c3\u30d1\u30fc",
         "13": "\u8bbe\u9677\u8005"
     },
+    "trapperGetTrapped": {
+        "0": "{0} is caught in trap",
+        "11": "{0}\u304c\u7f60\u306b\u304b\u304b\u3063\u305f",
+        "13": "{0}\u88ab\u5377\u5165\u9677\u9631"
+    },
+    "trapperPlaceTrap": {
+        "0": "Set Trap",
+        "11": "\u7f60\u8a2d\u7f6e",
+        "13": "\u8bbe\u7f6e\u9677\u9631"
+    },
     "trapperNumTrap": {
         "0": "Number of Traps",
         "11": "\u8a2d\u7f6e\u53ef\u80fd\u306a\u30c8\u30e9\u30c3\u30d7\u306e\u6570",

@@ -76,7 +76,7 @@ namespace TheOtherRoles
                                 gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
                                 gameObject.transform.localScale = Vector3.one * 2f;
                                 text = gameObject.GetComponent<TMPro.TMP_Text>();
-                                text.text = p.name + "が罠にかかった";
+                                text.text = String.Format(ModTranslation.getString("trapperGetTrapped"), p.name);
                                 HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => {
                                     if (p == 1f && text != null && text.gameObject != null) {
                                         UnityEngine.Object.Destroy(text.gameObject);
@@ -184,7 +184,7 @@ namespace TheOtherRoles
             hm.AbilityButton,
             KeyCode.F
         );
-        trapperSetTrapButton.buttonText = "罠設置";
+        trapperSetTrapButton.buttonText = ModTranslation.getString("trapperPlaceTrap");
     }
     public static void SetButtonCooldowns()
     {
