@@ -71,7 +71,10 @@ namespace TheOtherRoles
                     {
                         crewNoRole.Add(player);
                     }
-                    validPlayers.Add(player);
+                    if (!player.hasModifier(ModifierType.Munou))
+                    {
+                        validPlayers.Add(player);
+                    }
                 }
 
                 if (munouType == MunouType.Simple) return crewNoRole;
