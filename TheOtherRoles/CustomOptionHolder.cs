@@ -405,6 +405,8 @@ namespace TheOtherRoles {
 
         public static CustomOption randomWireTask;
         public static CustomOption disableVentAnimation;
+        public static CustomOption alwaysReduceKillCooldown;
+        public static CustomOption exceptInVent;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -799,6 +801,9 @@ namespace TheOtherRoles {
 
             randomWireTask = CustomOption.Create(9909, "randomWireTask", false, specialOptions, true);
             disableVentAnimation = CustomOption.Create(9910, "disableVentAnimation", false, specialOptions);
+            alwaysReduceKillCooldown = CustomOption.Create(9911, "alwaysReduceKillCooldown", false, specialOptions);
+            exceptInVent = CustomOption.Create(9912, "exceptInVent", false, alwaysReduceKillCooldown);
+
             additionalVents = CustomOption.Create(9905, "additionalVents", false, specialOptions, true);
             specimenVital = CustomOption.Create(9906, "specimenVital", false, specialOptions);
             polusRandomSpawn = CustomOption.Create(9907, "polusRandomSpawn", false, specialOptions);
