@@ -156,6 +156,16 @@ namespace TheOtherRoles
             {
                 return string.Format(ModTranslation.getString(format), sel);
             }
+
+            if(sel == "optionOn")
+            {
+                return "<color=#FFFF00FF>"  + ModTranslation.getString(sel) + "</color>";
+            }
+            else if(sel == "optionOff")
+            {
+                return "<color=#CCCCCCFF>"  + ModTranslation.getString(sel) + "</color>";
+            }
+
             return ModTranslation.getString(sel);
         }
 
