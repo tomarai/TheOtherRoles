@@ -973,13 +973,14 @@ namespace TheOtherRoles.Patches
             setPlayerOutline(Witch.currentTarget, Witch.color);
         }
 
-        static void reduceCooldown(PlayerControl __instance)
+        static void reduceKillCooldown(PlayerControl __instance)
         {
             if (CustomOptionHolder.alwaysReduceKillCooldown.getBool())
             {
                 // オプションがONの場合はベント内はクールダウン減少を止める
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool() && __instance.inVent;
-                if(!__instance.CanMove && !exceptInVent)
+
+                if(!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
                     __instance.SetKillTimer(__instance.killTimer - Time.fixedDeltaTime);
             }
 
@@ -1065,7 +1066,7 @@ namespace TheOtherRoles.Patches
                 BombEffect.UpdateAll();
 
                 // always reduce kill cooldown if setting is on
-                reduceCooldown(__instance);
+                reduceKillCooldown(__instance);
             }
 
             TheOtherRolesGM.FixedUpdate(__instance);
