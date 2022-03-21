@@ -982,6 +982,11 @@ namespace TheOtherRoles.Patches
 
                 if(!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
                     __instance.SetKillTimer(__instance.killTimer - Time.fixedDeltaTime);
+                
+                if(Jackal.jackal != null && __instance == Jackal.jackal &&!__instance.Data.IsDead && (__instance.inVent && !CustomOptionHolder.exceptInVent.getBool()))
+                {
+                    HudManagerStartPatch.jackalKillButton.Timer -= Time.fixedDeltaTime;
+                }
             }
 
         }

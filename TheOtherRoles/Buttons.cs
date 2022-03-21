@@ -30,7 +30,7 @@ namespace TheOtherRoles
         private static CustomButton trackerTrackCorpsesButton;
         private static CustomButton vampireKillButton;
         private static CustomButton garlicButton;
-        private static CustomButton jackalKillButton;
+        public static CustomButton jackalKillButton;
         private static CustomButton sidekickKillButton;
         private static CustomButton jackalSidekickButton;
         private static CustomButton eraserButton;
