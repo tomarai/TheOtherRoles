@@ -1,16 +1,22 @@
+# 製作者SNS  
+[![Twitter](https://img.shields.io/twitter/url?label=Twitter&style=social&url=https%3A%2F%2Ftwitter.com%2Fhaoming_dev)](https://twitter.com/haoming_dev)  [![](https://img.shields.io/discord/955423281316499517?label=Discord)](https://discord.gg/sTt8EzEpHP)  
+質問要望等は基本的にDiscordにて受け付けています
+  
 # とりあえず最初に書いておくやつ
 This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
 
 # The Other Roles: GM Edition 改造版
 GMエディションにPRを出す前にバランス調整等のお試しをするための環境  
 基本的にバグだらけなので使う人は自己責任でどうぞ  
-不具合を見つけた方はissue登録かDiscordのhaoming#1821まで
+不具合を見つけた方は上記のDiscordチャンネルで報告お願いします
 
-安定したものを使いたい方は素直に[本家GM](https://github.com/yukinogatari/TheOtherRoles-GM)を使ってください
+安定したものを使いたい方は素直に[本家GM](https://github.com/yukinogatari/TheOtherRoles-GM)を使ってください  
+  
 
 
 # 追加機能
-- 配線タスクの順番のランダム化
+- アクション時にキルクールダウン減少を止めない（オプション）
+- 配線タスクの順番のランダム化(オプション)
 - エアシップのリアクター時間変更(オプション)
 - エアシップの一部のタスクに壁判定を追加（現像、シャワー、ゴミ箱）
 - ポーラスのランダムリスポン（オプション）
