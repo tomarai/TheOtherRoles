@@ -332,9 +332,12 @@ namespace TheOtherRoles {
         public static CustomOption hideSettings;
         public static CustomOption restrictDevices;
         public static CustomOption restrictAdmin;
+        public static CustomOption restrictAdminTime;
         public static CustomOption restrictAdminText;
         public static CustomOption restrictCameras;
-        public static CustomOption restrictVents;
+        public static CustomOption restrictCamerasTime;
+        public static CustomOption restrictVitals;
+        public static CustomOption restrictVitalsTime;
 
         public static CustomOption hideOutOfSightNametags;
         public static CustomOption refundVotesOnDeath;
@@ -822,10 +825,13 @@ namespace TheOtherRoles {
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
 
             restrictDevices = CustomOption.Create(510, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);
-            restrictAdmin = CustomOption.Create(501, "disableAdmin", 30f, 0f, 600f, 1f, restrictDevices, format: "unitSeconds");
-            restrictAdminText = CustomOption.Create(505, "restrictAdminText", true, restrictDevices);
-            restrictCameras = CustomOption.Create(502, "disableCameras", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
-            restrictVents = CustomOption.Create(503, "disableVitals", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
+            restrictAdmin = CustomOption.Create(501, "disableAdmin", true, restrictDevices);
+            restrictAdminTime = CustomOption.Create(502, "disableAdminTime", 30f, 0f, 600f, 1f, restrictAdmin, format: "unitSeconds");
+            restrictAdminText = CustomOption.Create(503, "restrictAdminText", true, restrictAdmin);
+            restrictCameras = CustomOption.Create(505, "disableCameras", true, restrictDevices);
+            restrictCamerasTime = CustomOption.Create(506, "disableCamerasTime", 30f, 0f, 600f, 1f, restrictCameras, format: "unitSeconds");
+            restrictVitals = CustomOption.Create(507, "disableVitals", true, restrictDevices);
+            restrictVitalsTime = CustomOption.Create(508, "disableVitalsTime", 30f, 0f, 600f, 1f, restrictVitals, format: "unitSeconds");
 
             uselessOptions = CustomOption.Create(530, "uselessOptions", false, null, isHeader: true);
             dynamicMap = CustomOption.Create(8, "playRandomMaps", false, uselessOptions);

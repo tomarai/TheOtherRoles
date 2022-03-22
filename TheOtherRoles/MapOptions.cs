@@ -18,11 +18,14 @@ namespace TheOtherRoles{
         public static bool allowDupeNames = false;
 
         public static int restrictDevices = 0;
+        public static bool restrictAdmin = true;
         public static float restrictAdminTime = 600f;
         public static float restrictAdminTimeMax = 600f;
         public static bool restrictAdminText = true;
+        public static bool restrictCameras = true;
         public static float restrictCamerasTime = 600f;
         public static float restrictCamerasTimeMax = 600f;
+        public static bool restrictVitals = true;
         public static float restrictVitalsTime = 600f;
         public static float restrictVitalsTimeMax = 600f;
         public static bool disableVents = false;
@@ -62,10 +65,13 @@ namespace TheOtherRoles{
             allowDupeNames = CustomOptionHolder.uselessOptions.getBool() && CustomOptionHolder.playerNameDupes.getBool();
 
             restrictDevices = CustomOptionHolder.restrictDevices.getSelection();
-            restrictAdminTime = restrictAdminTimeMax = CustomOptionHolder.restrictAdmin.getFloat();
+            restrictAdmin = CustomOptionHolder.restrictAdmin.getBool();
+            restrictAdminTime = restrictAdminTimeMax = CustomOptionHolder.restrictAdminTime.getFloat();
             restrictAdminText = CustomOptionHolder.restrictAdminText.getBool();
-            restrictCamerasTime = restrictCamerasTimeMax = CustomOptionHolder.restrictCameras.getFloat();
-            restrictVitalsTime = restrictVitalsTimeMax = CustomOptionHolder.restrictVents.getFloat();
+            restrictCameras = CustomOptionHolder.restrictCameras.getBool();
+            restrictCamerasTime = restrictCamerasTimeMax = CustomOptionHolder.restrictCamerasTime.getFloat();
+            restrictVitals = CustomOptionHolder.restrictVitals.getBool();
+            restrictVitalsTime = restrictVitalsTimeMax = CustomOptionHolder.restrictVitalsTime.getFloat();
             disableVents = CustomOptionHolder.disableVents.getBool();
             ClearAdminTimerText();
             UpdateAdminTimerText();
@@ -99,7 +105,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || restrictAdminTimeMax > 0f;
+                return restrictDevices == 0 || !restrictAdmin || restrictAdminTimeMax > 0f;
             }
         }
 
@@ -107,7 +113,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || restrictCamerasTime > 0f;
+                return restrictDevices == 0 || !restrictCameras || restrictCamerasTime > 0f;
             }
         }
 
@@ -115,7 +121,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || restrictCamerasTimeMax > 0f;
+                return restrictDevices == 0 || !restrictCameras || restrictCamerasTimeMax > 0f;
             }
         }
 
@@ -123,7 +129,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || restrictVitalsTime > 0f;
+                return restrictDevices == 0 || !restrictCameras || restrictVitalsTime > 0f;
             }
         }
 
@@ -131,7 +137,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || restrictVitalsTimeMax > 0f;
+                return restrictDevices == 0 || !restrictCameras || restrictVitalsTimeMax > 0f;
             }
         }
         public static void MeetingEndedUpdate()
@@ -141,7 +147,7 @@ namespace TheOtherRoles{
         }
         public static void UpdateAdminTimerText()
         {
-            if (restrictDevices == 0 || !restrictAdminText)
+            if (restrictDevices == 0 || !restrictAdmin || !restrictAdminText)
                 return;
             if (HudManager.Instance == null)
                 return;

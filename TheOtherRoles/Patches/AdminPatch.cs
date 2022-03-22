@@ -34,7 +34,7 @@ namespace TheOtherRoles.Patches {
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() &&
+            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdmin && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() &&
                     !(EvilHacker.evilHacker != null && EvilHacker.evilHacker == PlayerControl.LocalPlayer))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
@@ -103,7 +103,7 @@ namespace TheOtherRoles.Patches {
 
                 playerColors = new Dictionary<SystemTypes, List<Color>>();
 
-                if (MapOptions.restrictDevices > 0)
+                if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdmin)
                 {
                     if (OutOfTime == null)
                     {

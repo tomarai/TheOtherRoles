@@ -24,7 +24,7 @@ namespace TheOtherRoles.Patches {
         static void UseCameraTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictCamerasTime > 0f && PlayerControl.LocalPlayer.isAlive())
+            if (MapOptions.restrictDevices > 0 && MapOptions.restrictCameras && MapOptions.restrictCamerasTime > 0f && PlayerControl.LocalPlayer.isAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseCameraTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(cameraTimer);
@@ -90,7 +90,7 @@ namespace TheOtherRoles.Patches {
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
 
-                    if (MapOptions.restrictDevices > 0)
+                    if (MapOptions.restrictDevices > 0 && MapOptions.restrictCameras)
                     {
                         if (TimeRemaining == null)
                         {
@@ -201,7 +201,7 @@ namespace TheOtherRoles.Patches {
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
 
-                    if (MapOptions.restrictDevices > 0)
+                    if (MapOptions.restrictDevices > 0 && MapOptions.restrictCameras)
                     {
                         if (TimeRemaining == null)
                         {

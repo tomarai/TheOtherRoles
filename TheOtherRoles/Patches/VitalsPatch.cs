@@ -30,7 +30,7 @@ namespace TheOtherRoles.Patches
         static void UseVitalsTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictVitalsTime > 0f && PlayerControl.LocalPlayer.isAlive())
+            if (MapOptions.restrictDevices > 0 && MapOptions.restrictVitals && MapOptions.restrictVitalsTime > 0f && PlayerControl.LocalPlayer.isAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseVitalsTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(vitalsTimer);
@@ -73,7 +73,7 @@ namespace TheOtherRoles.Patches
                 if (vitalsTimer > 0.1f)
                     UseVitalsTime();
 
-                if (MapOptions.restrictDevices > 0)
+                if (MapOptions.restrictDevices > 0 && MapOptions.restrictVitals)
                 {
                     if (TimeRemaining == null)
                     {
