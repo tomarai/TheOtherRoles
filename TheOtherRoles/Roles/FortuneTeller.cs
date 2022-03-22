@@ -349,7 +349,7 @@ namespace TheOtherRoles
                 msgInfo = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
             }
 
-            string msg = string.Format(ModTranslation.getString(msgBase), p.name, msgInfo);
+            string msg = string.Format(ModTranslation.getString(msgBase), p.Data.DefaultOutfit.PlayerName, msgInfo);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                 fortuneTellerMessage(msg, 5f, color);

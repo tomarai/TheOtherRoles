@@ -100,26 +100,17 @@ namespace TheOtherRoles
         }
         public override void OnMeetingEnd()
         {
-            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou) && PlayerControl.LocalPlayer.isAlive())
+            if(player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
                 randomColors();
             }
         }
 
-        public override void FixedUpdate()
-        {
-            // if(PlayerControl.LocalPlayer.isRole(RoleType.Munou) && PlayerControl.LocalPlayer.isAlive())
-            // {
-            //     if(!randomColorFlag)
-            //     {
-            //         randomColors();
-            //     }
-            // }
-        }
+        public override void FixedUpdate() { }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou)) resetColors();
+            if(player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou)) resetColors();
         }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
