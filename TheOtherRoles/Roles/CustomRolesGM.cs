@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
@@ -78,6 +78,7 @@ namespace TheOtherRoles
             Modifier.allModifiers.Do(x => x.OnMeetingEnd());
 
             CustomOverlays.hideInfoOverlay();
+            CustomOverlays.hideRoleOverlay();
             CustomOverlays.hideBlackBG();
         }
 
