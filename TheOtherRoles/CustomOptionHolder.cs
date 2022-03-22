@@ -332,6 +332,7 @@ namespace TheOtherRoles {
         public static CustomOption hideSettings;
         public static CustomOption restrictDevices;
         public static CustomOption restrictAdmin;
+        public static CustomOption restrictAdminText;
         public static CustomOption restrictCameras;
         public static CustomOption restrictVents;
 
@@ -574,7 +575,7 @@ namespace TheOtherRoles {
             madmateHasImpostorVision = CustomOption.Create(363, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(364, "madmateCanSabotage", false, madmateSpawnRate);
             madmateCanFixComm = CustomOption.Create(365, "madmateCanFixComm", true, madmateSpawnRate);
-            madmateExilePlayer = CustomOption.Create(366, "createdMadmateExileCrewmate", false, madmateSpawnRate);
+            madmateExilePlayer = CustomOption.Create(10370, "createdMadmateExileCrewmate", false, madmateSpawnRate);
 
             miniSpawnRate = new CustomRoleOption(180, "mini", Mini.color, 1);
             miniIsImpRate = CustomOption.Create(182, "miniIsImpRate", rates, miniSpawnRate);
@@ -822,6 +823,7 @@ namespace TheOtherRoles {
 
             restrictDevices = CustomOption.Create(510, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);
             restrictAdmin = CustomOption.Create(501, "disableAdmin", 30f, 0f, 600f, 1f, restrictDevices, format: "unitSeconds");
+            restrictAdminText = CustomOption.Create(505, "restrictAdminText", true, restrictDevices);
             restrictCameras = CustomOption.Create(502, "disableCameras", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
             restrictVents = CustomOption.Create(503, "disableVitals", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
 
