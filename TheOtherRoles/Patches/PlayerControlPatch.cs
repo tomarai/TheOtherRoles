@@ -519,12 +519,14 @@ namespace TheOtherRoles.Patches
                 }
             }
 
+            var canSeeEverything = PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isGM();
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
+                if (p == null) continue;
+
                 var canSeeInfo =
-                    p == PlayerControl.LocalPlayer ||
-                    PlayerControl.LocalPlayer.isDead() ||
-                    p.isGM() || PlayerControl.LocalPlayer.isGM() ||
+                    canSeeEverything ||
+                    p == PlayerControl.LocalPlayer || p.isGM() || 
                     (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target);
 
                 if (canSeeInfo)
@@ -782,7 +784,8 @@ namespace TheOtherRoles.Patches
                     if (Bait.bait.hasModifier(ModifierType.Madmate))
                     {
                         var candidates = PlayerControl.AllPlayerControls.ToArray().Where(x => x.isAlive() && !x.isImpostor() && !x.isDummy).ToList();
-                        reporter = candidates.Count > 0 ? (byte)rnd.Next(0, candidates.Count) : deadPlayer.killerIfExisting.PlayerId;
+                        int i = rnd.Next(0, candidates.Count);
+                        reporter = candidates.Count > 0 ? candidates[i].PlayerId : deadPlayer.killerIfExisting.PlayerId;
                     }
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedCmdReportDeadBody, Hazel.SendOption.Reliable, -1);

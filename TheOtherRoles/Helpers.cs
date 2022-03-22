@@ -50,6 +50,14 @@ namespace TheOtherRoles {
             }
         }
 
+        public static bool RefundVotes
+        {
+            get
+            {
+                return CustomOptionHolder.refundVotesOnDeath.getBool();
+            }
+        }
+
         public static void destroyList<T>(Il2CppSystem.Collections.Generic.List<T> items) where T : UnityEngine.Object
         {
             if (items == null) return;
@@ -282,8 +290,8 @@ namespace TheOtherRoles {
 
         public static bool isDead(this PlayerControl player)
         {
-            return player?.Data?.IsDead == true || player?.Data?.Disconnected == true ||
-                  (finalStatuses.ContainsKey(player.PlayerId) && finalStatuses[player.PlayerId] != FinalStatus.Alive);
+            return player == null || player?.Data?.IsDead == true || player?.Data?.Disconnected == true ||
+                  (finalStatuses != null && finalStatuses.ContainsKey(player.PlayerId) && finalStatuses[player.PlayerId] != FinalStatus.Alive);
         }
 
         public static bool isAlive(this PlayerControl player)

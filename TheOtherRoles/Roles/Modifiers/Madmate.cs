@@ -32,8 +32,9 @@ namespace TheOtherRoles
         public static bool canSabotage { get { return CustomOptionHolder.madmateCanSabotage.getBool(); } }
         public static bool canFixComm { get { return CustomOptionHolder.madmateCanFixComm.getBool(); } }
 
-        public static MadmateType madmateType { get { return MadmateType.Simple; } }
+        public static MadmateType madmateType { get { return (MadmateType)CustomOptionHolder.madmateType.getSelection(); } }
         public static MadmateAbility madmateAbility { get { return (MadmateAbility)CustomOptionHolder.madmateAbility.getSelection(); } }
+        public static RoleType fixedRole { get { return CustomOptionHolder.madmateFixedRole.role; } }
 
         public static int numCommonTasks { get { return CustomOptionHolder.madmateTasks.commonTasks; } }
         public static int numLongTasks { get { return CustomOptionHolder.madmateTasks.longTasks; } }
@@ -60,7 +61,7 @@ namespace TheOtherRoles
 
         public static List<RoleType> validRoles = new List<RoleType>
         {
-            RoleType.Crewmate,
+            RoleType.NoRole, // NoRole = off
             RoleType.Shifter,
             RoleType.Mayor,
             RoleType.Engineer,
@@ -76,7 +77,6 @@ namespace TheOtherRoles
             RoleType.SecurityGuard,
             RoleType.Bait,
             RoleType.Medium,
-            RoleType.FortuneTeller,
             RoleType.Mini,
             RoleType.NiceGuesser,
             RoleType.Watcher,
@@ -96,12 +96,15 @@ namespace TheOtherRoles
                     if (info.Contains(RoleInfo.crewmate) && !player.hasModifier(ModifierType.Munou) && !player.isRole(RoleType.FortuneTeller))
                     {
                         crewNoRole.Add(player);
+                        validCrewmates.Add(player);
                     }
                     else if (info.Any(x => validRoles.Contains(x.roleType)))
                     {
-                        crewHasRole.Add(player);
+                        if (fixedRole == RoleType.NoRole || info.Any(x => x.roleType == fixedRole))
+                            crewHasRole.Add(player);
+
+                        validCrewmates.Add(player);
                     }
-                    validCrewmates.Add(player);
                 }
 
                 if (madmateType == MadmateType.Simple) return crewNoRole;

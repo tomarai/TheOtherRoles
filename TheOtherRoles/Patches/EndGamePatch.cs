@@ -130,6 +130,7 @@ namespace TheOtherRoles.Patches
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
+
                 // 第三陣営の勝利以外の場合に狐が生存していたら狐の勝ち
                 else if(gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
@@ -144,13 +145,13 @@ namespace TheOtherRoles.Patches
             }
             AdditionalTempData.clear();
 
-
-            var hideRoles = new RoleType[] { RoleType.Lovers };
+            //foreach (var pc in PlayerControl.AllPlayerControls)
+            var excludeRoles = new RoleType[] { RoleType.Lovers };
             foreach (var p in GameData.Instance.AllPlayers)
             {
                 //var p = pc.Data;
-                var roles = RoleInfo.getRoleInfoForPlayer(p.Object, hideRoles);
-                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p, true);
+                var roles = RoleInfo.getRoleInfoForPlayer(p.Object, excludeRoles, includeHidden: true);
+                var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p);
                 var finalStatus = finalStatuses[p.PlayerId] =
                     p.Disconnected == true ? FinalStatus.Disconnected :
                     finalStatuses.ContainsKey(p.PlayerId) ? finalStatuses[p.PlayerId] :
@@ -166,7 +167,7 @@ namespace TheOtherRoles.Patches
                     PlayerId = p.PlayerId,
                     NameSuffix = Lovers.getIcon(p.Object),
                     Roles = roles,
-                    RoleString = RoleInfo.GetRolesString(p.Object, true, hideRoles),
+                    RoleString = RoleInfo.GetRolesString(p.Object, true, excludeRoles, true),
                     TasksTotal = tasksTotal,
                     TasksCompleted = tasksCompleted,
                     Status = finalStatus,
@@ -710,20 +711,21 @@ namespace TheOtherRoles.Patches
 
                         });
 
+                        bool plagueExists = AdditionalTempData.playerRoles.Any(x => x.Roles.Contains(RoleInfo.plagueDoctor));
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
                             if (data.PlayerName == "") continue;
                             var taskInfo = data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : "";
                             string aliveDead = ModTranslation.getString("roleSummary" + data.Status.ToString(), def: "-");
                             string result = $"{data.PlayerName + data.NameSuffix}<pos=18.5%>{taskInfo}<pos=25%>{aliveDead}<pos=34%>{data.RoleString}";
-                            if (RoleInfo.plagueDoctor.enabled && data.Status == FinalStatus.Alive)
+                            if (plagueExists && !data.Roles.Contains(RoleInfo.plagueDoctor))
                             {
                                 result += "<pos=52.5%>";
                                 if (AdditionalTempData.plagueDoctorInfected.ContainsKey(data.PlayerId))
                                 {
                                     result += Helpers.cs(Color.red, ModTranslation.getString("plagueDoctorInfectedText"));
                                 }
-                                else if (!data.Roles.Contains(RoleInfo.plagueDoctor))
+                                else
                                 {
                                     float progress = AdditionalTempData.plagueDoctorProgress.ContainsKey(data.PlayerId) ? AdditionalTempData.plagueDoctorProgress[data.PlayerId] : 0f;
                                     result += PlagueDoctor.getProgressString(progress);
@@ -883,7 +885,7 @@ namespace TheOtherRoles.Patches
                         return true;
                     }
 
-                    if (Fox.exists)
+                    if (Fox.exists && !Fox.crewWinsByTasks)
                     {
                         // 狐生存かつタスク完了時に生存中のクルーがタスクを全て終わらせたら勝ち
                         // 死んだプレイヤーが意図的にタスクを終了させないのを防止するため

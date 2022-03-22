@@ -328,8 +328,10 @@ namespace TheOtherRoles
                     return Pursuer.pursuer == player;
                 default:
                     TheOtherRolesPlugin.Logger.LogError($"isRole: no method found for role type {role}");
-                    return false;
+                    break;
             }
+
+            return false;
         }
 
         public static void setRole(this PlayerControl player, RoleType role)
@@ -613,6 +615,8 @@ namespace TheOtherRoles
             // Lover suicide trigger on exile/death
             if (player.isLovers())
                 Lovers.killLovers(player, killer);
+
+            RPCProcedure.updateMeeting(player.PlayerId, true);
         }
     }
 }

@@ -288,7 +288,7 @@ namespace TheOtherRoles {
         public static CustomOption madmateCanSabotage;
         public static CustomOption madmateCanFixComm;
         public static CustomOption madmateType;
-        public static CustomRoleSelectionOption madmateRole;
+        public static CustomRoleSelectionOption madmateFixedRole;
         public static CustomOption madmateAbility;
         public static CustomTasksOption madmateTasks;
         public static CustomOption madmateExilePlayer;
@@ -336,6 +336,7 @@ namespace TheOtherRoles {
         public static CustomOption restrictVents;
 
         public static CustomOption hideOutOfSightNametags;
+        public static CustomOption refundVotesOnDeath;
 
         public static CustomOption uselessOptions;
         public static CustomOption playerColorRandom;
@@ -564,8 +565,8 @@ namespace TheOtherRoles {
 
 
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
-            //madmateType = CustomOption.Create(366, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
-            //madmateRole = new CustomRoleSelectionOption(369, "madmateRole", Madmate.validRoles, madmateType);
+            madmateType = CustomOption.Create(366, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
+            madmateFixedRole = new CustomRoleSelectionOption(369, "madmateFixedRole", Madmate.validRoles, madmateType);
             madmateAbility = CustomOption.Create(367, "madmateAbility", new string[] { "madmateNone", "madmateFanatic" }, madmateSpawnRate);
             madmateTasks = new CustomTasksOption(368, 1, 1, 3, madmateAbility);
             madmateCanDieToSheriff = CustomOption.Create(361, "madmateCanDieToSheriff", false, madmateSpawnRate);
@@ -661,7 +662,7 @@ namespace TheOtherRoles {
             plagueDoctorWinDead = CustomOption.Create(908, "plagueDoctorWinDead", true, plagueDoctorSpawnRate);
 
 
-            watcherSpawnRate = new CustomDualRoleOption(1040, "watcher", Watcher.color, RoleType.Watcher, 15, roleEnabled: false);
+            watcherSpawnRate = new CustomDualRoleOption(1040, "watcher", Watcher.color, RoleType.Watcher, 15);
 
 
             foxSpawnRate = new CustomRoleOption(910, "fox", Fox.color, 1);
@@ -815,6 +816,7 @@ namespace TheOtherRoles {
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(5, "noVoteIsSelfVote", false, specialOptions);
             hideOutOfSightNametags = CustomOption.Create(550, "hideOutOfSightNametags", false, specialOptions);
+            refundVotesOnDeath = CustomOption.Create(551, "refundVotesOnDeath", true, specialOptions);
             allowParallelMedBayScans = CustomOption.Create(540, "parallelMedbayScans", false, specialOptions);
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
 
