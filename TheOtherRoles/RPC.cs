@@ -843,9 +843,10 @@ namespace TheOtherRoles
             dyingTarget.Exiled();
             PlayerControl dyingLoverPartner = Lovers.bothDie ? dyingTarget.getPartner() : null; // Lover check
 
-            if(killer.hasModifier(ModifierType.LastImpostor))
+            // ラストインポスターの弾数を優先的に消費させる
+            if(killer.hasModifier(ModifierType.LastImpostor) && LastImpostor.remainingShots > 0)
             {
-                Mathf.Max(0, LastImpostor.remainingShots - 1);
+                LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
             }
             else
             {

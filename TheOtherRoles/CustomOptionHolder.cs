@@ -800,7 +800,7 @@ namespace TheOtherRoles {
             specialOptions = new CustomOptionBlank(null);
             lastImpostorEnable = CustomOption.Create(9900, "lastImpostorEnable", true, specialOptions, true);
             lastImpostorFunctions = CustomOption.Create(9901, "lastImpostorFunctions", new string[]{ModTranslation.getString("lastImpostorDivine"), ModTranslation.getString("lastImpostorGuesser")}, lastImpostorEnable);
-            lastImpostorNumKills = CustomOption.Create(9902, "lastImpostorNumKills", 3f, 1f, 10f, 1.0f, lastImpostorEnable);
+            lastImpostorNumKills = CustomOption.Create(9902, "lastImpostorNumKills", 3f, 0f, 10f, 1f, lastImpostorEnable);
             lastImpostorResults = CustomOption.Create(9903, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, lastImpostorEnable);
             lastImpostorNumShots = CustomOption.Create(9904, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
 

@@ -24,7 +24,10 @@ namespace TheOtherRoles
             }
         }
 
-        public bool enabled { get { return Helpers.RolesEnabled && (baseOption == null || baseOption.enabled); } }
+        public bool enabled { get 
+        { 
+            return Helpers.RolesEnabled && (baseOption == null || baseOption.enabled); 
+        }}
         public RoleType roleType;
 
         private string nameKey;
@@ -93,7 +96,6 @@ namespace TheOtherRoles
         public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
         public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
-        // public static RoleInfo lastImpostor = new RoleInfo("lastImpostor", LastImpostor.color, CustomOptionHolder.foxSpawnRate, RoleType.LastImpostor);
         public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
@@ -101,6 +103,138 @@ namespace TheOtherRoles
         public static RoleInfo evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
         public static RoleInfo puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
+        public static void init() 
+        {
+            jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
+            mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
+            engineer = new RoleInfo("engineer", Engineer.color, CustomOptionHolder.engineerSpawnRate, RoleType.Engineer);
+            sheriff = new RoleInfo("sheriff", Sheriff.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Sheriff);
+            lighter = new RoleInfo("lighter", Lighter.color, CustomOptionHolder.lighterSpawnRate, RoleType.Lighter);
+            godfather = new RoleInfo("godfather", Godfather.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Godfather);
+            mafioso = new RoleInfo("mafioso", Mafioso.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Mafioso);
+            janitor = new RoleInfo("janitor", Janitor.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Janitor);
+            morphling = new RoleInfo("morphling", Morphling.color, CustomOptionHolder.morphlingSpawnRate, RoleType.Morphling);
+            camouflager = new RoleInfo("camouflager", Camouflager.color, CustomOptionHolder.camouflagerSpawnRate, RoleType.Camouflager);
+            vampire = new RoleInfo("vampire", Vampire.color, CustomOptionHolder.vampireSpawnRate, RoleType.Vampire);
+            eraser = new RoleInfo("eraser", Eraser.color, CustomOptionHolder.eraserSpawnRate, RoleType.Eraser);
+            trickster = new RoleInfo("trickster", Trickster.color, CustomOptionHolder.tricksterSpawnRate, RoleType.Trickster);
+            cleaner = new RoleInfo("cleaner", Cleaner.color, CustomOptionHolder.cleanerSpawnRate, RoleType.Cleaner);
+            warlock = new RoleInfo("warlock", Warlock.color, CustomOptionHolder.warlockSpawnRate, RoleType.Warlock);
+            bountyHunter = new RoleInfo("bountyHunter", BountyHunter.color, CustomOptionHolder.bountyHunterSpawnRate, RoleType.BountyHunter);
+            detective = new RoleInfo("detective", Detective.color, CustomOptionHolder.detectiveSpawnRate, RoleType.Detective);
+            timeMaster = new RoleInfo("timeMaster", TimeMaster.color, CustomOptionHolder.timeMasterSpawnRate, RoleType.TimeMaster);
+            medic = new RoleInfo("medic", Medic.color, CustomOptionHolder.medicSpawnRate, RoleType.Medic);
+            niceShifter = new RoleInfo("niceShifter", Shifter.color, CustomOptionHolder.shifterSpawnRate, RoleType.Shifter);
+            corruptedShifter = new RoleInfo("corruptedShifter", Shifter.color, CustomOptionHolder.shifterSpawnRate, RoleType.Shifter);
+            niceSwapper = new RoleInfo("niceSwapper", Swapper.color, CustomOptionHolder.swapperSpawnRate, RoleType.Swapper);
+            evilSwapper = new RoleInfo("evilSwapper", Palette.ImpostorRed, CustomOptionHolder.swapperSpawnRate, RoleType.Swapper);
+            seer = new RoleInfo("seer", Seer.color, CustomOptionHolder.seerSpawnRate, RoleType.Seer);
+            hacker = new RoleInfo("hacker", Hacker.color, CustomOptionHolder.hackerSpawnRate, RoleType.Hacker);
+            niceMini = new RoleInfo("niceMini", Mini.color, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
+            evilMini = new RoleInfo("evilMini", Palette.ImpostorRed, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
+            tracker = new RoleInfo("tracker", Tracker.color, CustomOptionHolder.trackerSpawnRate, RoleType.Tracker);
+            snitch = new RoleInfo("snitch", Snitch.color, CustomOptionHolder.snitchSpawnRate, RoleType.Snitch);
+            jackal = new RoleInfo("jackal", Jackal.color, CustomOptionHolder.jackalSpawnRate, RoleType.Jackal);
+            sidekick = new RoleInfo("sidekick", Sidekick.color, CustomOptionHolder.jackalSpawnRate, RoleType.Sidekick);
+            spy = new RoleInfo("spy", Spy.color, CustomOptionHolder.spySpawnRate, RoleType.Spy);
+            securityGuard = new RoleInfo("securityGuard", SecurityGuard.color, CustomOptionHolder.securityGuardSpawnRate, RoleType.SecurityGuard);
+            arsonist = new RoleInfo("arsonist", Arsonist.color, CustomOptionHolder.arsonistSpawnRate, RoleType.Arsonist);
+            niceGuesser = new RoleInfo("niceGuesser", Guesser.color, CustomOptionHolder.guesserSpawnRate, RoleType.NiceGuesser);
+            evilGuesser = new RoleInfo("evilGuesser", Palette.ImpostorRed, CustomOptionHolder.guesserSpawnRate, RoleType.EvilGuesser);
+            bait = new RoleInfo("bait", Bait.color, CustomOptionHolder.baitSpawnRate, RoleType.Bait);
+            impostor = new RoleInfo("impostor", Palette.ImpostorRed,null, RoleType.Impostor);
+            lawyer = new RoleInfo("lawyer", Lawyer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Lawyer);
+            pursuer = new RoleInfo("pursuer", Pursuer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Pursuer);
+            crewmate = new RoleInfo("crewmate", Color.white, null, RoleType.Crewmate);
+            lovers = new RoleInfo("lovers", Lovers.color, CustomOptionHolder.loversSpawnRate, RoleType.Lovers);
+            gm = new RoleInfo("gm", GM.color, CustomOptionHolder.gmEnabled, RoleType.GM);
+            opportunist = new RoleInfo("opportunist", Opportunist.color, CustomOptionHolder.opportunistSpawnRate, RoleType.Opportunist);
+            witch = new RoleInfo("witch", Witch.color, CustomOptionHolder.witchSpawnRate, RoleType.Witch);
+            vulture = new RoleInfo("vulture", Vulture.color, CustomOptionHolder.vultureSpawnRate, RoleType.Vulture);
+            medium = new RoleInfo("medium", Medium.color, CustomOptionHolder.mediumSpawnRate, RoleType.Medium);
+            ninja = new RoleInfo("ninja", Ninja.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Ninja);
+            plagueDoctor = new RoleInfo("plagueDoctor", PlagueDoctor.color, CustomOptionHolder.plagueDoctorSpawnRate, RoleType.PlagueDoctor);
+            nekoKabocha = new RoleInfo("nekoKabocha", NekoKabocha.color, CustomOptionHolder.nekoKabochaSpawnRate, RoleType.NekoKabocha);
+            niceWatcher = new RoleInfo("niceWatcher", Watcher.color, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
+            evilWatcher = new RoleInfo("evilWatcher", Palette.ImpostorRed, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
+            serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleType.SerialKiller);
+            fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
+            immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
+            fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
+            schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
+            trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
+            bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
+            bomberB = new RoleInfo("bomber", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberB);
+            evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
+            puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
+            evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
+            allRoleInfos = new List<RoleInfo>()
+            {
+                impostor,
+                godfather,
+                mafioso,
+                janitor,
+                morphling,
+                camouflager,
+                evilHacker,
+                vampire,
+                eraser,
+                trickster,
+                cleaner,
+                warlock,
+                bountyHunter,
+                witch,
+                ninja,
+                serialKiller,
+                niceMini,
+                evilMini,
+                niceGuesser,
+                evilGuesser,
+                lovers,
+                jester,
+                arsonist,
+                jackal,
+                sidekick,
+            	vulture,
+                pursuer,
+                lawyer,
+                crewmate,
+                niceShifter,
+                corruptedShifter,
+                mayor,
+                engineer,
+                sheriff,
+                lighter,
+                detective,
+                timeMaster,
+                medic,
+                niceSwapper,
+                evilSwapper,
+                seer,
+                hacker,
+                tracker,
+                snitch,
+                spy,
+                securityGuard,
+                bait,
+                gm,
+                opportunist,
+	            medium,
+                plagueDoctor,
+                nekoKabocha,
+                niceWatcher,
+                evilWatcher,
+                fox,
+                immoralist,
+                fortuneTeller,
+                schrodingersCat,
+                trapper,
+                bomberA,
+                bomberB,
+                evilTracker,
+                puppeteer,
+            };
+        }
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,

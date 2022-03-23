@@ -429,7 +429,7 @@ namespace TheOtherRoles.Patches {
                     roleInfo == RoleInfo.niceMini || 
 					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleType == RoleType.Spy) ||
                     roleInfo == RoleInfo.gm ||
-                    (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings) ||
+                    (Guesser.onlyAvailableRoles && !roleInfo.enabled) ||
                     roleInfo == RoleInfo.bomberB)
                     continue; // Not guessable roles
 				if (Guesser.guesserCantGuessSnitch && Snitch.snitch != null) {
@@ -461,7 +461,18 @@ namespace TheOtherRoles.Patches {
                         buttons.ForEach(x => x.GetComponent<SpriteRenderer>().color = x == selectedButton ? Color.red : Color.white);
                     } else {
                         PlayerControl focusedTarget = Helpers.playerById((byte)__instance.playerStates[buttonTarget].TargetPlayerId);
-                        if (!(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted) || focusedTarget == null || Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) <= 0 ) return;
+                        if (!(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted) || focusedTarget == null) return;
+                        if (Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId))
+                        {
+                            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor))
+                            {
+                                if(Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) + LastImpostor.remainingShots <= 0) return;
+                            }
+                            else
+                            {
+                                if(Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) <= 0) return;
+                            }
+                        }
 
                         if (!Guesser.killsThroughShield && focusedTarget == Medic.shielded) { // Depending on the options, shooting the shielded player will not allow the guess, notifiy everyone about the kill attempt and close the window
                             __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true)); 
@@ -476,7 +487,6 @@ namespace TheOtherRoles.Patches {
                         var mainRoleInfo = RoleInfo.getRoleInfoForPlayer(focusedTarget).FirstOrDefault();
                         if (mainRoleInfo == null) return;
 
-                        // createdMadmateとmadmateを同等に扱う
                         // BomberAとBomberBを同等に扱う
                         PlayerControl dyingTarget;
                         if(mainRoleInfo == roleInfo)
@@ -496,7 +506,7 @@ namespace TheOtherRoles.Patches {
                         // Reset the GUI
                         __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true));
                         UnityEngine.Object.Destroy(container.gameObject);
-                        if (Guesser.hasMultipleShotsPerMeeting && (Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) > 1 || LastImpostor.remainingShots > 1) && dyingTarget != PlayerControl.LocalPlayer)
+                        if (Guesser.hasMultipleShotsPerMeeting && (Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId) > 0 || LastImpostor.remainingShots > 0) && dyingTarget != PlayerControl.LocalPlayer)
                         {
                             __instance.playerStates.ToList().ForEach(x => { if (x.TargetPlayerId == dyingTarget.PlayerId && x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
                         }
@@ -650,8 +660,16 @@ namespace TheOtherRoles.Patches {
                 meetingInfoText.gameObject.SetActive(true);
             }
 
-            var numGuesses = Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId);
-            if (Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && numGuesses > 0)
+            int numGuesses = 0;
+            if (Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId))
+            {
+                numGuesses += Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId);
+            }
+            if(PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor))
+            {
+                numGuesses += LastImpostor.remainingShots;
+            }
+            if ((Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) || PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor)) && PlayerControl.LocalPlayer.isAlive() && numGuesses > 0)
             {
                 meetingInfoText.text = String.Format(ModTranslation.getString("guesserGuessesLeft"), numGuesses);
                 meetingInfoText.gameObject.SetActive(true);

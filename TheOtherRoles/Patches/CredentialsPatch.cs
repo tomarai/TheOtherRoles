@@ -72,6 +72,9 @@ namespace TheOtherRoles.Patches {
                 torLogo.transform.position = Vector3.up;
                 var renderer = torLogo.AddComponent<SpriteRenderer>();
                 renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Banner.png", 300f);
+                
+                // RoleInfoの遅延初期化
+                RoleInfo.init();
             }
         }
     }
