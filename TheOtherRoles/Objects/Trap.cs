@@ -234,12 +234,15 @@ namespace TheOtherRoles.Objects {
 
                     if(PlayerControl.LocalPlayer.isRole(RoleType.Trapper))
                     {
-                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperKill, Hazel.SendOption.Reliable, -1);
-                        writer.Write(trap.Key);
-                        writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                        writer.Write(trap.Value.target.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.trapperKill(trap.Key, PlayerControl.LocalPlayer.PlayerId, trap.Value.target.PlayerId);
+                        if (!trap.Value.target.isDead())
+                        {
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TrapperKill, Hazel.SendOption.Reliable, -1);
+                            writer.Write(trap.Key);
+                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                            writer.Write(trap.Value.target.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            RPCProcedure.trapperKill(trap.Key, PlayerControl.LocalPlayer.PlayerId, trap.Value.target.PlayerId);
+                        }
                     }
 
                 }
