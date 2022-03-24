@@ -35,6 +35,8 @@ namespace TheOtherRoles
             BomberB.SetButtonCooldowns();
             EvilTracker.SetButtonCooldowns();
             Puppeteer.SetButtonCooldowns();
+            MimicK.SetButtonCooldowns();
+            MimicA.SetButtonCooldowns();
             foreach (CustomButton gmButton in gmButtons)
             {
                 gmButton.MaxTimer = 0.0f;
@@ -66,6 +68,8 @@ namespace TheOtherRoles
             BomberB.MakeButtons(hm);
             EvilTracker.MakeButtons(hm);
             Puppeteer.MakeButtons(hm);
+            MimicK.MakeButtons(hm);
+            MimicA.MakeButtons(hm);
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();

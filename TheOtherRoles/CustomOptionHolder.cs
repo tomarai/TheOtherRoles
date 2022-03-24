@@ -408,6 +408,10 @@ namespace TheOtherRoles {
         public static CustomOption puppeteerCanControlDummyEvenIfDead;
         public static CustomOption puppeteerPenaltyOnDeath;
         public static CustomOption puppeteerLosesSenriganOnDeath;
+        public static CustomRoleOption mimicSpawnRate;
+        public static CustomOption mimicCountAsOne;
+        public static CustomOption mimicIfOneDiesBothDie;
+        public static CustomOption mimicHasOneVote;
 
         public static CustomOption randomWireTask;
         public static CustomOption disableVentAnimation;
@@ -561,6 +565,12 @@ namespace TheOtherRoles {
             evilTrackerCooldown = CustomOption.Create(1052, "evilTrackerCooldown", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
             evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, "evilTrackerResetTargetAfterMeeting", true, evilTrackerSpawnRate);
             evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, "evilTrackerCanSeeDeathFlash", true, evilTrackerSpawnRate);
+
+            mimicSpawnRate = new CustomRoleOption(1080, "mimic", MimicK.color, 1);
+            mimicCountAsOne = CustomOption.Create(1081, "mimicCountAsOne", true, mimicSpawnRate);
+            mimicIfOneDiesBothDie = CustomOption.Create(1082,"mimicIfOneDiesBothDie", true, mimicSpawnRate);
+            mimicHasOneVote = CustomOption.Create(1083, "mimicHasOneVote", true, mimicSpawnRate);
+
 
 
             nekoKabochaSpawnRate = new CustomRoleOption(1020, "nekoKabocha", NekoKabocha.color, 3);

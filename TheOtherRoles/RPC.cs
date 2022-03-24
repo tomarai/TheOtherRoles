@@ -111,6 +111,9 @@ namespace TheOtherRoles
         PuppeteerWin,
         PuppeteerKill,
         PuppeteerClimbRadder,
+        mimicMorph,
+        mimicResetMorph,
+
     }
 
     public static class RPCProcedure
@@ -1268,6 +1271,19 @@ namespace TheOtherRoles
             if(target == null) return;
             dummy.MyPhysics.ClimbLadder(target, (byte)(dummy.MyPhysics.lastClimbLadderSid + 1));
         }
+
+        public static void mimicMorph(byte mimicAId, byte mimicBId)
+        {
+            PlayerControl mimicA = Helpers.playerById(mimicAId);
+            PlayerControl mimicB = Helpers.playerById(mimicBId);
+            MorphHandler.morphToPlayer(mimicA, mimicB);
+        }
+
+        public static void mimicResetMorph(byte mimicAId)
+        {
+            PlayerControl mimicA = Helpers.playerById(mimicAId);
+            MorphHandler.resetMorph(mimicA);
+        }
        
 
 
@@ -1612,6 +1628,12 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.PuppeteerClimbRadder:
                         RPCProcedure.puppeteerClimbRadder(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.mimicMorph:
+                        RPCProcedure.mimicMorph(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.mimicResetMorph:
+                        RPCProcedure.mimicResetMorph(reader.ReadByte());
                         break;
                 }
             }

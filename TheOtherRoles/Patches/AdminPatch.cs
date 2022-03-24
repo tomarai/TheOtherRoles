@@ -35,7 +35,7 @@ namespace TheOtherRoles.Patches {
         {
             // Don't waste network traffic if we're out of time.
             if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdmin && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() &&
-                    !(EvilHacker.evilHacker != null && EvilHacker.evilHacker == PlayerControl.LocalPlayer))
+                    !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) || PlayerControl.LocalPlayer.isRole(RoleType.MimicA)))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -121,31 +121,31 @@ namespace TheOtherRoles.Patches {
                         TimeRemaining.color = Palette.White;
                     }
 
-                    if (EvilHacker.evilHacker != null && EvilHacker.evilHacker == PlayerControl.LocalPlayer)
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) || PlayerControl.LocalPlayer.isRole(RoleType.MimicA))
                     {
                         TimeRemaining.gameObject.SetActive(false);
                     }
                     else
                     {
-                    if (MapOptions.restrictAdminTime <= 0f)
-                    {
-                        __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
-                        OutOfTime.gameObject.SetActive(true);
-                        TimeRemaining.gameObject.SetActive(false);
-                        if (clearedIcons == false)
+                        if (MapOptions.restrictAdminTime <= 0f)
                         {
-                            foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
-                            clearedIcons = true;
+                            __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
+                            OutOfTime.gameObject.SetActive(true);
+                            TimeRemaining.gameObject.SetActive(false);
+                            if (clearedIcons == false)
+                            {
+                                foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
+                                clearedIcons = true;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
 
-                    clearedIcons = false;
-                    OutOfTime.gameObject.SetActive(false);
-                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
-                    TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
-                    //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
-                    TimeRemaining.gameObject.SetActive(true);
+                        clearedIcons = false;
+                        OutOfTime.gameObject.SetActive(false);
+                        string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
+                        TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
+                        //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                        TimeRemaining.gameObject.SetActive(true);
                     }
                 }
 
@@ -204,7 +204,8 @@ namespace TheOtherRoles.Patches {
                                     }
                                     else if (component?.myRend?.material != null)
                                     {
-                                        Color color = component.myRend.material.GetColor("_BodyColor");
+                                        // Color color = component.myRend.material.GetColor("_BodyColor");
+                                        Color color = Palette.PlayerColors[component.Data.DefaultOutfit.ColorId];
                                         if (Hacker.onlyColorType)
                                         {
                                             var id = Mathf.Max(0, Palette.PlayerColors.IndexOf(color));
@@ -258,13 +259,19 @@ namespace TheOtherRoles.Patches {
                 {
                     List<Color> colors = playerColors[__instance.RoomType];
                     List<Color> impostorColors = new List<Color>();
+                    List<Color> mimicKColors = new List<Color>();
                     List<Color> deadBodyColors = new List<Color>();
                     foreach(var p in PlayerControl.AllPlayerControls)
                     {
-                        var color = p.myRend.material.GetColor("_BodyColor");
+                        // var color = p.myRend.material.GetColor("_BodyColor");
+                        var color = Palette.PlayerColors[p.Data.DefaultOutfit.ColorId];
                         if(p.isImpostor())
                         {
                             impostorColors.Add(color);
+                            if(p.isRole(RoleType.MimicK))
+                            {
+                                mimicKColors.Add(color);
+                            }
                         }
                         else if(p.isDead())
                         {
@@ -297,13 +304,20 @@ namespace TheOtherRoles.Patches {
                                 }
                                 renderer.material.SetColor("_VisorColor", Palette.VisorColor);
                             }
-                            else if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin)
+                            else if ((PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin) || PlayerControl.LocalPlayer.isRole(RoleType.MimicA))
                             {
                                 renderer.material = newMat;
                                 var color = colors[i];
                                 if (impostorColors.Contains(color))
                                 {
-                                    color = Palette.ImpostorRed;
+                                    if(mimicKColors.Contains(color))
+                                    {
+                                        color = Palette.PlayerColors[3];
+                                    }
+                                    else
+                                    {
+                                        color = Palette.ImpostorRed;
+                                    }
                                     renderer.material.SetColor("_BodyColor", color);
                                     var id = Palette.PlayerColors.IndexOf(color);
                                     if (id < 0)

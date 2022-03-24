@@ -405,6 +405,8 @@ namespace TheOtherRoles.Patches {
                 enabled &= false;
             else if (PlayerControl.LocalPlayer.isRole(RoleType.BomberB) && BomberA.isAlive())
                 enabled &= false;
+            else if (PlayerControl.LocalPlayer.isRole(RoleType.MimicA) && MimicK.isAlive())
+                enabled &= false;
             
             if (enabled) __instance.KillButton.Show();
             else __instance.KillButton.Hide();

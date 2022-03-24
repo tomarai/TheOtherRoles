@@ -555,6 +555,46 @@
         "11": "\u8ffd\u653e\u6642\u30af\u30eb\u30fc\u3092\u8ffd\u653e\u3059\u308b",
         "13": "\u5f53\u75af\u5b50\u88ab\u6295\u51fa\u53bb\u65f6\u4e00\u540d\u8239\u5458\u4e5f\u4f1a\u88ab\u6295\u51fa\u53bb"
     },
+    "mimic": {
+        "0": "Mimic",
+        "11": "\u30df\u30df\u30c3\u30af"
+    },
+    "mimicK": {
+        "0": "Mimic(Killer)",
+        "11": "\u30df\u30df\u30c3\u30af(\u30ad\u30e9\u30fc)"
+    },
+    "mimicA": {
+        "0": "Mimic(Assistant)",
+        "11": "\u30df\u30df\u30c3\u30af(\u30a2\u30b7\u30b9\u30bf\u30f3\u30c8)"
+    },
+    "mimicCountAsOne": {
+        "0": "Count as one impostor",
+        "11": "1\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u3068\u30ab\u30a6\u30f3\u30c8\u3059\u308b"
+    },
+    "mimicIfOneDiesBothDie": {
+        "0": "If one dies both die",
+        "11": "\u7247\u65b9\u304c\u6b7b\u3093\u3060\u3089\u4e21\u65b9\u6b7b\u306c"
+    },
+    "mimicHasOneVote": {
+        "0": "One vote with 2 people",
+        "11": "2\u4eba\u30671\u7968\u6271\u3044"
+    },
+    "mimicKShortDesc": {
+        "0": "Kill and morph",
+        "11": "\u6bba\u3057\u3066\u5165\u308c\u66ff\u308f\u308c"
+    },
+    "mimicAShortDesc": {
+        "0": "Fake an alibi",
+        "11": "\u30ad\u30e9\u30fc\u306e\u30a2\u30ea\u30d0\u30a4\u3092\u4f5c\u308c"
+    },
+    "mimicKIntroDesc": {
+        "0": "Kill and morph",
+        "11": "\u6bba\u3057\u3066\u5165\u308c\u66ff\u308f\u308c"
+    },
+    "mimicAIntroDesc": {
+        "0": "Fake an alibi",
+        "11": "\u30ad\u30e9\u30fc\u306e\u30a2\u30ea\u30d0\u30a4\u3092\u4f5c\u308c"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",

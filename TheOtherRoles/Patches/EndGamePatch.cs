@@ -1108,6 +1108,11 @@ namespace TheOtherRoles.Patches
                         numImpostorsAlive--;
                         numTotalAlive--;
                     }
+                    else if(MimicK.isAlive() && MimicA.isAlive() && MimicK.countAsOne)
+                    {
+                        numImpostorsAlive--;
+                        numTotalAlive--;
+                    }
 
 
                     // 猫の自爆中はジャッカルのカウントを一人減らす

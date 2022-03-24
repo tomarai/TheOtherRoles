@@ -305,6 +305,14 @@ namespace TheOtherRoles.Patches
                 setRoleToRandomPlayer((byte)RoleType.BomberB, data.impostors);
                 data.maxImpostorRoles -= 2;
             }
+
+            // Assign Mimic
+            if (data.impostors.Count >= 2 && data.maxImpostorRoles >= 2 && (rnd.Next(1, 101) <= CustomOptionHolder.mimicSpawnRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleType.MimicK, data.impostors);
+                setRoleToRandomPlayer((byte)RoleType.MimicA, data.impostors);
+                data.maxImpostorRoles -= 2;
+            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)

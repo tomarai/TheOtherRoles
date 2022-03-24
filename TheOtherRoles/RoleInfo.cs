@@ -103,6 +103,8 @@ namespace TheOtherRoles
         public static RoleInfo evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
         public static RoleInfo puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
+        public static RoleInfo mimicK = new RoleInfo("mimicK", MimicK.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicK);
+        public static RoleInfo mimicA = new RoleInfo("mimicA", MimicA.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicA);
         public static void init() 
         {
             jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
@@ -168,6 +170,8 @@ namespace TheOtherRoles
             evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
             puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
             evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
+            mimicK = new RoleInfo("mimicK", MimicK.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicK);
+            mimicA = new RoleInfo("mimicA", MimicA.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicA);
             allRoleInfos = new List<RoleInfo>()
             {
                 impostor,
@@ -233,6 +237,8 @@ namespace TheOtherRoles
                 bomberB,
                 evilTracker,
                 puppeteer,
+                mimicK,
+                mimicA
             };
         }
 
@@ -300,6 +306,8 @@ namespace TheOtherRoles
                 bomberB,
                 evilTracker,
                 puppeteer,
+                mimicK,
+                mimicA
             };
 
         public static string tl(string key)
@@ -385,6 +393,8 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.BomberB)) infos.Add(bomberB);
             if(p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
             if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
+            if(p.isRole(RoleType.MimicK)) infos.Add(mimicK);
+            if(p.isRole(RoleType.MimicA)) infos.Add(mimicA);
 
 
             // Default roles

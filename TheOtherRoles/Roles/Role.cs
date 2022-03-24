@@ -84,6 +84,8 @@ namespace TheOtherRoles
         BomberA,
         BomberB,
         EvilTracker,
+        MimicK,
+        MimicA,
         EvilHacker,
 
 
@@ -113,6 +115,8 @@ namespace TheOtherRoles
             { RoleType.BomberA, typeof(RoleBase<BomberA>)},
             { RoleType.BomberB, typeof(RoleBase<BomberB>)},
             { RoleType.EvilTracker, typeof(RoleBase<EvilTracker>)},
+            { RoleType.MimicK, typeof(RoleBase<MimicK>)},
+            { RoleType.MimicA, typeof(RoleBase<MimicA>)},
 
             // Neutral
             { RoleType.Opportunist, typeof(RoleBase<Opportunist>) },
