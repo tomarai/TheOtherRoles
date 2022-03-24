@@ -978,18 +978,13 @@ namespace TheOtherRoles.Patches
 
         static void reduceKillCooldown(PlayerControl __instance)
         {
-            if (CustomOptionHolder.alwaysReduceKillCooldown.getBool())
+            if (CustomOptionHolder.alwaysReduceCooldown.getBool())
             {
                 // オプションがONの場合はベント内はクールダウン減少を止める
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool() && __instance.inVent;
 
                 if(!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
                     __instance.SetKillTimer(__instance.killTimer - Time.fixedDeltaTime);
-                
-                if(Jackal.jackal != null && __instance == Jackal.jackal &&!__instance.Data.IsDead && (__instance.inVent && !CustomOptionHolder.exceptInVent.getBool()))
-                {
-                    HudManagerStartPatch.jackalKillButton.Timer -= Time.fixedDeltaTime;
-                }
             }
 
         }

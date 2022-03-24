@@ -169,8 +169,20 @@ namespace TheOtherRoles.Objects {
             if (Timer >= 0) {
                 if (HasEffect && isEffectActive)
                     Timer -= Time.deltaTime;
+
+                bool always = CustomOptionHolder.alwaysReduceCooldown.getBool();
+                bool exceptInVent = CustomOptionHolder.exceptInVent.getBool();
+                if(always)
+                {
+                    if(!exceptInVent || !PlayerControl.LocalPlayer.inVent)
+                    {
+                        Timer -= Time.deltaTime;
+                    }
+                }
                 else if (!PlayerControl.LocalPlayer.inVent && PlayerControl.LocalPlayer.moveable)
+                {
                     Timer -= Time.deltaTime;
+                }
             }
             
             if (Timer <= 0 && HasEffect && isEffectActive) {
