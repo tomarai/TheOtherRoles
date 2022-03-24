@@ -34,7 +34,6 @@ namespace TheOtherRoles
         private CustomOption baseOption;
 
         RoleInfo(string name, Color color, CustomOption baseOption, RoleType roleType) {
-            Helpers.log($"{name} baseoption({baseOption})");
             this.color = color;
             this.nameKey = name;
             this.baseOption = baseOption;
