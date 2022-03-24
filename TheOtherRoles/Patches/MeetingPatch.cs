@@ -706,6 +706,7 @@ namespace TheOtherRoles.Patches {
             animateSwap = false;
             CustomOverlays.showBlackBG();
             CustomOverlays.hideInfoOverlay();
+            CustomOverlays.hideRoleOverlay();
             TheOtherRolesGM.OnMeetingStart();
         }
 

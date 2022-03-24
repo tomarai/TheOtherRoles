@@ -136,6 +136,7 @@ namespace TheOtherRoles.Patches
                     useButtonPos = HudManager.Instance.UseButton.transform.localPosition;
                 }
                 CustomOverlays.hideInfoOverlay();
+                CustomOverlays.hideRoleOverlay();
             }
 
             static void Postfix(MapBehaviour __instance)
