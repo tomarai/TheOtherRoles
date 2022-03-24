@@ -312,6 +312,7 @@ namespace TheOtherRoles
             public static PlayerControl evilHacker;
             public static Color color = Palette.ImpostorRed;
 
+            public static bool canHasBetterAdmin {get {return CustomOptionHolder.evilHackerCanHasBetterAdmin.getBool();}}
             public static bool canCreateMadmate = false;
             public static bool canCreateMadmateFromFox {get { return CustomOptionHolder.evilHackerCanCreateMadmateFromFox.getBool();}}
             public static bool canCreateMadmateFromJackal {get { return CustomOptionHolder.evilHackerCanCreateMadmateFromJackal.getBool();}}

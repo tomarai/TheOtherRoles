@@ -257,6 +257,20 @@ namespace TheOtherRoles.Patches {
                 if (playerColors.ContainsKey(__instance.RoomType))
                 {
                     List<Color> colors = playerColors[__instance.RoomType];
+                    List<Color> impostorColors = new List<Color>();
+                    List<Color> deadBodyColors = new List<Color>();
+                    foreach(var p in PlayerControl.AllPlayerControls)
+                    {
+                        var color = p.myRend.material.GetColor("_BodyColor");
+                        if(p.isImpostor())
+                        {
+                            impostorColors.Add(color);
+                        }
+                        else if(p.isDead())
+                        {
+                            deadBodyColors.Add(color);
+                        }
+                    }
 
                     for (int i = 0; i < __instance.myIcons.Count; i++)
                     {
@@ -282,6 +296,45 @@ namespace TheOtherRoles.Patches {
                                     renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
                                 }
                                 renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                            }
+                            else if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin)
+                            {
+                                renderer.material = newMat;
+                                var color = colors[i];
+                                if (impostorColors.Contains(color))
+                                {
+                                    color = Palette.ImpostorRed;
+                                    renderer.material.SetColor("_BodyColor", color);
+                                    var id = Palette.PlayerColors.IndexOf(color);
+                                    if (id < 0)
+                                    {
+                                        renderer.material.SetColor("_BackColor", color);
+                                    }
+                                    else
+                                    {
+                                        renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
+                                    }
+                                    renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                                }
+                                else if (deadBodyColors.Contains(color))
+                                {
+                                    color = Palette.Black;
+                                    renderer.material.SetColor("_BodyColor", color);
+                                    var id = Palette.PlayerColors.IndexOf(color);
+                                    if (id < 0)
+                                    {
+                                        renderer.material.SetColor("_BackColor", color);
+                                    }
+                                    else
+                                    {
+                                        renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
+                                    }
+                                    renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                                }
+                                else
+                                {
+                                    renderer.material = defaultMat;
+                                }
                             }
                             else
                             {

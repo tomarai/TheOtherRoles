@@ -44,6 +44,7 @@ namespace TheOtherRoles {
         public static CustomOption camouflagerRandomColors;
 
         public static CustomRoleOption evilHackerSpawnRate;
+        public static CustomOption evilHackerCanHasBetterAdmin;
         public static CustomOption evilHackerCanCreateMadmate;
         public static CustomOption evilHackerCanCreateMadmateFromFox;
         public static CustomOption evilHackerCanCreateMadmateFromJackal;
@@ -472,6 +473,7 @@ namespace TheOtherRoles {
             camouflagerRandomColors = CustomOption.Create(33, "camouflagerRandomColors", false, camouflagerSpawnRate);
 
             evilHackerSpawnRate = new CustomRoleOption(1900, "evilHacker", EvilHacker.color, 1);
+            evilHackerCanHasBetterAdmin = CustomOption.Create(1912, "evilHackerCanHasBetterAdmin", false, evilHackerSpawnRate);
             evilHackerCanCreateMadmate = CustomOption.Create(1901, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
             createdMadmateCanDieToSheriff = CustomOption.Create(1902, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
             createdMadmateCanEnterVents = CustomOption.Create(1903, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
