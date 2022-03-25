@@ -414,6 +414,7 @@ namespace TheOtherRoles {
         public static CustomOption mimicHasOneVote;
 
         public static CustomOption randomWireTask;
+        public static CustomOption numWireTask;
         public static CustomOption disableVentAnimation;
         public static CustomOption alwaysReduceCooldown;
         public static CustomOption exceptInVent;
@@ -817,6 +818,7 @@ namespace TheOtherRoles {
             lastImpostorNumShots = CustomOption.Create(9904, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
 
             randomWireTask = CustomOption.Create(9909, "randomWireTask", false, specialOptions, true);
+            numWireTask = CustomOption.Create(9913, "numWireTask", 3f, 1f, 10f, 1f, randomWireTask);
             disableVentAnimation = CustomOption.Create(9910, "disableVentAnimation", false, specialOptions);
             alwaysReduceCooldown = CustomOption.Create(9911, "alwaysReduceCooldown", false, specialOptions);
             exceptInVent = CustomOption.Create(9912, "exceptInVent", false, alwaysReduceCooldown);
