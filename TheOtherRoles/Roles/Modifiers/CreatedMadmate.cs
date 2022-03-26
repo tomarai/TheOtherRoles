@@ -99,7 +99,7 @@ namespace TheOtherRoles
                     counter++;
                 }
             }
-            return counter == totalTasks;
+            return counter >= totalTasks;
         }
 
         public static void Clear()
