@@ -167,12 +167,11 @@ namespace TheOtherRoles.Objects {
             }
 
             if (Timer >= 0) {
-                if (HasEffect && isEffectActive)
-                    Timer -= Time.deltaTime;
-
                 bool always = CustomOptionHolder.alwaysReduceCooldown.getBool();
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool();
-                if(always)
+                if (HasEffect && isEffectActive)
+                    Timer -= Time.deltaTime;
+                else if(always)
                 {
                     if(!exceptInVent || !PlayerControl.LocalPlayer.inVent)
                     {
