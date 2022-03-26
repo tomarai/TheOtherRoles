@@ -592,7 +592,7 @@ namespace TheOtherRoles {
             madmateHasImpostorVision = CustomOption.Create(363, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(364, "madmateCanSabotage", false, madmateSpawnRate);
             madmateCanFixComm = CustomOption.Create(365, "madmateCanFixComm", true, madmateSpawnRate);
-            madmateExilePlayer = CustomOption.Create(10370, "createdMadmateExileCrewmate", false, madmateSpawnRate);
+            madmateExilePlayer = CustomOption.Create(10370, "madmateExileCrewmate", false, madmateSpawnRate);
 
             miniSpawnRate = new CustomRoleOption(180, "mini", Mini.color, 1);
             miniIsImpRate = CustomOption.Create(182, "miniIsImpRate", rates, miniSpawnRate);

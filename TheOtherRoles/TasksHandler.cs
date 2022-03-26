@@ -54,7 +54,7 @@ namespace TheOtherRoles {
             }
         }
 
-        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo, bool madmateCount=false) {
+        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo) {
             int TotalTasks = 0;
             int CompletedTasks = 0;
             if (!playerInfo.Disconnected && playerInfo.Tasks != null &&

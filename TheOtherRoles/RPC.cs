@@ -546,7 +546,7 @@ namespace TheOtherRoles
                 // タスクがないプレイヤーがMadmateになった場合はショートタスクを必要数割り当てる
                 if (Helpers.hasFakeTasks(player))
                 {
-                    if(CreatedMadmate.hasTasks && CreatedMadmate.hasModifier(player))
+                    if(CreatedMadmate.hasTasks)
                     {
                         Helpers.clearAllTasks(player);
                         player.generateAndAssignTasks(0, CreatedMadmate.numTasks, 0);

@@ -33,6 +33,7 @@ namespace TheOtherRoles
             Opportunist.Clear();
             Ninja.Clear();
             Madmate.Clear();
+            CreatedMadmate.Clear();
             PlagueDoctor.Clear();
             Lighter.Clear();
             SerialKiller.Clear();

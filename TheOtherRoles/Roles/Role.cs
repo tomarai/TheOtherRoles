@@ -59,7 +59,6 @@ namespace TheOtherRoles
         NekoKabocha,
         Madmate,
         SerialKiller,
-        astImpostor,
 
 
         Mini = 150,
@@ -593,6 +592,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Warlock)) Warlock.warlock = target;
             if (player.isRole(RoleType.BountyHunter)) BountyHunter.bountyHunter = target;
             if (player.isRole(RoleType.Witch)) Witch.witch = target;
+            if (player.isRole(RoleType.EvilHacker))  EvilHacker.evilHacker = target;
             if (player.isRole(RoleType.Mini)) Mini.mini = target;
             if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;
             if (player.isRole(RoleType.NiceGuesser)) Guesser.niceGuesser = target;

@@ -1036,7 +1036,6 @@ namespace TheOtherRoles.Patches
                     int impLovers = 0;
                     int jackalLovers = 0;
 
-                    int numFoxAlive = 0;
 
                     for (int i = 0; i < GameData.Instance.PlayerCount; i++)
                     {
@@ -1065,11 +1064,6 @@ namespace TheOtherRoles.Patches
                                 {
                                     numJackalAlive++;
                                     if (lover) jackalLovers++;
-                                }
-
-                                if (Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.Fox))
-                                {
-                                        numFoxAlive += 1;
                                 }
 
                                 if (SchrodingersCat.jackalFlag)

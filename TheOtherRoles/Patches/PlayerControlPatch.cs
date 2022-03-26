@@ -560,7 +560,7 @@ namespace TheOtherRoles.Patches
                         playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);    
                     }
 
-                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data, true);
+                    var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
                     string roleNames = RoleInfo.GetRolesString(p, true, new RoleType[] { RoleType.Lovers });
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();

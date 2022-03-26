@@ -33,7 +33,7 @@ namespace TheOtherRoles
         public static bool canFixComm { get { return CustomOptionHolder.createdMadmateCanFixComm.getBool(); } }
 
         public static CreatedMadmateType madmateType { get { return CreatedMadmateType.Simple; } }
-        public static CreatedMadmateAbility madmateAbility { get { return (CreatedMadmateAbility)CustomOptionHolder.madmateAbility.getSelection(); } }
+        public static CreatedMadmateAbility madmateAbility { get { return (CreatedMadmateAbility)CustomOptionHolder.createdMadmateAbility.getSelection(); } }
 
         public static int numTasks { get { return (int)CustomOptionHolder.createdMadmateNumTasks.getFloat(); } }
 
