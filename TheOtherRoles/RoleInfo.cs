@@ -446,12 +446,13 @@ namespace TheOtherRoles
                 }
             }
 
+
             if(p.hasModifier(ModifierType.Munou))
             {
                 if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
                 {
                     string postfix = useColors ? Helpers.cs(Munou.color, Munou.postfix) : Munou.postfix;
-                    roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                     roleName = roleName + postfix;
                 }
             }
