@@ -1530,6 +1530,9 @@ namespace TheOtherRoles
                         float progress = System.BitConverter.ToSingle(progressByte, 0);
                         RPCProcedure.plagueDoctorProgress(progressTarget, progress);
                         break;
+                    case (byte)CustomRPC.NekoKabochaExile:
+                        RPCProcedure.nekoKabochaExile(reader.ReadByte());
+                        break;
                     case (byte)CustomRPC.SerialKillerSuicide:
                         RPCProcedure.serialKillerSuicide(reader.ReadByte());
                         break;
