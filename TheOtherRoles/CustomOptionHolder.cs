@@ -378,7 +378,8 @@ namespace TheOtherRoles {
         public static CustomOption schrodingersCatBecomesImpostor;
         public static CustomOption schrodingersCatKillsKiller;
         public static CustomOption schrodingersCatCantKillUntilLastOne;
-        public static CustomOption schrodingersCatBecomesRandomTeamOnExiled;
+        public static CustomOption schrodingersCatBecomesWhichTeamsOnExiled;
+        public static CustomOption schrodingersCatJustDieOnKilledByCrew;
 
         public static CustomRoleOption trapperSpawnRate;
         public static CustomOption trapperNumTrap;
@@ -707,7 +708,8 @@ namespace TheOtherRoles {
             schrodingersCatBecomesImpostor = CustomOption.Create(972, "schrodingersCatBecomesImpostor", true, schrodingersCatSpawnRate);
             schrodingersCatKillsKiller = CustomOption.Create(973, "schrodingersCatKillsKiller", false, schrodingersCatSpawnRate);
             schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, "schrodingersCatCantKillUntilLastOne", false, schrodingersCatSpawnRate);
-            schrodingersCatBecomesRandomTeamOnExiled = CustomOption.Create(975, "schrodingersCatBecomesRandomTeamOnExiled", false, schrodingersCatSpawnRate);
+            schrodingersCatBecomesWhichTeamsOnExiled = CustomOption.Create(975, "schrodingersCatBecomesWhichTeamsOnExiled", new string[] {"schrodingersCatNone", "schrodingersCatCrew", "schrodingersCatRandom"}, schrodingersCatSpawnRate);
+            schrodingersCatJustDieOnKilledByCrew = CustomOption.Create(975, "schrodingersCatJustDieOnKilledByCrew", false, schrodingersCatSpawnRate);
 
             puppeteerSpawnRate = new CustomRoleOption(1060, "puppeteer", Puppeteer.color, 1);
             puppeteerNumKills = CustomOption.Create(1061, "puppeteerNumKills", 3f, 1f, 15f, 1f, puppeteerSpawnRate);

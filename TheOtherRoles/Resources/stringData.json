@@ -34,10 +34,25 @@
         "11": "\u6700\u5f8c\u306e\u4e00\u4eba\u306b\u306a\u308b\u307e\u3067\u30ad\u30eb\u3067\u304d\u306a\u3044",
         "13": "\u5728\u6210\u4e3a\u72ec\u5b64\u72fc\u6216\u6700\u540e\u7684\u8c7a\u72fc\u9635\u5bb9\u4e4b\u524d\u4e0d\u80fd\u52a8\u5200"
     },
-    "schrodingersCatBecomesRandomTeamOnExiled": {
-        "0": "Becomes random team on exiled",
-        "11": "\u8ffd\u653e\u6642\u306b\u30e9\u30f3\u30c0\u30e0\u306a\u9663\u55b6\u306b\u6240\u5c5e\u3059\u308b",
-        "13": "\u88ab\u6295\u51fa\u53bb\u65f6\u6210\u4e3a\u968f\u673a\u9635\u5bb9"
+    "schrodingersCatBecomesWhichTeamsOnExiled": {
+        "0": "Becomes which teams if exiled",
+        "11": "\u8ffd\u653e\u6642\u306b\u6240\u5c5e\u3059\u308b\u30c1\u30fc\u30e0"
+    },
+    "schrodingersCatNone": {
+        "0": "None",
+        "11": "\u306a\u3057"
+    },
+    "schrodingersCatCrew": {
+        "0": "Crewmate",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8"
+    },
+    "schrodingersCatRandom": {
+        "0": "Random",
+        "11": "\u30e9\u30f3\u30c0\u30e0"
+    },
+    "schrodingersCatJustDieOnKilledByCrew": {
+        "0": "Just die if killed by crewmate",
+        "11": "\u30af\u30eb\u30fc\u306b\u30ad\u30eb\u3055\u308c\u308b\u3068\u305d\u306e\u307e\u307e\u6b7b\u4ea1\u3059\u308b"
     },
     "schrodingersCatShortDesc": {
         "0": "Get killed and join killer team",

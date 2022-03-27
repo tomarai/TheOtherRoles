@@ -15,15 +15,22 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public class SchrodingersCat : RoleBase<SchrodingersCat>
     {
+        public enum exileType
+        {
+            None = 0,
+            Crew = 1,
+            Random = 2,
+        }
         public static Color color = Color.grey;
         public static bool impostorFlag = false;
         public static bool jackalFlag = false;
         public static bool crewFlag = false;
         public static float killCooldown {get {return CustomOptionHolder.schrodingersCatKillCooldown.getFloat();}}
         public static bool becomesImpostor {get {return CustomOptionHolder.schrodingersCatBecomesImpostor.getBool();}}
-        public static bool becomesRandomTeamOnExiled {get {return CustomOptionHolder.schrodingersCatBecomesRandomTeamOnExiled.getBool();}}
+        public static exileType becomesWhichTeamsOnExiled {get {return (exileType)CustomOptionHolder.schrodingersCatBecomesWhichTeamsOnExiled.getSelection();}}
         public static bool cantKillUntilLastOne {get {return CustomOptionHolder.schrodingersCatCantKillUntilLastOne.getBool();}}
         public static bool killsKiller {get {return CustomOptionHolder.schrodingersCatKillsKiller.getBool();}}
+        public static bool justDieOnKilledByCrew {get {return CustomOptionHolder.schrodingersCatJustDieOnKilledByCrew.getBool();}}
         public static PlayerControl killer = null;
 
         public SchrodingersCat()
@@ -59,11 +66,13 @@ namespace TheOtherRoles
                 player.SetKillTimerUnchecked(killCooldown);
         }
         public override void OnDeath(PlayerControl killer = null)
-        {
+        { 
+            // 占い師の画面では呪殺したことを分からなくするために自殺処理させているので注意すること
             if(impostorFlag|| jackalFlag|| crewFlag) return;
+            if(((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
             if(killer == null)
             {
-                if(becomesRandomTeamOnExiled)
+                if(becomesWhichTeamsOnExiled == exileType.Random)
                 {
                     int rndVal = Jackal.jackal != null ? rnd.Next(0, 2): rnd.Next(0, 1);
                     switch(rndVal)
@@ -82,7 +91,7 @@ namespace TheOtherRoles
                             break;
                     }
                 }
-                else
+                else if(becomesWhichTeamsOnExiled == exileType.Crew)
                 {
                     setCrewFlag();
                 }
@@ -110,6 +119,7 @@ namespace TheOtherRoles
                 if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
                     SchrodingersCat.killer = killer;
 
+
                 // 蘇生する
                 player.Revive();
                 // 死体を消す
@@ -119,7 +129,6 @@ namespace TheOtherRoles
                         array[i].gameObject.active = false;
                     }     
                 }
-
                 if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
                 {
                     if(PlayerControl.LocalPlayer == killer){
