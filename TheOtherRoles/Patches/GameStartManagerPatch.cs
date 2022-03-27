@@ -26,6 +26,10 @@ namespace TheOtherRoles.Patches {
 
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
         public class GameStartManagerStartPatch {
+            public static void Prefix(GameStartManager __instance)
+            {
+                RandomGenerator.Initialize();
+            }
             public static void Postfix(GameStartManager __instance) {
                 // Trigger version refresh
                 versionSent = false;

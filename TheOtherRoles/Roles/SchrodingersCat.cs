@@ -70,6 +70,7 @@ namespace TheOtherRoles
             // 占い師の画面では呪殺したことを分からなくするために自殺処理させているので注意すること
             if(impostorFlag|| jackalFlag|| crewFlag) return;
             if(((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
+            Helpers.log("hogehoge");
             if(killer == null)
             {
                 if(becomesWhichTeamsOnExiled == exileType.Random)
