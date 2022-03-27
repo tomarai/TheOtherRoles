@@ -422,6 +422,7 @@ namespace TheOtherRoles {
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
+        public static CustomOption strongRandomGen;
 
 
 
@@ -831,6 +832,8 @@ namespace TheOtherRoles {
 
             airshipEnableWallCheck = CustomOption.Create(9908, "airshipEnableWallCheck", true, specialOptions, true);
             airshipReactorDuration = CustomOption.Create(9999, "airshipReactorDuration", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
+
+            strongRandomGen = CustomOption.Create(9915, "strongRandomGen", true, specialOptions, true);
 
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(4, "blockSkippingInEmergencyMeetings", false, specialOptions);

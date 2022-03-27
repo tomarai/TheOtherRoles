@@ -464,6 +464,10 @@
         "11": "\u30ea\u30a2\u30af\u30bf\u30fc\u6642\u9593(\u30a8\u30a2\u30b7\u30c3\u30d7)",
         "13": "\u98de\u8247\u53cd\u5e94\u5806\u65f6\u95f4\u8bbe\u7f6e"
     },
+    "strongRandomGen": {
+        "0": "Better random number generator",
+        "11": "\u512a\u79c0\u306a\u4e71\u6570\u751f\u6210\u5668"
+    },
     "evilHacker": {
         "0": "EvilHacker",
         "11": "\u30a4\u30d3\u30eb\u30cf\u30c3\u30ab\u30fc",

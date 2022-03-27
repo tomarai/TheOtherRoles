@@ -17,6 +17,8 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # 追加機能
 - アクション時にキルクールダウン減少を止めない（オプション）
 - 配線タスクの順番のランダム化(オプション)
+- 配線タスクの数を任意に変更可能(オプション)
+- エアシップの配線タスク位置の追加(オプション)
 - エアシップのリアクター時間変更(オプション)
 - エアシップの一部のタスクに壁判定を追加（現像、シャワー、ゴミ箱）
 - ポーラスのランダムリスポン（オプション）
@@ -351,6 +353,16 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 |死亡時のペナルティ｜死亡した際に失うポイント数|
 |死亡時に千里眼能力を失う|死亡すると人形操作時に千里眼能力が使えなくなる|
 
+# クレジット
+EvilHackerのアイデアとコード  
+[tomarai/TheOtherRoles](https://github.com/tomarai/TheOtherRoles)
+
+配線位置追加のアイデアとコード  
+[Dolly1016/Nebula](https://github.com/Dolly1016/Nebula)
+
+抽選処理の偏り排除のアイデアとコード  
+[yukieiji/ExtremeRoles](https://github.com/yukieiji/ExtremeRoles.git)
+<hr>
 ↓ここから本家のREADMEそのもの↓
 # The Other Roles: GM Edition
 
