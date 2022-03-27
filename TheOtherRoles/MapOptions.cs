@@ -155,7 +155,7 @@ namespace TheOtherRoles{
             AdminTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
             if (restrictAdminTime> 0)
                 // AdminTimerText.text = $"Admin: {Mathf.RoundToInt(restrictAdminTime)} sec remaining";
-                AdminTimerText.text = String.Format(ModTranslation.getString("adminText"),Mathf.RoundToInt(restrictAdminTime));
+                AdminTimerText.text = String.Format(ModTranslation.getString("adminText"),restrictAdminTime.ToString("0.00"));
             else
                 // AdminTimerText.text = "Admin: ran out of time";
                 AdminTimerText.text = ModTranslation.getString("adminRanOut");
