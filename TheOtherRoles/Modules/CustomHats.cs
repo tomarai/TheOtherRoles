@@ -378,10 +378,11 @@ namespace TheOtherRoles.Modules {
                 float YOffset = __instance.YStart;
 
                 var orderedKeys = packages.Keys.OrderBy((string x) => {
-                    if (x == innerslothPackageName) return 1000;
-                    if (x == "developerHats") return 200;
-                    if (x.Contains("gmEdition")) return 100;
-                    if (x.Contains("shiune")) return 0;
+                    if (x == innerslothPackageName) return 100003;
+                    if (x == "developerHats") return 10000;
+                    if (x.Contains("gmEdition")) return 10002;
+                    if (x.Contains("shiune")) return 10001;
+                    if (x.Contains("01haomingHat")) return 0;
                     return 500;
                 });
 
@@ -424,6 +425,7 @@ namespace TheOtherRoles.Modules {
 
         public static string[] hatRepos = new string[]
         {
+            "https://raw.githubusercontent.com/haoming37/TheOtherHats-GM-Haoming/master",
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"
         };
@@ -446,6 +448,7 @@ namespace TheOtherRoles.Modules {
 
             foreach (string repo in repos)
             {
+                Helpers.log(repo);
                 try
                 {
                     HttpStatusCode status = await FetchHats(repo);

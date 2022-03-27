@@ -611,6 +611,10 @@
         "0": "Fake an alibi",
         "11": "\u30ad\u30e9\u30fc\u306e\u30a2\u30ea\u30d0\u30a4\u3092\u4f5c\u308c"
     },
+    "01haomingHat": {
+        "0": "GM-Haoming Community Hats",
+        "11": "GM-Haoming Community Hats"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
