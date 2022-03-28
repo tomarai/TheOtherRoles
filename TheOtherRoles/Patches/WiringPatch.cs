@@ -110,12 +110,4 @@ namespace TheOtherRoles.Patches
             }
         }
     }
-    public static class Extensions
-    {
-        public static int RandomIdx<T>(this IEnumerable<T> self)
-        {
-            return UnityEngine.Random.Range(0, self.Count<T>());
-        }
-    }
-
 }

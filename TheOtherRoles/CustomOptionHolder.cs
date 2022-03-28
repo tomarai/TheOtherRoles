@@ -267,6 +267,7 @@ namespace TheOtherRoles {
         public static CustomOption specialOptions;
         public static CustomOption airshipEnableWallCheck;
         public static CustomOption airshipReactorDuration;
+        public static CustomOption airshipRandomSpawn;
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
         public static CustomOption noVoteIsSelfVote;
@@ -834,6 +835,7 @@ namespace TheOtherRoles {
 
             airshipEnableWallCheck = CustomOption.Create(9908, "airshipEnableWallCheck", true, specialOptions, true);
             airshipReactorDuration = CustomOption.Create(9999, "airshipReactorDuration", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
+            airshipRandomSpawn = CustomOption.Create(9915, "airshipRandomSpawn", false, specialOptions);
 
             strongRandomGen = CustomOption.Create(9915, "strongRandomGen", true, specialOptions, true);
 

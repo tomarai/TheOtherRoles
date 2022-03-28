@@ -3,8 +3,13 @@ using Hazel;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PowerTools;
+using TMPro;
+using UnhollowerBaseLib;
 
 namespace TheOtherRoles.Patches {
 
@@ -114,6 +119,59 @@ namespace TheOtherRoles.Patches {
                 }
             }
         }
-    }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Begin))]
+        public static bool Prefix(SpawnInMinigame __instance, PlayerTask task)
+        {
+            // base.Begin(task);
+            // ((Minigame)__instance).Begin(task);
+            __instance.MyTask = task;
+            __instance.MyNormTask = (task as NormalPlayerTask);
+            if (PlayerControl.LocalPlayer)
+            {
+                if (MapBehaviour.Instance)
+                {
+                    MapBehaviour.Instance.Close();
+                }
+                PlayerControl.LocalPlayer.NetTransform.Halt();
+            }
+            __instance.StartCoroutine(__instance.CoAnimateOpen());
+            
+            SpawnInMinigame.SpawnLocation[] array = __instance.Locations.ToArray<SpawnInMinigame.SpawnLocation>();
+            array.Shuffle(0);
+            array = (from s in array.Take(__instance.LocationButtons.Length)
+            orderby s.Location.x, s.Location.y descending
+            select s).ToArray<SpawnInMinigame.SpawnLocation>();
+            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(-25f, 40f));
+            for (int i = 0; i < __instance.LocationButtons.Length; i++)
+            {
+                PassiveButton passiveButton = __instance.LocationButtons[i];
+                SpawnInMinigame.SpawnLocation pt = array[i];
+                passiveButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SpawnAt(pt.Location)));
+                passiveButton.GetComponent<SpriteAnim>().Stop();
+                passiveButton.GetComponent<SpriteRenderer>().sprite = pt.Image;
+                // passiveButton.GetComponentInChildren<TextMeshPro>().text = DestroyableSingleton<TranslationController>.Instance.GetString(pt.Name, Array.Empty<object>());
+                passiveButton.GetComponentInChildren<TextMeshPro>().text = DestroyableSingleton<TranslationController>.Instance.GetString(pt.Name, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
+                ButtonAnimRolloverHandler component = passiveButton.GetComponent<ButtonAnimRolloverHandler>();
+                component.StaticOutImage = pt.Image;
+                component.RolloverAnim = pt.Rollover;
+                component.HoverSound = (pt.RolloverSfx ? pt.RolloverSfx : __instance.DefaultRolloverSound);
+            }
+            PlayerControl.LocalPlayer.gameObject.SetActive(false);
+            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(-25f, 40f));
+            if (CustomOptionHolder.airshipRandomSpawn.getBool())
+            {
+                __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
+            }
+            else
+            {
+                __instance.StartCoroutine(__instance.RunTimer());
+            }
+            ControllerManager.Instance.OpenOverlayMenu(__instance.name, null, __instance.DefaultButtonSelected, __instance.ControllerSelectable, false);
+            PlayerControl.HideCursorTemporarily();
+            ConsoleJoystick.SetMode_Menu();
+            return false;
+        }
+    }
 }
