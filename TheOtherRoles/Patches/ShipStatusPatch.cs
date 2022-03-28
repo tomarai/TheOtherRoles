@@ -153,18 +153,21 @@ namespace TheOtherRoles.Patches {
             // comms -11.82773,3.18128
             // shower 20.77513,2.811245
             // brig 13.83497,6.367104
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.MeetingRoom, new Vector2(11.0f, 14.7f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Cockpit, new Vector2(-22.0f, -1.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Electrical, new Vector2(-16.4f, -8.5f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Lounge, new Vector2(30.9f, 7.5f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Medical, new Vector2(25.5f, -5.0f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(10.3f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.ViewingDeck, new Vector2(-14.1f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Armory, new Vector2(-10.7f, -6.3f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Comms, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Showers, new Vector2(20.8f, 2.8f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Brig, new Vector2(13.8f, 6.4f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+            if (CustomOptionHolder.airshipAdditionalSpawn.getBool())
+            {
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.MeetingRoom, new Vector2(11.0f, 14.7f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Cockpit, new Vector2(-22.0f, -1.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Electrical, new Vector2(-16.4f, -8.5f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Lounge, new Vector2(30.9f, 7.5f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Medical, new Vector2(25.5f, -5.0f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(10.3f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.ViewingDeck, new Vector2(-14.1f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Armory, new Vector2(-10.7f, -6.3f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Comms, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Showers, new Vector2(20.8f, 2.8f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Brig, new Vector2(13.8f, 6.4f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+            }
 
             List<SpawnInMinigame.SpawnLocation> list = __instance.Locations.ToList<SpawnInMinigame.SpawnLocation>();
             foreach(var spawnCandidate in SpawnCandidates)

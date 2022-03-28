@@ -479,6 +479,14 @@
         "11": "\u30ea\u30a2\u30af\u30bf\u30fc\u6642\u9593(\u30a8\u30a2\u30b7\u30c3\u30d7)",
         "13": "\u98de\u8247\u53cd\u5e94\u5806\u65f6\u95f4\u8bbe\u7f6e"
     },
+    "airshipRandomSpawn": {
+        "0": "Random spawn(Airship)",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u30b9\u30dd\u30fc\u30f3(\u30a8\u30a2\u30b7\u30c3\u30d7)"
+    },
+    "airshipAdditionalSpawn": {
+        "0": "Additional spawn(Airship)",
+        "11": "\u8ffd\u52a0\u30b9\u30dd\u30fc\u30f3\u4f4d\u7f6e(\u30a8\u30a2\u30b7\u30c3\u30d7)"
+    },
     "strongRandomGen": {
         "0": "Better random number generator",
         "11": "\u512a\u79c0\u306a\u4e71\u6570\u751f\u6210\u5668"
