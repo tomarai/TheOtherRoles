@@ -19,7 +19,8 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public static class TheOtherRoles
     {
-        public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
+        // public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
+        public static PermutedCongruentialGenerator rnd {get {return RandomGenerator.Instance;}}
 
         public enum Teams
         {
