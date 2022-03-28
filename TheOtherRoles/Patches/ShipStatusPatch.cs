@@ -150,7 +150,7 @@ namespace TheOtherRoles.Patches {
             // security 10.3455,-16.15856
             // viewing deck -14.10035,-16.20251
             // armory -10.72389,-6.35868
-            // security -11.82773,3.18128
+            // comms -11.82773,3.18128
             // shower 20.77513,2.811245
             // brig 13.83497,6.367104
             SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
@@ -162,7 +162,7 @@ namespace TheOtherRoles.Patches {
             SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(10.3f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
             SpawnCandidates.Add(new SpawnCandidate(StringNames.ViewingDeck, new Vector2(-14.1f, -16.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
             SpawnCandidates.Add(new SpawnCandidate(StringNames.Armory, new Vector2(-10.7f, -6.3f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
-            SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
+            SpawnCandidates.Add(new SpawnCandidate(StringNames.Comms, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
             SpawnCandidates.Add(new SpawnCandidate(StringNames.Showers, new Vector2(20.8f, 2.8f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
             SpawnCandidates.Add(new SpawnCandidate(StringNames.Brig, new Vector2(13.8f, 6.4f), "TheOtherRoles.Resources.Locations.dummy.png", "rollover_brig"));
 
