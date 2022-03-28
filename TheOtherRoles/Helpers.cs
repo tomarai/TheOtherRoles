@@ -149,6 +149,16 @@ namespace TheOtherRoles {
             anim.Update(0f);
         }
 
+        public static Sprite loadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect)
+        {
+            return Sprite.Create(texture, textureRect, new Vector2(0.5f, 0.5f), pixelsPerUnit);
+        }
+
+        public static Sprite loadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect, Vector2 pivot)
+        {
+            return Sprite.Create(texture, textureRect, pivot, pixelsPerUnit);
+        }
+
         public static Sprite loadSpriteFromResources(string path, float pixelsPerUnit) {
             try {
                 Texture2D texture = loadTextureFromResources(path);

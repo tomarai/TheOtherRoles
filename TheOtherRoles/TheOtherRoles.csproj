@@ -19,6 +19,7 @@
 		<EmbeddedResource Include="Resources\*.png" />
 		<EmbeddedResource Include="Resources\*.json" />
 		<EmbeddedResource Include="Resources\*.wav" />
+		<EmbeddedResource Include="Resources\Locations\*.png" />
         <EmbeddedResource Include="Resources\TricksterAnimation\*.png" />
     </ItemGroup>
 
