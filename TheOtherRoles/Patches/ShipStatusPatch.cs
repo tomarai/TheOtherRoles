@@ -203,13 +203,23 @@ namespace TheOtherRoles.Patches {
             PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(-25f, 40f));
             if (CustomOptionHolder.airshipRandomSpawn.getBool())
             {
-                // Helpers.log("ランダム");
                 __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
             }
             else
             {
-                // Helpers.log("Notランダム");
-                __instance.StartCoroutine(__instance.RunTimer());
+                // __instance.StartCoroutine(__instance.RunTimer());
+                __instance.StartCoroutine(Effects.Lerp(10f,new Action<float>((p) =>
+                {
+                    if(p==1)
+                    {
+                        __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
+                    }
+                    else
+                    {
+                        string time = Mathf.CeilToInt(10 * (1-p)).ToString();
+                        __instance.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.TimeRemaining, time);
+                    }
+                })));
             }
             ControllerManager.Instance.OpenOverlayMenu(__instance.name, null, __instance.DefaultButtonSelected, __instance.ControllerSelectable, false);
             PlayerControl.HideCursorTemporarily();
