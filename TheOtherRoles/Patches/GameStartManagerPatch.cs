@@ -28,6 +28,7 @@ namespace TheOtherRoles.Patches {
         public class GameStartManagerStartPatch {
             public static void Prefix(GameStartManager __instance)
             {
+                // ホストの抽選処理に間に合わせるためにここに暫定で入れる
                 RandomGenerator.Initialize();
             }
             public static void Postfix(GameStartManager __instance) {

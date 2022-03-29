@@ -139,6 +139,9 @@ namespace TheOtherRoles
             BombEffect.clearBombEffects();
             Trap.clearAllTraps();
 
+            RandomGenerator.Initialize();
+            ShipStatusPatch.resetSpawnCandidates();
+
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
 
