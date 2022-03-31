@@ -265,6 +265,13 @@ namespace TheOtherRoles.Patches {
 
             if (Lawyer.lawyer != null && PlayerControl.LocalPlayer == Lawyer.lawyer && !Lawyer.lawyer.Data.IsDead)
                 Lawyer.meetings++;
+            
+            // Remove DeadBodys
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++) {
+                UnityEngine.Object.Destroy(array[i].gameObject);
+            }
+
         }
     }
 
