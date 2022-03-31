@@ -113,6 +113,7 @@ namespace TheOtherRoles
         PuppeteerClimbRadder,
         mimicMorph,
         mimicResetMorph,
+        Synchronize,
 
     }
 
@@ -140,7 +141,7 @@ namespace TheOtherRoles
             Trap.clearAllTraps();
 
             RandomGenerator.Initialize();
-            ShipStatusPatch.resetSpawnCandidates();
+            SpawnInMinigamePatch.resetSpawnCandidates();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
@@ -1287,6 +1288,11 @@ namespace TheOtherRoles
             PlayerControl mimicA = Helpers.playerById(mimicAId);
             MorphHandler.resetMorph(mimicA);
         }
+
+        public static void synchronize(byte playerId,int tag)
+        {
+            SpawnInMinigamePatch.synchronizeData.Synchronize((SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
+        }
        
 
 
@@ -1640,6 +1646,9 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.mimicResetMorph:
                         RPCProcedure.mimicResetMorph(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.Synchronize:
+                        RPCProcedure.synchronize(reader.ReadByte(),reader.ReadInt32());
                         break;
                 }
             }

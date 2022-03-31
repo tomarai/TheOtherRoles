@@ -487,6 +487,14 @@
         "0": "Additional spawn(Airship)",
         "11": "\u8ffd\u52a0\u30b9\u30dd\u30fc\u30f3\u4f4d\u7f6e(\u30a8\u30a2\u30b7\u30c3\u30d7)"
     },
+    "airshipSynchronizedSpawning": {
+        "0": "Synchronized spawn(Airship)",
+        "11": "\u540c\u671f\u30b9\u30dd\u30fc\u30f3(\u30a8\u30a2\u30b7\u30c3\u30d7)"
+    },
+    "airshipWait": {
+        "0": "Waiting Other Players",
+        "11": "\u4ed6\u306e\u30d7\u30ec\u30a4\u30e4\u30fc\u3092\u5f85\u3063\u3066\u3044\u307e\u3059"
+    },
     "strongRandomGen": {
         "0": "Better random number generator",
         "11": "\u512a\u79c0\u306a\u4e71\u6570\u751f\u6210\u5668"
