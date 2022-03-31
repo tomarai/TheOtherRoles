@@ -207,19 +207,19 @@ namespace TheOtherRoles.Patches {
             }
             else
             {
-                // __instance.StartCoroutine(__instance.RunTimer());
-                __instance.StartCoroutine(Effects.Lerp(10f,new Action<float>((p) =>
-                {
-                    if(p==1)
-                    {
-                        __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
-                    }
-                    else
-                    {
-                        string time = Mathf.CeilToInt(10 * (1-p)).ToString();
-                        __instance.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.TimeRemaining, time);
-                    }
-                })));
+                __instance.StartCoroutine(__instance.RunTimer());
+                // __instance.StartCoroutine(Effects.Lerp(10f,new Action<float>((p) =>
+                // {
+                //     if(p==1)
+                //     {
+                //         __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
+                //     }
+                //     else
+                //     {
+                //         string time = Mathf.CeilToInt(10 * (1-p)).ToString();
+                //         __instance.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.TimeRemaining, time);
+                //     }
+                // })));
             }
             ControllerManager.Instance.OpenOverlayMenu(__instance.name, null, __instance.DefaultButtonSelected, __instance.ControllerSelectable, false);
             PlayerControl.HideCursorTemporarily();

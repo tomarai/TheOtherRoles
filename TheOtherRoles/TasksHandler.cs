@@ -15,6 +15,7 @@ namespace TheOtherRoles {
         {
             public static void Postfix(NormalPlayerTask __instance)
             {
+                if(!MapOptions.hideTaskArrows) return;
                 bool commsActive = false;
                 foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
                 {
@@ -24,7 +25,7 @@ namespace TheOtherRoles {
                         break;
                     }
                 }
-                if(!MapOptions.hideTaskArrows && !(__instance.TaskType == TaskTypes.SortRecords) && !commsActive)
+                if(!(__instance.TaskType == TaskTypes.SortRecords) && !commsActive)
                 {
                     bool showArrows = !__instance.IsComplete && __instance.TaskStep > 0;
                     __instance.Arrow?.gameObject?.SetActive(showArrows);
@@ -37,6 +38,7 @@ namespace TheOtherRoles {
         {
             public static void Postfix(AirshipUploadTask __instance)
             {
+                if(!MapOptions.hideTaskArrows) return;
                 bool commsActive = false;
                 foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
                 {
@@ -46,7 +48,7 @@ namespace TheOtherRoles {
                         break;
                     }
                 }
-                if(!MapOptions.hideTaskArrows && !commsActive)
+                if(!commsActive)
                 {
                     bool showArrows = !MapOptions.hideTaskArrows && !__instance.IsComplete && __instance.TaskStep > 0;
                     __instance.Arrows?.DoIf(x => x != null, x => x.gameObject?.SetActive(showArrows));
