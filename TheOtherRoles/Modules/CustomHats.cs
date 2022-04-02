@@ -126,26 +126,26 @@ namespace TheOtherRoles.Modules {
             return sprite;
         }
 
-        private static HatBehaviour CreateHatBehaviour(CustomHat ch, bool fromDisk = false, bool testOnly = false) {
+        private static HatData CreateHatData(CustomHat ch, bool fromDisk = false, bool testOnly = false) {
             if (hatShader == null && DestroyableSingleton<HatManager>.InstanceExists) {
-                foreach (HatBehaviour h in DestroyableSingleton<HatManager>.Instance.AllHats) {
-                    if (h.AltShader != null) {
-                        hatShader = h.AltShader;
+                foreach (HatData h in DestroyableSingleton<HatManager>.Instance.allHats) {
+                    if (h.hatViewData.viewData.AltShader != null) {
+                        hatShader = h.hatViewData.viewData.AltShader;
                         break;
                     }
                 }
             }
 
-            HatBehaviour hat = new HatBehaviour();
-            hat.MainImage = CreateHatSprite(ch.resource, fromDisk);
+            HatData hat = new HatData();
+            hat.hatViewData.viewData.MainImage = CreateHatSprite(ch.resource, fromDisk);
             if (ch.backresource != null) {
-                hat.BackImage = CreateHatSprite(ch.backresource, fromDisk);
+                hat.hatViewData.viewData.BackImage = CreateHatSprite(ch.backresource, fromDisk);
                 ch.behind = true; // Required to view backresource
             }
             if (ch.climbresource != null)
-                hat.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
+                hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
             hat.name = ch.name + "\nby " + ch.author;
-            hat.Order = 99;
+            // hat.Order = 99;
             hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
             hat.InFront = !ch.behind;
             hat.NoBounce = !ch.bounce;
@@ -155,7 +155,7 @@ namespace TheOtherRoles.Modules {
             
 
             if (ch.adaptive && hatShader != null)
-                hat.AltShader = hatShader;
+                hat.hatViewData.viewData.AltShader = hatShader;
 
             HatExtension extend = new HatExtension();
             extend.author = ch.author != null ? ch.author : "Unknown";
@@ -177,7 +177,7 @@ namespace TheOtherRoles.Modules {
             return hat;
         }
 
-        private static HatBehaviour CreateHatBehaviour(CustomHatLoader.CustomHatOnline chd) {
+        private static HatData CreateHatData(CustomHatLoader.CustomHatOnline chd) {
             string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
             chd.resource = filePath + chd.resource;
             if (chd.backresource != null)
@@ -188,7 +188,7 @@ namespace TheOtherRoles.Modules {
                 chd.flipresource = filePath + chd.flipresource;
             if (chd.backflipresource != null)
                 chd.backflipresource = filePath + chd.backflipresource;
-            return CreateHatBehaviour(chd, true);
+            return CreateHatData(chd, true);
         }
 
         [HarmonyPatch(typeof(HatManager), nameof(HatManager.GetHatById))]
@@ -210,10 +210,10 @@ namespace TheOtherRoles.Modules {
 
                         List<CustomHat> customhats = createCustomHatDetails(hats);
                         foreach (CustomHat ch in customhats)
-                            __instance.AllHats.Add(CreateHatBehaviour(ch));
+                            __instance.allHats.Add(CreateHatData(ch));
                     }
                     while (CustomHatLoader.hatdetails.Count > 0) {
-                        __instance.AllHats.Add(CreateHatBehaviour(CustomHatLoader.hatdetails[0]));
+                        __instance.allHats.Add(CreateHatData(CustomHatLoader.hatdetails[0]));
                         CustomHatLoader.hatdetails.RemoveAt(0);
                     }
                 } catch (System.Exception e) {
@@ -231,7 +231,7 @@ namespace TheOtherRoles.Modules {
         private static class PlayerPhysicsHandleAnimationPatch {
             private static void Postfix(PlayerPhysics __instance) {
                 AnimationClip currentAnimation = __instance.Animator.GetCurrentAnimation();
-                if (currentAnimation == __instance.ClimbAnim || currentAnimation == __instance.ClimbDownAnim) return;
+                if (currentAnimation == __instance.CurrentAnimationGroup.ClimbAnim || currentAnimation == __instance.CurrentAnimationGroup.ClimbDownAnim) return;
                 HatParent hp = __instance.myPlayer.HatRenderer;
                 if (hp.Hat == null) return;
                 HatExtension extend = hp.Hat.getHatExtension();
@@ -240,14 +240,14 @@ namespace TheOtherRoles.Modules {
                     if (__instance.rend.flipX) {
                         hp.FrontLayer.sprite = extend.FlipImage;
                     } else {
-                        hp.FrontLayer.sprite = hp.Hat.MainImage;
+                        hp.FrontLayer.sprite = hp.Hat.hatViewData.viewData.MainImage;
                     }
                 }
                 if (extend.BackFlipImage != null) {
                     if (__instance.rend.flipX) {
                         hp.BackLayer.sprite = extend.BackFlipImage;
                     } else {
-                        hp.BackLayer.sprite = hp.Hat.BackImage;
+                        hp.BackLayer.sprite = hp.Hat.hatViewData.viewData.BackImage;
                     }
                 }
             }
@@ -270,7 +270,7 @@ namespace TheOtherRoles.Modules {
                         {
                             var color = pc.CurrentOutfit.ColorId;
                             pc.SetHat("hat_dusk", color);
-                            pc.HatRenderer.Hat = CreateHatBehaviour(hats[0], true, true);
+                            pc.HatRenderer.Hat = CreateHatData(hats[0], true, true);
                             pc.HatRenderer.SetHat(color);
                         }
                     }
@@ -296,7 +296,7 @@ namespace TheOtherRoles.Modules {
         public class HatsTabOnEnablePatch {
             public static TMPro.TMP_Text textTemplate;
 
-            public static float createHatPackage(List<System.Tuple<HatBehaviour, HatExtension>> hats, string packageName, float YStart, HatsTab __instance) {
+            public static float createHatPackage(List<System.Tuple<HatData, HatExtension>> hats, string packageName, float YStart, HatsTab __instance) {
                 float offset = YStart;
 
                 if (textTemplate != null) {
@@ -316,7 +316,7 @@ namespace TheOtherRoles.Modules {
                 var numHats = hats.Count;
 
                 for (int i = 0; i < hats.Count; i++) {
-                    HatBehaviour hat = hats[i].Item1;
+                    HatData hat = hats[i].Item1;
                     HatExtension ext = hats[i].Item2;
 
                     float xpos = __instance.XRange.Lerp((i % __instance.NumPerRow) / (__instance.NumPerRow - 1f));
@@ -350,8 +350,8 @@ namespace TheOtherRoles.Modules {
             {
                 calcItemBounds(__instance);
 
-                HatBehaviour[] unlockedHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
-                Dictionary<string, List<System.Tuple<HatBehaviour, HatExtension>>> packages = new Dictionary<string, List<System.Tuple<HatBehaviour, HatExtension>>>();
+                HatData[] unlockedHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
+                Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new Dictionary<string, List<System.Tuple<HatData, HatExtension>>>();
 
                 Helpers.destroyList(hatsTabCustomTexts);
                 Helpers.destroyList(__instance.ColorChips);
@@ -361,17 +361,17 @@ namespace TheOtherRoles.Modules {
 
                 textTemplate = PlayerCustomizationMenu.Instance.itemName;
 
-                foreach (HatBehaviour hatBehaviour in unlockedHats) {
+                foreach (HatData hatBehaviour in unlockedHats) {
                     HatExtension ext = hatBehaviour.getHatExtension();
 
                     if (ext != null) {
                         if (!packages.ContainsKey(ext.package)) 
-                            packages[ext.package] = new List<System.Tuple<HatBehaviour, HatExtension>>();
-                        packages[ext.package].Add(new System.Tuple<HatBehaviour, HatExtension>(hatBehaviour, ext));
+                            packages[ext.package] = new List<System.Tuple<HatData, HatExtension>>();
+                        packages[ext.package].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, ext));
                     } else {
                         if (!packages.ContainsKey(innerslothPackageName)) 
-                            packages[innerslothPackageName] = new List<System.Tuple<HatBehaviour, HatExtension>>();
-                        packages[innerslothPackageName].Add(new System.Tuple<HatBehaviour, HatExtension>(hatBehaviour, null));
+                            packages[innerslothPackageName] = new List<System.Tuple<HatData, HatExtension>>();
+                        packages[innerslothPackageName].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, null));
                     }
                 }
 
@@ -387,7 +387,7 @@ namespace TheOtherRoles.Modules {
                 });
 
                 foreach (string key in orderedKeys) {
-                    List<System.Tuple<HatBehaviour, HatExtension>> value = packages[key];
+                    List<System.Tuple<HatData, HatExtension>> value = packages[key];
                     YOffset = createHatPackage(value, key, YOffset, __instance);
                 }
 
@@ -580,7 +580,7 @@ namespace TheOtherRoles.Modules {
         }   
     }
     public static class CustomHatExtensions {
-        public static CustomHats.HatExtension getHatExtension(this HatBehaviour hat) {
+        public static CustomHats.HatExtension getHatExtension(this HatData hat) {
             CustomHats.HatExtension ret = null;
             if (CustomHats.TestExt != null && CustomHats.TestExt.condition.Equals(hat.name)) {
                 return CustomHats.TestExt;

@@ -466,7 +466,7 @@ namespace TheOtherRoles
                     if (isStealthed(fox))
                     {
                         opacity = Math.Max(opacity, 1.0f - stealthFade(fox));
-                        fox.myRend.material.SetFloat("_Outline", 0f);
+                        fox.MyRend.material.SetFloat("_Outline", 0f);
                     }
                     else
                     {
