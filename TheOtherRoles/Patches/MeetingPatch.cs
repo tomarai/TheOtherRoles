@@ -28,7 +28,8 @@ namespace TheOtherRoles.Patches {
 
         public static void updateNameplate(PlayerVoteArea pva, byte playerId = Byte.MaxValue)
         {
-            blankNameplate = blankNameplate ?? HatManager.Instance.AllNamePlates[0].viewData.viewData.Image;
+            return;
+            blankNameplate = blankNameplate ??HatManager.Instance.AllNamePlates[0].viewData.viewData.Image;
 
             var nameplate = blankNameplate;
             if (!hideNameplates)

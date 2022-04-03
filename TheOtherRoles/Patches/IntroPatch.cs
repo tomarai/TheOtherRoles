@@ -161,7 +161,8 @@ namespace TheOtherRoles.Patches {
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
         class SetUpRoleTextPatch {
-            public static void Postfix(IntroCutscene __instance) {
+            private static void setupRole(IntroCutscene __instance)
+            {
                 if (!CustomOptionHolder.activateRoles.getBool()) return; // Don't override the intro of the vanilla roles
 
                 List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { RoleType.Lovers });
@@ -195,6 +196,16 @@ namespace TheOtherRoles.Patches {
                     PlayerControl otherLover = PlayerControl.LocalPlayer.getPartner();
                 	__instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
                 } 
+
+            }
+            public static void Postfix(IntroCutscene __instance) {
+                DestroyableSingleton<HudManager>.Instance.StartCoroutine(
+                Effects.Lerp(1f, (System.Action<float>)((p) => {
+                    if (p > 0.1f) { return; }
+                    setupRole(__instance);
+                }))
+            );
+                setupRole(__instance);
             }
         }
 

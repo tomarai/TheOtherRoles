@@ -21,7 +21,6 @@ using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-/*
 namespace TheOtherRoles.Modules {
 
     [HarmonyPatch]
@@ -607,4 +606,3 @@ namespace TheOtherRoles.Modules {
         }
     }
 }
-*/
