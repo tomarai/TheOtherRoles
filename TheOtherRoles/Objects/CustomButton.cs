@@ -30,6 +30,8 @@ namespace TheOtherRoles.Objects {
         private bool mirror;
         private KeyCode? hotkey;
 
+        public static bool stopCountdown = true;
+
         public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Vector3 PositionOffset, HudManager hudManager, ActionButton textTemplate, KeyCode? hotkey, bool HasEffect, float EffectDuration, Action OnEffectEnds, bool mirror = false, string buttonText = null)
         {
             this.hudManager = hudManager;
@@ -166,7 +168,7 @@ namespace TheOtherRoles.Objects {
                 actionButton.graphic.material.SetFloat("_Desat", 1f);
             }
 
-            if (Timer >= 0) {
+            if (Timer >= 0 && !stopCountdown) {
                 bool always = CustomOptionHolder.alwaysReduceCooldown.getBool();
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool();
                 if (HasEffect && isEffectActive)
