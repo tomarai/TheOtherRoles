@@ -102,7 +102,7 @@ namespace TheOtherRoles.Patches {
             isFirstSpawn = false;
             if (CustomOptionHolder.airshipSetOriginalCooldown.getBool())
             {
-                PlayerControl.LocalPlayer.SetKillTimerUnchecked(PlayerControl.GameOptions.killCooldown);
+                PlayerControl.LocalPlayer.SetKillTimerUnchecked(PlayerControl.GameOptions.KillCooldown);
                 foreach(var b in CustomButton.buttons)
                 {
                     b.Timer = b.MaxTimer;
