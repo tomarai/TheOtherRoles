@@ -270,6 +270,7 @@ namespace TheOtherRoles {
         public static CustomOption airshipRandomSpawn;
         public static CustomOption airshipAdditionalSpawn;
         public static CustomOption airshipSynchronizedSpawning;
+        public static CustomOption airshipSetOriginalCooldown;
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
         public static CustomOption noVoteIsSelfVote;
@@ -840,6 +841,7 @@ namespace TheOtherRoles {
             airshipRandomSpawn = CustomOption.Create(9916, "airshipRandomSpawn", false, specialOptions);
             airshipAdditionalSpawn = CustomOption.Create(9917, "airshipAdditionalSpawn", false, specialOptions);
             airshipSynchronizedSpawning = CustomOption.Create(9918, "airshipSynchronizedSpawning", false, specialOptions);
+            airshipSetOriginalCooldown = CustomOption.Create(9919, "airshipSetOriginalCooldown", false, specialOptions);
 
             strongRandomGen = CustomOption.Create(9915, "strongRandomGen", true, specialOptions, true);
 

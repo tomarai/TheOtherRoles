@@ -10,6 +10,7 @@ using System.Linq;
 using PowerTools;
 using TMPro;
 using UnhollowerBaseLib;
+using TheOtherRoles.Objects;
 
 namespace TheOtherRoles.Patches {
 
@@ -18,6 +19,7 @@ namespace TheOtherRoles.Patches {
         private static PassiveButton selected = null;
         public static List<SpawnCandidate> SpawnCandidates;
         public static SynchronizeData synchronizeData = new SynchronizeData();
+        public static bool isFirstSpawn = true;
         public enum SynchronizeTag
         {
             PreSpawnMinigame,
@@ -65,6 +67,11 @@ namespace TheOtherRoles.Patches {
             }
             
         }
+        public static void reset()
+        {
+            isFirstSpawn = true;
+            resetSpawnCandidates();
+        }
         public static void resetSpawnCandidates()
         {
                 SpawnCandidates = new List<SpawnCandidate>();
@@ -89,10 +96,30 @@ namespace TheOtherRoles.Patches {
                 }
         }
 
+        private static void resetButtons()
+        {
+            // ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>().ForceSabTime(10f);
+            isFirstSpawn = false;
+            if (CustomOptionHolder.airshipSetOriginalCooldown.getBool())
+            {
+                PlayerControl.LocalPlayer.SetKillTimerUnchecked(PlayerControl.GameOptions.killCooldown);
+                foreach(var b in CustomButton.buttons)
+                {
+                    b.Timer = b.MaxTimer;
+                }
+            }
+            else
+            {
+                PlayerControl.LocalPlayer.SetKillTimerUnchecked(10f);
+                CustomButton.buttons.ForEach(x => x.Timer = 10f);
+            }
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Begin))]
         public static bool Prefix(SpawnInMinigame __instance, PlayerTask task)
         {
+            CustomButton.stopCountdown = true;
             // base.Begin(task);
             __instance.MyTask = task;
             __instance.MyNormTask = (task as NormalPlayerTask);
@@ -192,7 +219,12 @@ namespace TheOtherRoles.Patches {
         [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.SpawnAt))]
         public static bool Prefix2(SpawnInMinigame __instance, [HarmonyArgument(0)] Vector3 spawnAt)
         {
-            if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool()) return true; 
+            if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool())
+            {
+                if(isFirstSpawn)resetButtons();
+                CustomButton.stopCountdown = false;
+                return true; 
+            }
 
             Synchronize(SynchronizeTag.PreSpawnMinigame, PlayerControl.LocalPlayer.PlayerId);
             if (__instance.amClosing != Minigame.CloseState.None)
@@ -247,6 +279,8 @@ namespace TheOtherRoles.Patches {
                         DestroyableSingleton<HudManager>.Instance.PlayerCam.SnapToTarget();
                         synchronizeData.Reset(SynchronizeTag.PreSpawnMinigame);
                         __instance.Close();
+                        CustomButton.stopCountdown = false;
+                        if(isFirstSpawn) resetButtons();
                     }
                 }
 

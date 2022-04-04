@@ -10,6 +10,7 @@ using System.Linq;
 using PowerTools;
 using TMPro;
 using UnhollowerBaseLib;
+using TheOtherRoles.Objects;
 
 namespace TheOtherRoles.Patches {
 
@@ -118,6 +119,8 @@ namespace TheOtherRoles.Patches {
                     RPCProcedure.randomSpawn((byte)player.Data.PlayerId, (byte)randVal);
                 }
             }
+
+            CustomButton.stopCountdown = false;
         }
 
         

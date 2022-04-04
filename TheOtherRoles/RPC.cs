@@ -141,7 +141,7 @@ namespace TheOtherRoles
             Trap.clearAllTraps();
 
             RandomGenerator.Initialize();
-            SpawnInMinigamePatch.resetSpawnCandidates();
+            SpawnInMinigamePatch.reset();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
         }
