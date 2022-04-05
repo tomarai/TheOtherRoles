@@ -54,6 +54,8 @@ namespace TheOtherRoles
                 hm.AbilityButton,
                 KeyCode.F
             );
+            senriganButton.MaxTimer = 0f;
+            senriganButton.Timer = 0f;
             senriganButton.buttonText = ModTranslation.getString("");
         }
         public static Sprite getSenriganIcon()
@@ -62,7 +64,11 @@ namespace TheOtherRoles
             senriganIcon = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Senrigan.png", 115f);
             return senriganIcon;
         }
-        public static void SetButtonCooldowns() { }
+        public static void SetButtonCooldowns()
+        {
+            senriganButton.Timer = senriganButton.MaxTimer = 0f;
+
+        }
 
         
 

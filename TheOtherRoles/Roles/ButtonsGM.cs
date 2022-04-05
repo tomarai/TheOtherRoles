@@ -37,6 +37,7 @@ namespace TheOtherRoles
             Puppeteer.SetButtonCooldowns();
             MimicK.SetButtonCooldowns();
             MimicA.SetButtonCooldowns();
+            SoulPlayer.SetButtonCooldowns();
             foreach (CustomButton gmButton in gmButtons)
             {
                 gmButton.MaxTimer = 0.0f;
