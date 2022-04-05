@@ -126,16 +126,11 @@ namespace TheOtherRoles.Modules {
         }
 
         private static HatData CreateHatData(CustomHat ch, bool fromDisk = false, bool testOnly = false) {
-            if (hatShader == null && DestroyableSingleton<HatManager>.InstanceExists) {
-                foreach (HatData h in DestroyableSingleton<HatManager>.Instance.allHats) {
-                    if (h.hatViewData.viewData.AltShader != null) {
-                        hatShader = h.hatViewData.viewData.AltShader;
-                        break;
-                    }
-                }
-            }
+            if (hatShader == null && DestroyableSingleton<HatManager>.InstanceExists)
+                hatShader = new Material(Shader.Find("Unlit/PlayerShader"));
 
             HatData hat = new HatData();
+            hat.hatViewData.viewData = new HatViewData();
             hat.hatViewData.viewData.MainImage = CreateHatSprite(ch.resource, fromDisk);
             if (ch.backresource != null) {
                 hat.hatViewData.viewData.BackImage = CreateHatSprite(ch.backresource, fromDisk);
@@ -144,7 +139,7 @@ namespace TheOtherRoles.Modules {
             if (ch.climbresource != null)
                 hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
             hat.name = ch.name + "\nby " + ch.author;
-            // hat.Order = 99;
+            hat.displayOrder = 99;
             hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
             hat.InFront = !ch.behind;
             hat.NoBounce = !ch.bounce;
@@ -211,9 +206,9 @@ namespace TheOtherRoles.Modules {
                         foreach (CustomHat ch in customhats)
                             __instance.allHats.Add(CreateHatData(ch));
                     }
-                    while (CustomHatLoader.hatdetails.Count > 0) {
-                        __instance.allHats.Add(CreateHatData(CustomHatLoader.hatdetails[0]));
-                        CustomHatLoader.hatdetails.RemoveAt(0);
+                    while (CustomHatLoader.hatDetails.Count > 0) {
+                        __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
+                        CustomHatLoader.hatDetails.RemoveAt(0);
                     }
                 } catch (System.Exception e) {
                     if (!LOADED)
@@ -360,17 +355,17 @@ namespace TheOtherRoles.Modules {
 
                 textTemplate = PlayerCustomizationMenu.Instance.itemName;
 
-                foreach (HatData hatBehaviour in unlockedHats) {
-                    HatExtension ext = hatBehaviour.getHatExtension();
+                foreach (HatData hatData in unlockedHats) {
+                    HatExtension ext = hatData.getHatExtension();
 
                     if (ext != null) {
                         if (!packages.ContainsKey(ext.package)) 
                             packages[ext.package] = new List<System.Tuple<HatData, HatExtension>>();
-                        packages[ext.package].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, ext));
+                        packages[ext.package].Add(new System.Tuple<HatData, HatExtension>(hatData, ext));
                     } else {
                         if (!packages.ContainsKey(innerslothPackageName)) 
                             packages[innerslothPackageName] = new List<System.Tuple<HatData, HatExtension>>();
-                        packages[innerslothPackageName].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, null));
+                        packages[innerslothPackageName].Add(new System.Tuple<HatData, HatExtension>(hatData, null));
                     }
                 }
 
@@ -429,7 +424,7 @@ namespace TheOtherRoles.Modules {
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"
         };
 
-        public static List<CustomHatOnline> hatdetails = new List<CustomHatOnline>();
+        public static List<CustomHatOnline> hatDetails = new List<CustomHatOnline>();
         private static Task hatFetchTask = null;
         public static void LaunchHatFetcher() {
             if (running)
@@ -439,7 +434,7 @@ namespace TheOtherRoles.Modules {
         }
 
         private static async Task LaunchHatFetcherAsync() {
-            hatdetails = new List<CustomHatOnline>();
+            hatDetails = new List<CustomHatOnline>();
             List<string> repos = new List<string>(hatRepos);
 
             if (TheOtherRolesPlugin.DebugRepo.Value != "")
@@ -447,7 +442,6 @@ namespace TheOtherRoles.Modules {
 
             foreach (string repo in repos)
             {
-                Helpers.log(repo);
                 try
                 {
                     HttpStatusCode status = await FetchHats(repo);
@@ -552,7 +546,7 @@ namespace TheOtherRoles.Modules {
                     }
                 }
 
-                hatdetails.AddRange(hatdatas);
+                hatDetails.AddRange(hatdatas);
             } catch (System.Exception ex) {
                 TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
