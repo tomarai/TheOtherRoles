@@ -92,9 +92,12 @@ namespace TheOtherRoles
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             Instance = this;
             CustomOptionHolder.Load();
+            RoleInfo.Load();
             CustomColors.Load();
+            RandomGenerator.Initialize();
 
             Harmony.PatchAll();
+
         }
 
         public static Sprite GetModStamp() {

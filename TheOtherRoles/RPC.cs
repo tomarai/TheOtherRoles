@@ -140,7 +140,6 @@ namespace TheOtherRoles
             BombEffect.clearBombEffects();
             Trap.clearAllTraps();
 
-            RandomGenerator.Initialize();
             SpawnInMinigamePatch.reset();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
