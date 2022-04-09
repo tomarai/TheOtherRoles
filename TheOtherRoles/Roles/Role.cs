@@ -330,7 +330,7 @@ namespace TheOtherRoles
                 case RoleType.Pursuer:
                     return Pursuer.pursuer == player;
                 default:
-                    TheOtherRolesPlugin.Logger.LogError($"isRole: no method found for role type {role}");
+                    Helpers.log($"isRole: no method found for role type {role}");
                     break;
             }
 
@@ -468,7 +468,7 @@ namespace TheOtherRoles
                     Pursuer.pursuer = player;
                     break;
                 default:
-                    TheOtherRolesPlugin.Logger.LogError($"setRole: no method found for role type {role}");
+                    Helpers.log($"setRole: no method found for role type {role}");
                     return;
             }
         }
@@ -485,7 +485,7 @@ namespace TheOtherRoles
                         return;
                     }
                 }
-                TheOtherRolesPlugin.Logger.LogError($"eraseRole: no method found for role type {role}");
+                Helpers.log($"eraseRole: no method found for role type {role}");
             }
         }
 

@@ -128,11 +128,9 @@ namespace TheOtherRoles.Patches {
                 if (player.PlayerId == exiledPlayerId)
                     continue;
                 numAliveCrewmates++;
-                TheOtherRolesPlugin.Instance.Log.LogInfo($"pickRandomCrewmate: {player.PlayerId}");
             }
             // get random number range 0, num of alive crewmates
             int targetPlayerIndex = TheOtherRoles.rnd.Next(0, numAliveCrewmates);
-            TheOtherRolesPlugin.Instance.Log.LogInfo($"targetPlayerIndex: {targetPlayerIndex}");
             int currentPlayerIndex = 0;
             // return the player
             foreach (PlayerControl player in PlayerControl.AllPlayerControls) {

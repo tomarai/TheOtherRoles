@@ -40,72 +40,73 @@ namespace TheOtherRoles
             this.roleType = roleType;
         }
 
-        public static RoleInfo jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
-        public static RoleInfo mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
-        public static RoleInfo engineer = new RoleInfo("engineer", Engineer.color, CustomOptionHolder.engineerSpawnRate, RoleType.Engineer);
-        public static RoleInfo sheriff = new RoleInfo("sheriff", Sheriff.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Sheriff);
-        public static RoleInfo lighter = new RoleInfo("lighter", Lighter.color, CustomOptionHolder.lighterSpawnRate, RoleType.Lighter);
-        public static RoleInfo godfather = new RoleInfo("godfather", Godfather.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Godfather);
-        public static RoleInfo mafioso = new RoleInfo("mafioso", Mafioso.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Mafioso);
-        public static RoleInfo janitor = new RoleInfo("janitor", Janitor.color, CustomOptionHolder.mafiaSpawnRate, RoleType.Janitor);
-        public static RoleInfo morphling = new RoleInfo("morphling", Morphling.color, CustomOptionHolder.morphlingSpawnRate, RoleType.Morphling);
-        public static RoleInfo camouflager = new RoleInfo("camouflager", Camouflager.color, CustomOptionHolder.camouflagerSpawnRate, RoleType.Camouflager);
-        public static RoleInfo vampire = new RoleInfo("vampire", Vampire.color, CustomOptionHolder.vampireSpawnRate, RoleType.Vampire);
-        public static RoleInfo eraser = new RoleInfo("eraser", Eraser.color, CustomOptionHolder.eraserSpawnRate, RoleType.Eraser);
-        public static RoleInfo trickster = new RoleInfo("trickster", Trickster.color, CustomOptionHolder.tricksterSpawnRate, RoleType.Trickster);
-        public static RoleInfo cleaner = new RoleInfo("cleaner", Cleaner.color, CustomOptionHolder.cleanerSpawnRate, RoleType.Cleaner);
-        public static RoleInfo warlock = new RoleInfo("warlock", Warlock.color, CustomOptionHolder.warlockSpawnRate, RoleType.Warlock);
-        public static RoleInfo bountyHunter = new RoleInfo("bountyHunter", BountyHunter.color, CustomOptionHolder.bountyHunterSpawnRate, RoleType.BountyHunter);
-        public static RoleInfo detective = new RoleInfo("detective", Detective.color, CustomOptionHolder.detectiveSpawnRate, RoleType.Detective);
-        public static RoleInfo timeMaster = new RoleInfo("timeMaster", TimeMaster.color, CustomOptionHolder.timeMasterSpawnRate, RoleType.TimeMaster);
-        public static RoleInfo medic = new RoleInfo("medic", Medic.color, CustomOptionHolder.medicSpawnRate, RoleType.Medic);
-        public static RoleInfo niceShifter = new RoleInfo("niceShifter", Shifter.color, CustomOptionHolder.shifterSpawnRate, RoleType.Shifter);
-        public static RoleInfo corruptedShifter = new RoleInfo("corruptedShifter", Shifter.color, CustomOptionHolder.shifterSpawnRate, RoleType.Shifter);
-        public static RoleInfo niceSwapper = new RoleInfo("niceSwapper", Swapper.color, CustomOptionHolder.swapperSpawnRate, RoleType.Swapper);
-        public static RoleInfo evilSwapper = new RoleInfo("evilSwapper", Palette.ImpostorRed, CustomOptionHolder.swapperSpawnRate, RoleType.Swapper);
-        public static RoleInfo seer = new RoleInfo("seer", Seer.color, CustomOptionHolder.seerSpawnRate, RoleType.Seer);
-        public static RoleInfo hacker = new RoleInfo("hacker", Hacker.color, CustomOptionHolder.hackerSpawnRate, RoleType.Hacker);
-        public static RoleInfo niceMini = new RoleInfo("niceMini", Mini.color, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
-        public static RoleInfo evilMini = new RoleInfo("evilMini", Palette.ImpostorRed, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
-        public static RoleInfo tracker = new RoleInfo("tracker", Tracker.color, CustomOptionHolder.trackerSpawnRate, RoleType.Tracker);
-        public static RoleInfo snitch = new RoleInfo("snitch", Snitch.color, CustomOptionHolder.snitchSpawnRate, RoleType.Snitch);
-        public static RoleInfo jackal = new RoleInfo("jackal", Jackal.color, CustomOptionHolder.jackalSpawnRate, RoleType.Jackal);
-        public static RoleInfo sidekick = new RoleInfo("sidekick", Sidekick.color, CustomOptionHolder.jackalSpawnRate, RoleType.Sidekick);
-        public static RoleInfo spy = new RoleInfo("spy", Spy.color, CustomOptionHolder.spySpawnRate, RoleType.Spy);
-        public static RoleInfo securityGuard = new RoleInfo("securityGuard", SecurityGuard.color, CustomOptionHolder.securityGuardSpawnRate, RoleType.SecurityGuard);
-        public static RoleInfo arsonist = new RoleInfo("arsonist", Arsonist.color, CustomOptionHolder.arsonistSpawnRate, RoleType.Arsonist);
-        public static RoleInfo niceGuesser = new RoleInfo("niceGuesser", Guesser.color, CustomOptionHolder.guesserSpawnRate, RoleType.NiceGuesser);
-        public static RoleInfo evilGuesser = new RoleInfo("evilGuesser", Palette.ImpostorRed, CustomOptionHolder.guesserSpawnRate, RoleType.EvilGuesser);
-        public static RoleInfo bait = new RoleInfo("bait", Bait.color, CustomOptionHolder.baitSpawnRate, RoleType.Bait);
-        public static RoleInfo impostor = new RoleInfo("impostor", Palette.ImpostorRed,null, RoleType.Impostor);
-        public static RoleInfo lawyer = new RoleInfo("lawyer", Lawyer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Lawyer);
-        public static RoleInfo pursuer = new RoleInfo("pursuer", Pursuer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Pursuer);
-        public static RoleInfo crewmate = new RoleInfo("crewmate", Color.white, null, RoleType.Crewmate);
-        public static RoleInfo lovers = new RoleInfo("lovers", Lovers.color, CustomOptionHolder.loversSpawnRate, RoleType.Lovers);
-        public static RoleInfo gm = new RoleInfo("gm", GM.color, CustomOptionHolder.gmEnabled, RoleType.GM);
-        public static RoleInfo opportunist = new RoleInfo("opportunist", Opportunist.color, CustomOptionHolder.opportunistSpawnRate, RoleType.Opportunist);
-        public static RoleInfo witch = new RoleInfo("witch", Witch.color, CustomOptionHolder.witchSpawnRate, RoleType.Witch);
-        public static RoleInfo vulture = new RoleInfo("vulture", Vulture.color, CustomOptionHolder.vultureSpawnRate, RoleType.Vulture);
-        public static RoleInfo medium = new RoleInfo("medium", Medium.color, CustomOptionHolder.mediumSpawnRate, RoleType.Medium);
-        public static RoleInfo ninja = new RoleInfo("ninja", Ninja.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Ninja);
-        public static RoleInfo plagueDoctor = new RoleInfo("plagueDoctor", PlagueDoctor.color, CustomOptionHolder.plagueDoctorSpawnRate, RoleType.PlagueDoctor);
-        public static RoleInfo nekoKabocha = new RoleInfo("nekoKabocha", NekoKabocha.color, CustomOptionHolder.nekoKabochaSpawnRate, RoleType.NekoKabocha);
-        public static RoleInfo niceWatcher = new RoleInfo("niceWatcher", Watcher.color, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
-        public static RoleInfo evilWatcher = new RoleInfo("evilWatcher", Palette.ImpostorRed, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
-        public static RoleInfo serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleType.SerialKiller);
-        public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
-        public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
-        public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
-        public static RoleInfo schrodingersCat = new RoleInfo("schrodingersCat", SchrodingersCat.color, CustomOptionHolder.schrodingersCatSpawnRate, RoleType.SchrodingersCat);
-        public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
-        public static RoleInfo bomberA = new RoleInfo("bomber", BomberA.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberA);
-        public static RoleInfo bomberB = new RoleInfo("bomber", BomberB.color, CustomOptionHolder.bomberSpawnRate, RoleType.BomberB);
-        public static RoleInfo evilTracker = new RoleInfo("evilTracker", EvilTracker.color, CustomOptionHolder.evilTrackerSpawnRate, RoleType.EvilTracker);
-        public static RoleInfo puppeteer = new RoleInfo("puppeteer", Puppeteer.color, CustomOptionHolder.puppeteerSpawnRate, RoleType.Puppeteer);
-        public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
-        public static RoleInfo mimicK = new RoleInfo("mimicK", MimicK.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicK);
-        public static RoleInfo mimicA = new RoleInfo("mimicA", MimicA.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicA);
-        public static void init() 
+        public static RoleInfo jester;
+        public static RoleInfo mayor;
+        public static RoleInfo engineer;
+        public static RoleInfo sheriff;
+        public static RoleInfo lighter;
+        public static RoleInfo godfather;
+        public static RoleInfo mafioso;
+        public static RoleInfo janitor;
+        public static RoleInfo morphling;
+        public static RoleInfo camouflager;
+        public static RoleInfo vampire;
+        public static RoleInfo eraser;
+        public static RoleInfo trickster;
+        public static RoleInfo cleaner;
+        public static RoleInfo warlock;
+        public static RoleInfo bountyHunter;
+        public static RoleInfo detective;
+        public static RoleInfo timeMaster;
+        public static RoleInfo medic;
+        public static RoleInfo niceShifter;
+        public static RoleInfo corruptedShifter;
+        public static RoleInfo niceSwapper;
+        public static RoleInfo evilSwapper;
+        public static RoleInfo seer;
+        public static RoleInfo hacker;
+        public static RoleInfo niceMini;
+        public static RoleInfo evilMini;
+        public static RoleInfo tracker;
+        public static RoleInfo snitch;
+        public static RoleInfo jackal;
+        public static RoleInfo sidekick;
+        public static RoleInfo spy;
+        public static RoleInfo securityGuard;
+        public static RoleInfo arsonist;
+        public static RoleInfo niceGuesser;
+        public static RoleInfo evilGuesser;
+        public static RoleInfo bait;
+        public static RoleInfo impostor;
+        public static RoleInfo lawyer;
+        public static RoleInfo pursuer;
+        public static RoleInfo crewmate;
+        public static RoleInfo lovers;
+        public static RoleInfo gm;
+        public static RoleInfo opportunist;
+        public static RoleInfo witch;
+        public static RoleInfo vulture;
+        public static RoleInfo medium;
+        public static RoleInfo ninja;
+        public static RoleInfo plagueDoctor;
+        public static RoleInfo nekoKabocha;
+        public static RoleInfo niceWatcher;
+        public static RoleInfo evilWatcher;
+        public static RoleInfo serialKiller;
+        public static RoleInfo fox;
+        public static RoleInfo immoralist;
+        public static RoleInfo fortuneTeller;
+        public static RoleInfo schrodingersCat;
+        public static RoleInfo trapper;
+        public static RoleInfo bomberA;
+        public static RoleInfo bomberB;
+        public static RoleInfo evilTracker;
+        public static RoleInfo puppeteer;
+        public static RoleInfo evilHacker;
+        public static RoleInfo mimicK;
+        public static RoleInfo mimicA;
+        public static List<RoleInfo> allRoleInfos;
+        public static void Load() 
         {
             jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
             mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
@@ -242,73 +243,6 @@ namespace TheOtherRoles
             };
         }
 
-        public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
-                impostor,
-                godfather,
-                mafioso,
-                janitor,
-                morphling,
-                camouflager,
-                evilHacker,
-                vampire,
-                eraser,
-                trickster,
-                cleaner,
-                warlock,
-                bountyHunter,
-                witch,
-                ninja,
-                serialKiller,
-                niceMini,
-                evilMini,
-                niceGuesser,
-                evilGuesser,
-                lovers,
-                jester,
-                arsonist,
-                jackal,
-                sidekick,
-            	vulture,
-                pursuer,
-                lawyer,
-                crewmate,
-                niceShifter,
-                corruptedShifter,
-                mayor,
-                engineer,
-                sheriff,
-                lighter,
-                detective,
-                timeMaster,
-                medic,
-                niceSwapper,
-                evilSwapper,
-                seer,
-                hacker,
-                tracker,
-                snitch,
-                spy,
-                securityGuard,
-                bait,
-                gm,
-                opportunist,
-	            medium,
-                plagueDoctor,
-                nekoKabocha,
-                niceWatcher,
-                evilWatcher,
-                fox,
-                immoralist,
-                fortuneTeller,
-                schrodingersCat,
-                trapper,
-                bomberA,
-                bomberB,
-                evilTracker,
-                puppeteer,
-                mimicK,
-                mimicA
-            };
 
         public static string tl(string key)
         {

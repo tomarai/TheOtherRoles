@@ -322,7 +322,8 @@ namespace TheOtherRoles
             var strings = roleTypes.Select(
                 x => 
                     x == RoleType.NoRole ? "optionOff" :
-                    RoleInfo.allRoleInfos.First(y => y.roleType == x).nameColored
+                    ModTranslation.getString(x.ToString().Substring(0,1).ToLower() + x.ToString().Substring(1))
+                    //RoleInfo.allRoleInfos.First(y => y.roleType == x).nameColored
                 ).ToArray();
 
             Init(id, name, strings, 0, parent, false, false, "");
@@ -870,13 +871,13 @@ namespace TheOtherRoles
         }
     }
 
-    [HarmonyPatch(typeof(CreateOptionsPicker), nameof(CreateOptionsPicker.Start))]
-    public class CreateOptionsPickerPatch
-    {
-        public static void Postfix(CreateOptionsPicker __instance)
-        {
-            int numImpostors = Math.Clamp(__instance.GetTargetOptions().NumImpostors, 1, 3);
-            __instance.SetImpostorButtons(numImpostors);
-        }
-    }
+    // [HarmonyPatch(typeof(CreateOptionsPicker), nameof(CreateOptionsPicker.Start))]
+    // public class CreateOptionsPickerPatch
+    // {
+    //     public static void Postfix(CreateOptionsPicker __instance)
+    //     {
+    //         int numImpostors = Math.Clamp(__instance.GetTargetOptions().NumImpostors, 1, 3);
+    //         __instance.SetImpostorButtons(numImpostors);
+    //     }
+    // }
 }

@@ -576,7 +576,7 @@ namespace TheOtherRoles
 
                     if (stealthed)
                     {
-                        puppeteer.myRend.material.SetFloat("_Outline", 0f);
+                        puppeteer.MyRend.material.SetFloat("_Outline", 0f);
                     }
                     else
                     {
@@ -598,7 +598,7 @@ namespace TheOtherRoles
 
                     if (!stealthed)
                     {
-                        dummy.myRend.material.SetFloat("_Outline", 0f);
+                        dummy.MyRend.material.SetFloat("_Outline", 0f);
                     }
                     else
                     {

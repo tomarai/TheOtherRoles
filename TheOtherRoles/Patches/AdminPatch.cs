@@ -202,7 +202,7 @@ namespace TheOtherRoles.Patches {
                                     {
                                         num2--;
                                     }
-                                    else if (component?.myRend?.material != null)
+                                    else if (component?.MyRend?.material != null)
                                     {
                                         // Color color = component.myRend.material.GetColor("_BodyColor");
                                         Color color = Palette.PlayerColors[component.Data.DefaultOutfit.ColorId];

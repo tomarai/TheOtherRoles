@@ -96,12 +96,9 @@ namespace TheOtherRoles.Patches
 
         private static void InitializeMoreButton(OptionsMenuBehaviour __instance)
         {
+            __instance.BackButton.transform.localPosition += Vector3.right * 1.8f;
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
-            var transform = __instance.CensorChatButton.transform;
-            _origin ??= transform.localPosition;
-            
-            transform.localPosition = _origin.Value + Vector3.left * 1.3f;
-            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 1.3f;
+            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f;
             
             moreOptions.gameObject.SetActive(true);
             moreOptions.Text.text = ModTranslation.getString("modOptionsText");
@@ -125,6 +122,12 @@ namespace TheOtherRoles.Patches
                 CheckSetTitle();
                 RefreshOpen();
             }));
+
+            var leaveGameButton = GameObject.Find("LeaveGameButton");
+            if (leaveGameButton != null)
+            {
+                leaveGameButton.transform.localPosition += (Vector3.right * 1.3f);
+            }
         }
 
         private static void RefreshOpen()

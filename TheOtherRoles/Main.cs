@@ -22,7 +22,7 @@ namespace TheOtherRoles
     {
         public const string Id = "me.eisbison.theotherroles";
 
-        public const string VersionString = "1.12.16";
+        public const string VersionString = "2022.4.7.1";
         
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
@@ -92,9 +92,12 @@ namespace TheOtherRoles
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             Instance = this;
             CustomOptionHolder.Load();
+            RoleInfo.Load();
             CustomColors.Load();
+            RandomGenerator.Initialize();
 
             Harmony.PatchAll();
+
         }
 
         public static Sprite GetModStamp() {
@@ -143,23 +146,23 @@ namespace TheOtherRoles
                 GameData.Instance.AddPlayer(playerControl);
                 AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
 
-                int hat = random.Next(HatManager.Instance.AllHats.Count);
-                int pet = random.Next(HatManager.Instance.AllPets.Count);
-                int skin = random.Next(HatManager.Instance.AllSkins.Count);
-                int visor = random.Next(HatManager.Instance.AllVisors.Count);
-                int color = random.Next(Palette.PlayerColors.Length);
-                int nameplate = random.Next(HatManager.Instance.AllNamePlates.Count);
+                // int hat = random.Next(HatManager.Instance.AllHats.Count);
+                // int pet = random.Next(HatManager.Instance.AllPets.Count);
+                // int skin = random.Next(HatManager.Instance.AllSkins.Count);
+                // int visor = random.Next(HatManager.Instance.AllVisors.Count);
+                // int color = random.Next(Palette.PlayerColors.Length);
+                // int nameplate = random.Next(HatManager.Instance.AllNamePlates.Count);
 
-                playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-                playerControl.GetComponent<DummyBehaviour>().enabled = true;
-                playerControl.NetTransform.enabled = false;
-                playerControl.SetName(RandomString(10));
-                playerControl.SetColor(color);
-                playerControl.SetHat(HatManager.Instance.AllHats[hat].ProductId, color);
-                playerControl.SetPet(HatManager.Instance.AllPets[pet].ProductId, color);
-                playerControl.SetVisor(HatManager.Instance.AllVisors[visor].ProductId);
-                playerControl.SetSkin(HatManager.Instance.AllSkins[skin].ProductId);
-                playerControl.SetNamePlate(HatManager.Instance.AllNamePlates[nameplate].ProductId);
+                // playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
+                // playerControl.GetComponent<DummyBehaviour>().enabled = true;
+                // playerControl.NetTransform.enabled = false;
+                // playerControl.SetName(RandomString(10));
+                // playerControl.SetColor(color);
+                // playerControl.SetHat(HatManager.Instance.AllHats[hat].ProductId, color);
+                // playerControl.SetPet(HatManager.Instance.AllPets[pet].ProductId, color);
+                // playerControl.SetVisor(HatManager.Instance.AllVisors[visor].ProductId);
+                // playerControl.SetSkin(HatManager.Instance.AllSkins[skin].ProductId);
+                // playerControl.SetNamePlate(HatManager.Instance.AllNamePlates[nameplate].ProductId);
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
             }
 
