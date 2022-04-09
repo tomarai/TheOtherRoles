@@ -75,7 +75,7 @@ namespace TheOtherRoles
 
                 if (options.Any(x => x.id == id))
                 {
-                    TheOtherRolesPlugin.Instance.Log.LogWarning($"CustomOption id {id} is used in multiple places.");
+                    Helpers.log($"CustomOption id {id} is used in multiple places.");
                 }
             }
             options.Add(this);
