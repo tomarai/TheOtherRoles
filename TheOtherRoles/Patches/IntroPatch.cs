@@ -3,9 +3,11 @@ using System;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TheOtherRoles.Objects;
+using BepInEx.IL2CPP.Utils.Collections;
 
 namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
@@ -162,20 +164,30 @@ namespace TheOtherRoles.Patches {
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
         class SetUpRoleTextPatch {
-            private static void setupRole(IntroCutscene __instance)
+            public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
             {
-                if (!CustomOptionHolder.activateRoles.getBool()) return; // Don't override the intro of the vanilla roles
+                if (!CustomOptionHolder.activateRoles.getBool()) return true; // Don't override the intro of the vanilla roles
+                __result = setupRole(__instance).WrapToIl2Cpp();
+                return false;
+            }
 
+            private static IEnumerator setupRole(IntroCutscene __instance)
+            {
                 List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { RoleType.Lovers });
                 RoleInfo roleInfo = infos.FirstOrDefault();
-
-                if (roleInfo != null && roleInfo != RoleInfo.crewmate && roleInfo != RoleInfo.impostor && !(roleInfo == RoleInfo.fortuneTeller && FortuneTeller.numTasks > 0)) {
-                    __instance.YouAreText.color = roleInfo.color;
-                    __instance.RoleText.text = roleInfo.name;
-                    __instance.RoleText.color = roleInfo.color;
-                    __instance.RoleBlurbText.text = roleInfo.introDescription;
-                    __instance.RoleBlurbText.color = roleInfo.color;
+                if (roleInfo == RoleInfo.fortuneTeller && FortuneTeller.numTasks > 0)
+                {
+                    roleInfo = RoleInfo.crewmate;
                 }
+
+                Helpers.log($"{roleInfo.name}");
+                Helpers.log($"{roleInfo.introDescription}");
+
+                __instance.YouAreText.color = roleInfo.color;
+                __instance.RoleText.text = roleInfo.name;
+                __instance.RoleText.color = roleInfo.color;
+                __instance.RoleBlurbText.text = roleInfo.introDescription;
+                __instance.RoleBlurbText.color = roleInfo.color;
 
                 if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate))
                 {
@@ -198,15 +210,27 @@ namespace TheOtherRoles.Patches {
                 	__instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
                 } 
 
-            }
-            public static void Postfix(IntroCutscene __instance) {
-                DestroyableSingleton<HudManager>.Instance.StartCoroutine(
-                Effects.Lerp(1f, (System.Action<float>)((p) => {
-                    if (p > 0.1f) { return; }
-                    setupRole(__instance);
-                }))
-            );
-                setupRole(__instance);
+                // 従来処理
+                SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
+                __instance.YouAreText.gameObject.SetActive(true);
+                __instance.RoleText.gameObject.SetActive(true);
+                __instance.RoleBlurbText.gameObject.SetActive(true);
+
+                if (__instance.ourCrewmate == null)
+                {
+                    __instance.ourCrewmate = __instance.CreatePlayer(0, 1, PlayerControl.LocalPlayer.Data, false);
+                    __instance.ourCrewmate.gameObject.SetActive(false);
+                }
+                __instance.ourCrewmate.gameObject.SetActive(true);
+                __instance.ourCrewmate.transform.localPosition = new Vector3(0f, -1.05f, -18f);
+                __instance.ourCrewmate.transform.localScale = new Vector3(1f, 1f, 1f);
+                yield return new WaitForSeconds(2.5f);
+                __instance.YouAreText.gameObject.SetActive(false);
+                __instance.RoleText.gameObject.SetActive(false);
+                __instance.RoleBlurbText.gameObject.SetActive(false);
+                __instance.ourCrewmate.gameObject.SetActive(false);
+
+                yield break;
             }
         }
 
