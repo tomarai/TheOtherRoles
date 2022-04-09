@@ -45,6 +45,7 @@ GMエディションにPRを出す前にバランス調整等のお試しをす�
 # GM本家とのバージョン対応表
 |Among Us Version| GM本家 | Haoming Edition| Download|
 |----------------|--------|-----------------|--------|
+|2022.3.29s|v3.5.4| v2.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.0/TheOtherRoles-GM-Haoming.v2.0.0.zip)|l
 |2022.2.24s|v3.5.4| v1.12.16|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.16/TheOtherRoles-GM-Haoming.v1.12.16.zip)|l
 |2022.2.24s|v3.5.4| v1.12.14|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.14/TheOtherRoles-GM-Haoming.v1.12.14.zip)|l
 |2022.2.24s|v3.5.4| v1.12.13|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.13/TheOtherRoles-GM-Haoming.v1.12.13.zip)|l
