@@ -185,7 +185,7 @@ namespace TheOtherRoles
                         return;
                     }
                 }
-                TheOtherRolesPlugin.Logger.LogError($"eraseRole: no method found for role type {mod}");
+                Helpers.log($"eraseRole: no method found for role type {mod}");
             }
         }
 
