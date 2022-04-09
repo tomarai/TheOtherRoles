@@ -428,6 +428,7 @@ namespace TheOtherRoles {
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
         public static CustomOption strongRandomGen;
+        public static CustomOption enableSenrigan;
 
 
 
@@ -828,7 +829,8 @@ namespace TheOtherRoles {
             randomWireTask = CustomOption.Create(9909, "randomWireTask", false, specialOptions, true);
             additionalWireTask = CustomOption.Create(9914, "additionalWireTask", false, randomWireTask);
             numWireTask = CustomOption.Create(9913, "numWireTask", 3f, 1f, 10f, 1f, randomWireTask);
-            disableVentAnimation = CustomOption.Create(9910, "disableVentAnimation", false, specialOptions, true);
+            enableSenrigan = CustomOption.Create(9920, "enableSenrigan", true, specialOptions, true);
+            disableVentAnimation = CustomOption.Create(9910, "disableVentAnimation", false, specialOptions);
             alwaysReduceCooldown = CustomOption.Create(9911, "alwaysReduceCooldown", false, specialOptions);
             exceptInVent = CustomOption.Create(9912, "exceptInVent", false, alwaysReduceCooldown);
 

@@ -454,6 +454,10 @@
         "0": "Number of wiring task",
         "11": "\u914d\u7dda\u30bf\u30b9\u30af\u6570"
     },
+    "enableSenrigan": {
+        "0": "Enable Far Sight",
+        "11": "\u5343\u91cc\u773c\u6709\u52b9\u5316"
+    },
     "additionalVents": {
         "0": "Additional vents(Polus)",
         "11": "\u8ffd\u52a0\u30d9\u30f3\u30c8(\u30dd\u30fc\u30e9\u30b9)",

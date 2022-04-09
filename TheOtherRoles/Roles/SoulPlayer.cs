@@ -10,6 +10,7 @@ namespace TheOtherRoles
     {
         public static Color color = Palette.CrewmateBlue;
         private static CustomButton senriganButton;
+        private static bool enableSenrigan {get {return CustomOptionHolder.enableSenrigan.getBool();}}
         public static bool toggle = false;
         public static Sprite senriganIcon;
         public static void senrigan(){
@@ -45,7 +46,7 @@ namespace TheOtherRoles
                 {/*ボタンが押されたとき*/
                     senrigan();
                 },
-                () => {/*ボタンが有効になる条件*/ return PlayerControl.LocalPlayer.isDead() && !PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer); },
+                () => {/*ボタンが有効になる条件*/ return enableSenrigan && PlayerControl.LocalPlayer.isDead() && !PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer); },
                 () => {/*ボタンが使える条件*/ return PlayerControl.LocalPlayer.isDead();},
                 () => {/*ミーティング終了時*/ },
                 getSenriganIcon(),
