@@ -26,11 +26,6 @@ namespace TheOtherRoles.Patches {
 
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
         public class GameStartManagerStartPatch {
-            public static void Prefix(GameStartManager __instance)
-            {
-                // ホストの抽選処理に間に合わせるためにここに暫定で入れる
-                RandomGenerator.Initialize();
-            }
             public static void Postfix(GameStartManager __instance) {
                 // Trigger version refresh
                 versionSent = false;

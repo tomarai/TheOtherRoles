@@ -420,7 +420,7 @@ namespace TheOtherRoles.Modules {
 
         public static string[] hatRepos = new string[]
         {
-#if (RELEASE||DEV)
+#if RELEASE
             "https://raw.githubusercontent.com/haoming37/TheOtherHats-GM-Haoming/master",
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master",

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>2.0.2</Version>
+        <Version>2022.4.10.0</Version>
         <Description>TheOtherRoles: GM Haoming Edition</Description>
         <Authors>Haoming</Authors>
 		<Configurations>Debug;Release;Release_Dev</Configurations>
@@ -16,7 +16,10 @@
     </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Dev|AnyCPU'">
-		<DefineConstants>$(DefineConstants);DEV;</DefineConstants>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<Optimize>true</Optimize>
+		<DefineConstants>$(DefineConstants);RELEASE;DEV;</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
