@@ -144,10 +144,12 @@ namespace TheOtherRoles
 				KeyCode.F,
                 false);
                 adminButton.buttonText = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin);
+            adminButton.MaxTimer =  adminButton.Timer = 0;
         }
         public static void SetButtonCooldowns()
         {
             morphButton.MaxTimer = 0f;
+            adminButton.MaxTimer =  0f;
         }
 
         public static void Clear()
