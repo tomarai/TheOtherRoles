@@ -377,6 +377,7 @@ namespace TheOtherRoles.Modules {
                     if (x.Contains("gmEdition")) return 10002;
                     if (x.Contains("shiune")) return 10001;
                     if (x.Contains("01haomingHat")) return 0;
+                    if (x.Contains("02haomingHat")) return 1;
                     return 500;
                 });
 
@@ -419,10 +420,13 @@ namespace TheOtherRoles.Modules {
 
         public static string[] hatRepos = new string[]
         {
-#if RELEASE
+#if (RELEASE||DEV)
             "https://raw.githubusercontent.com/haoming37/TheOtherHats-GM-Haoming/master",
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
-            "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"
+            "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master",
+#endif
+#if DEV
+            "https://raw.githubusercontent.com/haoming37/TheOtherHats-GM-Haoming-Dev/dev",
 #endif
         };
 

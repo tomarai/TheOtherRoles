@@ -2,16 +2,21 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Version>2.0.2</Version>
-        <Description>TheOtherRoles: GM Edition</Description>
-        <Authors>Eisbison</Authors>
+        <Description>TheOtherRoles: GM Haoming Edition</Description>
+        <Authors>Haoming</Authors>
+		<Configurations>Debug;Release;Release_Dev</Configurations>
     </PropertyGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+        <DefineConstants>$(DefineConstants);STEAM;</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ApplicationIcon />
         <Win32Resource />
         <AssemblyName>TheOtherRolesGM</AssemblyName>
+    </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Dev|AnyCPU'">
+		<DefineConstants>$(DefineConstants);DEV;</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
