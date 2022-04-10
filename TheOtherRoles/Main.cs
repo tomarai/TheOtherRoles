@@ -135,6 +135,17 @@ namespace TheOtherRoles
 
         public static void Postfix(KeyboardJoystick __instance)
         {
+            if (AmongUsClient.Instance.AmHost && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                //ゲーム強制終了
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.F5))
+                {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.forceEnd();
+                }
+            }
+
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
