@@ -450,14 +450,12 @@ namespace TheOtherRoles
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
-                    if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sheriff) || p == target){
+                    if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p == target){
                         if(p.Data.Role.IsImpostor){
                             arrow = new Arrow(Color.red);
                         }
                         else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.jackalFlag)){
                             arrow = new Arrow(Jackal.color);
-                        }else if(p.isRole(RoleType.Sheriff)){
-                            arrow = new Arrow(Color.white);
                         }else if(p==target)
                         {
                             arrow = new Arrow(Puppeteer.color);
