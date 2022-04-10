@@ -25,9 +25,11 @@ namespace TheOtherRoles{
         public static bool restrictCameras = true;
         public static float restrictCamerasTime = 600f;
         public static float restrictCamerasTimeMax = 600f;
+        public static bool restrictCamerasText = true;
         public static bool restrictVitals = true;
         public static float restrictVitalsTime = 600f;
         public static float restrictVitalsTimeMax = 600f;
+        public static bool restrictVitalsText = true;
         public static bool disableVents = false;
 
         public static bool ghostsSeeRoles = true;
@@ -45,6 +47,8 @@ namespace TheOtherRoles{
         public static List<Vent> ventsToSeal = new List<Vent>();
         public static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
         public static TMPro.TextMeshPro AdminTimerText = null;
+        public static TMPro.TextMeshPro CamerasTimerText = null;
+        public static TMPro.TextMeshPro VitalsTimerText = null;
 
         public static void clearAndReloadMapOptions() {
             meetingsCount = 0;
@@ -70,11 +74,13 @@ namespace TheOtherRoles{
             restrictAdminText = CustomOptionHolder.restrictAdminText.getBool();
             restrictCameras = CustomOptionHolder.restrictCameras.getBool();
             restrictCamerasTime = restrictCamerasTimeMax = CustomOptionHolder.restrictCamerasTime.getFloat();
+            restrictCamerasText = CustomOptionHolder.restrictCamerasText.getBool();
+            restrictVitalsText = CustomOptionHolder.restrictVitalsText.getBool();
             restrictVitals = CustomOptionHolder.restrictVitals.getBool();
             restrictVitalsTime = restrictVitalsTimeMax = CustomOptionHolder.restrictVitalsTime.getFloat();
             disableVents = CustomOptionHolder.disableVents.getBool();
-            ClearAdminTimerText();
-            UpdateAdminTimerText();
+            ClearTimerText();
+            UpdateTimerText();
 
             allowParallelMedBayScans = CustomOptionHolder.allowParallelMedBayScans.getBool();
             ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value;
@@ -129,7 +135,7 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || !restrictCameras || restrictVitalsTime > 0f;
+                return restrictDevices == 0 || !restrictVitals || restrictVitalsTime > 0f;
             }
         }
 
@@ -137,37 +143,85 @@ namespace TheOtherRoles{
         {
             get
             {
-                return restrictDevices == 0 || !restrictCameras || restrictVitalsTimeMax > 0f;
+                return restrictDevices == 0 || !restrictVitals || restrictVitalsTimeMax > 0f;
             }
         }
         public static void MeetingEndedUpdate()
         {
-            ClearAdminTimerText();
-            UpdateAdminTimerText();
+            ClearTimerText();
+            UpdateTimerText();
         }
-        public static void UpdateAdminTimerText()
+
+        public static void UpdateTimerText()
         {
-            if (restrictDevices == 0 || !restrictAdmin || !restrictAdminText)
+            if (restrictDevices == 0 || (!restrictAdminText && !restrictCamerasText && !restrictVitalsText))
                 return;
             if (HudManager.Instance == null)
                 return;
-            AdminTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
-            AdminTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
-            if (restrictAdminTime> 0)
-                // AdminTimerText.text = $"Admin: {Mathf.RoundToInt(restrictAdminTime)} sec remaining";
-                AdminTimerText.text = String.Format(ModTranslation.getString("adminText"),restrictAdminTime.ToString("0.00"));
-            else
-                // AdminTimerText.text = "Admin: ran out of time";
-                AdminTimerText.text = ModTranslation.getString("adminRanOut");
-            AdminTimerText.gameObject.SetActive(true);
+
+            // Admin
+            if(restrictAdminText)
+            {
+                AdminTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
+                float y = -4.0f;
+                if (restrictCamerasText)
+                    y += 0.2f;
+                if (restrictVitalsText)
+                    y += 0.2f;
+                AdminTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
+                if (restrictAdminTime > 0)
+                    // AdminTimerText.text = $"Admin: {Mathf.RoundToInt(restrictAdminTime)} sec remaining";
+                    AdminTimerText.text = String.Format(ModTranslation.getString("adminText"),restrictAdminTime.ToString("0.00"));
+                else
+                    // AdminTimerText.text = "Admin: ran out of time";
+                    AdminTimerText.text = ModTranslation.getString("adminRanOut");
+                AdminTimerText.gameObject.SetActive(true);
+            }
+
+            // Cameras
+            if(restrictCamerasText)
+            {
+                CamerasTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
+                float y= -4.0f;
+                if (restrictVitalsText)
+                    y += 0.2f;
+                CamerasTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
+                if (restrictCamerasTime > 0)
+                    // CamerasTimerText.text = $"Cameras: {Mathf.RoundToInt(restrictCamerasTime)} sec remaining";
+                    CamerasTimerText.text = String.Format(ModTranslation.getString("camerasText"),restrictCamerasTime.ToString("0.00"));
+                else
+                    // CamerasTimerText.text = "Cameras: ran out of time";
+                    CamerasTimerText.text = ModTranslation.getString("camerasRanOut");
+                CamerasTimerText.gameObject.SetActive(true);
+            }
+
+            // Vitals
+            if(restrictVitalsText)
+            {
+                VitalsTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
+                VitalsTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
+                if (restrictVitalsTime > 0)
+                    // VitalsTimerText.text = $"Vitals: {Mathf.RoundToInt(restrictVitalsTime)} sec remaining";
+                    VitalsTimerText.text = String.Format(ModTranslation.getString("vitalsText"),restrictVitalsTime.ToString("0.00"));
+                else
+                    // VitalsTimerText.text = "Vitals: ran out of time";
+                    VitalsTimerText.text = ModTranslation.getString("vitalsRanOut");
+                VitalsTimerText.gameObject.SetActive(true);
+            }
         }
 
-        private static void ClearAdminTimerText()
+        private static void ClearTimerText()
         {
-            if (AdminTimerText == null)
-                return;
-            UnityEngine.Object.Destroy(AdminTimerText);
-            AdminTimerText = null;
+            if (AdminTimerText != null)
+                UnityEngine.Object.Destroy(AdminTimerText);
+                AdminTimerText = null;
+            if (CamerasTimerText != null)
+                UnityEngine.Object.Destroy(CamerasTimerText);
+                CamerasTimerText = null;
+            if (VitalsTimerText != null)
+                UnityEngine.Object.Destroy(VitalsTimerText);
+                VitalsTimerText = null;
+
         }
     }
 }

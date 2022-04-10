@@ -341,8 +341,10 @@ namespace TheOtherRoles {
         public static CustomOption restrictAdminText;
         public static CustomOption restrictCameras;
         public static CustomOption restrictCamerasTime;
+        public static CustomOption restrictCamerasText;
         public static CustomOption restrictVitals;
         public static CustomOption restrictVitalsTime;
+        public static CustomOption restrictVitalsText;
 
         public static CustomOption hideOutOfSightNametags;
         public static CustomOption refundVotesOnDeath;
@@ -861,8 +863,10 @@ namespace TheOtherRoles {
             restrictAdminText = CustomOption.Create(503, "restrictAdminText", true, restrictAdmin);
             restrictCameras = CustomOption.Create(505, "disableCameras", true, restrictDevices);
             restrictCamerasTime = CustomOption.Create(506, "disableCamerasTime", 30f, 0f, 600f, 1f, restrictCameras, format: "unitSeconds");
+            restrictCamerasText = CustomOption.Create(509, "restrictCamerasText", true, restrictCameras);
             restrictVitals = CustomOption.Create(507, "disableVitals", true, restrictDevices);
             restrictVitalsTime = CustomOption.Create(508, "disableVitalsTime", 30f, 0f, 600f, 1f, restrictVitals, format: "unitSeconds");
+            restrictVitalsText = CustomOption.Create(511, "restrictVitalsText", true, restrictVitals);
 
             uselessOptions = CustomOption.Create(530, "uselessOptions", false, null, isHeader: true);
             dynamicMap = CustomOption.Create(8, "playRandomMaps", false, uselessOptions);

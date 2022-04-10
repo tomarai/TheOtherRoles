@@ -408,13 +408,37 @@
         "0": "Show remaining time of admin",
         "11": "\u30a2\u30c9\u30df\u30f3\u306e\u6b8b\u308a\u6642\u9593\u3092\u8868\u793a\u3059\u308b"
     },
+    "restrictCamerasText": {
+        "0": "Show remaining time of cameras",
+        "11": "\u30ab\u30e1\u30e9\u306e\u6b8b\u308a\u6642\u9593\u3092\u8868\u793a\u3059\u308b"
+    },
+    "restrictVitalsText": {
+        "0": "Show remaining time of vitals",
+        "11": "\u5fc3\u96fb\u56f3\u306e\u6b8b\u308a\u6642\u9593\u3092\u8868\u793a\u3059\u308b"
+    },
     "adminText": {
-        "0": "Admin: {0} sec remaining",
+        "0": "Admin:     {0} sec remaining",
         "11": "\u30a2\u30c9\u30df\u30f3:  \u6b8b\u308a\u6642\u9593{0}\u79d2"
+    },
+    "camerasText": {
+        "0": "Cameras: {0} sec remaining",
+        "11": "\u30ab\u30e1\u30e9:\u3000  \u6b8b\u308a\u6642\u9593{0}\u79d2"
+    },
+    "vitalsText": {
+        "0": "Vitals:       {0} sec remaining",
+        "11": "\u5fc3\u96fb\u56f3:\u3000  \u6b8b\u308a\u6642\u9593{0}\u79d2"
     },
     "adminRanOut": {
         "0": "Admin: ran out of time",
         "11": "\u30a2\u30c9\u30df\u30f3:  \u6642\u9593\u5207\u308c"
+    },
+    "camerasRanOut": {
+        "0": "Cameras: ran out of time",
+        "11": "\u30ab\u30e1\u30e9:  \u6642\u9593\u5207\u308c"
+    },
+    "vitalsRanOut": {
+        "0": "vitals: ran out of time",
+        "11": "\u5fc3\u96fb\u56f3:  \u6642\u9593\u5207\u308c"
     },
     "disableAdminTime": {
         "0": "Restrict Admin Table time",
