@@ -116,7 +116,7 @@ namespace TheOtherRoles
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
                     if(p.isRole(RoleType.MimicA)){
-                        arrow = new Arrow(Palette.ImpostorRed);
+                        arrow = MimicA.isMorph ? new Arrow(Palette.White) :new Arrow(Palette.ImpostorRed);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.transform.position);
                         arrows.Add(arrow);

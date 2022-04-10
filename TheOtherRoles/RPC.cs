@@ -1280,12 +1280,14 @@ namespace TheOtherRoles
             PlayerControl mimicA = Helpers.playerById(mimicAId);
             PlayerControl mimicB = Helpers.playerById(mimicBId);
             MorphHandler.morphToPlayer(mimicA, mimicB);
+            MimicA.isMorph = true;
         }
 
         public static void mimicResetMorph(byte mimicAId)
         {
             PlayerControl mimicA = Helpers.playerById(mimicAId);
             MorphHandler.resetMorph(mimicA);
+            MimicA.isMorph = false;
         }
 
         public static void synchronize(byte playerId,int tag)

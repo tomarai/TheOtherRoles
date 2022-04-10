@@ -96,7 +96,6 @@ namespace TheOtherRoles
                         writer.Write(MimicK.allPlayers.FirstOrDefault().PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.mimicMorph(PlayerControl.LocalPlayer.PlayerId, MimicK.allPlayers.FirstOrDefault().PlayerId);
-                        isMorph = true;
                     }
                     else
                     {
@@ -104,7 +103,6 @@ namespace TheOtherRoles
                         writer.Write(PlayerControl.LocalPlayer.PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.mimicResetMorph(PlayerControl.LocalPlayer.PlayerId);
-                        isMorph = false;
                     }
 
                 },
