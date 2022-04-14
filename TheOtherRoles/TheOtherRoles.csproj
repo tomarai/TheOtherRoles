@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>2022.4.10.0</Version>
+        <Version>2.0.3</Version>
         <Description>TheOtherRoles: GM Haoming Edition</Description>
         <Authors>Haoming</Authors>
 		<Configurations>Debug;Release;Release_Dev</Configurations>
