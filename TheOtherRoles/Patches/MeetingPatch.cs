@@ -11,7 +11,11 @@ using System.Collections;
 using System;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Analytics;
 using System.Reflection;
+using BepInEx.IL2CPP.Utils.Collections;
+using Assets.CoreScripts;
 
 namespace TheOtherRoles.Patches {
     [HarmonyPatch]
@@ -722,7 +726,7 @@ namespace TheOtherRoles.Patches {
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
         class StartMeetingPatch {
-            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget)
+            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget, ref Il2CppSystem.Collections.IEnumerator __result)
             {
                 startMeeting();
                 // Medium meeting start time
@@ -733,6 +737,120 @@ namespace TheOtherRoles.Patches {
                 if (meetingTarget == null) meetingsCount++;
                 // Save the meeting target
                 target = meetingTarget;
+
+                __result = CoStartMeeting(__instance, meetingTarget).WrapToIl2Cpp();
+                return false;
+            }
+            private static IEnumerator CoStartMeeting2(PlayerControl __instance, GameData.PlayerInfo meetingTarget)
+            {
+                // ボタンと同時に通報が入った場合のバグ対応、他のクライアントからキルイベントが飛んでくるのを待つ
+                // 見えては行けないものが見えるので暗転させる
+
+                HudManager hudManager = DestroyableSingleton<HudManager>.Instance;
+                var blackscreen = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
+                blackscreen.color = Palette.Black;
+                blackscreen.transform.position = Vector3.zero;
+                blackscreen.transform.localPosition = new Vector3(0f, 0f, -910f);
+                blackscreen.transform.localScale = new Vector3(10f, 10f, 1f);
+                blackscreen.gameObject.SetActive(true);
+                blackscreen.enabled = true;
+                yield return new WaitForSeconds(2f);
+                UnityEngine.Object.Destroy(blackscreen);
+
+                DeadBody[] array = UnityEngine.GameObject.FindObjectsOfType<DeadBody>();
+                GameData.PlayerInfo[] deadBodies = (from b in array
+                select GameData.Instance.GetPlayerById(b.ParentId)).ToArray<GameData.PlayerInfo>();
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (array[j] != null && array[j].gameObject != null)
+                    {
+                        UnityEngine.GameObject.Destroy(array[j].gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogError("Encountered a null Dead Body while destroying.");
+                    }
+                }
+                ShapeshifterEvidence[] array2 = UnityEngine.GameObject.FindObjectsOfType<ShapeshifterEvidence>();
+                for (int k = 0; k < array2.Length; k++)
+                {
+                    if (array2[k] != null && array2[k].gameObject != null)
+                    {
+                        UnityEngine.GameObject.Destroy(array2[k].gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogError("Encountered a null Evidence while destroying.");
+                    }
+                }
+                for (int l = 0; l < __instance.currentRoleAnimations.Count; l++)
+                {
+                    if (__instance.currentRoleAnimations[l] != null && __instance.currentRoleAnimations[l].gameObject != null)
+                    {
+                        UnityEngine.GameObject.Destroy(__instance.currentRoleAnimations[l].gameObject);
+                        Debug.LogError("Encountered a null Role Animation while destroying.");
+                    }
+                }
+                __instance.currentRoleAnimations.Clear();
+                MeetingHud.Instance.StartCoroutine(MeetingHud.Instance.CoIntro(__instance.Data, target, deadBodies));
+                yield break;
+            }
+            private static IEnumerator CoStartMeeting(PlayerControl __instance, GameData.PlayerInfo meetingTarget)
+            {
+                bool isEmergency = target == null;
+                DestroyableSingleton<Telemetry>.Instance.WriteMeetingStarted(isEmergency);
+                while (!MeetingHud.Instance)
+                {
+                    yield return null;
+                }
+                MeetingRoomManager.Instance.RemoveSelf();
+                for (int i = 0; i < PlayerControl.AllPlayerControls.Count; i++)
+                {
+                    PlayerControl playerControl = PlayerControl.AllPlayerControls[i];
+                    if (playerControl == null)
+                    {
+                        Debug.LogError("Encountered a null PlayerControl when starting a meeting");
+                    }
+                    else
+                    {
+                        if (!playerControl.GetComponent<DummyBehaviour>().enabled)
+                        {
+                            playerControl.MyPhysics.ExitAllVents();
+                            ShipStatus.Instance.SpawnPlayer(playerControl, GameData.Instance.PlayerCount, false);
+                        }
+                        playerControl.RemoveProtection();
+                        playerControl.NetTransform.enabled = true;
+                        playerControl.MyPhysics.ResetMoveState(true);
+                    }
+                }
+                if (__instance.AmOwner)
+                {
+                    if (isEmergency)
+                    {
+                        __instance.RemainingEmergencies--;
+                        StatsManager.Instance.IncrementStat(StringNames.StatsEmergenciesCalled);
+                    }
+                    else
+                    {
+                        StatsManager.Instance.IncrementStat(StringNames.StatsBodiesReported);
+                    }
+                }
+                if (MapBehaviour.Instance)
+                {
+                    MapBehaviour.Instance.Close();
+                }
+                if (Minigame.Instance)
+                {
+                    Minigame.Instance.ForceClose();
+                }
+                ShipStatus.Instance.OnMeetingCalled();
+                KillAnimation.SetMovement(__instance, true);
+
+                // そのままyield returnで待ちを入れるとロックしたのでHudManagerのコルーチンとして実行させる
+                DestroyableSingleton<HudManager>._instance.StartCoroutine(CoStartMeeting2(__instance, meetingTarget).WrapToIl2Cpp());
+
+                yield break;
+
             }
         }
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Close))]
