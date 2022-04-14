@@ -1,5 +1,5 @@
 # 製作者SNS  
-[![Twitter](https://img.shields.io/twitter/url?label=Twitter&style=social&url=https%3A%2F%2Ftwitter.com%2Fhaoming_dev)](https://twitter.com/haoming_dev)  [![](https://img.shields.io/discord/955423281316499517?label=Discord)](https://discord.gg/sTt8EzEpHP)  
+[![Twitter](https://img.shields.io/twitter/url?label=Twitter&style=social&url=https%3A%2F%2Ftwitter.com%2Fhaoming_dev)](https://twitter.com/haoming_dev)  [![](https://img.shields.io/discord/959276810368061501?label=Discord)](https://discord.gg/sTt8EzEpHP)  
 質問要望等は基本的にDiscordにて受け付けています
   
 # とりあえず最初に書いておくやつ
