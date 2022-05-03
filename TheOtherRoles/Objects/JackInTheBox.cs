@@ -23,31 +23,33 @@ namespace TheOtherRoles.Objects {
         public static void startAnimation(int ventId) {
             JackInTheBox box = AllJackInTheBoxes.FirstOrDefault((x) => x?.vent != null && x.vent.Id == ventId);
             if (box == null) return;
-            Vent vent = box.vent;
 
             HudManager.Instance.StartCoroutine(Effects.Lerp(0.6f, new Action<float>((p) => {
-                if (vent != null && vent.myRend != null) {
-                    vent.myRend.sprite = getBoxAnimationSprite((int)(p * boxAnimationSprites.Length));
-                    if (p == 1f) vent.myRend.sprite = getBoxAnimationSprite(0);
+                if (box.boxRenderer != null) {
+                    box.boxRenderer.sprite = getBoxAnimationSprite((int)(p * boxAnimationSprites.Length));
+                    if (p == 1f) box.boxRenderer.sprite = getBoxAnimationSprite(0);
                 }
             })));
         }
 
         private GameObject gameObject;
         public Vent vent;
+        private SpriteRenderer boxRenderer;
 
         public JackInTheBox(Vector2 p) {
-            gameObject = new GameObject("JackInTheBox");
-            Vector3 position = new Vector3(p.x, p.y, PlayerControl.LocalPlayer.transform.position.z + 1f);
+            gameObject = new GameObject("JackInTheBox"){layer = 11};
+            gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
+            Vector3 position = new Vector3(p.x, p.y,  p.y/1000f + 0.01f);
             position += (Vector3)PlayerControl.LocalPlayer.Collider.offset; // Add collider offset that DoMove moves the player up at a valid position
             // Create the marker
             gameObject.transform.position = position;
-            var boxRenderer = gameObject.AddComponent<SpriteRenderer>();
+            boxRenderer = gameObject.AddComponent<SpriteRenderer>();
             boxRenderer.sprite = getBoxAnimationSprite(0);
 
             // Create the vent
             var referenceVent = UnityEngine.Object.FindObjectOfType<Vent>();
             vent = UnityEngine.Object.Instantiate<Vent>(referenceVent);
+            vent.gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
             vent.transform.position = gameObject.transform.position;
             vent.Left = null;
             vent.Right = null;
@@ -58,7 +60,7 @@ namespace TheOtherRoles.Objects {
             vent.GetComponent<PowerTools.SpriteAnim>()?.Stop();
             vent.Id = ShipStatus.Instance.AllVents.Select(x => x.Id).Max() + 1; // Make sure we have a unique id
             var ventRenderer = vent.GetComponent<SpriteRenderer>();
-            ventRenderer.sprite = getBoxAnimationSprite(0);
+            ventRenderer.sprite = null;  // Use the box.boxRenderer instead
             vent.myRend = ventRenderer;
             var allVentsList = ShipStatus.Instance.AllVents.ToList();
             allVentsList.Add(vent);
@@ -82,7 +84,7 @@ namespace TheOtherRoles.Objects {
         }
 
         public void convertToVent() {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
             vent.gameObject.SetActive(true);
             return;
         }

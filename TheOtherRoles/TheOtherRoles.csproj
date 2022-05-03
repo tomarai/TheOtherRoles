@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>3.4.5.2</Version>
+        <Version>4.1.1.1</Version>
         <Description>TheOtherRoles</Description>
         <Authors>Eisbison</Authors>
+		<LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -15,6 +16,7 @@
         <EmbeddedResource Include="Resources\CustomHats\*.png" />
         <EmbeddedResource Include="Resources\*.png" />
         <EmbeddedResource Include="Resources\TricksterAnimation\*.png" />
+		<EmbeddedResource Include="Resources\PortalAnimation\*.png" />
     </ItemGroup>
 
     <ItemGroup>
